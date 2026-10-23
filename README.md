@@ -60,7 +60,7 @@ cd public/playground && npm ci && npm test
 DEP_ENGINE_URL=http://127.0.0.1:8433 DEP_ADMIN_PASSWORD=admin npm run compat
 ```
 
-Start the server afresh for each run: the cases change its data. The tests in `engine/tests/client.rs` start a server and wait a fixed 1.5 seconds before connecting; on a slow or busy machine this can be too short.
+Start the server afresh for each run: the cases change its data.
 
 ## Releasing
 

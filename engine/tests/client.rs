@@ -22,7 +22,11 @@ fn start_with(port: u16, extra: &[&str]) -> Server {
         .stderr(Stdio::null())
         .spawn()
         .unwrap();
-    std::thread::sleep(std::time::Duration::from_millis(1500));
+    // Wait until the server accepts connections (a fixed sleep is too short on a slow machine).
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(30);
+    while std::net::TcpStream::connect(("127.0.0.1", port)).is_err() && std::time::Instant::now() < deadline {
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
     Server(child)
 }
 
