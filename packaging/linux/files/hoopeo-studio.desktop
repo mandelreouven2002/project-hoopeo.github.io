@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Hoopeo Studio
+GenericName=DEP SQL Developer
+Comment=The developer application for DEP SQL (Project Hoopeo)
+Exec=hoopeo-studio
+Icon=hoopeo-studio
+Terminal=false
+Categories=Development;Database;IDE;
+Keywords=SQL;database;privacy;DEP;
+StartupWMClass=hoopeo-studio

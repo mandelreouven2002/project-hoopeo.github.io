@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+if [ "$1" = purge ]; then
+  rm -rf /etc/dep-engine
+  echo "The database in /var/lib/dep-engine was kept. Remove it yourself to delete the data."
+fi
+[ -d /run/systemd/system ] && systemctl daemon-reload >/dev/null 2>&1 || true
+exit 0
