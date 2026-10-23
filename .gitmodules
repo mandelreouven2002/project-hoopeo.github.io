@@ -1,0 +1,3 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/mandelreouven2002/project-hoopeo.github.io.git
