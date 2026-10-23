@@ -1,0 +1,48 @@
+/* Design tokens of Project Hoopeo, shared by the website and the playground.
+   The five brand colours are sampled from the logos in branding/:
+     hoopoe orange #FC910A (the crest), deep orange #F76312, brand blue #0370DE,
+     navy #011A3E (the wordmark text), teal #02D0D1.
+   Orange and teal fail WCAG AA as text on white, so they are used for rules, fills and highlights, and for
+   text only on navy. The text variants below are darker (light theme) or the brand colour itself (dark theme).
+   In the playground, colour says what a value is: plain (red), masked path (orange), operational path (teal),
+   protected (blue), disclosed (violet). */
+:root {
+  color-scheme: light;
+  --brand-orange: #FC910A; --brand-deep-orange: #F76312; --brand-blue: #0370DE; --brand-navy: #011A3E; --brand-teal: #02D0D1;
+
+  --bg: #F4F7FB; --surface: #FFFFFF; --surface-2: #EDF2F8; --ink: #011A3E; --muted: #475A76; --line: #D3DCE8;
+  --link: #0258B8; --primary: #0258B8; --primary-hover: #014A9C; --on-primary: #FFFFFF;
+  --accent: var(--brand-orange); --accent-2: var(--brand-teal);
+  --code-bg: #EEF3F9; --focus: #0258B8; --header-bg: #011A3E; --header-ink: #F4F7FB;
+
+  --plain: #B3261E;  --plain-soft: #FBE9E7;
+  --masked: #9A4F00; --masked-soft: #FDEBD3;
+  --op: #036C74;     --op-soft: #DDF4F4;
+  --prot: #0258B8;   --prot-soft: #E1ECFA;
+  --disc: #6A35C0;   --disc-soft: #EFE8FB;
+  --plain-line: #D9382B; --masked-line: #FC910A; --op-line: #02D0D1; --prot-line: #0370DE; --disc-line: #8A5CE0;
+  --good: #17724A; --bad: #B3261E; --bad-soft: #FBE9E7;
+
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-label: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
+  --f-code: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --r: 8px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --bg: #07101D; --surface: #0D1A2D; --surface-2: #132238; --ink: #EAF1FA; --muted: #A3B3C9; --line: #22344D;
+  --link: #6DB3FF; --primary: #0370DE; --primary-hover: #2A86E8; --on-primary: #FFFFFF;
+  --code-bg: #0A1526; --focus: #6DB3FF; --header-bg: #050B14; --header-ink: #EAF1FA;
+  --plain: #FF8F85; --plain-soft: #3A1B1C; --masked: #FC910A; --masked-soft: #33230D;
+  --op: #02D0D1; --op-soft: #0B3033; --prot: #6DB3FF; --prot-soft: #12284A; --disc: #C3A2FF; --disc-soft: #2A1D47;
+  --plain-line: #FF8F85; --disc-line: #C3A2FF; --prot-line: #6DB3FF;
+  --good: #5FD39A; --bad: #FF8A80; --bad-soft: #3A1B1C; } }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07101D; --surface: #0D1A2D; --surface-2: #132238; --ink: #EAF1FA; --muted: #A3B3C9; --line: #22344D;
+  --link: #6DB3FF; --primary: #0370DE; --primary-hover: #2A86E8; --on-primary: #FFFFFF;
+  --code-bg: #0A1526; --focus: #6DB3FF; --header-bg: #050B14; --header-ink: #EAF1FA;
+  --plain: #FF8F85; --plain-soft: #3A1B1C; --masked: #FC910A; --masked-soft: #33230D;
+  --op: #02D0D1; --op-soft: #0B3033; --prot: #6DB3FF; --prot-soft: #12284A; --disc: #C3A2FF; --disc-soft: #2A1D47;
+  --plain-line: #FF8F85; --disc-line: #C3A2FF; --prot-line: #6DB3FF;
+  --good: #5FD39A; --bad: #FF8A80; --bad-soft: #3A1B1C; }
