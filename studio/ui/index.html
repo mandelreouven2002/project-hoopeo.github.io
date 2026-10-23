@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoopeo Studio</title>
+<link rel="stylesheet" href="vendor/codemirror/codemirror.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="main" id="main">
+    <aside class="browser" id="browser" aria-label="Object browser">
+      <div class="panel-head"><span>Object Browser</span><span class="panel-sub" id="browserConn">Not connected</span></div>
+      <div class="tree" id="tree" tabindex="0"></div>
+      <div class="props" id="props" aria-label="Properties"></div>
+    </aside>
+    <div class="vsplit" id="vsplit" title="Drag to resize"></div>
+    <section class="work">
+      <div class="doctabs" id="doctabs" role="tablist" aria-label="SQL windows"></div>
+      <div class="editor" id="editorHost"></div>
+      <div class="hsplit" id="hsplit" title="Drag to resize"></div>
+      <section class="bottom" aria-label="Output and results">
+        <div class="btabs" id="btabs" role="tablist"></div>
+        <div class="bbody" id="bbody"></div>
+        <div class="bstatus" id="bstatus"></div>
+      </section>
+    </section>
+  </div>
+  <footer class="status" id="status">
+    <span class="st st-conn" id="stConn">Not connected</span>
+    <span class="st" id="stRole"></span>
+    <span class="st" id="stPath"></span>
+    <span class="st" id="stWhere"></span>
+    <span class="st" id="stTls"></span>
+    <span class="st" id="stServe"></span>
+    <span class="st" id="stTxn"></span>
+    <span class="spacer"></span>
+    <span class="st" id="stTiming"></span>
+    <span class="st" id="stCursor">Ln 1, Col 1</span>
+  </footer>
+</div>
+
+<!-- Logon: saved connections of every kind -->
+<dialog class="dlg wide" id="dlgConnect" aria-labelledby="dlgConnectTitle">
+  <div class="dlg-title" id="dlgConnectTitle">Connect</div>
+  <div class="dlg-body split">
+    <div class="list-box">
+      <div class="list-head">Saved connections</div>
+      <ul class="list" id="profileList" role="listbox"></ul>
+    </div>
+    <div class="form">
+      <label class="row"><span>Name</span><input id="pfName" required spellcheck="false"></label>
+      <label class="row"><span>Database</span>
+        <select id="pfKind">
+          <option value="server">DEP Engine server (this computer, another computer, or the cloud)</option>
+          <option value="local">Local data directory, opened by Studio</option>
+          <option value="memory">Empty database, in memory</option>
+        </select>
+      </label>
+      <label class="row" data-show="server"><span>Host</span><input id="pfHost" placeholder="127.0.0.1" spellcheck="false"></label>
+      <label class="row" data-show="server"><span>Port</span><input id="pfPort" type="number" min="1" max="65535" value="5433"></label>
+      <label class="row" data-show="local"><span>Data directory</span><span class="with-btn"><input id="pfDataDir" spellcheck="false"><button type="button" class="btn small" id="pfDataDirPick">Browse...</button></span></label>
+      <label class="row"><span>Role</span><input id="pfUser" value="admin" list="roleList" spellcheck="false"></label>
+      <label class="row"><span>Endpoint</span><input id="pfEndpoint" value="operational" list="endpointList" spellcheck="false"></label>
+      <label class="row" data-show="server"><span>Password</span><input id="pfPassword" type="password" autocomplete="off"></label>
+      <label class="row" data-show="server"><span>TLS</span>
+        <select id="pfTls">
+          <option value="disable">Off (plain TCP, for this computer or a private network)</option>
+          <option value="require">Required (encrypted, certificate not checked)</option>
+          <option value="verify-full">Verify (encrypted, certificate checked)</option>
+        </select>
+      </label>
+      <label class="row" data-show="server" id="pfCaRow"><span>CA certificate</span><span class="with-btn"><input id="pfCaFile" placeholder="Public roots only" spellcheck="false"><button type="button" class="btn small" id="pfCaPick">Browse...</button></span></label>
+      <p class="note" id="pfHint"></p>
+      <p class="error" id="pfError" hidden></p>
+      <p class="ok" id="pfOk" hidden></p>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <button type="button" class="btn" id="btnDeleteProfile">Delete</button>
+    <button type="button" class="btn" id="btnSaveProfile">Save</button>
+    <button type="button" class="btn" id="btnTestProfile">Test</button>
+    <span class="spacer"></span>
+    <button type="button" class="btn" data-close>Cancel</button>
+    <button type="button" class="btn default" id="btnDoConnect">Connect</button>
+  </div>
+</dialog>
+
+<!-- New local database -->
+<dialog class="dlg" id="dlgNewLocal" aria-labelledby="dlgNewLocalTitle">
+  <div class="dlg-title" id="dlgNewLocalTitle">New Local Database</div>
+  <div class="dlg-body">
+    <div class="form">
+      <label class="row"><span>Name</span><input id="nlName" value="My database" spellcheck="false"></label>
+      <fieldset class="group-box"><legend>Storage</legend>
+        <label class="check"><input type="radio" name="nlStore" value="local" checked> Data directory on this computer (kept when Studio quits)</label>
+        <label class="row indent"><span>Directory</span><span class="with-btn"><input id="nlDir" spellcheck="false"><button type="button" class="btn small" id="nlDirPick">Browse...</button></span></label>
+        <label class="check"><input type="radio" name="nlStore" value="memory"> In memory (lost when Studio quits)</label>
+      </fieldset>
+      <fieldset class="group-box"><legend>Network</legend>
+        <label class="check"><input type="checkbox" id="nlServe"> Also serve it on a port of this computer, for DEP CLI, psql and other tools</label>
+        <label class="row indent"><span>Port</span><input id="nlPort" type="number" min="1" max="65535" value="5544"></label>
+        <label class="row indent"><span>admin password</span><input id="nlPassword" type="password" autocomplete="new-password"></label>
+      </fieldset>
+      <p class="error" id="nlError" hidden></p>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <span class="spacer"></span>
+    <button type="button" class="btn" data-close>Cancel</button>
+    <button type="button" class="btn default" id="btnCreateLocal">Create</button>
+  </div>
+</dialog>
+
+<!-- Serve on port -->
+<dialog class="dlg" id="dlgServe" aria-labelledby="dlgServeTitle">
+  <div class="dlg-title" id="dlgServeTitle">Serve on Port</div>
+  <div class="dlg-body">
+    <div class="form">
+      <p class="note" id="svIntro"></p>
+      <label class="row"><span>Listen on</span>
+        <select id="svBind">
+          <option value="127.0.0.1">This computer only (127.0.0.1)</option>
+          <option value="0.0.0.0">All network interfaces (0.0.0.0)</option>
+        </select>
+      </label>
+      <label class="row"><span>Port</span><input id="svPort" type="number" min="1" max="65535" value="5544"></label>
+      <label class="row"><span>admin password</span><input id="svPassword" type="password" autocomplete="new-password" placeholder="Keep the current password"></label>
+      <p class="error" id="svError" hidden></p>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <span class="spacer"></span>
+    <button type="button" class="btn" data-close>Cancel</button>
+    <button type="button" class="btn default" id="btnServe">Serve</button>
+  </div>
+</dialog>
+
+<!-- Choose a table -->
+<dialog class="dlg narrow" id="dlgPick" aria-labelledby="dlgPickTitle">
+  <div class="dlg-title" id="dlgPickTitle">Choose</div>
+  <div class="dlg-body">
+    <div class="form"><label class="row"><span id="pkLabel">Table</span><select id="pkSelect"></select></label></div>
+  </div>
+  <div class="dlg-foot">
+    <span class="spacer"></span>
+    <button type="button" class="btn" data-close>Cancel</button>
+    <button type="button" class="btn default" id="btnPick">OK</button>
+  </div>
+</dialog>
+
+<!-- Message box -->
+<dialog class="dlg narrow" id="dlgMsg" aria-labelledby="dlgMsgTitle">
+  <div class="dlg-title" id="dlgMsgTitle">Hoopeo Studio</div>
+  <div class="dlg-body"><div class="msgtext" id="msgText"></div></div>
+  <div class="dlg-foot" id="msgButtons"></div>
+</dialog>
+
+<!-- About, licenses -->
+<dialog class="dlg wide" id="dlgAbout" aria-labelledby="dlgAboutTitle">
+  <div class="dlg-title" id="dlgAboutTitle">About Hoopeo Studio</div>
+  <div class="dlg-body about">
+    <img class="about-mark" src="img/wordmark.png" alt="Project Hoopeo, Database-Enforced Privacy">
+    <dl class="about-facts" id="aboutFacts"></dl>
+    <h3 class="about-h" id="aboutLicenseHead">Project Hoopeo Evaluation License</h3>
+    <pre class="notice" id="aboutLicense"></pre>
+    <h3 class="about-h" id="aboutNoticeHead">Notice</h3>
+    <pre class="notice" id="aboutNotice"></pre>
+    <details class="about-third" id="aboutThird">
+      <summary>Third-party notices</summary>
+      <pre class="notice" id="aboutThirdText"></pre>
+    </details>
+  </div>
+  <div class="dlg-foot"><span class="spacer"></span><button type="button" class="btn default" data-close>Close</button></div>
+</dialog>
+
+<!-- Reference -->
+<dialog class="dlg wide tall" id="dlgRef" aria-labelledby="dlgRefTitle">
+  <div class="dlg-title" id="dlgRefTitle">DEP SQL Reference</div>
+  <div class="dlg-body ref" id="refBody"></div>
+  <div class="dlg-foot"><span class="spacer"></span><button type="button" class="btn default" data-close>Close</button></div>
+</dialog>
+
+<div class="ctxmenu" id="ctxmenu" role="menu" hidden></div>
+
+<datalist id="roleList"><option value="admin"><option value="reception_app"><option value="doctors_app"><option value="billing_job"><option value="privacy_admin"><option value="bi_dashboard"><option value="reminder_job"><option value="app_developer"></datalist>
+<datalist id="endpointList"><option value="operational"><option value="analytics"></datalist>
+
+<script src="vendor/codemirror/codemirror.js"></script>
+<script src="vendor/codemirror/sql.js"></script>
+<script src="vendor/codemirror/matchbrackets.js"></script>
+<script src="vendor/codemirror/active-line.js"></script>
+<script src="depsql-mode.js"></script>
+<script src="reference.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

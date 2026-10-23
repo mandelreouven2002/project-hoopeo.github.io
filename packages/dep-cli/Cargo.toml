@@ -1,0 +1,21 @@
+[package]
+name = "dep-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+homepage.workspace = true
+rust-version.workspace = true
+publish = false
+license = "LicenseRef-Hoopeo-Evaluation"
+description = "DEP CLI: the DEP SQL shell (Project Hoopeo)"
+
+[[bin]]
+name = "dep-cli"
+path = "src/main.rs"
+
+[dependencies]
+dep-engine = { path = "../../engine" }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+rustyline = "15"
+rpassword = "7"
+dirs = "6"
