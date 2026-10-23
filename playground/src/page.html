@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DEP SQL Playground | Project Hoopeo</title>
+<meta name="description" content="DEP SQL Playground: a browser simulator of Database-Enforced Privacy. It runs the DEP rules in your browser and shows the same statement in a regular database, on the masked read path and on the operational path.">
+<meta name="color-scheme" content="light dark">
+<!--__SITE_HEAD__-->
+<style>
+/*__FONTS__*/
+/*__TOKENS__*/
+/* Left: the same statement in three panes (regular SQL, masked path, operational path).
+   Right: query tabs over the editor, and the schema below. One column on phones, editor first.
+   Colour says what a value is: plain (red), masked path (orange), operational path (teal), protected (blue),
+   disclosed (violet). The tokens are in site/assets/css/tokens.css. */
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--f-body); min-height: 100vh; display: flex; flex-direction: column; }
+*, *::before, *::after { box-sizing: border-box; }
+button, select, input, textarea { font: inherit; color: inherit; }
+code, pre, textarea, select, .mono { font-family: var(--f-code); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.skip { position: absolute; left: -999px; top: 0; background: var(--primary); color: var(--on-primary); padding: 8px 14px; z-index: 100; }
+.skip:focus { left: 8px; top: 8px; }
+/* the bar that site/build.py replaces with the site header (and footer) */
+.site-header { background: var(--header-bg); color: var(--header-ink); border-bottom: 3px solid var(--brand-orange); }
+.site-header .wrap { display: flex; align-items: center; gap: 8px 18px; min-height: 56px; flex-wrap: wrap; padding: 6px 16px; max-width: none; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--header-ink); text-decoration: none; font: 600 1.05rem var(--f-body); }
+.brand img { width: 32px; height: auto; display: block; }
+.nav { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: auto; align-items: center; }
+.nav a { color: var(--header-ink); text-decoration: none; padding: 7px 10px; font: 500 0.95rem var(--f-label); border-bottom: 3px solid transparent; border-radius: 6px 6px 0 0; }
+.nav a:hover { background: rgba(255, 255, 255, 0.1); }
+.nav a[aria-current="page"] { border-bottom-color: var(--brand-orange); font-weight: 600; }
+.theme-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: var(--header-ink); border-radius: 6px; cursor: pointer; }
+.theme-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.theme-btn .i-sun { display: none; }
+:root[data-theme="dark"] .theme-btn .i-moon { display: none; }
+:root[data-theme="dark"] .theme-btn .i-sun { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .i-moon { display: none; }
+  :root:not([data-theme="light"]) .theme-btn .i-sun { display: block; }
+}
+.site-header :focus-visible { outline-color: #fff; }
+
+.app { flex: 1 0 auto; height: calc(100vh - 62px); box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px; }
+.standalone .app { height: calc(100vh - 62px); }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+h1 { margin: 0; font: 600 1.25rem/1.2 var(--f-body); letter-spacing: -0.005em; }
+.top .spacer { flex: 1 1 auto; }
+.btn { border: 2px solid var(--primary); background: var(--primary); color: var(--on-primary); border-radius: 6px; padding: 6px 16px; font: 600 0.88rem var(--f-label); letter-spacing: 0.03em; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn.ghost { background: transparent; color: var(--link); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--link); background: var(--surface-2); }
+
+.main { flex: 1 1 auto; min-height: 0; display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "plain ide" "masked ide" "op schema"; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.box > .body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+#pane-plain { grid-area: plain; } #pane-masked { grid-area: masked; } #pane-op { grid-area: op; }
+#ide { grid-area: ide; } #schema { grid-area: schema; }
+
+@media (max-width: 1099px) {
+  body { min-height: 0; }
+  .app, .standalone .app { height: auto; }
+  .main { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "ide" "plain" "masked" "op" "schema"; }
+  .box.pane > .body { max-height: 60vh; }
+  #schema > .body { max-height: 70vh; }
+}
+
+/* pane headers */
+.phead { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); border-top: 4px solid var(--line); }
+.phead h2 { margin: 0; font: 600 0.95rem var(--f-label); letter-spacing: 0.02em; }
+.phead .sub { font-size: 0.74rem; color: var(--muted); background: none; padding: 0; }
+.phead select { background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; font-size: 0.78rem; }
+.phead .sum { margin-left: auto; font: 600 0.74rem var(--f-code); padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.phead .sum.ok { color: var(--good); }
+.phead .sum:empty { display: none; }
+.phead .sum.err { color: var(--bad); background: var(--bad-soft); }
+#pane-plain .phead { border-top-color: var(--plain-line); } #pane-plain h2 { color: var(--plain); }
+#pane-masked .phead { border-top-color: var(--masked-line); } #pane-masked h2 { color: var(--masked); }
+#pane-op .phead { border-top-color: var(--op-line); } #pane-op h2 { color: var(--op); }
+
+/* results */
+.res { border-bottom: 1px solid var(--line); }
+.res:last-child { border-bottom: 0; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+th, td { text-align: left; padding: 4px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font: 600 0.76rem var(--f-code); color: var(--muted); position: sticky; top: 0; background: var(--surface); }
+td { font-family: var(--f-code); font-size: 0.8rem; }
+tr:last-child td { border-bottom: 0; }
+.null { color: var(--muted); font-style: italic; } .null.prot { color: var(--prot); }
+.chip { display: inline-block; font: 600 0.64rem var(--f-label); letter-spacing: 0.05em; text-transform: uppercase; padding: 0 5px; border-radius: 3px; margin-left: 5px; vertical-align: 1px; }
+.chip.prot { color: var(--prot); background: var(--prot-soft); } .chip.disc { color: var(--disc); background: var(--disc-soft); } .chip.key { color: var(--muted); background: var(--surface-2); }
+.cmd { padding: 4px 12px 7px; font: 0.8rem var(--f-code); color: var(--good); }
+.stmt { padding: 5px 12px 0; font: 0.72rem/1.4 var(--f-code); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.notes { padding: 4px 12px; font: 0.74rem/1.45 var(--f-code); color: var(--muted); }
+.notes b { color: var(--prot); font-weight: 600; }
+.phead .txn { font: 600 0.68rem var(--f-label); letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; color: var(--op); background: var(--op-soft); }
+.phead .txn.bad { color: var(--bad); background: var(--bad-soft); }
+.idx { margin-top: 5px; padding-top: 5px; border-top: 1px dashed var(--line); display: grid; gap: 1px; font-size: 0.74rem; overflow-wrap: anywhere; }
+.spanel h4 { margin-top: 4px; }
+.cmd.muted { color: var(--muted); }
+.err { margin: 0; padding: 8px 12px; background: var(--bad-soft); font: 0.8rem/1.5 var(--f-code); white-space: pre-wrap; overflow-wrap: anywhere; }
+.err b { color: var(--bad); font-weight: 600; }
+.ran { margin: 0; padding: 6px 12px; font: 0.74rem/1.45 var(--f-code); color: var(--muted); background: var(--surface-2); border-bottom: 1px solid var(--line); white-space: pre-wrap; }
+.empty { padding: 12px; color: var(--muted); font-size: 0.86rem; }
+
+/* IDE */
+.extabs { display: flex; gap: 2px; padding: 6px 6px 0; overflow-x: auto; border-bottom: 1px solid var(--line); scrollbar-width: thin; flex: 0 0 auto; }
+.extab { flex: 0 0 auto; border: 1px solid transparent; border-bottom: 0; background: transparent; padding: 6px 10px; border-radius: 5px 5px 0 0; font: 500 0.82rem var(--f-label); color: var(--muted); cursor: pointer; white-space: nowrap; }
+.extab:hover { color: var(--ink); }
+.extab[aria-selected="true"] { background: var(--surface-2); border-color: var(--line); border-top: 3px solid var(--brand-orange); color: var(--ink); font-weight: 600; margin-bottom: -1px; }
+.extab.mine { margin-left: auto; }
+.ide { flex: 1 1 auto; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; }
+textarea { width: 100%; resize: none; background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 10px 12px; font-size: 0.86rem; line-height: 1.55; tab-size: 4; }
+#sql { height: 100%; min-height: 180px; }
+.idebar { display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+.idebar label { display: grid; gap: 2px; flex: 1 1 220px; min-width: 0; }
+.idebar label span { font: 600 0.7rem var(--f-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.kbd { font: 0.72rem var(--f-code); color: var(--muted); }
+
+/* schema box */
+.stabs { display: flex; flex-wrap: wrap; gap: 2px; padding: 5px 6px; border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+.stab { border: 0; background: transparent; padding: 4px 9px; border-radius: 4px; font: 600 0.8rem var(--f-label); color: var(--muted); cursor: pointer; }
+.stab:hover { color: var(--ink); }
+.stab[aria-selected="true"] { background: var(--primary); color: var(--on-primary); }
+.spanel { padding: 10px 12px; display: grid; gap: 10px; align-content: start; }
+.tbls { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.tbl { border: 1px solid var(--line); border-radius: 5px; padding: 7px 9px; min-width: 0; }
+.tbl h3 { margin: 0 0 4px; font: 600 0.86rem var(--f-code); }
+.tbl ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 0.8rem; }
+.tbl li { overflow-wrap: anywhere; }
+.ty, .ref { color: var(--muted); font: 0.74rem var(--f-code); }
+.muted { color: var(--muted); font-size: 0.8rem; margin: 0; }
+h4 { margin: 0; font: 600 0.72rem var(--f-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.fn { border: 1px solid var(--line); border-radius: 5px; padding: 7px 9px; display: grid; gap: 4px; font-size: 0.8rem; }
+.fn h3 { margin: 0; font: 600 0.82rem var(--f-code); overflow-wrap: anywhere; }
+.fn pre, .log pre, .setup pre { margin: 0; background: var(--code-bg); padding: 6px 8px; border-radius: 4px; font-size: 0.72rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.fn summary, .setup summary { cursor: pointer; color: var(--muted); font-size: 0.76rem; }
+.good { color: var(--good); } .bad { color: var(--bad); }
+.storagehead { display: flex; gap: 8px; align-items: center; }
+.storagehead select { background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; font-size: 0.8rem; }
+/* the compact footer of the website */
+.pg-foot { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
+.pg-foot a { color: var(--link); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body class="__BODY_CLASS__">
+<!--__SITE_HEADER__-->
+<div class="app">
+  <div class="top">
+    <h1>DEP SQL Playground</h1>
+    <span class="spacer"></span>
+    <span class="kbd" id="ver"></span>
+    <span class="kbd" id="status" role="status">Starting the database...</span>
+    <a class="btn ghost" id="guide" href="__GUIDE_URL__">Guide</a>
+    <button class="btn ghost" id="reset" type="button">Reset</button>
+  </div>
+
+  <main class="main" id="main">
+    <section class="box pane" id="pane-plain" aria-label="Regular SQL">
+      <div class="phead"><h2>Regular SQL</h2><code class="sub">sql.js · clinic.db</code><span class="sum" id="sum-plain"></span></div>
+      <div class="body" id="out-plain"></div>
+    </section>
+    <section class="box pane" id="pane-masked" aria-label="DEP masked read path">
+      <div class="phead"><h2>DEP · masked read path</h2><code class="sub" id="who-masked">admin@clinic:analytics</code><span class="txn" id="txn-masked" hidden></span><span class="sum" id="sum-masked"></span></div>
+      <div class="body" id="out-masked"></div>
+    </section>
+    <section class="box pane" id="pane-op" aria-label="DEP operational path">
+      <div class="phead"><h2>DEP · operational path</h2><code class="sub" id="who-op">admin@clinic:operational</code><span class="txn" id="txn-op" hidden></span><span class="sum" id="sum-op"></span></div>
+      <div class="body" id="out-op"></div>
+    </section>
+
+    <section class="box" id="ide" aria-label="SQL editor">
+      <div class="extabs" role="tablist" id="extabs"></div>
+      <div class="ide">
+        <textarea id="sql" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL"></textarea>
+        <div class="idebar">
+          <span class="kbd">Ctrl+Enter</span>
+          <button class="btn" id="run" type="button">Run</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="box" id="schema" aria-label="Schema">
+      <div class="stabs" role="tablist">
+        <button class="stab" role="tab" aria-selected="true" data-p="sp-schema">Tables</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-catalog">Functions</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-access">Access</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-audit">Audit</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-storage">Storage</button>
+      </div>
+      <div class="body">
+        <div class="spanel" id="sp-schema"></div>
+        <div class="spanel" id="sp-catalog" hidden></div>
+        <div class="spanel" id="sp-access" hidden></div>
+        <div class="spanel" id="sp-audit" hidden></div>
+        <div class="spanel" id="sp-storage" hidden>
+          <div class="storagehead"><select id="storageTable" aria-label="Table"></select></div>
+          <div id="storageView"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- sql.js 1.12.0
+__SQLJS_LICENSE__
+-->
+<script src="sql-wasm.js"></script>
+<script src="depsql.js"></script>
+<script>
+/*__CLINIC__*/
+</script>
+<script>
+/*__UI__*/
+</script>
+<!--__SITE_FOOTER__-->
+</body>
+</html>
