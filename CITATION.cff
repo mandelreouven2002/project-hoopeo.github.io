@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use, discuss, or build on DEP, please cite it as below."
+title: "Project Hoopeo: Database-Enforced Privacy (DEP)"
+abstract: >-
+  A design for a database server in which privacy is part of the type system,
+  the query semantics, and the execution engine. Protected values can be used
+  for matching one value at a time but are never returned by ordinary queries;
+  linking whole datasets and disclosing values are allowed only in functions
+  declared LINKS and DISCLOSES, so every such place is reviewable and listed
+  in the catalog.
+type: software
+authors:
+  - given-names: Reuven
+    family-names: "Mandelovich"
+version: "0.5.2"
+date-released: "2026-10-23"
+license:
+  - CC-BY-4.0
+  - Apache-2.0
+repository-code: "https://github.com/mandelreouven2002/project-hoopeo.github.io"
+url: "https://lp.reuven.click"
+# doi: "10.5281/zenodo.XXXXXXX"   # add after the first Zenodo release
+keywords:
+  - privacy
+  - privacy as code
+  - databases
+  - access control
+  - SQL
+  - data protection
+preferred-citation:
+  type: report
+  title: "DEP: Database-Enforced Privacy. A Design Proposal"
+  authors:
+    - given-names: Reuven
+      family-names: "Mandelovich"
+  year: 2026
+  month: 10
+  version: "1.0"
+  # doi: "10.5281/zenodo.XXXXXXX"   # add after the first Zenodo release
+  url: "https://github.com/mandelreouven2002/project-hoopeo.github.io"

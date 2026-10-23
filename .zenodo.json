@@ -1,0 +1,23 @@
+{
+  "title": "DEP: Database-Enforced Privacy. A Design Proposal",
+  "upload_type": "publication",
+  "publication_type": "technicalnote",
+  "description": "A design for a database server in which privacy is part of the type system, the query semantics, and the execution engine. Protected values can be used for matching one value at a time but are never returned by ordinary queries; linking whole datasets and disclosing values are allowed only in functions declared LINKS and DISCLOSES, so every such place is reviewable and listed in the catalog. Includes a privacy-first development method in which the privacy policy, the schema, and the tests are the same artifact.",
+  "creators": [
+    {
+      "name": "Mandelovich, Reuven"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": [
+    "privacy",
+    "privacy as code",
+    "databases",
+    "access control",
+    "SQL",
+    "data protection"
+  ],
+  "language": "eng",
+  "version": "1.0"
+}

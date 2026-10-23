@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+*.log
+dist/
+# build outputs: the website (site/build.py) and the playground (playground/build.py)
+/site/_site/
+/playground/site/
+/playground/dep-sql-playground.html
+__pycache__/
