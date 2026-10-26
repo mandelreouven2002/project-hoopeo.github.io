@@ -54,7 +54,7 @@ A size is a number with an optional unit: `1048576`, `512MB`, `4GB`, `2GiB`. A m
 
 In a container, the default memory and cache sizes follow the container's memory limit, not the host's.
 
-## Behaviour to know
+## Behavior to know
 
 - `--init` runs only when the database is new. A server with a data directory runs the scripts the first time and skips them when it starts again on the same directory. A server with no `--data-dir` is new at every start, so it always runs them.
 - `--admin-password` is applied at every start, so it can also reset a forgotten password.

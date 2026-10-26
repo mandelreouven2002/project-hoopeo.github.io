@@ -40,6 +40,8 @@ When standard input is not a terminal, the shell runs it as a script. History is
 
 The prompt names the role and the endpoint: `reception_app@operational=>`. Inside a transaction it is `=*>`, and after an error that needs `ROLLBACK` it is `=!>`. A statement that continues on another line shows `->`. Statements end with a semicolon.
 
+![DEP CLI: a transaction with a savepoint, and the prompts of an open and a failed transaction](../images/terminal/cli-transaction.png)
+
 ## Meta-commands
 
 A meta-command starts with a backslash, on a line of its own.

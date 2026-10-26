@@ -2,6 +2,8 @@
 
 A **DEP note** is a sentence that says which DEP rule applied to a statement. Plain SQL produces none, so a note is a signal that DEP did something. Notes never contain a protected value.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/studio/studio-lookup-dark.png"><img src="../images/studio/studio-lookup.png" alt="DEP notes in the Output pane of Hoopeo Studio"></picture>
+
 How a client receives them:
 
 | Client | How |
@@ -17,13 +19,13 @@ In the texts below, `{x}` stands for a name filled in by the engine: `{col}` is 
 
 | Note | When |
 |---|---|
-| `PROTECTED column {col} is matched by equality through the blind index of MATCH DOMAIN {domain}.` | A protected column is compared with a value: `=`, `OR`, `CASE`, `NOT (col = v)`; also in `UPDATE` and `DELETE` |
+| `PROTECTED column {col} is matched by equality through the blind index of MATCH DOMAIN {domain}.` | A [protected column](glossary.md#protected-column) is compared with a value ([matching](glossary.md#matching)): `=`, `OR`, `CASE`, `NOT (col = v)`; also in `UPDATE` and `DELETE` |
 | `PROTECTED column {col} is matched against a list of values through the blind index of MATCH DOMAIN {domain}.` | `IN` or `NOT IN` with a list |
-| `Join of PROTECTED columns {col} and {col} (MATCH DOMAIN {domain}) is anchored to a single protected value.` | A join between two protected columns that the query anchors to one value |
+| `Join of PROTECTED columns {col} and {col} (MATCH DOMAIN {domain}) is anchored to a single protected value.` | A join between two protected columns that the query [anchors](glossary.md#anchor) to one value |
 | `Output column {name} is PROTECTED column {col} (MATCH DOMAIN {domain}) and is returned as NULL.` | A protected column is selected |
-| `Output column {name} is disclosed: {description} (DISCLOSES {domain}).` | A column produced by `REVEAL` in a disclosing function is returned |
+| `Output column {name} is disclosed: {description} (DISCLOSES {domain}).` | A column produced by [`REVEAL`](glossary.md#reveal) in a [disclosing function](glossary.md#disclosure) is returned |
 | `{fn}() is declared DISCLOSES {domains}: the columns it declares are returned in plaintext.` | A function declared `DISCLOSES` is called |
-| `{fn}() is declared LINKS {domains}: it may join protected values without an anchor.` | A function declared `LINKS` is called |
+| `{fn}() is declared LINKS {domains}: it may join protected values without an anchor.` | A function declared for [linking](glossary.md#linking) (`LINKS`) is called |
 
 ## Writes and schema
 

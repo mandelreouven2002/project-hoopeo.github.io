@@ -1,12 +1,14 @@
 # Concepts
 
-DEP stands for Database-Enforced Privacy. Its principle is that the ability to *use* a value for an operation does not require the ability to *read* it. This guide defines the terms the rest of the documentation uses, with a short example of each from the demo clinic (`examples/clinic.sql`). The full argument is in the [design proposal](../design/01-dep-concept.md); the language is in the [DEP SQL guide](dep-sql.md).
+New to DEP? Start with [DEP SQL in five minutes](overview.md). DEP stands for Database-Enforced Privacy. Its principle is that the ability to *use* a value for an operation does not require the ability to *read* it. This guide defines the terms the rest of the documentation uses, with a short example of each from the demo clinic (`examples/clinic.sql`). The full argument is in the [design proposal](../design/01-dep-concept.md); the language is in the [DEP SQL guide](dep-sql.md).
 
 DEP Engine is an experimental concept. It shows that the model can be built and where its trust boundary lies, and it is not a production database.
 
 ## Protected columns
 
 A column declared `PROTECTED` can be used by the database to find a record, update it and connect it to related records, but an ordinary query never returns its value. The type of the column does not change: `national_id` is still `TEXT`.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/statement-path-dark.png"><img src="../images/diagrams/statement-path.png" alt="Every statement passes the DEP analyzer before it is planned; a statement that breaks a rule is refused there" width="1000"></picture>
 
 ```text
 admin@operational=> SELECT patient_id, full_name, national_id, phone FROM patients WHERE patient_id = 2;
@@ -60,6 +62,8 @@ The serial looks like an ID number but belongs to another domain, so the join is
 
 A protected value is stored twice, and never as plaintext. An **index entry** is a keyed hash (HMAC-SHA256 under the domain's key) used for all matching. A **ciphertext** (XChaCha20-Poly1305) holds the value so that a disclosing function can release it later. `SHOW STORAGE` shows what the server holds. It needs a superuser, and it never shows a value:
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/blind-index-dark.png"><img src="../images/diagrams/blind-index.png" alt="A protected value is stored as an index entry and a ciphertext, and matched by computing the same index entry" width="1000"></picture>
+
 ```text
 admin@operational=> CREATE TABLE secrets (id BIGINT PRIMARY KEY, token TEXT PROTECTED MATCH DOMAIN token_domain);
 CREATE TABLE
@@ -80,6 +84,8 @@ The stored form of `token` is an `ie1:` index entry and a `ct1:` ciphertext, sid
 ## Endpoints and access paths
 
 A connection has an **access path**, fixed when it logs in, which sets the most it may do with protected values. An **endpoint** is the database name a client connects to, bound to one path.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/access-paths-dark.png"><img src="../images/diagrams/access-paths.png" alt="One statement on a regular database, on the masked read path and on the operational path, with what each path allows" width="1000"></picture>
 
 | Path | For | May |
 |---|---|---|
@@ -122,6 +128,8 @@ DEP separates four decisions that most databases fold into one `SELECT` privileg
 
 Matching must be **anchored**: tied to a value the client sent, by an equality at the top level of the query. A lookup is anchored by its own filter, and a join between two protected columns is anchored when the query also filters one of them to a value.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/anchoring-dark.png"><img src="../images/diagrams/anchoring.png" alt="An anchored join is allowed, an unanchored one is refused, and a LINKS function may join without an anchor" width="1000"></picture>
+
 ```text
 doctors_app@operational=> SELECT p.full_name, m.diagnosis FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id WHERE p.national_id = '123456782';
 DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
@@ -142,7 +150,9 @@ The second statement would connect every patient to every diagnosis, so it is re
 
 ## Declared functions
 
-When an organisation does need to link datasets or release a value, it says so in the schema. A **declared function** has a signature that states what it may do:
+When an organization does need to link datasets or release a value, it says so in the schema. A **declared function** has a signature that states what it may do:
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/declared-functions-dark.png"><img src="../images/diagrams/declared-functions.png" alt="DISCLOSES and LINKS functions, REVEAL, and the terminal rule for disclosed values" width="1000"></picture>
 
 - `DISCLOSES d` allows `REVEAL` on values of domain `d`, the only place `REVEAL` is legal;
 - `LINKS d` allows unanchored matching of domain `d` inside its body;

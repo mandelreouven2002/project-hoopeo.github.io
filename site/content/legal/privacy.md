@@ -12,11 +12,11 @@ This site collects no personal data. This notice says what that means in practic
 
 ## The software
 
-DEP Engine, DEP CLI and Hoopeo Studio run on your own machine, or on a server that you run. They send nothing to the project: they have no telemetry, no update check and no licence check. The only link to the outside is a Help menu item in Hoopeo Studio that opens lp.reuven.click in your browser when you choose it. The data you put in them stays where you put it.
+DEP Engine, DEP CLI and Hoopeo Studio run on your own machine, or on a server that you run. They send nothing to the project: they have no telemetry, no update check and no license check. The only link to the outside is a Help menu item in Hoopeo Studio that opens lp.reuven.click in your browser when you choose it. The data you put in them stays where you put it.
 
 Hoopeo Studio keeps the connection profiles you save (without passwords) and its local databases on your computer. DEP CLI keeps its command history in a file on your computer.
 
-Because the software is experimental, it must be used with invented data only. See the [terms of use](terms.md).
+The software is experimental. See the [terms of use](terms.md).
 
 ## Contact
 

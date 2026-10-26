@@ -23,4 +23,4 @@ You will receive an acknowledgment within a few days. Reporters are credited in 
 
 ## Scope
 
-Reports about the design are in scope, and so are reports about the implementations: DEP Engine, DEP CLI, Hoopeo Studio (distributed as binaries) and DEP.js (open source). DEP Engine is an experimental concept that demonstrates the model and its trust boundary; it is not a production database, and it should not be used with real personal data. Design-level bypasses are especially valuable while the rules can still change.
+Reports about the design are in scope, and so are reports about the implementations: DEP Engine, DEP CLI, Hoopeo Studio (distributed as binaries) and DEP.js (open source). DEP Engine is an experimental concept that demonstrates the model and its trust boundary (see the [terms of use](site/content/legal/terms.md)). Design-level bypasses are especially valuable while the rules can still change.

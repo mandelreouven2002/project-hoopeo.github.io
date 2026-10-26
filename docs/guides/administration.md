@@ -1,6 +1,8 @@
 # Administration
 
-This guide is for the person who runs DEP Engine as a server for other people or programs: configuration, TLS, the data directory and its key, resources, the audit log, key rotation, upgrades and metrics. DEP Engine is experimental software. Everything here is guidance for evaluation and testing, not a recipe for protecting real personal data. Use invented data only.
+This guide is for the person who runs DEP Engine as a server for other people or programs: configuration, TLS, the data directory and its key, resources, the audit log, key rotation, upgrades and metrics. 
+
+<p class="muted"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="../../site/content/legal/terms.md">terms of use</a>.</p>
 
 ## Running the server
 
@@ -72,6 +74,8 @@ Keep the private key readable only by the server's user. The packages do this fo
 
 The data directory holds the database (`data.redb`), the audit log (`audit.redb`), a lock file and, with `--tls-self-signed`, the certificate. The **master key** (`master.key`) is the secret from which every protected value's index key and encryption key derive. Without it the protected values cannot be read or matched, and with it anyone with the data can read them.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/keys-dark.png"><img src="../images/diagrams/keys.png" alt="The master key and the keys derived from it for each match domain" width="1000"></picture>
+
 - By default the key is in the data directory. **Keep it apart:** `--key-file /etc/dep-engine/master.key` on another volume, with its own permissions and its own backup. A stolen backup of the data alone then holds only ciphertext and index entries.
 - Neither file is useful without the other, so back up both, and test the restore.
 - Back up while the server is stopped, or from a filesystem snapshot. Copying `data.redb` while the server writes can produce a file that does not open.
@@ -111,6 +115,8 @@ A lookup on a protected column answers the question "is this value here?", and a
 ## The audit log
 
 The audit log is `audit.redb`, written with group commit: a statement returns only after its records are on disk. It records:
+
+![The audit log in Hoopeo Studio](../images/studio/studio-audit.png)
 
 | `kind` | When |
 |---|---|
@@ -226,7 +232,7 @@ dep_full_scans_total 0
 
 Experimental software calls for caution, so treat this as the minimum for a shared evaluation server, and not as a statement that anything is production-ready.
 
-1. Invented data only. The Evaluation License forbids real personal data.
+1. Remember that the project is experimental: read the [terms of use](../../site/content/legal/terms.md).
 2. TLS on, and `--tls-required` if clients are remote.
 3. A strong admin password, and one role per application.
 4. The master key on a separate volume, with its own permissions.

@@ -4,18 +4,18 @@ These terms apply to this website and to the software of Project Hoopeo that you
 
 ## What the project is
 
-Project Hoopeo is an experimental concept. It demonstrates Database-Enforced Privacy (DEP), and it has not been audited, certified or tested for use with real data. It is not for production use.
+Project Hoopeo is an experimental and conceptual project. It demonstrates Database-Enforced Privacy (DEP). It has not been audited or certified, and it is not for production use.
 
-- **Invented data only.** Do not put real personal data, or any data you are not free to lose or expose, into DEP Engine, DEP CLI, Hoopeo Studio or the playground.
+- **Your data is your responsibility.** You decide what data you put into DEP Engine, DEP CLI, Hoopeo Studio or the playground, and you are responsible for it, including under any data-protection law that applies to you. The author takes no responsibility for any data stored in, processed by, disclosed by or lost from the software.
 - **No promise of protection.** The software is meant to show how privacy rules can be enforced by a database. It does not promise that any data is protected, that it is free of defects, or that it is fit for any purpose.
 - **Not legal or compliance advice.** Nothing on this site is a claim that the software, or any way of using it, complies with any law or regulation.
 
 ## The software
 
-- **The binaries** of DEP Engine, DEP CLI and Hoopeo Studio are licensed under the [Project Hoopeo Evaluation License](../../../LICENSES/LicenseRef-Hoopeo-Evaluation.txt): evaluation, research, teaching and non-production testing. Production and commercial use is available under a commercial licence. See [Licensing](../../../LICENSING.md).
-- **The open layers**, DEP.js, the playground and the examples under the Apache License 2.0, and the specification and documentation under CC BY 4.0, are under their own licences, which give you more rights.
+- **The binaries** of DEP Engine, DEP CLI and Hoopeo Studio are licensed under the [Project Hoopeo Evaluation License](../../../LICENSES/LicenseRef-Hoopeo-Evaluation.txt): evaluation, research, teaching and non-production testing. Production and commercial use is available under a commercial license. See [Licensing](../../../LICENSING.md).
+- **The open layers**, DEP.js, the playground and the examples under the Apache License 2.0, and the specification and documentation under CC BY 4.0, are under their own licenses, which give you more rights.
 - **The names and logos** are not licensed. See [Names and logos](../../../BRAND.md).
-- **Third-party libraries** keep their own licences, listed in [Licensing](../../../LICENSING.md#third-party-libraries).
+- **Third-party libraries** keep their own licenses, listed in [Licensing](../../../LICENSING.md#third-party-libraries).
 
 ## No warranty, no liability
 

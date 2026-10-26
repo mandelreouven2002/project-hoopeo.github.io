@@ -1,6 +1,6 @@
 # Using the playground
 
-The DEP SQL Playground runs Database-Enforced Privacy (DEP) in your browser. You write DEP SQL against a small clinic, and you see the same statement run three times, side by side: in a regular database, on DEP's masked read path, and on DEP's operational path. Nothing is installed and nothing is sent anywhere: the page runs entirely in your browser.
+The DEP SQL Playground runs Database-Enforced Privacy (DEP) in your browser. New to DEP? Read [DEP SQL in five minutes](../../docs/guides/overview.md) first. You write DEP SQL against a small clinic, and you see the same statement run three times, side by side: in a regular database, on DEP's masked read path, and on DEP's operational path. Nothing is installed and nothing is sent anywhere: the page runs entirely in your browser.
 
 [Open the playground](../../playground/). The page is also available as a [single HTML file](../../playground/dep-sql-playground.html) that works offline.
 
@@ -9,6 +9,8 @@ The DEP SQL Playground runs Database-Enforced Privacy (DEP) in your browser. You
 ## The page
 
 The page has three areas.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/images/playground/playground-lookup-dark.png"><img src="../../docs/images/playground/playground-lookup.png" alt="The playground after running Lookup by ID: the regular pane answers with the ID number, the masked pane refuses, the operational pane returns NULL"></picture>
 
 **Left: three result panes.** Every statement you run appears in all three, with its DEP notes.
 
@@ -42,6 +44,10 @@ A pane shows when its connection is inside a transaction, or in a failed one.
 
 **Bottom right: the schema**, as the operational connection sees it. **Tables** shows each table with its row count, keys and indexes. **Functions** lists the declared functions. **Access** shows roles, endpoints and grants. **Audit** is the audit log. **Storage** shows a table as the DEP server keeps it: index entries and ciphertexts, never the values.
 
+![The Audit tab of the schema area, after a few lookups: each protected match and each refusal, without values](../../docs/images/playground/playground-audit.png)
+
+![The Storage tab: the table as the DEP server keeps it, with index entries and ciphertexts](../../docs/images/playground/playground-storage.png)
+
 The two DEP panes are two connections to one DEP server, so a transaction open in one is isolated from the other. **Reset** rebuilds both databases from the setup script and clears the panes. Your own code tab is kept.
 
 ## Notes and errors
@@ -49,6 +55,10 @@ The two DEP panes are two connections to one DEP server, so a transaction open i
 Each DEP result carries its **DEP notes**, in the pane below the statement: one sentence for each rule that applied, such as "PROTECTED column patients.national_id is matched by equality through the blind index". Plain SQL gets none. A refused statement shows the same error DEP Engine would give: a message, a hint, and a SQLSTATE with a DEP code such as `ZD107` (`DEP_UNANCHORED_MATCH`). The [error reference](../../docs/reference/errors.md) lists them all.
 
 Try this: run **Lookup by ID**, then **Join all**, then **Join disclosed**. The first is matched and returned as NULL, the second is refused because nothing anchors it to a single value, and the third is refused because a disclosed value can be returned and nothing else. [Concepts](../../docs/guides/concepts.md) explains why.
+
+![Join all: the regular pane answers, and both DEP panes refuse the join](../../docs/images/playground/playground-unanchored.png)
+
+![Disclosing: the disclosed column on the operational pane](../../docs/images/playground/playground-disclosing.png)
 
 ## What DEP.js is
 

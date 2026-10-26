@@ -78,6 +78,8 @@ The second insert reuses an ID number, and the unique constraint refuses it with
 
 `SAVEPOINT name`, `ROLLBACK TO SAVEPOINT name` and `RELEASE SAVEPOINT name` work as in PostgreSQL. Rolling back to a savepoint also ends the aborted state.
 
+![A transaction with a savepoint in DEP CLI, and the prompts of an open and a failed transaction](../images/terminal/cli-transaction.png)
+
 ```text
 admin@operational=> BEGIN;
 BEGIN
@@ -241,6 +243,8 @@ SQLSTATE:  23503
 
 The engine keeps an index for every primary key, unique key, reference and protected column. On a protected column the key is the blind index entry, so a lookup never needs a plaintext value. `CREATE [UNIQUE] INDEX` adds more, and `DROP INDEX` removes only those you made.
 
+![The indexes of patients, and EXPLAIN reading two keys of the blind index](../images/terminal/cli-explain.png)
+
 ```text
 admin@operational=> CREATE INDEX appointments_by_type ON appointments (visit_type);
 CREATE INDEX
@@ -283,6 +287,8 @@ CREATE INDEX
 ## EXPLAIN
 
 `EXPLAIN` shows the plan after the DEP rewrite, and below it a `Read:` section that says how each table is read: an index lookup, or every row. Reading by an index touches only the matching rows; reading every row is a scan.
+
+![Explain Plan in Hoopeo Studio](../images/studio/studio-explain.png)
 
 ```text
 admin@operational=> EXPLAIN SELECT * FROM appointments WHERE appointment_id = 101;

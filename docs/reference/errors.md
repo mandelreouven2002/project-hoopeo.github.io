@@ -2,27 +2,29 @@
 
 A DEP error is an ordinary PostgreSQL error with a SQLSTATE in class `ZD`, a message, and a hint. DEP CLI and Hoopeo Studio print the DEP code beside the SQLSTATE, as in `SQLSTATE: ZD107 (DEP_UNANCHORED_MATCH)`. Over the PostgreSQL protocol only the SQLSTATE travels, so a program branches on `ZD107`; the HTTP API also returns the code. Errors that DataFusion or PostgreSQL would also raise keep their usual SQLSTATEs, listed in the second table.
 
+![A DEP error in Hoopeo Studio: the message, the code and the hint](../images/studio/studio-refused.png)
+
 A **policy rejection** depends only on the statement, the access path, the role and the schema, and happens before any row is read. An **execution failure** happens while an allowed statement runs and may depend on the data (a constraint, for example). An error message never contains a protected value or the value of a bound parameter.
 
 ## DEP errors
 
 | SQLSTATE | Code | Raised when |
 |---|---|---|
-| `ZD001` | `DEP_REVEAL_OUTSIDE_DISCLOSURE` | `REVEAL` is used outside a function that declares `DISCLOSES` for the column's match domain |
-| `ZD002` | `DEP_DECLARATION_PRIVILEGE` | A role declares `DISCLOSES` or `LINKS` for a domain without `GRANT DISCLOSE` or `GRANT LINK`, or `DISCLOSE` or `LINK` is granted to `PUBLIC` |
-| `ZD003` | `DEP_DECLARED_LANGUAGE` | A declared function is not `LANGUAGE sql` |
+| `ZD001` | `DEP_REVEAL_OUTSIDE_DISCLOSURE` | [`REVEAL`](glossary.md#reveal) is used outside a function that declares `DISCLOSES` for the column's [match domain](glossary.md#match-domain) |
+| `ZD002` | `DEP_DECLARATION_PRIVILEGE` | A role declares a [`DISCLOSES` or `LINKS` function](glossary.md#declared-function) for a domain without `GRANT DISCLOSE` or `GRANT LINK`, or `DISCLOSE` or `LINK` is granted to `PUBLIC` |
+| `ZD003` | `DEP_DECLARED_LANGUAGE` | A [declared function](glossary.md#declared-function) is not `LANGUAGE sql` |
 | `ZD004` | `DEP_DECLARED_CALL` | A declared function calls another declared function that is not declared for the same purpose and domain |
 | `ZD005` | `DEP_PUBLIC_EXECUTE` | `EXECUTE` on a function declared `DISCLOSES` or `LINKS` is granted to `PUBLIC` |
-| `ZD006` | `DEP_REFERENCE_MISMATCH` | A reference joins a protected column and an ordinary one |
-| `ZD101` | `DEP_PROTECTED_OPERATION` | An operation other than full-value equality is applied to a protected value |
-| `ZD102` | `DEP_ENDPOINT_OPERATION` | The operation is not allowed on the connection's access path (matching, writing, schema changes, or disclosing on `MASKED_READ`) |
-| `ZD103` | `DEP_MATCH_DOMAIN_MISMATCH` | Two protected columns of different match domains are compared or referenced |
-| `ZD104` | `DEP_DISCLOSED_VALUE_USE` | A disclosed value is used for anything but being returned |
+| `ZD006` | `DEP_REFERENCE_MISMATCH` | A reference joins a [protected column](glossary.md#protected-column) and an ordinary one |
+| `ZD101` | `DEP_PROTECTED_OPERATION` | An operation other than full-value equality is applied to a [protected value](glossary.md#protected-column) |
+| `ZD102` | `DEP_ENDPOINT_OPERATION` | The operation is not allowed on the connection's [access path](glossary.md#access-path): matching, writing, schema changes, or disclosing on the [`MASKED_READ`](glossary.md#masked-read-path) path |
+| `ZD103` | `DEP_MATCH_DOMAIN_MISMATCH` | Two protected columns of different [match domains](glossary.md#match-domain) are compared or referenced |
+| `ZD104` | `DEP_DISCLOSED_VALUE_USE` | A disclosed value is used for anything but being returned: the [terminal rule](glossary.md#terminal-rule) |
 | `ZD105` | `DEP_UNQUALIFIED_ACCESS` | Reserved. Defined by the design, and not raised by DEP Engine 0.5 |
-| `ZD106` | `DEP_PATH_IMMUTABLE` | A connection tries to change its access path |
-| `ZD107` | `DEP_UNANCHORED_MATCH` | A match of protected values is not anchored to a single value, outside a `LINKS` function |
-| `ZD108` | `DEP_UNSUPPORTED_FORM` | A form DEP cannot analyse, rejected rather than run with uncertain protection |
-| `ZD109` | `DEP_MATCH_RATE_LIMITED` | A role went over its match limit |
+| `ZD106` | `DEP_PATH_IMMUTABLE` | A connection tries to change its [access path](glossary.md#access-path) |
+| `ZD107` | `DEP_UNANCHORED_MATCH` | A match of protected values is not [anchored](glossary.md#anchor) to a single value, outside a function declared for [linking](glossary.md#linking) (`LINKS`) |
+| `ZD108` | `DEP_UNSUPPORTED_FORM` | A form DEP cannot analyze, rejected rather than run with uncertain protection |
+| `ZD109` | `DEP_MATCH_RATE_LIMITED` | A role went over its [match limit](glossary.md#match-limit) |
 | `ZD901` | | An internal code with no SQLSTATE of its own. DEP Engine does not raise it |
 
 ### Examples

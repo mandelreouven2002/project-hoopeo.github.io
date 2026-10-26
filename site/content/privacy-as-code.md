@@ -14,6 +14,8 @@ The tools usually called Privacy as Code work around this. A policy-evaluation s
 
 DEP moves the enforcement to the one component every query passes through. The policy is part of the schema and of the query plan, so every client is bound by it, from its first statement.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/images/diagrams/statement-path-dark.png"><img src="../../docs/images/diagrams/statement-path.png" alt="Every statement passes the DEP analyzer before it is planned; a statement that breaks a rule is refused there" width="1000"></picture>
+
 A column is declared protected, with a match domain that says what kind of value it holds:
 
 ```sql
@@ -32,6 +34,10 @@ This works alongside the tools above, and does not replace them. A data taxonomy
 
 DEP separates four decisions that most databases fold into a single privilege.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/images/diagrams/access-paths-dark.png"><img src="../../docs/images/diagrams/access-paths.png" alt="One statement on a regular database, on the masked read path and on the operational path, with what each path allows" width="1000"></picture>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/images/diagrams/declared-functions-dark.png"><img src="../../docs/images/diagrams/declared-functions.png" alt="DISCLOSES and LINKS functions, REVEAL, and the terminal rule for disclosed values" width="1000"></picture>
+
 | Decision | What it means | In DEP |
 |---|---|---|
 | Matching | Using a protected value to find records | Allowed one value at a time on the operational path, to a role granted the column |
@@ -45,7 +51,7 @@ DEP separates four decisions that most databases fold into a single privilege.
 
 **Equality only.** The one operation on a protected value is full-value equality. Pattern matching, ordering, casts, substrings and functions are refused wherever they appear in a query, so a protected value cannot be probed through them.
 
-**Anchoring as data minimisation.** An application may match a value it was given: look a patient up, update her record, read her diagnoses. It may not connect every patient to every diagnosis. The first is an anchored match, tied to one value the client supplied. The second is linking, and it is refused unless a function was declared for it.
+**Anchoring as data minimization.** An application may match a value it was given: look a patient up, update her record, read her diagnoses. It may not connect every patient to every diagnosis. The first is an anchored match, tied to one value the client supplied. The second is linking, and it is refused unless a function was declared for it.
 
 ```text
 doctors_app@operational=> SELECT p.full_name, m.diagnosis FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id;
@@ -66,7 +72,7 @@ SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)
 
 Privacy by design asks that privacy be built into a system from the start. Four of its commonly cited principles correspond to something a database can enforce.
 
-- **Data minimisation.** Ordinary queries never return protected values, and a role holds only the columns, endpoint and functions it needs. Matching is tied to one value at a time.
+- **Data minimization.** Ordinary queries never return protected values, and a role holds only the columns, endpoint and functions it needs. Matching is tied to one value at a time.
 - **Purpose limitation.** Each release or linkage of data is a named function with a recorded purpose and an explicit list of the roles that may execute it.
 - **Privacy as the default.** A protected column is suppressed unless a declared function says otherwise. A role can connect only through the endpoints it was granted, so a consumer has the masked read path unless someone grants it the operational one, and a declared function is never executable by `PUBLIC`.
 - **Accountability.** The catalog lists every disclosure and linkage, and the audit log attributes every protected match to a role.
@@ -85,7 +91,7 @@ DEP is an experimental concept that demonstrates the model and the trust boundar
 - **Aggregates are not automatically anonymous.** Small groups and combinations of attributes can identify people.
 - **The server and its administrator are trusted.** DEP does not defend against a compromised operating system or an administrator who can read the server's memory.
 - **Side channels are not addressed.** Differences in timing between lookups that match and lookups that do not are out of scope, and a constraint violation on a protected column reveals whether a value exists.
-- **It is a demonstration.** DEP Engine shows that the model can be built. It is experimental software and must not be used with real personal data.
+- **It is a demonstration.** DEP Engine shows that the model can be built. It is experimental software, part of a conceptual project; see the [terms of use](legal/terms.md).
 
 The [design proposal](../../docs/design/01-dep-concept.md#18-guarantees-and-limits) states the guarantees precisely, under stated assumptions, and lists the known limitations of this version. The [roadmap](../../docs/design/02-roadmap-and-release.md) compares DEP with existing approaches, and says which ideas DEP borrows from them.
 

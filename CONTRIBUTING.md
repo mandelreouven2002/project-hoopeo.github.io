@@ -28,11 +28,11 @@ Be specific: a schema, a query, and what you expect is worth more than a general
 
 ## Credit
 
-Contributors whose feedback changes the design are acknowledged in the document's acknowledgements and in the release notes.
+Contributors whose feedback changes the design are acknowledged in the document's acknowledgments and in the release notes.
 
 ## Licensing of contributions
 
-Each directory keeps its licence (see [`LICENSING.md`](LICENSING.md)). A contribution is made under the licence of the directory it goes to, and there is no contributor licence agreement:
+Each directory keeps its license (see [`LICENSING.md`](LICENSING.md)). A contribution is made under the license of the directory it goes to, and there is no contributor license agreement:
 
 - text in `docs/` is contributed under CC BY 4.0;
 - code in `playground/`, `examples/` and `site/` is contributed under the Apache License 2.0.

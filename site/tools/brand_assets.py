@@ -7,7 +7,7 @@
 Reads the masters in branding/ and never changes them. Writes:
   * the logos and product icons as WebP with a PNG fallback, at the sizes the pages use (1x, 2x);
   * favicon.ico, icon-192.png, icon-512.png, apple-touch-icon.png and site.webmanifest, from the
-    application icon of Project Hoopeo (the mascot centred on a square, the same picture as
+    application icon of Project Hoopeo (the mascot centered on a square, the same picture as
     packaging/icons/project-hoopeo in the private repository);
   * social images: og-default.png (1200 x 630) and one per main section.
 """
@@ -22,7 +22,7 @@ SRC = ROOT / "branding"
 OUT = ROOT / "site" / "assets" / "brand"
 FONTS = ROOT / "site" / "assets" / "fonts"
 
-# The brand colours, sampled from the masters (see site/assets/css/tokens.css)
+# The brand colors, sampled from the masters (see site/assets/css/tokens.css)
 BG_LIGHT = (244, 247, 251)
 NAVY = (1, 26, 62)
 BLUE = (3, 112, 222)

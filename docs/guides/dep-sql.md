@@ -1,6 +1,6 @@
 # DEP SQL
 
-DEP SQL is SQL with a small number of additions. It runs on Apache DataFusion, so most of ordinary SQL works as it does there: `SELECT` with joins, subqueries, CTEs, aggregates and window functions, and `INSERT`, `UPDATE` and `DELETE`. This guide covers what DEP adds and restricts, with the syntax, the rule, an example, and the error each rule raises. Every example below was run against DEP Engine 0.5.2 on the demo clinic (`examples/clinic.sql`), and the output is real. Rows come back in no guaranteed order unless the statement has `ORDER BY`.
+New to DEP SQL? [DEP SQL in five minutes](overview.md) explains what the language is, with one example. DEP SQL is SQL with a small number of additions. It runs on Apache DataFusion, so most of ordinary SQL works as it does there: `SELECT` with joins, subqueries, CTEs, aggregates and window functions, and `INSERT`, `UPDATE` and `DELETE`. This guide covers what DEP adds and restricts, with the syntax, the rule, an example, and the error each rule raises. Every example below was run against DEP Engine 0.5.2 on the demo clinic (`examples/clinic.sql`), and the output is real. Rows come back in no guaranteed order unless the statement has `ORDER BY`.
 
 A statement that breaks a rule fails with a **DEP error**: a message, a hint, and a `ZDnnn` SQLSTATE with a code such as `DEP_UNANCHORED_MATCH`. The [error reference](../reference/errors.md) lists them all. A rule that applies produces a **DEP note**; see the [notes reference](../reference/notes.md).
 
@@ -168,6 +168,8 @@ A comparison with a value of the wrong kind does not match and does not fail: `n
 
 Two protected columns in the same domain can be joined, if the join is **anchored**: the query also contains an equality between one of the columns and a single value, at the top level of the `WHERE` clause.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="../images/diagrams/anchoring-dark.png"><img src="../images/diagrams/anchoring.png" alt="An anchored join is allowed, an unanchored one is refused, and a LINKS function may join without an anchor" width="1000"></picture>
+
 ```text
 doctors_app@operational=> SELECT p.full_name, m.diagnosis
 FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id
@@ -218,6 +220,8 @@ The only way to run an unanchored match is inside a function declared `LINKS` fo
 ## What is refused
 
 Everything other than full-value equality is refused on a protected value, on every path, in any position of a query, with `ZD101` `DEP_PROTECTED_OPERATION`:
+
+![Hoopeo Studio refusing an unanchored join, with the error code and the hint](../images/studio/studio-refused.png)
 
 ```text
 admin@operational=> SELECT full_name FROM patients WHERE national_id LIKE '1234%';
@@ -270,7 +274,7 @@ SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
 
 `count(column)` and `count(*)` work: they count rows and read no value.
 
-DEP fails closed. A form the engine cannot analyse is rejected with `ZD108` `DEP_UNSUPPORTED_FORM` rather than run with uncertain protection.
+DEP fails closed. A form the engine cannot analyze is rejected with `ZD108` `DEP_UNSUPPORTED_FORM` rather than run with uncertain protection.
 
 A protected column read by `SELECT` comes back as `NULL`:
 
@@ -299,8 +303,8 @@ AS $$ SELECT ... $$;
 
 - **`DISCLOSES d`** lets the body call `REVEAL(column)` on a protected column of domain `d`. `REVEAL` is legal nowhere else. The values it returns are *disclosed values*.
 - **`LINKS d`** lets the body match columns of domain `d` without an anchor: joins, `GROUP BY` and `DISTINCT`.
-- A function with neither is an ordinary function. Its body is still analysed, and an anchored lookup works in it as anywhere else.
-- A function can declare both. It cannot be `LANGUAGE plpgsql`, because the engine must be able to analyse the body.
+- A function with neither is an ordinary function. Its body is still analyzed, and an anchored lookup works in it as anywhere else.
+- A function can declare both. It cannot be `LANGUAGE plpgsql`, because the engine must be able to analyze the body.
 
 Parameters are referred to by name in the body. The body of every declared function is checked when it is created, so an error in it appears at that moment.
 
@@ -387,6 +391,8 @@ A declared function runs with the privileges of its **owner**, checked at every 
 
 A disclosing function can be called on the operational path only. A linking function with no protected parameter can also be called on the masked read path, which is how dashboards get statistics without matching anything. A function is called in the `FROM` clause:
 
+![The result of monthly_fund_report in Hoopeo Studio, with the disclosed column](../images/studio/studio-function.png)
+
 ```text
 bi_dashboard@analytics=> SELECT * FROM diagnoses_per_fund() ORDER BY health_fund, diagnosis;
 DEP:  diagnoses_per_fund() is declared LINKS person_id: it may join protected values without an anchor.
@@ -441,6 +447,8 @@ CREATE ENDPOINT name MODE OPERATIONAL | MASKED_READ;
 GRANT privilege [, ...] ON object TO role [, ...];
 REVOKE privilege [, ...] ON object FROM role [, ...];
 ```
+
+![DEP CLI on the analytics endpoint: protected outputs are NULL, matching is refused, a LINKS function works](../images/terminal/cli-access-paths.png)
 
 | Privilege | On | Meaning |
 |---|---|---|
@@ -550,7 +558,7 @@ A statement over the limit fails with `ZD109` `DEP_MATCH_RATE_LIMITED` before it
 
 ## Not supported
 
-DEP Engine rejects, with `ZD108` or a PostgreSQL error, what it cannot analyse safely:
+DEP Engine rejects, with `ZD108` or a PostgreSQL error, what it cannot analyze safely:
 
 - `DEFAULT` values and `CHECK` constraints in `CREATE TABLE`;
 - `ALTER TABLE` (only `ALTER ROLE` and `ALTER SYSTEM ROTATE MASTER KEY` exist);

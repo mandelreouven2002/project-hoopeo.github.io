@@ -4,7 +4,7 @@
 
 Licensing and distribution. DEP Engine, DEP CLI and Hoopeo Studio are now distributed as binaries under the
 Project Hoopeo Evaluation License; DEP.js, the specification and the examples are unchanged. No changes to the
-behaviour of DEP Engine or DEP CLI.
+behavior of DEP Engine or DEP CLI.
 
 - The source of DEP Engine, DEP CLI and Hoopeo Studio is not published. The installers are published as
   GitHub Releases of the public repository, with `SHA256SUMS`, and the Docker image of DEP Engine as
