@@ -161,7 +161,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/download-artifact@v4
-        with: { path: in }
+        with:
+          path: in
+          # not the *.dockerbuild artifact that buildx leaves, which is not a zip
+          pattern: "{linux-*,macos,macos-signing,playground,notes}"
       - name: Collect the assets under stable names, and write SHA256SUMS
         run: |
           V="${{ needs.prepare.outputs.version }}"
