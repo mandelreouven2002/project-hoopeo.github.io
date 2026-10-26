@@ -2,14 +2,15 @@
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow">Database-Enforced Privacy (DEP)</p>
-      <h1>Privacy rules that the database enforces on every query</h1>
-      <p class="lede">DEP is a way of building a database so that the engine itself enforces privacy rules for every client. A protected value can be used to find and to join records, and an ordinary query never gets it back.</p>
+      <h1>SQL that uses personal data without handing it out</h1>
+      <p class="lede">DEP SQL is SQL with the privacy rules in the schema. Mark a column <code>PROTECTED</code>, and applications can still find, check and connect records with it, but no query gets the value back. The few exceptions are named functions, granted and audited. DEP Engine, the database server, enforces it for every client.</p>
+      <pre class="hero-code"><code>national_id TEXT <b>PROTECTED MATCH DOMAIN</b> person_id</code></pre>
       <div class="btn-row">
-        <a class="btn" href="{{BASE}}playground/">Try it in your browser</a>
+        <a class="btn" href="{{BASE}}docs/guides/overview/">DEP SQL in five minutes</a>
+        <a class="btn secondary" href="{{BASE}}playground/">Try it in your browser</a>
         <a class="btn secondary" href="{{BASE}}install/">Install</a>
-        <a class="btn secondary" href="{{BASE}}docs/guides/getting-started/">Read the guide</a>
       </div>
-      <p class="notice"><span class="badge">Experimental</span> An experimental concept. Use invented data only.</p>
+      <p class="notice"><span class="badge">Experimental</span> <span>Project Hoopeo is an experimental, conceptual project. See the <a href="{{BASE}}legal/terms/">terms of use</a>.</span></p>
     </div>
     <div class="hero-art">
       <picture class="for-light"><source type="image/webp" srcset="{{BASE}}assets/brand/wordmark-520.webp 1x, {{BASE}}assets/brand/wordmark-1040.webp 2x"><img src="{{BASE}}assets/brand/wordmark-520.png" width="520" height="182" alt="Project Hoopeo, Database-Enforced Privacy"></picture>
@@ -20,9 +21,26 @@
 
 <section class="section">
   <div class="wrap">
+    <p class="eyebrow">The language</p>
+    <picture class="for-light"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/dep-sql-adds-narrow.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/dep-sql-adds.png" width="1000" alt="What DEP SQL adds to SQL: protected columns in the schema, endpoints at login, and declared functions for the exceptions"></picture>
+    <picture class="for-dark"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/dep-sql-adds-narrow-dark.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/dep-sql-adds-dark.png" width="1000" alt="What DEP SQL adds to SQL: protected columns in the schema, endpoints at login, and declared functions for the exceptions"></picture>
+  </div>
+</section>
+
+<section class="section tint">
+  <div class="wrap">
+    <p class="eyebrow">The example used everywhere on this site</p>
+    <picture class="for-light"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/roles-narrow.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/roles.png" width="1000" alt="One clinic, four users: reception, doctors, a BI dashboard and billing, with what each can and cannot do"></picture>
+    <picture class="for-dark"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/roles-narrow-dark.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/roles-dark.png" width="1000" alt="One clinic, four users: reception, doctors, a BI dashboard and billing, with what each can and cannot do"></picture>
+    <p class="muted"><a href="{{BASE}}docs/guides/overview/#what-each-user-sees">See what each of them gets</a>, with the real output of DEP Engine.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <p class="eyebrow">The same lookup, three outcomes</p>
     <h2 style="margin-top:0">Find a patient by ID number, without being handed the ID numbers</h2>
-    <p class="prose">Reception types the ID number a patient presents. A regular database answers with the row, ID number included, and the same privilege lets the next query read every ID number in the table. DEP matches the number through a blind index and returns the column as NULL. A query that would link every patient to every diagnosis is refused before it reads a row.</p>
+    <p class="prose">Reception types the ID number a patient presents. A regular database answers with the row, ID number included, and the same privilege lets the next query read every ID number in the table. DEP finds the row by comparing a keyed fingerprint of the number (its blind index entry), and returns the column as NULL. A query that would connect every patient to every diagnosis is refused before it reads a row.</p>
     <div class="compare">
       <figure class="plain"><figcaption>A regular database</figcaption>
 <pre><code>SELECT full_name, national_id
@@ -47,7 +65,7 @@ and is returned as NULL.
 ------------+-------------
  Dana Cohen | NULL
 (1 row)</code></pre></figure>
-      <figure class="refused"><figcaption>DEP Engine: an unanchored join</figcaption>
+      <figure class="refused"><figcaption>DEP Engine: a join with no anchor</figcaption>
 <pre><code>SELECT p.full_name, m.diagnosis
 FROM patients AS p
 JOIN medical_records AS m
@@ -62,17 +80,17 @@ WHERE patients.national_id = $1, or perform it
 inside a function declared LINKS person_id.
 SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)</code></pre></figure>
     </div>
-    <p class="muted">The second and third panels are the real output of DEP Engine on the demo clinic. The <a href="{{BASE}}docs/guides/concepts/">concepts guide</a> explains each rule.</p>
+    <p class="muted">The second and third panels are the real output of DEP Engine on the demo clinic. Every term is explained in the <a href="{{BASE}}docs/reference/glossary/">glossary</a>.</p>
   </div>
 </section>
 
 <section class="section tint">
   <div class="wrap">
     <h2 style="margin-top:0">Start here</h2>
-    <div class="grid three">
-      <div class="card"><h3>Try it</h3><p>The playground runs the DEP rules in your browser. Every statement is run three times, side by side: in a regular database, on the masked read path and on the operational path.</p><p><a class="btn" href="{{BASE}}playground/">Open the playground</a></p></div>
-      <div class="card blue"><h3>Install</h3><p>DEP Engine, DEP CLI and Hoopeo Studio for Linux and macOS, a Docker image, and DEP.js as a single HTML file. Free for evaluation.</p><p><a class="btn" href="{{BASE}}install/">See the installers</a></p></div>
-      <div class="card teal"><h3>Read the guide</h3><p>From a first lookup to administration: concepts, the DEP SQL language, transactions, running a server and connecting applications.</p><p><a class="btn" href="{{BASE}}docs/guides/getting-started/">Getting started</a></p></div>
+    <div class="grid three steps">
+      <div class="card"><p class="step">1</p><h3>Read</h3><p>DEP SQL in five minutes: the problem, the three additions, and what each user of the clinic sees.</p><p><a class="btn" href="{{BASE}}docs/guides/overview/">Read the overview</a></p></div>
+      <div class="card teal"><p class="step">2</p><h3>Try</h3><p>The playground runs every statement three times, side by side: in a regular database, and on DEP's two access paths. Nothing to install.</p><p><a class="btn" href="{{BASE}}playground/">Open the playground</a></p></div>
+      <div class="card blue"><p class="step">3</p><h3>Install</h3><p>Hoopeo Studio is the easiest start: one download, and a database of its own. DEP CLI and DEP Engine for Linux, macOS and Docker.</p><p><a class="btn" href="{{BASE}}install/">Install</a></p></div>
     </div>
   </div>
 </section>
@@ -83,14 +101,9 @@ SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)</code></pre></figure>
     <div class="grid two">
       <div class="card"><h3>Open</h3>
         <p>The specification and the documentation (CC BY 4.0). DEP.js, the playground and the examples (Apache 2.0). Anyone may read, cite, implement and build on them.</p></div>
-      <div class="card blue"><h3>Binaries under an evaluation licence</h3>
-        <p>DEP Engine, DEP CLI and Hoopeo Studio are distributed as binaries. The Evaluation License allows evaluation, research, teaching and non-production testing with invented data. Production and commercial use is available under a commercial licence.</p></div>
+      <div class="card blue"><h3>Binaries under an evaluation license</h3>
+        <p>DEP Engine, DEP CLI and Hoopeo Studio are distributed as binaries. The Evaluation License allows evaluation, research, teaching and non-production testing. Production and commercial use is available under a commercial license.</p></div>
     </div>
     <p class="muted"><a href="{{BASE}}legal/licensing/">Licensing in full</a>, with the third-party libraries.</p>
-    <div class="grid three" style="margin-top:28px">
-      <div class="card"><img class="icon" src="{{BASE}}assets/brand/dep-engine-64.png" srcset="{{BASE}}assets/brand/dep-engine-64.webp 1x, {{BASE}}assets/brand/dep-engine-128.webp 2x" width="56" height="56" alt=""><h3>DEP Engine</h3><p>The database server. PostgreSQL wire protocol, HTTP API, TLS.</p></div>
-      <div class="card"><img class="icon" src="{{BASE}}assets/brand/dep-cli-64.png" srcset="{{BASE}}assets/brand/dep-cli-64.webp 1x, {{BASE}}assets/brand/dep-cli-128.webp 2x" width="56" height="56" alt=""><h3>DEP CLI</h3><p>The command-line shell, with the engine built in.</p></div>
-      <div class="card"><img class="icon" src="{{BASE}}assets/brand/hoopeo-studio-64.png" srcset="{{BASE}}assets/brand/hoopeo-studio-64.webp 1x, {{BASE}}assets/brand/hoopeo-studio-128.webp 2x" width="56" height="56" alt=""><h3>Hoopeo Studio</h3><p>The developer application for DEP SQL.</p></div>
-    </div>
   </div>
 </section>

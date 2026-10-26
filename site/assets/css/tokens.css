@@ -1,10 +1,10 @@
 /* Design tokens of Project Hoopeo, shared by the website and the playground.
-   The five brand colours are sampled from the logos in branding/:
+   The five brand colors are sampled from the logos in branding/:
      hoopoe orange #FC910A (the crest), deep orange #F76312, brand blue #0370DE,
      navy #011A3E (the wordmark text), teal #02D0D1.
    Orange and teal fail WCAG AA as text on white, so they are used for rules, fills and highlights, and for
-   text only on navy. The text variants below are darker (light theme) or the brand colour itself (dark theme).
-   In the playground, colour says what a value is: plain (red), masked path (orange), operational path (teal),
+   text only on navy. The text variants below are darker (light theme) or the brand color itself (dark theme).
+   In the playground, color says what a value is: plain (red), masked path (orange), operational path (teal),
    protected (blue), disclosed (violet). */
 :root {
   color-scheme: light;

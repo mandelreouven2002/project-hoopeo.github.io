@@ -2,13 +2,19 @@
 
 Guides, a reference, and the design documents of Project Hoopeo. The guides are written for someone using DEP Engine, DEP CLI or the playground. Every SQL example in them was run against DEP Engine, and the output shown is the real output, DEP notes included.
 
-New to DEP? Start with [Getting started](../../docs/guides/getting-started.md), then read [Concepts](../../docs/guides/concepts.md).
+**New to DEP?** Start with [DEP SQL in five minutes](../../docs/guides/overview.md), then try the [playground](../../playground/). Terms you do not know are explained in the [glossary](../../docs/reference/glossary.md).
+
+## Start here
+
+| Guide | What it covers |
+|---|---|
+| [DEP SQL in five minutes](../../docs/guides/overview.md) | What DEP SQL is and why: the problem, the idea, the three things it adds to SQL, and what four users of a clinic see, with the real output of DEP Engine |
+| [Getting started](../../docs/guides/getting-started.md) | Install, start a server with the demo clinic, connect with DEP CLI, `psql` and the HTTP API, and run a first lookup |
 
 ## Guides
 
 | Guide | What it covers |
 |---|---|
-| [Getting started](../../docs/guides/getting-started.md) | Install, start a server with the demo clinic, connect with DEP CLI, `psql` and the HTTP API, and run a first lookup |
 | [Concepts](../../docs/guides/concepts.md) | Protected columns, match domains, blind indexes, endpoints and access paths, matching, anchoring and linking, declared functions, the terminal rule, DEP notes, the audit log |
 | [DEP SQL](../../docs/guides/dep-sql.md) | Every addition DEP makes to SQL: syntax, rules, examples and the error each rule raises |
 | [Transactions, constraints and indexes](../../docs/guides/transactions-and-constraints.md) | Transactions and savepoints, transactional schema changes, isolation and the write lock, constraints, indexes, `EXPLAIN` |
@@ -19,6 +25,7 @@ New to DEP? Start with [Getting started](../../docs/guides/getting-started.md), 
 
 | Page | What it lists |
 |---|---|
+| [Glossary](../../docs/reference/glossary.md) | Every term of DEP: a one-line definition, what it means, an example and where you meet it |
 | [Errors](../../docs/reference/errors.md) | Every DEP code with its SQLSTATE, and the PostgreSQL SQLSTATEs DEP Engine uses |
 | [DEP notes](../../docs/reference/notes.md) | Every DEP note text, and when it appears |
 | [SHOW commands](../../docs/reference/show.md) | Every `SHOW` command and its columns |

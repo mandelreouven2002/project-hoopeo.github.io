@@ -2,7 +2,7 @@
    site/                     index.html + sql-wasm.js + sql-wasm.wasm + depsql.js + fonts/ (the two compilers as separate files)
    dep-sql-playground.html   one self-contained file that also works offline (the fonts are inlined)
 
-The colours and fonts are the ones of the website: ../site/assets/css/tokens.css and ../site/assets/fonts/.
+The colors and fonts are the ones of the website: ../site/assets/css/tokens.css and ../site/assets/fonts/.
 site/build.py calls page() to put the playground inside the website, with the site header and footer."""
 import base64, os, shutil
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -41,11 +41,11 @@ def page(inline_fonts, mascot_src):
     return page
 
 
-def standalone(page_html, mascot_data_uri, guide_url):
+def standalone(page_html, mascot_data_uri, guide_url, glossary_url):
     head = ('<header class="site-header"><div class="wrap"><span class="brand"><img src="%s" alt="">'
             '<span>Project Hoopeo</span></span></div></header>' % mascot_data_uri)
     return (page_html.replace('<!--__SITE_HEAD__-->', '').replace('<!--__SITE_HEADER__-->', head)
-            .replace('<!--__SITE_FOOTER__-->', '').replace('__BODY_CLASS__', 'standalone').replace('__GUIDE_URL__', guide_url))
+            .replace('<!--__SITE_FOOTER__-->', '').replace('__BODY_CLASS__', 'standalone').replace('__GUIDE_URL__', guide_url).replace('__GLOSSARY_URL__', glossary_url))
 
 
 def mascot_uri():
@@ -55,11 +55,12 @@ def mascot_uri():
 
 def main():
     guide = 'https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/playground/README.md'
+    glossary = 'https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/docs/reference/glossary.md'
     uri = mascot_uri()
     os.makedirs('site/fonts', exist_ok=True)
     for f in font_files():
         shutil.copy(os.path.join(ASSETS, 'fonts', f), 'site/fonts/' + f)
-    open('site/index.html', 'w', encoding='utf-8').write(standalone(page(False, uri), uri, guide))
+    open('site/index.html', 'w', encoding='utf-8').write(standalone(page(False, uri), uri, guide, glossary))
     shutil.copy('depsql.js', 'site/depsql.js')
     shutil.copy('node_modules/sql.js/dist/sql-wasm.js', 'site/sql-wasm.js')
     shutil.copy('node_modules/sql.js/dist/sql-wasm.wasm', 'site/sql-wasm.wasm')
@@ -67,7 +68,7 @@ def main():
     wasm = base64.b64encode(open('node_modules/sql.js/dist/sql-wasm.wasm', 'rb').read()).decode()
     dep = R('depsql.js'); sqljs = R('node_modules/sql.js/dist/sql-wasm.js')
     for n, c in (('depsql', dep), ('sqljs', sqljs)): assert '</script' not in c.lower(), n
-    one = standalone(page(True, uri), uri, guide)
+    one = standalone(page(True, uri), uri, guide, glossary)
     one = one.replace('<script src="sql-wasm.js"></script>', '<script>\n' + sqljs + '\n</script>\n<script>window.__SQLJS_WASM__ = "' + wasm + '";</script>')
     one = one.replace('<script src="depsql.js"></script>', '<script>\n' + dep + '\n</script>')
     open('dep-sql-playground.html', 'w', encoding='utf-8').write(one)

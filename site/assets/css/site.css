@@ -1,4 +1,4 @@
-/* The stylesheet of the website. Tokens (colours, fonts) are in tokens.css, fonts in fonts.css. */
+/* The stylesheet of the website. Tokens (colors, fonts) are in tokens.css, fonts in fonts.css. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--f-body); min-height: 100vh; display: flex; flex-direction: column; }
@@ -180,3 +180,56 @@ blockquote { margin: 1.2em 0; padding: 4px 18px; border-left: 4px solid var(--ac
   h1, h2, h3 { break-after: avoid; }
   table, figure, img { break-inside: avoid; }
 }
+
+/* Additions of Handoff 2: images that follow the theme, diagrams, screenshots, the hero code line, numbered steps,
+   the product picker of the Install page, and glossary terms with their popover. Merge into site.css. */
+
+/* Diagrams have their own frame; screenshots get one */
+img.diagram { display: block; width: 100%; max-width: 1000px; height: auto; margin: 22px auto; }
+.prose img:not(.diagram) { display: block; width: auto; max-width: 100%; height: auto; margin: 22px 0; }
+.prose img:not(.diagram) { border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 6px 20px rgba(1, 26, 62, 0.08); }
+
+/* Images with a light and a dark version (the build turns <picture> with a dark <source> into these two).
+   After the rule above, so that these win. */
+img.for-dark, picture.for-dark { display: none; }
+:root[data-theme="dark"] img.for-light, :root[data-theme="dark"] picture.for-light { display: none; }
+:root[data-theme="dark"] img.for-dark, :root[data-theme="dark"] picture.for-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img.for-light, :root:not([data-theme="light"]) picture.for-light { display: none; }
+  :root:not([data-theme="light"]) img.for-dark, :root:not([data-theme="light"]) picture.for-dark { display: block; }
+}
+/* Each diagram also has a narrow, stacked version (NAME-narrow.png, 440 px): the docs column always uses it, and wide pages
+   switch to it on phones with <source media="(max-width: 640px)">. */
+.docs-article img.diagram { max-width: 440px; }
+.prose:not(.docs-article .prose) picture img.diagram { max-width: none; width: min(1000px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
+
+/* The hero's code line */
+.hero-code { display: inline-block; margin: 18px 0 4px; padding: 10px 16px; background: var(--code-bg); border: 1px solid var(--line); border-left: 4px solid var(--prot-line); border-radius: var(--r); font-size: 0.98rem; }
+.hero-code b { color: var(--prot); font-weight: 600; }
+.hero .lede code { font-size: 0.92em; }
+.hero-grid > div { min-width: 0; }
+.hero-code { max-width: 100%; overflow-x: auto; }
+@media (max-width: 480px) { .hero-code { font-size: 0.8rem; padding: 8px 12px; } }
+
+/* Numbered steps (Start here) */
+.steps .step { font: 600 0.8rem var(--f-label); letter-spacing: 0.09em; color: var(--muted); margin: 0 0 4px; }
+.steps .step::before { content: "Step "; }
+
+/* The product picker of the Install page */
+.grid.product-picker { margin: 24px 0 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) { .grid.product-picker { grid-template-columns: 1fr; } }
+.product-picker .icon { margin-bottom: 4px; }
+.product-picker a.card { display: block; text-decoration: none; color: var(--ink); transition: transform 0.12s, box-shadow 0.12s; }
+.product-picker a.card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(1, 26, 62, 0.12); }
+.product-picker a.card p { color: var(--muted); }
+
+/* Glossary terms: linked, with a one-line definition on hover and on focus */
+a.term { color: inherit; text-decoration: underline dotted var(--muted); text-underline-offset: 3px; }
+a.term:hover, a.term:focus-visible { color: var(--link); text-decoration-color: var(--link); }
+.term-pop { position: absolute; z-index: 50; max-width: 340px; padding: 10px 14px 11px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-top: 3px solid var(--prot-line); border-radius: var(--r); box-shadow: 0 10px 28px rgba(1, 26, 62, 0.18); font-size: 0.92rem; line-height: 1.45; }
+.term-pop strong { display: block; font: 600 0.78rem var(--f-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.term-pop small { display: block; margin-top: 6px; color: var(--link); }
+
+/* The glossary page: each entry is a target */
+.glossary-index { line-height: 2; }
+.prose h3[id]:target { background: var(--prot-soft); border-radius: 6px; padding-inline: 6px; margin-inline: -6px; }

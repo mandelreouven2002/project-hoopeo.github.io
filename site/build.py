@@ -7,11 +7,11 @@
 Python 3 with the `markdown` package (pip install markdown). Nothing else: no framework, no other build step.
 
 BASE_URL is the one place where the address of the site is written. It is read from the environment
-if it is set, so a custom domain, or an organisation named project-hoopeo, needs no change in the sources:
+if it is set, so a custom domain, or an organization named project-hoopeo, needs no change in the sources:
   BASE_URL=https://example.org/ python3 site/build.py
 Every link the pages contain is relative to it; no page hard-codes it.
 
-The pages come from Markdown in the repository: site/content/, docs/, the licence files and the playground
+The pages come from Markdown in the repository: site/content/, docs/, the license files and the playground
 README. A link from one Markdown file to another, written as a repository path, is rewritten to the page that
 the file becomes, and a link to any other file of the repository becomes a link to GitHub.
 """
@@ -24,6 +24,9 @@ import sys
 from urllib.parse import urlparse
 
 import markdown
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import glossary_terms as GT
 
 BASE_URL = os.environ.get('BASE_URL') or 'https://mandelreouven2002.github.io/project-hoopeo.github.io/'
 if not BASE_URL.endswith('/'):
@@ -40,8 +43,11 @@ SITE = 'Project Hoopeo'
 # ---------------------------------------------------------------- the pages
 
 # repository path -> (url path under the site, nav label)
-GUIDES = [
+START = [
+    ('docs/guides/overview.md', 'DEP SQL in five minutes'),
     ('docs/guides/getting-started.md', 'Getting started'),
+]
+GUIDES = [
     ('docs/guides/concepts.md', 'Concepts'),
     ('docs/guides/dep-sql.md', 'DEP SQL'),
     ('docs/guides/transactions-and-constraints.md', 'Transactions and constraints'),
@@ -49,6 +55,7 @@ GUIDES = [
     ('docs/guides/applications.md', 'Applications'),
 ]
 REFERENCE = [
+    ('docs/reference/glossary.md', 'Glossary'),
     ('docs/reference/errors.md', 'Errors'),
     ('docs/reference/notes.md', 'DEP notes'),
     ('docs/reference/show.md', 'SHOW commands'),
@@ -61,7 +68,7 @@ DESIGN = [
     ('docs/design/02-roadmap-and-release.md', 'Roadmap and release'),
 ]
 PLAYGROUND_DOC = [('site/content/playground-guide.md', 'Using the playground')]
-DOC_SECTIONS = [('Guides', GUIDES), ('Reference', REFERENCE), ('Design', DESIGN), ('Playground', PLAYGROUND_DOC)]
+DOC_SECTIONS = [('Start here', START), ('Guides', GUIDES), ('Reference', REFERENCE), ('Design', DESIGN), ('Playground', PLAYGROUND_DOC)]
 
 SPECIAL = {
     'docs/design/01-dep-concept.md': 'docs/design/proposal/',
@@ -88,8 +95,10 @@ SPECIAL = {
 STATIC = ['docs/design/diagrams/dep-architecture.html', 'docs/design/fig-architecture.png',
           'examples/clinic.sql']
 
-NAV = [('Home', ''), ('Privacy as Code', 'privacy-as-code/'), ('Docs', 'docs/'), ('Playground', 'playground/'),
-       ('Install', 'install/'), ('About', 'about/'), ('GitHub', GITHUB)]
+NAV = [('Home', ''), ('Docs', 'docs/'), ('Playground', 'playground/'), ('Install', 'install/'),
+       ('Privacy as Code', 'privacy-as-code/'), ('About', 'about/'), ('GitHub', GITHUB)]
+GLOSSARY_SRC = 'docs/reference/glossary.md'
+GLOSSARY_URL = 'docs/reference/glossary/'
 
 
 def url_of(src):
@@ -132,8 +141,10 @@ def resolve(href, src):
         if '#' in u:
             return link(u)
         return link(u) + ('#' + frag if frag else '')
-    if target in STATIC:
+    if target in STATIC or target.startswith('docs/images/'):
         return link(target)
+    if target.startswith('site/assets/'):
+        return link(target[len('site/'):])
     full = os.path.join(ROOT, target)
     if os.path.isdir(full) or target.endswith('/'):
         return f'{GITHUB}/tree/main/{target.rstrip("/")}'
@@ -148,18 +159,99 @@ def gh_slug(value, sep='-'):
     return value.replace(' ', '-')
 
 
-def render_md(text, src):
+_PICTURE = re.compile(r'<picture><source media="\(prefers-color-scheme: dark\)" srcset="([^"]+)"><img src="([^"]+)" alt="([^"]*)"(?: width="(\d+)")?></picture>')
+
+
+def _narrow(path):
+    """diagrams/NAME.png -> diagrams/NAME-narrow.png, and NAME-dark.png -> NAME-narrow-dark.png"""
+    return re.sub(r'(-dark)?\.png$', lambda m: '-narrow' + (m.group(1) or '') + '.png', path)
+
+
+def themed_images(body, docs):
+    """An image with a dark version becomes one element per theme, which the stylesheet shows and hides with the theme
+    (the site's theme button, not only the system's). The narrow version of a diagram is used in the docs column,
+    and on phones elsewhere."""
+    def sub(m):
+        dark, light, alt, width = m.group(1), m.group(2), m.group(3), m.group(4)
+        diagram = '/diagrams/' in light
+        w = f' width="{width}"' if width else ''
+        if diagram and docs:
+            return (f'<img class="diagram for-light" src="{_narrow(light)}" alt="{alt}"{w}>'
+                    f'<img class="diagram for-dark" src="{_narrow(dark)}" alt=""{w}>')
+        if diagram:
+            return (f'<picture class="for-light"><source media="(max-width: 640px)" srcset="{_narrow(light)}"><img class="diagram" src="{light}" alt="{alt}"{w}></picture>'
+                    f'<picture class="for-dark"><source media="(max-width: 640px)" srcset="{_narrow(dark)}"><img class="diagram" src="{dark}" alt=""{w}></picture>')
+        return f'<img class="for-light" src="{light}" alt="{alt}"{w}><img class="for-dark" src="{dark}" alt=""{w}>'
+    return _PICTURE.sub(sub, body)
+
+
+_SKIP = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'code', 'pre', 'script', 'style', 'button', 'summary', 'title', 'nav'}
+_GLOSSARY = None
+
+
+def glossary():
+    """{heading: definition} and the compiled patterns, read once."""
+    global _GLOSSARY
+    if _GLOSSARY is None:
+        defs = GT.definitions(read(GLOSSARY_SRC))
+        pats = []
+        for name, variants in GT.TERMS:
+            parts = [('(?-i:%s)' % v) if (re.search(r'[A-Z]{3}', v) and v == v.upper()) else ('(?i:%s)' % v) for v in variants]
+            pats.append((name, re.compile(r'\b(?:%s)\b' % '|'.join(parts))))
+        _GLOSSARY = (defs, pats)
+    return _GLOSSARY
+
+
+def link_terms(body):
+    """Links the first occurrence of each glossary term in the text of the page (not in headings, code or links)."""
+    defs, pats = glossary()
+    todo = list(pats)
+    out, depth = [], 0
+    for tok in re.split(r'(<[^>]+>)', body):
+        if tok.startswith('<'):
+            m = re.match(r'<(/?)([a-zA-Z][a-zA-Z0-9]*)', tok)
+            if m and m.group(2).lower() in _SKIP and not tok.endswith('/>'):
+                depth += -1 if m.group(1) else 1
+                depth = max(depth, 0)
+            out.append(tok)
+            continue
+        if depth or not todo or not tok.strip():
+            out.append(tok)
+            continue
+        pos, buf = 0, []
+        while todo:
+            best = None
+            for name, pat in todo:
+                m = pat.search(tok, pos)
+                if m and (best is None or m.start() < best[1].start() or (m.start() == best[1].start() and m.end() > best[1].end())):
+                    best = (name, m)
+            if not best:
+                break
+            name, m = best
+            todo = [t for t in todo if t[0] != name]
+            d = html.escape(defs.get(name, ''), quote=True)
+            buf.append(tok[pos:m.start()])
+            buf.append(f'<a class="term" href="{BASE}{GLOSSARY_URL}#{GT.slug(name)}" data-term="{html.escape(name)}" data-def="{d}">{m.group(0)}</a>')
+            pos = m.end()
+        buf.append(tok[pos:])
+        out.append(''.join(buf))
+    return ''.join(out)
+
+
+def render_md(text, src, docs=False, terms=True):
     md = markdown.Markdown(extensions=['tables', 'fenced_code', 'toc', 'attr_list', 'sane_lists', 'md_in_html'],
                            extension_configs={'toc': {'toc_depth': '2-3', 'slugify': gh_slug}})
-    body = md.convert(text)
+    body = themed_images(md.convert(text), docs)
     toc = md.toc_tokens
 
     def sub(m):
         return f'{m.group(1)}="{resolve(html.unescape(m.group(2)), src)}"'
-    body = re.sub(r'\b(href|src)="([^"]*)"', sub, body)
+    body = re.sub(r'\b(href|src|srcset)="([^"]*)"', sub, body)
     body = re.sub(r'<table>', '<div class="table-scroll"><table>', body)
     body = body.replace('</table>', '</table></div>')
-    body = re.sub(r'<img ', '<img loading="lazy" ', body)
+    body = re.sub(r'<img (?!loading)', '<img loading="lazy" ', body)
+    if terms and src != GLOSSARY_SRC:
+        body = link_terms(body)
     return body, toc
 
 
@@ -243,6 +335,7 @@ def site_footer():
       <li><a href="{BASE}playground/">Playground</a></li>
       <li><a href="{BASE}install/">Install</a></li>
       <li><a href="{BASE}docs/">Docs</a></li>
+      <li><a href="{BASE}docs/reference/glossary/">Glossary</a></li>
       <li><a href="{BASE}privacy-as-code/">Privacy as Code</a></li></ul></div>
     <div><h2>Legal</h2><ul>
       <li><a href="{BASE}legal/privacy/">Privacy</a></li>
@@ -252,13 +345,13 @@ def site_footer():
     <div><h2>Author</h2><ul>
       <li><a href="{AUTHOR_SITE}" rel="noopener">lp.reuven.click</a></li></ul></div>
   </div>
-  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental concept. It is not a production database, and it should not be used with real personal data. &copy; 2026 Reuven Mandelovich.</p>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="{BASE}legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
 </div></footer>
 <script src="{BASE}assets/js/site.js" defer></script>'''
 
 
 def site_footer_compact():
-    return f'''<footer class="pg-foot"><span><strong>Experimental.</strong> Use invented data only.</span>
+    return f'''<footer class="pg-foot"><span><strong>Experimental.</strong> An experimental, conceptual project: see the <a href="{BASE}legal/terms/">terms of use</a>.</span>
   <a href="{BASE}legal/privacy/">Privacy</a><a href="{BASE}legal/terms/">Terms</a><a href="{BASE}legal/licensing/">Licensing</a>
   <a href="{BASE}">Project Hoopeo</a><a href="{AUTHOR_SITE}" rel="noopener">lp.reuven.click</a></footer>
 <script src="{BASE}assets/js/site.js" defer></script>'''
@@ -281,7 +374,7 @@ def page_html(title, desc, path, body, current='', og='og-default', cls=''):
 '''
 
 
-EXPERIMENTAL = '<p class="muted"><span class="badge">Experimental</span> Project Hoopeo is an experimental concept. It is not for production use, and it must not be used with real personal data.</p>'
+EXPERIMENTAL = f'<p class="muted"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="{BASE}legal/terms/">terms of use</a>.</p>'
 
 
 def doc_sidebar(current_src):
@@ -293,7 +386,7 @@ def doc_sidebar(current_src):
 
 
 def docs_page(src, label, text, order):
-    body, toc = render_md(text, src)
+    body, toc = render_md(text, src, docs=True)
     u = url_of(src)
     title = title_of(text, label)
     desc = first_paragraph(text)
@@ -360,7 +453,8 @@ def build_playground():
     page = (page.replace('<!--__SITE_HEAD__-->', head_meta('DEP SQL Playground', desc, 'playground/', 'og-playground'))
             .replace('<!--__SITE_HEADER__-->', site_header('Playground'))
             .replace('<!--__SITE_FOOTER__-->', site_footer_compact())
-            .replace('__BODY_CLASS__', 'in-site').replace('__GUIDE_URL__', link('playground/guide/')))
+            .replace('__BODY_CLASS__', 'in-site').replace('__GUIDE_URL__', link('playground/guide/'))
+            .replace('__GLOSSARY_URL__', link(GLOSSARY_URL)))
     dest = os.path.join(OUT, 'playground')
     os.makedirs(dest, exist_ok=True)
     with open(os.path.join(dest, 'index.html'), 'w', encoding='utf-8') as f:
@@ -403,7 +497,7 @@ def build():
     urls.append('legal/licensing/')
 
     # home and 404
-    home = read('site/content/home.html').replace('{{BASE}}', BASE)
+    home = link_terms(read('site/content/home.html').replace('{{BASE}}', BASE))
     write('index.html', page_html(SITE, 'Project Hoopeo implements Database-Enforced Privacy (DEP): privacy rules that the database engine enforces on every query, for every client.', '', home, 'Home'))
     nf = f'''<div class="wrap notfound"><img src="{BASE}assets/brand/mascot-240.webp" width="200" height="240" alt="The Project Hoopeo hoopoe">
 <h1>This page was not found</h1><p class="lede">The page may have moved, or the address may be mistyped.</p>
@@ -412,6 +506,10 @@ def build():
 
     build_playground()
     urls.append('playground/')
+
+    # the documentation images, and the one-line installer
+    shutil.copytree(os.path.join(ROOT, 'docs', 'images'), os.path.join(OUT, 'docs', 'images'))
+    shutil.copy(os.path.join(HERE, 'static', 'install.sh'), os.path.join(OUT, 'install.sh'))
 
     # static files
     for rel in STATIC:
@@ -442,8 +540,14 @@ def check():
     bad = 0
     for f in files:
         text = open(f, encoding='utf-8').read()
-        for m in re.finditer(r'\b(?:href|src)="([^"]*)"', text):
-            ref = html.unescape(m.group(1))
+        refs = []
+        for m in re.finditer(r'\b(href|src|srcset)="([^"]*)"', text):
+            if m.group(1) == 'srcset':
+                refs += [x.strip().split(' ')[0] for x in html.unescape(m.group(2)).split(',') if x.strip()]
+            else:
+                refs.append(m.group(2))
+        for ref in refs:
+            ref = html.unescape(ref)
             if re.match(r'^(https?:|mailto:|data:|javascript:)', ref) or ref == '':
                 continue
             path, _, frag = ref.partition('#')
