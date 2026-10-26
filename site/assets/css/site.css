@@ -233,3 +233,7 @@ a.term:hover, a.term:focus-visible { color: var(--link); text-decoration-color: 
 /* The glossary page: each entry is a target */
 .glossary-index { line-height: 2; }
 .prose h3[id]:target { background: var(--prot-soft); border-radius: 6px; padding-inline: 6px; margin-inline: -6px; }
+
+/* a screenshot opens at full size when clicked */
+a.zoom { display: block; cursor: zoom-in; border: 0; }
+a.zoom:hover img { box-shadow: 0 8px 24px rgba(1, 26, 62, 0.18); }

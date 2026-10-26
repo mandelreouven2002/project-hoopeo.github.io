@@ -238,6 +238,22 @@ def link_terms(body):
     return ''.join(out)
 
 
+def zoom_images(body):
+    """A screenshot or a terminal session is wider than the text column: a click opens it at full size."""
+    out, depth = [], 0
+    for tok in re.split(r'(<[^>]+>)', body):
+        m = re.match(r'<(/?)([a-zA-Z][a-zA-Z0-9]*)', tok) if tok.startswith('<') else None
+        if m and m.group(2).lower() == 'a':
+            depth += -1 if m.group(1) else 1
+            depth = max(depth, 0)
+        if m and m.group(2).lower() == 'img' and not depth and 'class="diagram' not in tok:
+            src = re.search(r'\bsrc="([^"]+)"', tok)
+            if src:
+                tok = f'<a class="zoom" href="{src.group(1)}" title="Open at full size">{tok}</a>'
+        out.append(tok)
+    return ''.join(out)
+
+
 def render_md(text, src, docs=False, terms=True):
     md = markdown.Markdown(extensions=['tables', 'fenced_code', 'toc', 'attr_list', 'sane_lists', 'md_in_html'],
                            extension_configs={'toc': {'toc_depth': '2-3', 'slugify': gh_slug}})
@@ -250,6 +266,7 @@ def render_md(text, src, docs=False, terms=True):
     body = re.sub(r'<table>', '<div class="table-scroll"><table>', body)
     body = body.replace('</table>', '</table></div>')
     body = re.sub(r'<img (?!loading)', '<img loading="lazy" ', body)
+    body = zoom_images(body)
     if terms and src != GLOSSARY_SRC:
         body = link_terms(body)
     return body, toc
