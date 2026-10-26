@@ -72,7 +72,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with: { targets: "aarch64-apple-darwin,x86_64-apple-darwin" }
       - uses: Swatinem/rust-cache@v2
-      - name: Build the packages (signed and notarised only if the secrets exist)
+      - name: Build the packages (signed and notarized only if the secrets exist)
         env:
           ARCH: universal
           SIGN_APP: ${{ secrets.MACOS_SIGN_APP }}
@@ -177,12 +177,16 @@ jobs:
             echo "The binaries are distributed under the Project Hoopeo Evaluation License: evaluation, research, teaching and non-production testing. Production and commercial use needs a commercial license. Check the files with SHA256SUMS. Project Hoopeo is an experimental, conceptual project: see the terms of use on the website."
             if [ "$(cat in/macos-signing/dist-unsigned.txt)" = "unsigned" ]; then
               echo
-              echo "The macOS packages in this release are not signed or notarised. macOS asks for confirmation: Control-click the package, choose Open."
+              echo "The macOS packages in this release are not signed or notarized. macOS asks for confirmation: Control-click the package, choose Open."
             fi
           } >> notes.md
-      - name: Create the release on the public repository
+      - name: Keep the assets, for a release created by hand
+        uses: actions/upload-artifact@v4
+        with: { name: release-assets, path: "out/*\nnotes.md" }
+      - name: Create the release on the public repository (needs the secret PUBLIC_REPO_TOKEN)
         env:
           GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
+          if [ -z "$GH_TOKEN" ]; then echo "PUBLIC_REPO_TOKEN is not set: the assets are in the release-assets artifact of this run."; exit 0; fi
           gh release create "v${{ needs.prepare.outputs.version }}" out/* \
             --repo "$PUBLIC_REPO" --title "Project Hoopeo ${{ needs.prepare.outputs.version }}" --notes-file notes.md

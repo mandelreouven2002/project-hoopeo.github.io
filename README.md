@@ -82,7 +82,7 @@ Releases are built by `.github/workflows/release.yml` when a tag `v*` is pushed.
 |---|---|---|
 | `PUBLIC_REPO_TOKEN` | This repository, Settings > Secrets and variables > Actions | Publishing the release to the public repository. A fine-grained personal access token, scoped to `mandelreouven2002/project-hoopeo.github.io` only, with Contents: read and write |
 | `MACOS_SIGN_APP`, `MACOS_SIGN_PKG` | the same | Optional. The names of the Developer ID Application and Installer certificates, which must be in the runner's keychain. Without them the macOS packages are built unsigned, and the release notes say so |
-| `MACOS_NOTARY_PROFILE` | the same | Optional. A `notarytool` keychain profile, to notarise the signed packages |
+| `MACOS_NOTARY_PROFILE` | the same | Optional. A `notarytool` keychain profile, to notarize the signed packages |
 
 The `GITHUB_TOKEN` of the workflow is enough to push the Docker image to GHCR. After the first push, open the package `dep-engine` on GitHub and make it public, and link it to the public repository (the image carries the `org.opencontainers.image.source` label that does this).
 
