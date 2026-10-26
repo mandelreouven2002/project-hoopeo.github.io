@@ -50,7 +50,7 @@ control() {  # control <dir> <package> <description> <depends>
   } > "$1/DEBIAN/control"
 }
 
-licences() {  # licences <dir>: the licence documents that go beside every binary
+licenses() {  # licenses <dir>: the license documents that go beside every binary
   mkdir -p "$1/LICENSES"
   cp "$ROOT/NOTICE" "$ROOT/LICENSING.md" "$ROOT/public/BRAND.md" "$1/"
   cp "$ROOT/LICENSES/LicenseRef-Hoopeo-Evaluation.txt" "$ROOT/LICENSES/LicenseRef-Hoopeo-Commercial.txt" "$1/LICENSES/"
@@ -59,7 +59,7 @@ licences() {  # licences <dir>: the licence documents that go beside every binar
 }
 
 docs() {  # docs <root> <package> [examples dir inside the package]
-  licences "$1/usr/share/doc/$2"
+  licenses "$1/usr/share/doc/$2"
   # A machine-readable Debian copyright file (https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/)
   {
     echo "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/"
@@ -68,7 +68,7 @@ docs() {  # docs <root> <package> [examples dir inside the package]
     echo "Source: https://github.com/mandelreouven2002/project-hoopeo.github.io"
     echo "Comment: Binary-only distribution. The source code of DEP Engine, DEP CLI and"
     echo " Hoopeo Studio is not public. The third-party components in the binaries keep"
-    echo " their own licences: see THIRD-PARTY-NOTICES in this directory."
+    echo " their own licenses: see THIRD-PARTY-NOTICES in this directory."
     echo
     echo "Files: *"
     echo "Copyright: 2026 Reuven Mandelovich"
@@ -149,7 +149,7 @@ cp "$REL/dep-engine" "$REL/dep-cli" "$T/bin/"
 cp "$HERE/files/dep-engine.service" "$HERE/files/dep-engine.env" "$T/etc/"
 cp "$HERE/files/install.sh" "$T/install.sh"
 cp -R "$ROOT/public/examples" "$T/examples"
-licences "$T"
+licenses "$T"
 cat > "$T/README.txt" <<EOF
 DEP Engine $VERSION for Linux ($ARCH), Project Hoopeo
 
@@ -167,7 +167,7 @@ T="$WORK/dep-cli-$VERSION-linux-$ARCH"
 mkdir -p "$T"
 cp "$REL/dep-cli" "$T/"
 cp -R "$ROOT/public/examples" "$T/examples"
-licences "$T"
+licenses "$T"
 printf 'DEP CLI %s for Linux (%s), Project Hoopeo\n\n  ./dep-cli --memory --init examples/clinic.sql   try the demo clinic\n  ./dep-cli -h HOST -p 5433 -U admin -d operational --sslmode require\n\nCopy dep-cli to a directory on your PATH, for example /usr/local/bin.\n(c) Reuven Mandelovich, lp.reuven.click\n' "$VERSION" "$ARCH" > "$T/README.txt"
 tar -C "$WORK" -czf "$DIST/dep-cli-$VERSION-linux-$ARCH.tar.gz" "$(basename "$T")"
 echo "  $DIST/dep-cli-$VERSION-linux-$ARCH.tar.gz"

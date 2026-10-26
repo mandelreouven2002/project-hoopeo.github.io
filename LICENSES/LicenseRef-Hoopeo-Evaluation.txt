@@ -6,17 +6,17 @@ SPDX identifier: LicenseRef-Hoopeo-Evaluation
 
 Copyright (c) 2026 Reuven Mandelovich ("the Licensor"), https://lp.reuven.click
 
-This licence applies to the binary (executable) form of DEP Engine, DEP CLI and Hoopeo
+This license applies to the binary (executable) form of DEP Engine, DEP CLI and Hoopeo
 Studio, as distributed in the installers, archives and container images published by the
 Licensor (together, "the Software"). It does not apply to DEP.js, the specification, the
-documentation or the examples, which have their own licences (see LICENSING.md).
+documentation or the examples, which have their own licenses (see LICENSING.md).
 
-By installing or using the Software, You accept this licence. "You" means the person, or the
-organisation, that installs or uses the Software.
+By installing or using the Software, You accept this license. "You" means the person, or the
+organization, that installs or uses the Software.
 
 1. Grant
 
-The Licensor grants You a free, non-exclusive, non-transferable, revocable licence to
+The Licensor grants You a free, non-exclusive, non-transferable, revocable license to
 install and use unmodified copies of the Software for evaluation, research, teaching and
 non-production testing.
 
@@ -26,42 +26,44 @@ You may not:
 
   (a) use the Software in production, or for any purpose other than those listed in
       section 1;
-  (b) use the Software with real personal data, that is, data about identified or
-      identifiable people who have not given informed consent to its use in an
-      experiment. Use synthetic or invented data;
-  (c) modify the Software, or make derivative works from it;
-  (d) decompile, disassemble or reverse engineer the Software, or try to obtain its source
+  (b) modify the Software, or make derivative works from it;
+  (c) decompile, disassemble or reverse engineer the Software, or try to obtain its source
       code, except to the extent that applicable law allows it despite this restriction;
-  (e) sublicense, sell, rent or lend the Software, or offer it, or its functions, as a
+  (d) sublicense, sell, rent or lend the Software, or offer it, or its functions, as a
       service to third parties;
-  (f) remove or alter any copyright, licence or attribution notice in the Software or in
+  (e) remove or alter any copyright, license or attribution notice in the Software or in
       its documentation.
 
 3. Redistribution
 
 You may redistribute the Software only as the unmodified installers, archives or images
-published by the Licensor, complete, and together with this licence, the NOTICE file and
-the THIRD-PARTY-NOTICES file. A recipient receives the Software under this licence.
+published by the Licensor, complete, and together with this license, the NOTICE file and
+the THIRD-PARTY-NOTICES file. A recipient receives the Software under this license.
 
 4. Third-party components
 
-The Software contains third-party components, which remain under their own licences. These
-are listed in THIRD-PARTY-NOTICES. Nothing in this licence limits the rights that those
-licences give You in those components.
+The Software contains third-party components, which remain under their own licenses. These
+are listed in THIRD-PARTY-NOTICES. Nothing in this license limits the rights that those
+licenses give You in those components.
 
 5. Ownership
 
-The Software is licensed, not sold. The Licensor keeps all rights that this licence does
+The Software is licensed, not sold. The Licensor keeps all rights that this license does
 not expressly grant. The names "Project Hoopeo", "Hoopeo Studio", "DEP Engine", "DEP CLI"
 and "DEP.js", the hoopoe mascot, the wordmark and the product icons are covered by BRAND.md;
-this licence does not grant any right in them.
+this license does not grant any right in them.
 
-6. No warranty
+6. No warranty; your data
 
 The Software is experimental. To the extent that the law allows, it is provided "as is",
 without warranty of any kind, express or implied, including any warranty of
 merchantability, fitness for a particular purpose, accuracy, security or non-infringement.
 The Licensor does not warrant that the Software protects any data.
+
+The Software is part of an experimental and conceptual project. You decide what data You put
+into the Software, and You are responsible for it, including under any data-protection law
+that applies to You. The Licensor takes no responsibility for any data stored in, processed
+by, disclosed by or lost from the Software.
 
 7. Limitation of liability
 
@@ -73,20 +75,20 @@ allows.
 
 8. Termination
 
-This licence ends automatically if You breach it. Because it is revocable, the Licensor may
-also end it by notice. When this licence ends, You must stop using the Software and delete
+This license ends automatically if You breach it. Because it is revocable, the Licensor may
+also end it by notice. When this license ends, You must stop using the Software and delete
 all copies of it. Sections 5 to 9 survive termination.
 
 9. Other terms
 
 Later versions of the Software may be released under different terms. A new version does
-not change the licence of a version You already have, but its use is subject to the
-licence that comes with it.
+not change the license of a version You already have, but its use is subject to the
+license that comes with it.
 
-Production use and commercial use are available under a commercial licence. See
+Production use and commercial use are available under a commercial license. See
 LICENSES/LicenseRef-Hoopeo-Commercial.txt, and contact the Licensor through
 https://lp.reuven.click.
 
-If a provision of this licence is held unenforceable, the rest remains in force. This
-licence is the whole agreement between You and the Licensor about the Software, unless You
+If a provision of this license is held unenforceable, the rest remains in force. This
+license is the whole agreement between You and the Licensor about the Software, unless You
 have signed a commercial agreement with the Licensor.

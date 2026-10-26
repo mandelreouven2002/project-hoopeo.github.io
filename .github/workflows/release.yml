@@ -157,17 +157,24 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with: { path: in }
-      - name: Collect the assets and write SHA256SUMS
+      - name: Collect the assets under stable names, and write SHA256SUMS
         run: |
+          V="${{ needs.prepare.outputs.version }}"
           mkdir out
           find in/linux-* in/macos in/playground -type f -exec cp {} out/ \;
+          # no version in the file names, so that releases/latest/download/<file> always works (the version stays in the tag,
+          # the release title, the package metadata and the folder inside each archive)
+          for f in out/*; do
+            n="$(basename "$f" | sed "s/[-_]${V//./\\.}//")"
+            [ "$n" = "$(basename "$f")" ] || mv "$f" "out/$n"
+          done
           (cd out && sha256sum * > SHA256SUMS && cat SHA256SUMS)
       - name: Release notes
         run: |
           cp in/notes/notes.md notes.md
           {
             echo
-            echo "The binaries are distributed under the Project Hoopeo Evaluation License: evaluation, research, teaching and non-production testing, with invented data only. Production and commercial use needs a commercial licence. Check the files with SHA256SUMS."
+            echo "The binaries are distributed under the Project Hoopeo Evaluation License: evaluation, research, teaching and non-production testing. Production and commercial use needs a commercial license. Check the files with SHA256SUMS. Project Hoopeo is an experimental, conceptual project: see the terms of use on the website."
             if [ "$(cat in/macos-signing/dist-unsigned.txt)" = "unsigned" ]; then
               echo
               echo "The macOS packages in this release are not signed or notarised. macOS asks for confirmation: Control-click the package, choose Open."

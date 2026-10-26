@@ -465,7 +465,7 @@ fn write_text_file(path: String, content: String) -> Result<(), String> {
     std::fs::write(&path, content).map_err(|e| plain(format!("{path}: {e}")))
 }
 
-/// Shows an open dialog for SQL files; returns the path, or nothing if cancelled.
+/// Shows an open dialog for SQL files; returns the path, or nothing if canceled.
 #[tauri::command]
 async fn pick_open_file(app: AppHandle) -> Option<String> {
     let d = app.dialog().file().add_filter("SQL", &["sql", "txt"]);

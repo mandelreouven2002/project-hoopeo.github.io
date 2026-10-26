@@ -4,7 +4,7 @@
   python3 packaging/icons/make_icons.py
 
 For each product it writes PNG sizes, a macOS .icns and a Windows .ico into
-packaging/icons/<product>/. The logo is centred on a 1024 canvas with the margin
+packaging/icons/<product>/. The logo is centered on a 1024 canvas with the margin
 macOS uses for app icons, on a transparent background.
 """
 from pathlib import Path

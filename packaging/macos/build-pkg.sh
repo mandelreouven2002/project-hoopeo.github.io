@@ -57,7 +57,7 @@ sign() {  # sign <path> : hardened runtime, if a Developer ID is set
   if [ -n "${SIGN_APP:-}" ]; then codesign --force --timestamp --options runtime --sign "$SIGN_APP" "$1"; fi
 }
 
-licences() {  # licences <dir>: the licence documents that go beside the binaries
+licenses() {  # licenses <dir>: the license documents that go beside the binaries
   mkdir -p "$1/LICENSES"
   cp "$ROOT/NOTICE" "$ROOT/LICENSING.md" "$ROOT/public/BRAND.md" "$1/"
   cp "$ROOT/LICENSES/LicenseRef-Hoopeo-Evaluation.txt" "$ROOT/LICENSES/LicenseRef-Hoopeo-Commercial.txt" "$1/LICENSES/"
@@ -94,7 +94,7 @@ APP="$STUDIO_ROOT/Applications/Hoopeo Studio.app"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN/hoopeo-studio" "$APP/Contents/MacOS/hoopeo-studio"
 cp "$ROOT/packaging/icons/hoopeo-studio/icon.icns" "$APP/Contents/Resources/icon.icns"
-licences "$APP/Contents/Resources"
+licenses "$APP/Contents/Resources"
 plist "$APP/Contents/Info.plist" "Hoopeo Studio" click.reuven.hoopeo.studio hoopeo-studio icon.icns public.app-category.developer-tools
 sign "$APP/Contents/MacOS/hoopeo-studio"; sign "$APP"
 
@@ -105,7 +105,7 @@ cp "$BIN/dep-cli" "$CLI_ROOT/usr/local/bin/dep-cli"
 cp "$HERE/files/dep-cli-shell.command" "$CLI_ROOT/usr/local/libexec/project-hoopeo/"
 cp -R "$ROOT/public/examples" "$CLI_ROOT/usr/local/share/project-hoopeo/examples"
 cp "$HERE/files/uninstall.sh" "$CLI_ROOT/usr/local/share/project-hoopeo/uninstall.sh"
-licences "$CLI_ROOT/usr/local/share/project-hoopeo"
+licenses "$CLI_ROOT/usr/local/share/project-hoopeo"
 CLIAPP="$CLI_ROOT/Applications/DEP CLI.app"
 mkdir -p "$CLIAPP/Contents/MacOS" "$CLIAPP/Contents/Resources"
 cp "$HERE/files/dep-cli-launcher" "$CLIAPP/Contents/MacOS/dep-cli-launcher"
@@ -118,7 +118,7 @@ ENGINE_ROOT="$WORK/engine-root"
 mkdir -p "$ENGINE_ROOT/usr/local/bin" "$ENGINE_ROOT/usr/local/share/project-hoopeo"
 cp "$BIN/dep-engine" "$ENGINE_ROOT/usr/local/bin/dep-engine"
 cp "$HERE/files/uninstall.sh" "$ENGINE_ROOT/usr/local/share/project-hoopeo/uninstall.sh"
-licences "$ENGINE_ROOT/usr/local/share/project-hoopeo"
+licenses "$ENGINE_ROOT/usr/local/share/project-hoopeo"
 sign "$ENGINE_ROOT/usr/local/bin/dep-engine"
 SERVICE_ROOT="$WORK/service-root"
 mkdir -p "$SERVICE_ROOT/Library/LaunchAgents" "$SERVICE_ROOT/usr/local/libexec/project-hoopeo"
@@ -146,7 +146,7 @@ component "$SERVICE_ROOT" click.reuven.hoopeo.dep-engine-service dep-engine-serv
 RES="$WORK/resources"; mkdir -p "$RES"
 for f in welcome.html conclusion.html; do sed "s/__VERSION__/$VERSION/g" "$HERE/resources/$f" > "$RES/$f"; done
 cp "$HERE/resources/background.png" "$HERE/resources/background-dark.png" "$RES/"
-# The licence page of the installer: the Evaluation License, then the NOTICE.
+# The license page of the installer: the Evaluation License, then the NOTICE.
 { cat "$ROOT/LICENSES/LicenseRef-Hoopeo-Evaluation.txt"; printf '\n\n--------------------------------------------------------------------------------\n\n'; cat "$ROOT/NOTICE"; } > "$RES/LICENSE.txt"
 
 product() {  # product <distribution.xml> <output name>

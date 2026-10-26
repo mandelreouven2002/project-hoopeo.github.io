@@ -92,4 +92,4 @@ The `GITHUB_TOKEN` of the workflow is enough to push the Docker image to GHCR. A
 
 ## Licensing
 
-The binaries are distributed under the Project Hoopeo Evaluation License; the source is private. A commercial licence is available on request through <https://lp.reuven.click>. See `LICENSING.md` and `NOTICE`. This repository does not take contributions (`CONTRIBUTING.md`).
+The binaries are distributed under the Project Hoopeo Evaluation License; the source is private. A commercial license is available on request through <https://lp.reuven.click>. See `LICENSING.md` and `NOTICE`. This repository does not take contributions (`CONTRIBUTING.md`).

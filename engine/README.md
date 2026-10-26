@@ -123,4 +123,4 @@ One transaction writes at a time (readers are never blocked). Hash joins do not 
 join whose smaller side is larger than the query memory fails with 53200; sorts and aggregations spill.
 References support NO ACTION only (no ON DELETE CASCADE), and DEFAULT and CHECK are not supported.
 
-License: the binaries are distributed under the Project Hoopeo Evaluation License (`../LICENSES/LicenseRef-Hoopeo-Evaluation.txt`); a commercial licence is available. See `../LICENSING.md`.
+License: the binaries are distributed under the Project Hoopeo Evaluation License (`../LICENSES/LicenseRef-Hoopeo-Evaluation.txt`); a commercial license is available. See `../LICENSING.md`.

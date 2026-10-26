@@ -3,7 +3,7 @@ Database-Enforced Privacy (DEP)
 Copyright (c) 2026 Reuven Mandelovich
 https://lp.reuven.click
 
-Project Hoopeo is distributed in layers, each under its own licence. See LICENSING.md for
+Project Hoopeo is distributed in layers, each under its own license. See LICENSING.md for
 the overview and LICENSES/ for the texts.
 
   Specification and documentation          CC BY 4.0
@@ -15,17 +15,17 @@ the overview and LICENSES/ for the texts.
 
   DEP Engine, DEP CLI and Hoopeo Studio    Binaries only, under the Project Hoopeo
                                            Evaluation License. The source code is not
-                                           public. A commercial licence is available on
+                                           public. A commercial license is available on
                                            request.
 
 Names and logos. "Project Hoopeo", "Hoopeo Studio", "DEP Engine", "DEP CLI", "DEP.js",
 the hoopoe mascot and the product icons are names and marks of Reuven Mandelovich. The
-licences above cover the software and the documents; they do not grant permission to use
+licenses above cover the software and the documents; they do not grant permission to use
 these names or logos, except to describe the origin of the work truthfully. See BRAND.md.
 
 Third-party software. DEP Engine is built on Apache DataFusion and Apache Arrow (Apache
 License 2.0), and uses other open-source crates; Hoopeo Studio is built with Tauri (Apache
 License 2.0 or MIT) and includes CodeMirror 5 (MIT); DEP.js is built on sql.js (MIT). These
-components remain under their own licences, and nothing in the licences above limits the
-rights that those licences give. The list of third-party components and their licences is
+components remain under their own licenses, and nothing in the licenses above limits the
+rights that those licenses give. The list of third-party components and their licenses is
 in THIRD-PARTY-NOTICES.

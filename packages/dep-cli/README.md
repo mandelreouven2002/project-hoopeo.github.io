@@ -35,4 +35,4 @@ Meta-commands: `\dt`, `\d TABLE`, `\di [TABLE]`, `\df`, `\du`, `\dp`, `\matrix`,
 when it failed and needs ROLLBACK.
 
 License: the binaries are distributed under the Project Hoopeo Evaluation License
-(`../../LICENSES/LicenseRef-Hoopeo-Evaluation.txt`); a commercial licence is available. See `../../LICENSING.md`.
+(`../../LICENSES/LicenseRef-Hoopeo-Evaluation.txt`); a commercial license is available. See `../../LICENSING.md`.

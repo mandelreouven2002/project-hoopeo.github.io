@@ -29,4 +29,4 @@ Screenshots on Linux: `studio/dev/screenshot.sh output`.
 
 License: the binaries are distributed under the Project Hoopeo Evaluation License
 (`../LICENSES/LicenseRef-Hoopeo-Evaluation.txt`); Help > Licenses and Notices shows it, with the notice and the
-third-party notices. A commercial licence is available. See `../LICENSING.md`.
+third-party notices. A commercial license is available. See `../LICENSING.md`.
