@@ -234,9 +234,9 @@ The [getting started guide](../../docs/guides/getting-started.md) continues from
 
 ## DEP.js
 
-<p class="btn-row"><a class="btn" href="../../playground/">Open the playground</a> <a class="btn secondary" href="https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/latest/download/dep-sql-playground.html">Download it as one file</a></p>
+<p class="btn-row"><a class="btn" href="../../playground/">Open the playground</a> <a class="btn secondary" href="https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/latest/download/dep-sql-playground.html">Download it as one file</a> <a class="btn secondary" href="https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/latest/download/depsql.js">Download depsql.js (the library)</a></p>
 
-DEP.js needs no installation: the playground runs DEP's rules in your browser, on SQLite. The downloaded file opens from disk and works offline. To use `depsql.js` as a library, in Node or in a page, see the [playground guide](playground-guide.md#using-depsqljs-as-a-library). DEP.js is open source, under the Apache License 2.0.
+DEP.js needs no installation: the playground runs DEP's rules in your browser, on SQLite. The downloaded file opens from disk and works offline. The one file is the playground page; `depsql.js` is the library on its own (167 KB, it needs [sql.js](https://sql.js.org)). To use it in Node or in a page, see the [playground guide](playground-guide.md#using-depsqljs-as-a-library). DEP.js is open source, under the Apache License 2.0.
 
 ## More
 

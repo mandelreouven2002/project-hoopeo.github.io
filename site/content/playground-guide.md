@@ -78,7 +78,7 @@ A test, `compat.js`, runs the same statements on a DEP Engine server and on DEP.
 
 ## Using `depsql.js` as a library
 
-`depsql.js` runs in a page or in Node. It needs sql.js.
+`depsql.js` runs in a page or in Node. It needs sql.js. Download it from the [latest release](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/latest/download/depsql.js), or take `playground/depsql.js` from the repository.
 
 ```js
 const SQL = await initSqlJs();                                  // sql.js
