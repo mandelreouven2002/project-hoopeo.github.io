@@ -153,8 +153,9 @@ jobs:
           npm ci
           python3 build.py
           cp dep-sql-playground.html "../../dep-sql-playground-${{ needs.prepare.outputs.version }}.html"
+          cp depsql.js ../../depsql.js
       - uses: actions/upload-artifact@v4
-        with: { name: playground, path: "dep-sql-playground-*.html" }
+        with: { name: playground, path: "dep-sql-playground-*.html\ndepsql.js" }
 
   publish:
     needs: [prepare, linux, macos, docker, playground]
