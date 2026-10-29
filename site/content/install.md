@@ -1,8 +1,16 @@
 # Install
 
-Choose a product, then your system. Every button downloads the latest release, so there is nothing to look up: download, open, install.
+Choose the environment that fits your task. For a complete local application, follow [Build your first app](../../docs/guides/first-app.md). For a browser-only introduction, open the [guided playground](../../playground/).
 
 <p class="muted"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="legal/terms.md">terms of use</a>.</p>
+
+<div class="quick-note" markdown="1">
+
+**Installing a service?** Engine packages can start a background server on port **5433**. The application tutorial uses **5543** for an isolated manual instance, so the two do not conflict. Studio and CLI also have embedded modes that need no server.
+
+**Current documented release: 0.5.2.** Download buttons follow the latest upstream release. For repeatable evaluation, choose an exact release from [GitHub Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/tag/v0.5.2) and verify its SHA256SUMS. Binary licenses and readiness are separate: read [Compatibility & limitations](../../docs/guides/compatibility.md).
+
+</div>
 
 <div class="grid two product-picker">
 <a class="card" href="#hoopeo-studio"><img class="icon" src="../assets/brand/hoopeo-studio-64.png" width="56" height="56" alt=""><h3>Hoopeo Studio</h3><p>The developer application, with a database of its own. The easiest place to start.</p></a>
@@ -146,6 +154,8 @@ This opens the demo clinic in memory, as `admin` on the operational endpoint. Ty
 **Remove:** on macOS, `/usr/local/share/project-hoopeo/uninstall.sh`. On Linux, `sudo apt remove dep-cli`.
 
 ## DEP Engine
+
+**Server path:** install Engine plus a client (DEP CLI or psql). For isolated application development, continue to [the app tutorial](../../docs/guides/first-app.md). For other machines connecting to a shared evaluation server, continue to [Administration](../../docs/guides/administration.md).
 
 The database server: the PostgreSQL wire protocol on port 5433 and, when you turn it on, the HTTP API.
 

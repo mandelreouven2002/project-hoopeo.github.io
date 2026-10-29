@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design with DEP | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Chapter 7 compares DEP with Privacy as Code tools and with privacy frameworks. This chapter shows what Privacy as Code looks like in day-to-day work with DEP.">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/designing/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Design with DEP | Project Hoopeo">
+<meta property="og:description" content="Chapter 7 compares DEP with Privacy as Code tools and with privacy frameworks. This chapter shows what Privacy as Code looks like in day-to-day work with DEP.">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/designing/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Design with DEP | Project Hoopeo">
+<meta name="twitter:description" content="Chapter 7 compares DEP with Privacy as Code tools and with privacy frameworks. This chapter shows what Privacy as Code looks like in day-to-day work with DEP.">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/" aria-current="page"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/" aria-current="page"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 4 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#5-design-principles">Design principles</a></li><li><a href="#9-dep-and-privacy-as-code">DEP and Privacy as Code</a><ul><li><a href="#91-what-changes-in-practice">What changes in practice</a></li><li><a href="#92-a-complete-inventory-by-construction">A complete inventory by construction</a></li><li><a href="#93-everyday-work-is-attributed">Everyday work is attributed</a></li><li><a href="#94-review-happens-in-code">Review happens in code</a></li><li><a href="#95-the-engine-enforces-people-decide">The engine enforces, people decide</a></li></ul></li><li><a href="#10-designing-with-dep">Designing with DEP</a><ul><li><a href="#100-why-the-order-of-design-changes">Why the order of design changes</a></li><li><a href="#101-step-1-start-from-the-workflows">Step 1: Start from the workflows</a></li><li><a href="#102-step-2-classify-the-fields">Step 2: Classify the fields</a></li><li><a href="#103-step-3-build-the-privacy-matrix">Step 3: Build the privacy matrix</a></li><li><a href="#104-step-4-assign-consumers-to-paths">Step 4: Assign consumers to paths</a></li><li><a href="#105-step-5-translate-the-decisions-into-schema">Step 5: Translate the decisions into schema</a></li><li><a href="#106-step-6-write-the-tests-before-the-implementation">Step 6: Write the tests before the implementation</a></li><li><a href="#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a></li><li><a href="#108-step-8-change-the-matrix-first">Step 8: Change the matrix first</a></li><li><a href="#109-summary-of-the-method">Summary of the method</a></li></ul></li><li><a href="#11-use-cases">Use cases</a><ul><li><a href="#111-in-the-clinic">In the clinic</a></li><li><a href="#112-beyond-the-clinic">Beyond the clinic</a></li></ul></li><li><a href="#automating-the-review">Automating the review</a></li></ul></details><div class="prose"><h1 id="design-with-dep">Design with DEP</h1>
+<h2 id="5-design-principles">Design principles</h2>
+<p><strong>In one sentence:</strong> ten rules that every other part of DEP follows. Each is stated, illustrated with the clinic, and followed by what it means in practice.</p>
+<p><strong>1. Protection is declared in the schema.</strong>
+Marking a field as protected changes its behavior everywhere in the engine. There is no separate policy file that can drift out of sync with the table, and no application code that must agree to honor it.
+- <em>Example.</em> Declaring <code>national_id TEXT PROTECTED</code> protects it for all six consumers, including the AI agent connected last week.
+- <em>In practice:</em> reading the schema is enough to know what is protected.</p>
+<p><strong>2. Defined capabilities instead of general access.</strong>
+The rules are an allow-list. <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">Anchored</a> equality <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a> is permitted; everything else (substrings, casts, ordering, ranges, arbitrary functions) is rejected until it is explicitly designed and added.
+- <em>Example.</em> <code>WHERE RIGHT(national_id, 4) = '6782'</code> is rejected, because "last four digits" was never designed as an operation.
+- <em>In practice:</em> a new SQL feature never weakens protection by accident.</p>
+<p><strong>3. Single values are operational work; bulk processing is declared.</strong>
+Finding, updating, or connecting the records of one protected value is everyday work, and DEP allows it to anyone who may use the column. <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">Linking</a> whole datasets, or releasing the values themselves, is an organizational decision, and DEP allows it only in declared code.
+- <em>Example.</em> The doctor sees Dana's diagnoses; listing every patient's diagnoses requires a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a>.
+- <em>In practice:</em> applications keep working; exports and linkages become reviewable objects.</p>
+<p><strong>4. Permit and attribute.</strong>
+DEP does not decide whether a particular person may look up a particular record; ordinary permissions and the organization's own rules do that. DEP guarantees that every protected match is recorded, attributed to an identity, and rate-limited.
+- <em>Example.</em> Reception may look anyone up, and every lookup is in the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> under <code>reception_app</code>.
+- <em>In practice:</em> a single action is allowed and visible; misuse can be detected and traced.</p>
+<p><strong>5. Protection travels with the value.</strong>
+Aliases, subqueries, common table expressions, views, temporary tables, and planner transformations must not turn a protected value into an ordinary one.
+- <em>Example.</em> Wrapping <code>national_id</code> in a common table expression and calling <code>length()</code> on it is still rejected.
+- <em>In practice:</em> there is no way to launder a value through query structure.</p>
+<p><strong>6. Exceptions are explicit and local.</strong>
+The only way to reveal a protected value is <code>REVEAL</code> inside a function declared <code>DISCLOSES</code>, and the only way to link whole datasets through protected values is a function declared <code>LINKS</code>.
+- <em>Example.</em> <code>monthly_fund_report</code> is visible in the schema as the place ID numbers leave.
+- <em>In practice:</em> every exception is visible in the code, not hidden in a grant.</p>
+<p><strong>7. Reject rather than silently weaken.</strong>
+When a query asks for something forbidden, DEP returns an explicit error. It never "fixes" the query by removing a condition, because that would change its meaning and could return far more data than intended.
+- <em>Example.</em> The assistant's lookup returns <code>DEP_ENDPOINT_OPERATION</code>, not zero rows.
+- <em>In practice:</em> an error never looks like an empty result, and an empty result never hides an error.</p>
+<p><strong>8. The path belongs to the connection, not to the query.</strong>
+Whether a client is operational or masked is decided by the server at login. No statement, session variable, role switch, or pooled connection can change it.
+- <em>Example.</em> <code>SET dep.path = 'OPERATIONAL'</code> on the assistant's connection is rejected.
+- <em>In practice:</em> a misbehaving client cannot promote itself.</p>
+<p><strong>9. Familiar SQL wherever possible.</strong>
+DEP adds a few constructs to PostgreSQL-style syntax and reuses everything else: <code>CREATE FUNCTION</code>, <code>LANGUAGE sql</code>, <code>$$</code> bodies, <code>GRANT</code>, <code>COMMENT ON</code>. It adds no permission system of its own beyond two privileges for declaring functions.
+- <em>Example.</em> The monthly report is an ordinary <code>CREATE FUNCTION</code> with one extra word, <code>DISCLOSES</code>.
+- <em>In practice:</em> a PostgreSQL developer can read DEP code without learning a new language.</p>
+<p><strong>10. A precise promise rather than a grand one.</strong>
+DEP prevents direct <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosure</a>, unreviewed linkage, and arbitrary processing of protected fields. It does not promise anonymity, and it says so.
+- <em>Example.</em> DEP states plainly that a successful lookup reveals that a patient exists.
+- <em>In practice:</em> every claim in this document can be tested.</p>
+<hr />
+<h2 id="9-dep-and-privacy-as-code">DEP and Privacy as Code</h2>
+<p><strong>In one sentence:</strong> with DEP, the privacy policy is enforced by the engine that runs every query, and the evidence of that enforcement is produced in the same place.</p>
+<p><a href="/project-hoopeo.github.io/docs/privacy/#3-privacy-as-code-privacy-by-design-and-the-gdpr">Chapter 7</a> compares DEP with Privacy as Code tools and with privacy frameworks. This chapter shows what Privacy as Code looks like in day-to-day work with DEP.</p>
+<h3 id="91-what-changes-in-practice">What changes in practice</h3>
+<p><strong>What is different?</strong> Four things, each explained below with an example:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Without DEP</th>
+<th>With DEP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where values may leave</td>
+<td>Wherever a role has <code>SELECT</code></td>
+<td>Only in declared functions, listed in the catalog (<a href="/project-hoopeo.github.io/docs/designing/#92-a-complete-inventory-by-construction">A complete inventory by construction</a>)</td>
+</tr>
+<tr>
+<td>Who looked up what</td>
+<td>Unknown, unless every application logs it</td>
+<td>Every protected match is recorded by the server (<a href="/project-hoopeo.github.io/docs/designing/#93-everyday-work-is-attributed">Everyday work is attributed</a>)</td>
+</tr>
+<tr>
+<td>Review of privacy-relevant changes</td>
+<td>Depends on reviewers noticing</td>
+<td>Declared functions are syntax that CI can find (<a href="/project-hoopeo.github.io/docs/designing/#94-review-happens-in-code">Review happens in code</a>)</td>
+</tr>
+<tr>
+<td>Who decides</td>
+<td>Whoever holds a permission</td>
+<td>People decide; the engine enforces exactly what they approved (<a href="/project-hoopeo.github.io/docs/designing/#95-the-engine-enforces-people-decide">The engine enforces, people decide</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92-a-complete-inventory-by-construction">A complete inventory by construction</h3>
+<p><strong>What is it?</strong> Because <code>REVEAL</code> is legal only inside disclosing functions, and unanchored matching only inside linking functions, the set of places where protected values can leave the database, or link whole datasets, is exactly the set of declared functions.</p>
+<p><strong>Example</strong></p>
+<pre class="highlight"><code class="language-sql">SHOW FUNCTIONS;</code></pre>
+<p><strong>Selected output fields</strong> (SHOW FUNCTIONS also returns owner, callers, masked-path availability and the body):</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>function</th>
+<th>discloses</th>
+<th>links</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>diagnoses_per_fund()</code></td>
+<td></td>
+<td>person_id</td>
+<td>Diagnosis statistics per health fund</td>
+</tr>
+<tr>
+<td><code>fund_claims_report(DATE)</code></td>
+<td>person_id</td>
+<td>person_id</td>
+<td>Monthly diagnosis claims to health funds</td>
+</tr>
+<tr>
+<td><code>monthly_fund_report(DATE)</code></td>
+<td>person_id</td>
+<td></td>
+<td>Monthly visit report to health funds</td>
+</tr>
+<tr>
+<td><code>appointment_reminders(DATE)</code></td>
+<td>phone_number</td>
+<td></td>
+<td>SMS appointment reminders</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> these four rows are the clinic's complete answer to "where can identifiers leave, and where are datasets linked through them?" The answer is complete because of how the system is built, not because someone remembered to document every export.</p>
+<h3 id="93-everyday-work-is-attributed">Everyday work is attributed</h3>
+<p><strong>What is it?</strong> Anchored matching is allowed without any declaration, but every protected match on the operational path is recorded in the audit log with the identity that made it, and without the value itself.</p>
+<p><strong>Example.</strong> An administrator reviewing yesterday's activity might see entries like these:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>time</th>
+<th>identity</th>
+<th>operation</th>
+<th><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a></th>
+<th>rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-10-19 09:12</td>
+<td><code>reception_app</code></td>
+<td>lookup</td>
+<td><code>patients.national_id</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>2026-10-19 09:31</td>
+<td><code>doctors_app</code></td>
+<td>anchored join</td>
+<td><code>patients.national_id</code>, <code>medical_records.patient_national_id</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>2026-10-19 23:00</td>
+<td><code>reminder_job</code></td>
+<td>call <code>appointment_reminders()</code></td>
+<td><code>patients.phone</code></td>
+<td>64</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the clinic can show who looked up what, and when, without the log itself containing a single ID number. An audit log that held every identifier ever searched for would become the most sensitive table in the system. This table summarizes operations rather than reproducing the native audit format; use <a href="/project-hoopeo.github.io/docs/reference/show/#show-audit-n">SHOW AUDIT</a> for the implemented columns.</p>
+<h3 id="94-review-happens-in-code">Review happens in code</h3>
+<p><strong>What is it?</strong> Declared functions live in migration files like any other schema change. Because <code>DISCLOSES</code> and <code>LINKS</code> are syntax, a CI pipeline can find every addition or change and require approval from the organization's privacy officer before it merges.</p>
+<p><strong>Example.</strong> A developer adds a new disclosing function in a migration. The pipeline reports:</p>
+<pre class="highlight"><code class="language-text">privacy check: 1 change requires approval
+  + CREATE FUNCTION marketing_contacts() ... DISCLOSES phone_number
+    no matching cell in privacy/matrix.md (phone x Marketing)
+    approval required: privacy-officer</code></pre>
+<p><strong>Explanation:</strong> the engine adds the guarantee that makes this review meaningful. Code that is not declared cannot reveal values or link datasets, so the review cannot be bypassed by writing the same logic somewhere else. The checks themselves are described in <a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>.</p>
+<h3 id="95-the-engine-enforces-people-decide">The engine enforces, people decide</h3>
+<p><strong>What is the division of work?</strong> DEP does not run approval workflows, judge lawful bases, or decide what is legitimate. Those decisions belong to the privacy officer, legal counsel, and management. DEP ensures that their decisions are implemented exactly as approved, and that the organization can demonstrate it.</p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>The catalog is a complete list of exits and linkages.</li>
+<li>The audit log attributes every lookup, without holding values.</li>
+<li>Privacy-relevant changes are syntax, so CI can require their review.</li>
+<li>People decide; DEP enforces and produces the evidence.</li>
+</ul>
+<hr />
+<h2 id="10-designing-with-dep">Designing with DEP</h2>
+<p><strong>In one sentence:</strong> with DEP, privacy decisions are schema decisions, so they are made first, recorded as reviewed artifacts, and turned into grants, declared functions, and tests.</p>
+<h3 id="100-why-the-order-of-design-changes">Why the order of design changes</h3>
+<p><strong>What changes?</strong> In a conventional project the schema comes first, the application is built on it, and privacy is reviewed afterwards, usually by asking which columns should be hidden from whom. With DEP that order no longer works, because privacy decisions <em>are</em> schema decisions: whether a field is <code>PROTECTED</code>, which <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a> it belongs to, which consumer connects on which path, which roles may use which protected column, and which declared functions exist at all.</p>
+<p><strong>How does the method work?</strong> It has eight steps. Each produces an <strong>artifact</strong> that lives in the repository next to the code, is reviewed like code, and is checked automatically. That is what makes it Privacy as Code rather than a checklist.</p>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    W[1. Workflows] --&gt; C[2. Classification]
+    C --&gt; M[3. Privacy matrix]
+    M --&gt; P[4. Paths]
+    M --&gt; S[5. Schema]
+    M --&gt; T[6. Tests]
+    S --&gt; V[7. Review and sync]
+    T --&gt; V
+    V --&gt; X[8. Change the matrix first]
+    X --&gt; M</div><figcaption>Why the order of design changes</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    W[1. Workflows] --&gt; C[2. Classification]
+    C --&gt; M[3. Privacy matrix]
+    M --&gt; P[4. Paths]
+    M --&gt; S[5. Schema]
+    M --&gt; T[6. Tests]
+    S --&gt; V[7. Review and sync]
+    T --&gt; V
+    V --&gt; X[8. Change the matrix first]
+    X --&gt; M</code></pre></details></figure>
+<h3 id="101-step-1-start-from-the-workflows">Step 1: Start from the workflows</h3>
+<p><strong>Question.</strong> What must the system do, and who or what does it?</p>
+<p><strong>Why first?</strong> A value is sensitive only in relation to what is done with it, so workflows, not data, are the starting point.</p>
+<p><strong>In the clinic</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Consumer</th>
+<th>What it needs to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Check-in</td>
+<td><code>reception_app</code></td>
+<td>Find a patient by the ID number they present and show today's appointments</td>
+</tr>
+<tr>
+<td>Consultation</td>
+<td><code>doctors_app</code></td>
+<td>Find the patient in the room by ID number and show their diagnoses</td>
+</tr>
+<tr>
+<td>Reminders</td>
+<td><code>reminder_job</code></td>
+<td>Send an SMS to each patient with an appointment tomorrow</td>
+</tr>
+<tr>
+<td>Visit report</td>
+<td><code>billing_job</code></td>
+<td>Report each visit to the patient's health fund, identified by ID number</td>
+</tr>
+<tr>
+<td>Claims</td>
+<td><code>billing_job</code></td>
+<td>Submit each month's diagnoses to the health funds, identified by ID number</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td><code>bi_dashboard</code></td>
+<td>Show how many patients of each health fund have each diagnosis</td>
+</tr>
+<tr>
+<td>Scheduling</td>
+<td><code>scheduling_agent</code></td>
+<td>Suggest scheduling improvements from appointment patterns</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Artifact:</strong> <code>privacy/workflows.md</code>.</p>
+<h3 id="102-step-2-classify-the-fields">Step 2: Classify the fields</h3>
+<p><strong>Question.</strong> Which fields are protected, in which match domain, and which keys link sensitive data?</p>
+<p><strong>How?</strong> Ask two questions about every field the workflows touch:</p>
+<ol>
+<li><strong>Is the value sensitive, and is it mostly <em>used</em> rather than <em>read</em>?</strong> Protect it when the system needs to use it (to find, deduplicate, or connect records) but most consumers have no need to see it. Fields that people must see to do their work, such as a name at reception or a diagnosis in the consultation room, stay ordinary in the first version, governed by ordinary permissions.</li>
+<li><strong>Does the field link datasets whose linkage is sensitive?</strong> DEP enforces anchoring and <code>LINKS</code> only on protected columns, so a key that connects two tables is a privacy decision in its own right.</li>
+</ol>
+<p><strong>In the clinic</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Protected</th>
+<th>Match domain</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>patients.national_id</code></td>
+<td>Yes</td>
+<td><code>person_id</code></td>
+<td>Used to find patients and in the health-fund reports; nobody needs to browse it</td>
+</tr>
+<tr>
+<td><code>patients.phone</code></td>
+<td>Yes</td>
+<td><code>phone_number</code></td>
+<td>Needed only to send reminders</td>
+</tr>
+<tr>
+<td><code>medical_records.patient_national_id</code></td>
+<td>Yes</td>
+<td><code>person_id</code></td>
+<td>Links patients to diagnoses, and that linkage is sensitive</td>
+</tr>
+<tr>
+<td><code>patients.patient_id</code></td>
+<td>No</td>
+<td>None</td>
+<td>Internal key linking patients to appointments; that linkage is not sensitive</td>
+</tr>
+<tr>
+<td><code>patients.full_name</code></td>
+<td>No</td>
+<td>None</td>
+<td>Reception and doctors must see it</td>
+</tr>
+<tr>
+<td><code>medical_records.diagnosis</code></td>
+<td>No</td>
+<td>None</td>
+<td>Sensitive, but doctors must read it; governed by ordinary permissions</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> note what the design avoids: <code>medical_records</code> has no <code>patient_id</code>. Its only connection to <code>patients</code> is the protected ID number, so there is no ordinary path around the linkage rules.</p>
+<h4 id="choosing-how-tables-are-connected">Choosing how tables are connected</h4>
+<p><strong>What are the options?</strong></p>
+<ul>
+<li>An <strong>ordinary key</strong> is an open road: anyone with privilege on both tables can join them, on both paths, without anchoring or declaration.</li>
+<li>A <strong>protected key</strong> is a road with a barrier: joins through it are anchored on the operational path, declared in <code>LINKS</code> everywhere else, and impossible on the masked path.</li>
+</ul>
+<p>The clinic's map:</p>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · ordinary key · open"| A["appointments"]
+    P -.-|"national_id · protected key · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4</div><figcaption>Choosing how tables are connected</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · ordinary key · open"| A["appointments"]
+    P -.-|"national_id · protected key · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4</code></pre></details></figure>
+<p><strong>Rule 1: the default is an ordinary internal key.</strong> Most links are not sensitive. If <code>appointments</code> referenced patients through the protected ID number, the simplest dashboard figure, visits per health fund, would fail on the masked path, and every such report would need a reviewed <code>LINKS</code> function.</p>
+<p><strong>Rule 2: a protected foreign key is for links that are themselves sensitive.</strong> A list of names next to diagnoses is the clinic's most sensitive dataset even without a single ID number.</p>
+<p><strong>Rule 3: a sensitive pair must not also be connected by an open road.</strong></p>
+<p><strong>Example: an open road around the barrier.</strong> A designer adds a <code>visits</code> table with a diagnosis code, connected to patients through <code>patient_id</code>:</p>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · open"| A["appointments"]
+    P -.-|"national_id · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    P ---|"patient_id · open"| V["visits&lt;br/&gt;diagnosis_code"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4
+    linkStyle 2 stroke:#dc2626,stroke-width:3px</div><figcaption>Choosing how tables are connected</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · open"| A["appointments"]
+    P -.-|"national_id · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    P ---|"patient_id · open"| V["visits&lt;br/&gt;diagnosis_code"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4
+    linkStyle 2 stroke:#dc2626,stroke-width:3px</code></pre></details></figure>
+<pre class="highlight"><code class="language-sql">SELECT p.full_name, v.diagnosis_code
+FROM patients AS p JOIN visits AS v USING (patient_id);</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text"> full_name  | diagnosis_code
+------------+----------------
+ Dana Cohen | J45
+ ...</code></pre>
+<p><strong>Explanation:</strong> the query returns every patient's diagnoses, on both paths, without anchoring, without <code>LINKS</code>, and without touching a protected column. DEP cannot detect this by itself: to the engine, <code>patient_id</code> is an ordinary column like any other. Hence the rule:</p>
+<blockquote>
+<p><strong>Between a table that holds identities and a table that holds sensitive data, there must be no path made only of ordinary keys, of any length.</strong></p>
+</blockquote>
+<p><strong>Three questions decide each connection</strong></p>
+<figure class="book-diagram"><div class="mermaid">flowchart TD
+    Q1{"If someone received every row&lt;br/&gt;of this join, would that&lt;br/&gt;harm privacy?"}
+    Q1 -- No --&gt; K1["Use an ordinary internal key"]
+    Q1 -- Yes --&gt; K2["Use a protected foreign key"]
+    K2 --&gt; Q2{"Is there another path between&lt;br/&gt;the same data made only&lt;br/&gt;of ordinary keys?"}
+    Q2 -- Yes --&gt; F["Close it: protect a key on that path,&lt;br/&gt;or move the sensitive column"]
+    Q2 -- No --&gt; Q3
+    F --&gt; Q3
+    K1 --&gt; Q3{"Does any declared function return&lt;br/&gt;this key without its recipient needing it?"}
+    Q3 -- Yes --&gt; R["Remove it from the output"]
+    Q3 -- No --&gt; D["Done"]</div><figcaption>Choosing how tables are connected</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart TD
+    Q1{"If someone received every row&lt;br/&gt;of this join, would that&lt;br/&gt;harm privacy?"}
+    Q1 -- No --&gt; K1["Use an ordinary internal key"]
+    Q1 -- Yes --&gt; K2["Use a protected foreign key"]
+    K2 --&gt; Q2{"Is there another path between&lt;br/&gt;the same data made only&lt;br/&gt;of ordinary keys?"}
+    Q2 -- Yes --&gt; F["Close it: protect a key on that path,&lt;br/&gt;or move the sensitive column"]
+    Q2 -- No --&gt; Q3
+    F --&gt; Q3
+    K1 --&gt; Q3{"Does any declared function return&lt;br/&gt;this key without its recipient needing it?"}
+    Q3 -- Yes --&gt; R["Remove it from the output"]
+    Q3 -- No --&gt; D["Done"]</code></pre></details></figure>
+<p>The first question is a business decision. The other two can be checked from the schema itself, which makes them a natural CI check (<a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>).</p>
+<p><strong>Artifact:</strong> <code>privacy/classification.md</code>.</p>
+<h3 id="103-step-3-build-the-privacy-matrix">Step 3: Build the privacy matrix</h3>
+<p><strong>What is it?</strong> The <strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a></strong> has one row per protected field and one column per workflow. Every cell holds one of four decisions:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MATCH</strong></td>
+<td>The workflow uses the value to find, update, or connect the records of one value at a time, and never sees it.</td>
+</tr>
+<tr>
+<td><strong>LINK</strong></td>
+<td>The workflow connects whole datasets through the value.</td>
+</tr>
+<tr>
+<td><strong>DISCLOSE</strong></td>
+<td>The workflow needs the value itself to leave the database.</td>
+</tr>
+<tr>
+<td><strong>NONE</strong></td>
+<td>The workflow has no use for the value.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rules.</strong> The default is <strong>NONE</strong>. Every MATCH, LINK, and DISCLOSE carries a written reason. A cell may hold two decisions when a workflow both links and discloses.</p>
+<p><strong>In the clinic</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Check-in</th>
+<th>Consultation</th>
+<th>Reminders</th>
+<th>Visit report</th>
+<th>Claims</th>
+<th>Statistics</th>
+<th>Scheduling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>patients.national_id</code></td>
+<td>MATCH</td>
+<td>MATCH</td>
+<td>NONE</td>
+<td>DISCLOSE</td>
+<td>DISCLOSE + LINK</td>
+<td>LINK</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td><code>patients.phone</code></td>
+<td>NONE</td>
+<td>NONE</td>
+<td>DISCLOSE</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td><code>medical_records.patient_national_id</code></td>
+<td>NONE</td>
+<td>MATCH</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>LINK</td>
+<td>LINK</td>
+<td>NONE</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation: reading by column</strong> tells you what each consumer may do. Reception finds patients by ID number, but cannot look anyone up by phone and never reaches diagnoses. Doctors reach diagnoses one patient at a time: MATCH, not LINK. The reminder job releases phone numbers and touches no ID number. The dashboard links without matching anything itself, by calling a declared function. The scheduling assistant touches no protected value at all.</p>
+<p><strong>Explanation: reading by row</strong> tells you where each value goes. The ID number is used in two workflows, leaves the database in two, and links datasets in two. The phone number is never used for search and leaves only for reminders. The copy of the ID number in <code>medical_records</code> is used only by doctors, one patient at a time, and otherwise only in declared linkage; it never leaves.</p>
+<p>The matrix covers only protected columns. Ordinary fields are governed by ordinary permissions.</p>
+<p><strong>Artifact:</strong> <code>privacy/matrix.md</code>, or an equivalent machine-readable file, with a reason next to every MATCH, LINK, and DISCLOSE.</p>
+<h3 id="104-step-4-assign-consumers-to-paths">Step 4: Assign consumers to paths</h3>
+<p><strong>Question.</strong> Which consumer connects on which path?</p>
+<p><strong>How?</strong> Apply the rules of <a href="/project-hoopeo.github.io/docs/sql/#68-choosing-a-path-for-a-consumer">Choosing a path for a consumer</a> to the matrix:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Consumer</th>
+<th>Path</th>
+<th>Declared functions it may call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reception_app</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>doctors_app</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>reminder_job</code></td>
+<td><code>OPERATIONAL</code></td>
+<td><code>appointment_reminders</code></td>
+</tr>
+<tr>
+<td><code>billing_job</code></td>
+<td><code>OPERATIONAL</code></td>
+<td><code>monthly_fund_report</code>, <code>fund_claims_report</code></td>
+</tr>
+<tr>
+<td><code>bi_dashboard</code></td>
+<td><code>MASKED_READ</code></td>
+<td><code>diagnoses_per_fund</code></td>
+</tr>
+<tr>
+<td><code>scheduling_agent</code></td>
+<td><code>MASKED_READ</code></td>
+<td>None</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Artifact:</strong> <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> and role configuration.</p>
+<h3 id="105-step-5-translate-the-decisions-into-schema">Step 5: Translate the decisions into schema</h3>
+<p><strong>Question.</strong> How does each decision become code?</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Matrix decision</th>
+<th>Schema construct</th>
+<th>In the clinic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MATCH</td>
+<td>Privilege on that protected column for the consumer's role, and the operational endpoint</td>
+<td><code>GRANT SELECT (patient_id, national_id, full_name, health_fund) ON patients TO reception_app</code></td>
+</tr>
+<tr>
+<td>LINK</td>
+<td>A function declared <code>LINKS</code>, with <code>GRANT EXECUTE</code></td>
+<td><code>diagnoses_per_fund</code> for <code>bi_dashboard</code></td>
+</tr>
+<tr>
+<td>DISCLOSE</td>
+<td>A function declared <code>DISCLOSES</code>, with <code>GRANT EXECUTE</code></td>
+<td><code>appointment_reminders</code> for <code>reminder_job</code></td>
+</tr>
+<tr>
+<td>NONE</td>
+<td>No privilege on that column for that role</td>
+<td>Reception has no privilege on <code>phone</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> declared functions are created with no public <code>EXECUTE</code>, so every consumer appears in the grants by name. The complete schema, functions, and grants are in <a href="/project-hoopeo.github.io/docs/sql/#clinic-schema">Appendix A</a>. Three details in them come straight from the method:</p>
+<ul>
+<li><strong>The reminder function returns the phone number and the appointment time, but not the visit type.</strong> A reminder SMS does not need to say what the visit is for.</li>
+<li><strong>No declared function returns <code>patient_id</code>.</strong> Each returns only what its recipient needs, so its output cannot be joined back to other tables through an ordinary key.</li>
+<li><strong>Nobody has privilege on <code>patients.phone</code>.</strong> The only route to phone numbers is <code>appointment_reminders</code>, and the NONE cells in the phone row are enforced by the absence of a grant.</li>
+</ul>
+<p><strong>Artifact:</strong> migration files.</p>
+<h3 id="106-step-6-write-the-tests-before-the-implementation">Step 6: Write the tests before the implementation</h3>
+<p><strong>Question.</strong> How do we prove each decision holds?</p>
+<p><strong>How?</strong> Every cell of the matrix becomes a test. Each test states a statement, a role, a path, and the expected result or error. The <strong>NONE</strong> cells produce negative tests, and they are the most important ones: they prove what must <em>not</em> happen.</p>
+<p><strong>In the clinic</strong></p>
+<pre class="highlight"><code class="language-sql">-- national_id x Check-in = MATCH
+-- role: reception_app    path: OPERATIONAL   expect: Dana's appointments; no national_id in output
+SELECT p.full_name, a.starts_at
+FROM patients AS p JOIN appointments AS a USING (patient_id)
+WHERE p.national_id = '123456782';
+
+-- phone x Check-in = NONE
+-- role: reception_app    path: OPERATIONAL   expect: permission denied for column phone
+SELECT full_name FROM patients WHERE phone = '+972-50-0000001';
+
+-- medical_records x Consultation = MATCH (anchored)
+-- role: doctors_app      path: OPERATIONAL   expect: Dana's diagnoses
+SELECT m.diagnosis
+FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id
+WHERE p.national_id = '123456782';
+
+-- medical_records x Consultation: linking everyone is not MATCH
+-- role: doctors_app      path: OPERATIONAL   expect: DEP_UNANCHORED_MATCH
+SELECT p.full_name, m.diagnosis
+FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id;
+
+-- national_id x Statistics = LINK
+-- role: bi_dashboard     path: MASKED_READ   expect: rows of counts
+SELECT * FROM diagnoses_per_fund();
+
+-- national_id x Scheduling = NONE
+-- role: scheduling_agent path: MASKED_READ   expect: DEP_ENDPOINT_OPERATION
+SELECT a.starts_at
+FROM patients AS p JOIN appointments AS a USING (patient_id)
+WHERE p.national_id = '123456782';
+
+-- phone x Visit report = NONE
+-- role: billing_job      path: OPERATIONAL   expect: permission denied for function
+SELECT * FROM appointment_reminders(DATE '2026-10-21');
+
+-- Disclosed values are terminal
+-- role: billing_job      path: OPERATIONAL   expect: DEP_DISCLOSED_VALUE_USE
+SELECT r.national_id, m.diagnosis
+FROM monthly_fund_report('2026-10-01') AS r
+JOIN medical_records AS m ON m.patient_national_id = r.national_id;</code></pre>
+<p><strong>Explanation:</strong> these tests use the same format a DEP conformance suite would. If any of them stops behaving as expected, a privacy decision has been broken, and the build fails.</p>
+<p><strong>Artifact:</strong> the matrix-derived test suite.</p>
+<h3 id="107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</h3>
+<p><strong>Question.</strong> Does what runs match what was decided?</p>
+<p><strong>How?</strong> The matrix and the schema live in the same repository and are reviewed together. A CI pipeline can enforce that:</p>
+<ol>
+<li>every declared function in the migrations corresponds to a DISCLOSE or LINK cell, and every such cell has a function;</li>
+<li>every privilege on a protected column corresponds to a MATCH cell for that role;</li>
+<li>every new declared function, every <code>GRANT EXECUTE</code> on one, and every new privilege on a protected column is approved by the clinic's privacy officer;</li>
+<li>every MATCH, LINK, and DISCLOSE cell carries a written reason;</li>
+<li>the map of foreign keys contains no path made only of ordinary keys between a table that holds identities and a table that holds sensitive data;</li>
+<li>the matrix-derived tests pass.</li>
+</ol>
+<p><strong>After deployment.</strong> The same comparison runs against the live database: <code>SHOW FUNCTIONS</code> and the privileges on protected columns are checked against the matrix.</p>
+<p><strong>Example: a drift report</strong></p>
+<pre class="highlight"><code class="language-text">drift: 1 object in the database is not in the matrix
+  GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO bi_dashboard
+  matrix: national_id x Statistics = LINK (not DISCLOSE)</code></pre>
+<p><strong>Explanation:</strong> someone granted the dashboard access to a disclosing function by hand. The grant would be useless on the masked path, but it contradicts what was decided, so it is reported.</p>
+<p><strong>Artifact:</strong> CI checks and a drift report.</p>
+<h3 id="108-step-8-change-the-matrix-first">Step 8: Change the matrix first</h3>
+<p><strong>What is the rule?</strong> When a new need arrives, the first change is to the matrix, not to the code.</p>
+<p><strong>Example.</strong> The marketing team asks to send patients a promotional SMS. That is a new column in the matrix, and a new question in one cell: <code>phone x Marketing = DISCLOSE?</code></p>
+<p><strong>Explanation:</strong> the question "may we?" is now asked explicitly, with the reason written down and reviewed, and perhaps answered no. Without the matrix, it would have been answered by whoever happened to have permission to run a query.</p>
+<h3 id="109-summary-of-the-method">Summary of the method</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Question it answers</th>
+<th>Artifact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Workflows</td>
+<td>What must the system do, and who does it?</td>
+<td><code>privacy/workflows.md</code></td>
+</tr>
+<tr>
+<td>2. Classification</td>
+<td>Which fields are protected, in which match domain, and which keys link sensitive data?</td>
+<td><code>privacy/classification.md</code></td>
+</tr>
+<tr>
+<td>3. Privacy matrix</td>
+<td>For each field and workflow: match, link, disclose, or nothing?</td>
+<td><code>privacy/matrix.md</code></td>
+</tr>
+<tr>
+<td>4. Paths</td>
+<td>Which consumer connects on which path?</td>
+<td>Endpoint and role configuration</td>
+</tr>
+<tr>
+<td>5. Schema</td>
+<td>How do the decisions become code?</td>
+<td>Migrations: tables, declared functions, grants</td>
+</tr>
+<tr>
+<td>6. Tests</td>
+<td>How do we prove each decision holds?</td>
+<td>Matrix-derived test suite</td>
+</tr>
+<tr>
+<td>7. Review and sync</td>
+<td>Does what runs match what was decided?</td>
+<td>CI checks and drift report</td>
+</tr>
+<tr>
+<td>8. Change</td>
+<td>How does the system evolve?</td>
+<td>Matrix first, code second</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Notes.</strong> The method does not replace legal review or a data protection impact assessment. It gives them precise inputs (the matrix and its reasons) and verifiable outputs: the schema, the tests, and the catalog.</p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>Decide privacy first: workflows, then fields, then the matrix.</li>
+<li>Every matrix cell becomes a grant or a declared function, and a test.</li>
+<li>CI and the drift report keep the database equal to what was decided.</li>
+</ul>
+<hr />
+<h2 id="11-use-cases">Use cases</h2>
+<p><strong>In one sentence:</strong> the same three patterns (match one value, link through declared code, disclose through declared code) appear wherever an organization holds identifiers it uses more than it reads.</p>
+<h3 id="111-in-the-clinic">In the clinic</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>What DEP allows</th>
+<th>What DEP prevents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reception</strong></td>
+<td>Finding a patient by the ID number she presents, and showing her appointments</td>
+<td>Downloading the register; reaching diagnoses; reverse lookup by phone</td>
+</tr>
+<tr>
+<td><strong>Consultation room</strong></td>
+<td>Seeing the diagnoses of the patient in the room, through an anchored join</td>
+<td>Listing the diagnoses of every patient</td>
+</tr>
+<tr>
+<td><strong>Statistics</strong></td>
+<td>Diagnoses per health fund, through the declared <code>diagnoses_per_fund</code></td>
+<td>Any linkage the dashboard writes itself</td>
+</tr>
+<tr>
+<td><strong>Reports to the health funds</strong></td>
+<td>The visit report and the claims, through declared disclosing functions</td>
+<td>Any other route by which ID numbers leave</td>
+</tr>
+<tr>
+<td><strong>The AI agent</strong></td>
+<td>Exploring, aggregating, and joining appointments and patients through ordinary keys</td>
+<td>Looking a patient up by ID number, or extracting identifiers, whatever SQL it generates</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> in every case, the legitimate work keeps running. What changes is that a compromised application, or an agent following the wrong instructions, cannot turn its access into a full export or a full linkage. Privacy is enforced by the server, not by the agent's prompt.</p>
+<h3 id="112-beyond-the-clinic">Beyond the clinic</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Matching</th>
+<th>Linking</th>
+<th>Disclosing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Customer service</strong> in a bank or a telecom company</td>
+<td>Agents find a caller by the identifier they give</td>
+<td>Complaint statistics per product</td>
+<td>A regulatory report identified by customer number</td>
+</tr>
+<tr>
+<td><strong>Human resources and payroll</strong></td>
+<td>HR finds an employee by ID number</td>
+<td>Salary statistics per department</td>
+<td>The annual salary report to the tax authority</td>
+</tr>
+<tr>
+<td><strong>Development and support access</strong></td>
+<td>None</td>
+<td>None</td>
+<td>None: engineers query realistic data through the masked path without ever seeing identifiers</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="automating-the-review">Automating the review</h2>
+<p>The matrix-to-schema checks and drift report above describe a review workflow to implement in your own project. DEP Engine exposes SHOW FUNCTIONS, SHOW GRANTS and SHOW PRIVACY MATRIX; it does not ship the illustrated CI policy or an automatic privacy-officer approval service.</p>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" alt="Compare the computed privacy matrix with the workflows and permissions you approved." width="1000" height="625"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" alt="" width="1000" height="625"></a></p>
+<figcaption>Compare the computed privacy matrix with the workflows and permissions you approved.</figcaption>
+</figure></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/functions/"><small>Previous</small>Declared functions</a><a class="next" href="/project-hoopeo.github.io/docs/application/"><small>Next</small>Build an application</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#5-design-principles">Design principles</a></li><li><a href="#9-dep-and-privacy-as-code">DEP and Privacy as Code</a><ul><li><a href="#91-what-changes-in-practice">What changes in practice</a></li><li><a href="#92-a-complete-inventory-by-construction">A complete inventory by construction</a></li><li><a href="#93-everyday-work-is-attributed">Everyday work is attributed</a></li><li><a href="#94-review-happens-in-code">Review happens in code</a></li><li><a href="#95-the-engine-enforces-people-decide">The engine enforces, people decide</a></li></ul></li><li><a href="#10-designing-with-dep">Designing with DEP</a><ul><li><a href="#100-why-the-order-of-design-changes">Why the order of design changes</a></li><li><a href="#101-step-1-start-from-the-workflows">Step 1: Start from the workflows</a></li><li><a href="#102-step-2-classify-the-fields">Step 2: Classify the fields</a></li><li><a href="#103-step-3-build-the-privacy-matrix">Step 3: Build the privacy matrix</a></li><li><a href="#104-step-4-assign-consumers-to-paths">Step 4: Assign consumers to paths</a></li><li><a href="#105-step-5-translate-the-decisions-into-schema">Step 5: Translate the decisions into schema</a></li><li><a href="#106-step-6-write-the-tests-before-the-implementation">Step 6: Write the tests before the implementation</a></li><li><a href="#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a></li><li><a href="#108-step-8-change-the-matrix-first">Step 8: Change the matrix first</a></li><li><a href="#109-summary-of-the-method">Summary of the method</a></li></ul></li><li><a href="#11-use-cases">Use cases</a><ul><li><a href="#111-in-the-clinic">In the clinic</a></li><li><a href="#112-beyond-the-clinic">Beyond the clinic</a></li></ul></li><li><a href="#automating-the-review">Automating the review</a></li></ul></aside>
+</div><script src="/project-hoopeo.github.io/assets/vendor/mermaid/mermaid.tiny.js?v=ea0cdf04eb" defer></script><script src="/project-hoopeo.github.io/assets/js/diagrams.js?v=a3fd689319" defer></script>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

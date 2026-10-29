@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Server options | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="dep-engine is the DEP Engine server. Every option can be given on the command line or in an environment variable, which is how the Linux service, the macOS launch agent and the Docker image...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/server-options/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Server options | Project Hoopeo">
+<meta property="og:description" content="dep-engine is the DEP Engine server. Every option can be given on the command line or in an environment variable, which is how the Linux service, the macOS launch agent and the Docker image...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/server-options/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Server options | Project Hoopeo">
+<meta name="twitter:description" content="dep-engine is the DEP Engine server. Every option can be given on the command line or in an environment variable, which is how the Linux service, the macOS launch agent and the Docker image...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/" aria-current="page"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/" aria-current="page"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Reference</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#options">Options</a></li><li><a href="#behavior-to-know">Behavior to know</a></li><li><a href="#ports">Ports</a></li><li><a href="#dep-cli">DEP CLI</a></li></ul></details><div class="prose"><h1 id="server-options">Server options</h1>
+<p><code>dep-engine</code> is the DEP Engine server. Every option can be given on the command line or in an environment variable, which is how the Linux service, the macOS launch agent and the Docker image configure it. A command-line option overrides the environment. <code>dep-engine --help</code> prints the same list.</p>
+<pre class="highlight"><code class="language-sh">dep-engine --help 2&gt;&amp;1</code></pre>
+<pre class="highlight"><code class="language-text">usage: dep-engine [--listen 127.0.0.1:5433] [--data-dir DIR] [--key-file FILE] [--init FILE]... [--admin-password PASSWORD]
+                  [--tls-cert FILE --tls-key FILE | --tls-self-signed [--tls-host NAME]...] [--tls-required]
+                  [--http-listen 127.0.0.1:8433] [--match-limit 1000/minute] [--lock-timeout 30]
+                  [--memory-limit 4GB] [--cache-size 1GB] [--idle-in-transaction-timeout 300] [--max-connections 200]
+  --data-dir   keep the state in DIR (created if new); without it the server keeps everything in memory
+  --key-file   where the master key is kept (default DIR/master.key); keep it apart from the data
+  --init       a DEP SQL script run as admin, only when the database is new
+  --admin-password  sets the admin password; for a new database without one, a random password is printed
+  --init-admin-password-file  for a new database only: the admin password is read from FILE
+  --tls-cert, --tls-key  a PEM certificate chain and private key: clients may then connect with TLS
+  --tls-self-signed      create a self-signed certificate (DIR/tls/server.crt) for localhost and each --tls-host
+  --tls-required         refuse connections without TLS
+  --http-listen          also serve the HTTP API (HTTPS with TLS): /v1/query, /v1/health, /metrics
+  --match-limit          default limit on protected matches for roles that are not superusers, e.g. 1000/minute
+  --lock-timeout         seconds a writer waits for the write lock (default 30)
+  --memory-limit         memory for running queries; beyond it they spill to encrypted files (default: 1/4 of RAM)
+  --cache-size           page cache of the data file (default: 1/8 of RAM, at most 4GB)
+  --idle-in-transaction-timeout  seconds before a transaction left idle is rolled back (default 300; 0: never)
+  --max-connections      client connections served at once (default 200; 0: no limit)</code></pre>
+<h2 id="options">Options</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Environment variable</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--listen ADDR</code></td>
+<td><code>DEP_LISTEN</code></td>
+<td><code>127.0.0.1:5433</code></td>
+<td>Address of the PostgreSQL wire protocol. Use <code>0.0.0.0:5433</code> to accept connections from the network, with TLS</td>
+</tr>
+<tr>
+<td><code>--data-dir DIR</code></td>
+<td><code>DEP_DATA_DIR</code></td>
+<td>none</td>
+<td>Keep the database in <code>DIR</code> (created if new). Without it everything is in memory and is lost when the server stops</td>
+</tr>
+<tr>
+<td><code>--key-file FILE</code></td>
+<td><code>DEP_KEY_FILE</code></td>
+<td><code>DIR/master.key</code></td>
+<td>Where the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#master-key" data-term="Master key" data-def="The one secret from which every other key is derived.">master key</a> is kept. Keep it apart from the data</td>
+</tr>
+<tr>
+<td><code>--init FILE</code></td>
+<td><code>DEP_INIT</code></td>
+<td>none</td>
+<td>A DEP SQL script run as <code>admin</code>, only when the database is new. Repeat the option for several scripts; in <code>DEP_INIT</code>, separate them with colons</td>
+</tr>
+<tr>
+<td><code>--admin-password PW</code></td>
+<td><code>DEP_ADMIN_PASSWORD</code></td>
+<td>random, for a new database</td>
+<td>Sets the <code>admin</code> password at every start. For a new database without one, a random password is printed</td>
+</tr>
+<tr>
+<td><code>--init-admin-password-file FILE</code></td>
+<td><code>DEP_INIT_ADMIN_PASSWORD_FILE</code></td>
+<td>none</td>
+<td>The <code>admin</code> password of a new database, read from <code>FILE</code></td>
+</tr>
+<tr>
+<td><code>--tls-cert FILE</code>, <code>--tls-key FILE</code></td>
+<td><code>DEP_TLS_CERT</code>, <code>DEP_TLS_KEY</code></td>
+<td>none</td>
+<td>A PEM certificate chain and private key. Clients may then connect with TLS</td>
+</tr>
+<tr>
+<td><code>--tls-self-signed</code></td>
+<td><code>DEP_TLS_SELF_SIGNED</code> (<code>1</code>, <code>0</code>, <code>false</code>)</td>
+<td>off</td>
+<td>Create a self-signed certificate in <code>DIR/tls</code> (in <code>./tls</code> without <code>--data-dir</code>), valid for <code>localhost</code> and each <code>--tls-host</code></td>
+</tr>
+<tr>
+<td><code>--tls-host NAME</code></td>
+<td><code>DEP_TLS_HOSTS</code> (comma-separated)</td>
+<td>none</td>
+<td>A host name for the self-signed certificate. Repeat the option for several</td>
+</tr>
+<tr>
+<td><code>--tls-required</code></td>
+<td><code>DEP_TLS_REQUIRED</code> (<code>1</code>, <code>0</code>, <code>false</code>)</td>
+<td>off</td>
+<td>Refuse connections without TLS</td>
+</tr>
+<tr>
+<td><code>--http-listen ADDR</code></td>
+<td><code>DEP_HTTP_LISTEN</code></td>
+<td>off</td>
+<td>Also serve the HTTP API, over HTTPS when TLS is on</td>
+</tr>
+<tr>
+<td><code>--match-limit N/UNIT</code></td>
+<td><code>DEP_MATCH_LIMIT</code></td>
+<td>none</td>
+<td>Default limit on protected matches for roles that are not superusers. Units: <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>. For example <code>1000/minute</code></td>
+</tr>
+<tr>
+<td><code>--lock-timeout SECONDS</code></td>
+<td><code>DEP_LOCK_TIMEOUT</code></td>
+<td><code>30</code></td>
+<td>How long a writer waits for the write lock before <code>55P03</code></td>
+</tr>
+<tr>
+<td><code>--memory-limit SIZE</code></td>
+<td><code>DEP_MEMORY_LIMIT</code></td>
+<td>a quarter of RAM</td>
+<td>Memory for running queries. Beyond it they spill to encrypted files</td>
+</tr>
+<tr>
+<td><code>--cache-size SIZE</code></td>
+<td><code>DEP_CACHE_SIZE</code></td>
+<td>an eighth of RAM, at most 4 GB</td>
+<td>Page cache of the data file</td>
+</tr>
+<tr>
+<td><code>--idle-in-transaction-timeout SECONDS</code></td>
+<td><code>DEP_IDLE_IN_TRANSACTION_TIMEOUT</code></td>
+<td><code>300</code></td>
+<td>Seconds before a transaction left idle is rolled back. <code>0</code>: never</td>
+</tr>
+<tr>
+<td><code>--max-connections N</code></td>
+<td><code>DEP_MAX_CONNECTIONS</code></td>
+<td><code>200</code></td>
+<td>Client connections served at once. <code>0</code>: no limit</td>
+</tr>
+</tbody>
+</table></div>
+<p>A size is a number with an optional unit: <code>1048576</code>, <code>512MB</code>, <code>4GB</code>, <code>2GiB</code>. A malformed value stops the server with a message.</p>
+<p>In a container, the default memory and cache sizes follow the container's memory limit, not the host's.</p>
+<h2 id="behavior-to-know">Behavior to know</h2>
+<ul>
+<li><code>--init</code> runs only when the database is new. A server with a data directory runs the scripts the first time and skips them when it starts again on the same directory. A server with no <code>--data-dir</code> is new at every start, so it always runs them.</li>
+<li><code>--admin-password</code> is applied at every start, so it can also reset a forgotten password.</li>
+<li>A data directory is locked: a second server on the same directory stops with <code>55006</code>.</li>
+<li>The server prints its settings and how to connect when it starts; see the <a href="/project-hoopeo.github.io/docs/application/#run-the-full-clinic">getting started guide</a>.</li>
+</ul>
+<h2 id="ports">Ports</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5433</td>
+<td>The PostgreSQL wire protocol (<code>--listen</code>)</td>
+</tr>
+<tr>
+<td>8433</td>
+<td>The HTTP API (<code>--http-listen</code>; the examples use this number, there is no default)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="dep-cli">DEP CLI</h2>
+<p><code>dep-cli</code> takes its own options: see the <a href="/project-hoopeo.github.io/docs/reference/cli/">DEP CLI reference</a>.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/reference/show/"><small>Previous</small>SHOW commands</a><a class="next" href="/project-hoopeo.github.io/docs/reference/http-api/"><small>Next</small>HTTP API</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#options">Options</a></li><li><a href="#behavior-to-know">Behavior to know</a></li><li><a href="#ports">Ports</a></li><li><a href="#dep-cli">DEP CLI</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

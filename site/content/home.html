@@ -1,109 +1,87 @@
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">Database-Enforced Privacy (DEP)</p>
-      <h1>SQL that uses personal data without handing it out</h1>
-      <p class="lede">DEP SQL is SQL with the privacy rules in the schema. Mark a column <code>PROTECTED</code>, and applications can still find, check and connect records with it, but no query gets the value back. The few exceptions are named functions, granted and audited. DEP Engine, the database server, enforces it for every client.</p>
-      <pre class="hero-code"><code>national_id TEXT <b>PROTECTED MATCH DOMAIN</b> person_id</code></pre>
-      <div class="btn-row">
-        <a class="btn" href="{{BASE}}docs/guides/overview/">DEP SQL in five minutes</a>
-        <a class="btn secondary" href="{{BASE}}playground/">Try it in your browser</a>
-        <a class="btn secondary" href="{{BASE}}install/">Install</a>
+<section class="new-hero concept-hero">
+  <div class="wrap">
+    <div class="release-line"><span class="version-dot"></span> DATABASE-ENFORCED PRIVACY <span class="release-divider">/</span> PROJECT HOOPEO <a href="{{BASE}}docs/server/#compatibility">Implementation status <span aria-hidden="true">→</span></a></div>
+    <div class="intro-grid">
+      <div class="intro-copy">
+        <div class="home-wordmark">
+          <img class="for-light" src="{{BASE}}assets/brand/wordmark-520.webp" width="520" height="183" alt="Project Hoopeo, Database-Enforced Privacy">
+          <img class="for-dark" src="{{BASE}}assets/brand/wordmark-dark-520.webp" width="520" height="183" alt="Project Hoopeo, Database-Enforced Privacy">
+        </div>
+        <h1>Database-enforced<br><span>privacy.</span></h1>
+        <p class="hero-description">Use sensitive values without exposing them in ordinary query results. Database-Enforced Privacy (DEP) separates permission to find records, link datasets and release protected values.</p>
+        <p class="hero-principle">Declare the rules in the schema. The database applies them to every connected client.</p>
+        <div class="hero-actions"><a class="btn" href="{{BASE}}docs/">Understand DEP <span aria-hidden="true">→</span></a><a class="text-link" href="#example">See it in action <span aria-hidden="true">↓</span></a></div>
+        <p class="engine-caption"><strong>The implementation:</strong> DEP SQL and the experimental DEP Engine, built on Apache DataFusion. Connect with PostgreSQL drivers. <a href="{{BASE}}docs/server/#compatibility">Check compatibility.</a></p>
       </div>
-      <p class="notice"><span class="badge">Experimental</span> <span>Project Hoopeo is an experimental, conceptual project. See the <a href="{{BASE}}legal/terms/">terms of use</a>.</span></p>
+      <div class="proof-window hero-code" aria-labelledby="hero-code-title">
+        <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>A lookup, with DEP</span><span class="sql-label">DEP SQL</span></div>
+        <div class="hero-code-heading"><p class="eyebrow">Find it. Don't expose it.</p><h2 id="hero-code-title">Find the user.<br>Keep the email private.</h2></div>
+        <div class="hero-schema"><p class="hero-code-label">01 / Protect the column</p><pre class="schema-example"><code class="language-sql">email TEXT PROTECTED
+  MATCH DOMAIN email_address</code></pre><span class="hero-schema-note">Column definition in the users table</span></div>
+        <div class="hero-lookup"><p class="hero-code-label">02 / Use it to find a record</p><pre class="proof-query"><code class="language-sql">SELECT user_id, email
+FROM users
+WHERE email = 'dana@example.com';</code></pre></div>
+        <div class="hero-output"><div class="hero-output-heading"><span class="hero-code-label">03 / Get the permitted result</span><span class="hero-result-tag">DEP · operational</span></div><table><thead><tr><th scope="col">user_id</th><th scope="col">email</th></tr></thead><tbody><tr><td>42</td><td><span class="hero-null">NULL</span></td></tr></tbody></table><p>The email finds the record. It doesn't leave the database in this result.</p></div>
+        <a class="proof-bottom" href="#example">Explore lookups, reads and joins <span aria-hidden="true">↓</span></a>
+      </div>
     </div>
-    <div class="hero-art">
-      <picture class="for-light"><source type="image/webp" srcset="{{BASE}}assets/brand/wordmark-520.webp 1x, {{BASE}}assets/brand/wordmark-1040.webp 2x"><img src="{{BASE}}assets/brand/wordmark-520.png" width="520" height="182" alt="Project Hoopeo, Database-Enforced Privacy"></picture>
-      <picture class="for-dark"><source type="image/webp" srcset="{{BASE}}assets/brand/wordmark-dark-520.webp 1x, {{BASE}}assets/brand/wordmark-dark-1040.webp 2x"><img src="{{BASE}}assets/brand/wordmark-dark-520.png" width="520" height="182" alt="Project Hoopeo, Database-Enforced Privacy"></picture>
+    <div class="trust-strip"><span><strong>PRIVACY AS CODE</strong> in the database</span><span>Rules in the schema</span><span>Explicit permissions</span><span>Audited operations</span></div>
+  </div>
+</section>
+<section class="wrap operation-summary" aria-label="Three separate permissions"><div><span>USE</span><h2>Find a known value</h2><p>Whole-value equality can locate a record without returning its protected identifier.</p></div><div><span>LINK</span><h2>Control the scope of joins</h2><p>A protected join needs one-person anchoring, or an approved <code>LINKS</code> function.</p></div><div><span>DISCLOSE</span><h2>Make release explicit</h2><p>Plaintext leaves through a granted <code>DISCLOSES</code> function with <code>REVEAL</code>.</p></div></section>
+<section class="model-section"><div class="wrap model-grid"><div><p class="eyebrow">How DEP works</p><h2>The right to use a value<br>doesn't have to mean<br>the right to read it.</h2><p>Different applications need different operations: look up a record, compute statistics, or release an identifier for an approved task. Express those decisions in the database schema and permissions.</p><a class="text-link" href="{{BASE}}docs/">Understand DEP <span aria-hidden="true">→</span></a><div class="model-list"><div><span>01</span><div><h3>Protect columns in the schema</h3><p><code>PROTECTED MATCH DOMAIN person_id</code> keeps identifiers searchable by whole-value equality while ordinary query output is <code>NULL</code>.</p></div></div><div><span>02</span><div><h3>Choose the access path at login</h3><p><code>operational</code> permits authorized lookups. <code>analytics</code> reads ordinary columns and approved linking functions, without protected matching.</p></div></div><div><span>03</span><div><h3>Declare and audit the exceptions</h3><p><code>DISCLOSES</code> releases values through <code>REVEAL</code>. <code>LINKS</code> permits dataset-wide matching. Each function has explicit grants.</p></div></div></div></div><div class="enforcement-map" aria-labelledby="enforcement-title">
+        <div class="map-heading"><span class="eyebrow">One shared enforcement point</span><h2 id="enforcement-title">One database. Shared privacy rules.</h2></div>
+        <div class="map-clients" aria-label="Connected clients"><span>Applications</span><span>Analytics tools</span><span>AI agents</span></div>
+        <div class="map-connector"><span aria-hidden="true">↓</span> SQL queries</div>
+        <div class="map-database"><span class="map-server-label">DEP DATABASE</span><h3>Check how a value is used.</h3><p>Protected columns, access paths and declared functions define the permitted operations.</p><div class="map-rule-tags"><span>USE</span><span>LINK</span><span>DISCLOSE</span></div></div>
+        <div class="map-connector"><span aria-hidden="true">↓</span> Apply the rule before returning a result</div>
+        <div class="map-outcomes"><div><span class="map-outcome-label">ALLOWED USE</span><p>Return the permitted result.</p><small>Protected identifiers are NULL in ordinary output.</small></div><div><span class="map-outcome-label">FORBIDDEN USE</span><p>Refuse the operation.</p><small>Return an explicit DEP error and hint.</small></div></div>
+        <p class="map-footnote">An approved disclosure function can explicitly release a protected value.</p>
+      </div></div></section>
+<section class="wrap worked-example" id="example" aria-labelledby="example-title">
+  <div class="section-heading"><div><p class="eyebrow">A worked example</p><h2 id="example-title">One dataset. Four operations.</h2></div></div>
+  <p class="example-intro">To make the rules concrete, this example uses a small clinic. Compare finding a record, reading identifiers and joining protected records with and without an anchor.</p>
+  <div class="example-grid">
+    <div class="example-schema">
+      <h3 id="schema-rule">Protection starts in the schema.</h3>
+      <p>Here, the national ID is the protected value. A shared match domain lets related protected columns match each other.</p>
+      <pre class="schema-example"><code class="language-sql">CREATE TABLE patients (
+  patient_id  BIGINT PRIMARY KEY,
+  national_id TEXT PROTECTED MATCH DOMAIN person_id,
+  full_name   TEXT
+);</code></pre>
+      <p>Finding a record does not require returning its identifier. Linking the entire dataset is a separate operation.</p>
+      <a class="text-link" href="{{BASE}}docs/sql/">Learn the SQL and permissions <span aria-hidden="true">→</span></a>
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <p class="eyebrow">The language</p>
-    <picture class="for-light"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/dep-sql-adds-narrow.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/dep-sql-adds.png" width="1000" alt="What DEP SQL adds to SQL: protected columns in the schema, endpoints at login, and declared functions for the exceptions"></picture>
-    <picture class="for-dark"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/dep-sql-adds-narrow-dark.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/dep-sql-adds-dark.png" width="1000" alt="What DEP SQL adds to SQL: protected columns in the schema, endpoints at login, and declared functions for the exceptions"></picture>
-  </div>
-</section>
-
-<section class="section tint">
-  <div class="wrap">
-    <p class="eyebrow">The example used everywhere on this site</p>
-    <picture class="for-light"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/roles-narrow.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/roles.png" width="1000" alt="One clinic, four users: reception, doctors, a BI dashboard and billing, with what each can and cannot do"></picture>
-    <picture class="for-dark"><source media="(max-width: 640px)" srcset="{{BASE}}docs/images/diagrams/roles-narrow-dark.png"><img class="diagram" src="{{BASE}}docs/images/diagrams/roles-dark.png" width="1000" alt="One clinic, four users: reception, doctors, a BI dashboard and billing, with what each can and cannot do"></picture>
-    <p class="muted"><a href="{{BASE}}docs/guides/overview/#what-each-user-sees">See what each of them gets</a>, with the real output of DEP Engine.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <p class="eyebrow">The same lookup, three outcomes</p>
-    <h2 style="margin-top:0">Find a patient by ID number, without being handed the ID numbers</h2>
-    <p class="prose">Reception types the ID number a patient presents. A regular database answers with the row, ID number included, and the same privilege lets the next query read every ID number in the table. DEP finds the row by comparing a keyed fingerprint of the number (its blind index entry), and returns the column as NULL. A query that would connect every patient to every diagnosis is refused before it reads a row.</p>
-    <div class="compare">
-      <figure class="plain"><figcaption>A regular database</figcaption>
-<pre><code>SELECT full_name, national_id
+      <div class="proof-window" id="home-demo" aria-label="Compare ordinary SQL access and DEP operations">
+        <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>Same data. Four different operations.</span><span class="sql-label">SQL / DEP</span></div>
+        <div class="demo-tabs" role="tablist" aria-label="Compare SQL operations">
+          <button type="button" role="tab" id="demo-tab-lookup" aria-controls="demo-panel" data-example="lookup" aria-selected="true" tabindex="0" disabled>1. Find one</button>
+          <button type="button" role="tab" id="demo-tab-read-all" aria-controls="demo-panel" data-example="read-all" aria-selected="false" tabindex="-1" disabled>2. Read IDs</button>
+          <button type="button" role="tab" id="demo-tab-join-one" aria-controls="demo-panel" data-example="join-one" aria-selected="false" tabindex="-1" disabled>3. Join one</button>
+          <button type="button" role="tab" id="demo-tab-join-all" aria-controls="demo-panel" data-example="join-all" aria-selected="false" tabindex="-1" disabled>4. Join all</button>
+        </div>
+        <div id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-lookup">
+          <p class="demo-task" id="demo-task">Find the patient who supplied this ID</p>
+          <pre class="proof-query"><code class="language-sql" id="demo-query">SELECT full_name, national_id
 FROM patients
-WHERE national_id = '123456782';
+WHERE national_id = '123456782';</code></pre>
+          <div class="proof-result"><div class="result-heading"><span class="result-marker regular"></span> Regular SQL <span class="result-tag">DIRECT COLUMN ACCESS</span></div><div id="demo-regular" class="demo-table"><table><thead><tr><th>full_name</th><th>national_id</th></tr></thead><tbody><tr><td>Dana Cohen</td><td>123456782</td></tr></tbody></table></div></div>
+          <div class="proof-result protected-result"><div class="result-heading"><span class="result-marker protected"></span> DEP · operational <span class="result-tag">DOCTORS_APP</span></div><div id="demo-dep" class="demo-table"><table><thead><tr><th>full_name</th><th>national_id</th></tr></thead><tbody><tr><td>Dana Cohen</td><td class="demo-null">NULL</td></tr></tbody></table></div></div>
+          <div class="demo-explanation" aria-live="polite"><p id="demo-explanation">DEP uses the supplied ID to find Dana but does not return the stored identifier. Try reading all IDs or joining the whole dataset.</p><p id="demo-next">Build-verified simulator output · synthetic clinic data.</p></div>
+        </div>
+        <a class="proof-bottom" id="demo-run" href="{{BASE}}playground/?example=lookup">Run this exact query in the playground →</a>
+      </div>
+  </div>
+<p class="comparison-scope">The ordinary SQL comparison assumes direct SELECT access to the underlying column. Conventional databases can also enforce controls through restricted views, permissions and stored procedures. DEP makes these particular value-use rules explicit and applies them to analyzed queries.</p>
 
- full_name  | national_id
-------------+-------------
- Dana Cohen | 123456782
-(1 row)</code></pre></figure>
-      <figure class="dep"><figcaption>DEP Engine</figcaption>
-<pre><code>SELECT full_name, national_id
-FROM patients
-WHERE national_id = '123456782';
-
-DEP:  PROTECTED column patients.national_id is
-matched by equality through the blind index of
-MATCH DOMAIN person_id.
-DEP:  Output column national_id is PROTECTED
-and is returned as NULL.
- full_name  | national_id
-------------+-------------
- Dana Cohen | NULL
-(1 row)</code></pre></figure>
-      <figure class="refused"><figcaption>DEP Engine: a join with no anchor</figcaption>
-<pre><code>SELECT p.full_name, m.diagnosis
-FROM patients AS p
-JOIN medical_records AS m
-  ON m.patient_national_id = p.national_id;
-
-ERROR:  Join on PROTECTED columns
-patients.national_id and
-medical_records.patient_national_id is not
-anchored to a single protected value.
-HINT:  Anchor the join with a lookup such as
-WHERE patients.national_id = $1, or perform it
-inside a function declared LINKS person_id.
-SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)</code></pre></figure>
-    </div>
-    <p class="muted">The second and third panels are the real output of DEP Engine on the demo clinic. Every term is explained in the <a href="{{BASE}}docs/reference/glossary/">glossary</a>.</p>
+</section>
+<section class="wrap journey-section" aria-labelledby="choose-path">
+  <div class="section-heading"><div><p class="eyebrow">Start with what you need</p><h2 id="choose-path">A short path to your first query.</h2></div><a class="text-link" href="{{BASE}}docs/">Read the DEP guide <span aria-hidden="true">→</span></a></div>
+  <div class="journeys">
+    <a class="journey" href="{{BASE}}playground/"><span class="step-no">01 / EXPLORE</span><h3>See the difference</h3><p>Run the same query in regular SQL and both DEP access paths. No installation.</p><span class="journey-action">Open the playground <span aria-hidden="true">→</span></span><span class="time">2 MIN · IN YOUR BROWSER</span></a>
+    <a class="journey recommended" href="{{BASE}}docs/application/"><span class="step-no">02 / BUILD <span class="small-tag">RECOMMENDED</span></span><h3>Build a small app</h3><p>Start a server, create a protected table, grant access, and connect from Python or Node.js.</p><span class="journey-action">Build your first app <span aria-hidden="true">→</span></span><span class="time">15 MIN · LOCAL DEVELOPMENT</span></a>
+    <a class="journey" href="{{BASE}}docs/server/"><span class="step-no">03 / OPERATE</span><h3>Run a shared server</h3><p>Configure persistent storage, TLS, application roles, match limits, and backups.</p><span class="journey-action">Read the server guide <span aria-hidden="true">→</span></span><span class="time">SHARED EVALUATION ENVIRONMENT</span></a>
   </div>
 </section>
-
-<section class="section tint">
-  <div class="wrap">
-    <h2 style="margin-top:0">Start here</h2>
-    <div class="grid three steps">
-      <div class="card"><p class="step">1</p><h3>Read</h3><p>DEP SQL in five minutes: the problem, the three additions, and what each user of the clinic sees.</p><p><a class="btn" href="{{BASE}}docs/guides/overview/">Read the overview</a></p></div>
-      <div class="card teal"><p class="step">2</p><h3>Try</h3><p>The playground runs every statement three times, side by side: in a regular database, and on DEP's two access paths. Nothing to install.</p><p><a class="btn" href="{{BASE}}playground/">Open the playground</a></p></div>
-      <div class="card blue"><p class="step">3</p><h3>Install</h3><p>Hoopeo Studio is the easiest start: one download, and a database of its own. DEP CLI and DEP Engine for Linux, macOS and Docker.</p><p><a class="btn" href="{{BASE}}install/">Install</a></p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 style="margin-top:0">What is open, and what is distributed as binaries</h2>
-    <div class="grid two">
-      <div class="card"><h3>Open</h3>
-        <p>The specification and the documentation (CC BY 4.0). DEP.js, the playground and the examples (Apache 2.0). Anyone may read, cite, implement and build on them.</p></div>
-      <div class="card blue"><h3>Binaries under an evaluation license</h3>
-        <p>DEP Engine, DEP CLI and Hoopeo Studio are distributed as binaries. The Evaluation License allows evaluation, research, teaching and non-production testing. Production and commercial use is available under a commercial license.</p></div>
-    </div>
-    <p class="muted"><a href="{{BASE}}legal/licensing/">Licensing in full</a>, with the third-party libraries.</p>
-  </div>
-</section>
+<section class="wrap boundary-section"><div class="boundary-note"><span class="badge">Know the boundary</span><h2>Designed to demonstrate a model.</h2><p>DEP Engine is experimental software for evaluation. PostgreSQL wire compatibility is not full PostgreSQL compatibility. Protected identifiers do not make other fields anonymous, and DEP does not establish GDPR compliance.</p><div class="boundary-links"><a href="{{BASE}}docs/server/#compatibility">Current capabilities & limits →</a><a href="{{BASE}}docs/privacy/">Technical contributions to GDPR →</a><a href="{{BASE}}legal/licensing/">Source & evaluation licensing →</a></div></div></section>

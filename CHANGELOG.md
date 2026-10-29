@@ -1,5 +1,55 @@
 # Changelog
 
+## Clear presence-test examples (2026-10-29)
+
+- Distinguished a missing stored value from a protected value displayed as NULL.
+- Added one permission table and separate examples for presence filters, returned flags, COUNT(column) and COUNT(*), with both access paths and implementation status.
+- Aligned the glossary and server chapter with the explanation and linked them to the same examples.
+
+## Rule precision and known differences (2026-10-29)
+
+- Stated the presence rule everywhere it appears: on the masked read path a protected value cannot be tested for presence (`IS NULL`, `COUNT(col)`, ZD102); on the operational path presence may be tested in a condition and never returned (ZD101). This resolves a conflict between the SQL chapter and the guarantees in chapter 8.
+- Stated the terminal rule precisely: a disclosed value may be returned, renamed or cast, and is not a `DISTINCT` key or the argument of a function or operator.
+- DEP.js follows both rules, and no longer accepts a scalar subquery over a disclosed value as a sort key. The 38 simulator checks and the tutorial and book checks pass.
+- Chapter 6: the native disclosed-sort gap is now confirmed by native testing of DEP Engine 0.5.1, and three further differences of DEP Engine 0.5.2 are documented (presence tests, computing on disclosed values, unchecked `VALUES` rows). Fixes exist in the Engine's development source and are not yet released.
+- Corrected chapter numbers carried over from the design proposal, and the main navigation now reads Learn DEP, since the book covers more than the language.
+- Homepage: the example match domain is `email_address`, the status link is named for what it opens, and internal links use a plain arrow.
+
+## Code-led homepage introduction (2026-10-27)
+
+- Paired the DEP introduction with a compact, highlighted users/email lookup and its protected NULL output.
+- Moved the client-to-database enforcement diagram into How DEP works and kept the detailed clinic comparison below.
+
+## Concept-first homepage (2026-10-27)
+
+- Introduced Database-Enforced Privacy before the clinic, with a general explanation of value use, linkage and disclosure and a client-to-database enforcement diagram.
+- Moved the four verified SQL comparisons and clinic schema into a worked-example section after the conceptual explanation.
+- Kept the playground query links, code coloring and task paths, and updated homepage links to canonical book chapters.
+
+## Unified documentation (2026-10-27)
+
+- Consolidated the design proposal and implementation guides into eight ordered chapters, with chapter navigation, previous/next links and chapter-specific browser titles.
+- Kept Privacy as Code as a beginner introduction leading to chapter 7; restored one clear main navigation and moved reference into a collapsible menu.
+- Merged errors and DEP notes, embedded playground help, removed duplicate tutorial bodies, and preserved old URLs and section links with redirects.
+- Retained all 30 illustration families, the architectural views and all 16 Mermaid definitions; diagrams render locally with licensed Mermaid Tiny.
+- Corrected conflicting proposal material for current SQL behavior and identified future features and the existing native disclosed-sort difference.
+- Added checks for the book structure, historical links, illustration inventory and executable function examples.
+
+## Website update (2026-10-27)
+
+Website and documentation changes. The native DEP Engine version remains 0.5.2.
+
+Follow-up: restored GitHub and Install in the main navigation; added local SQL/DEP syntax highlighting, four verified interactive homepage comparisons, a query-reading guide, complete role commands, Node verification and troubleshooting.
+
+- Added a demonstration-first homepage, task-based navigation, documentation search and code copying.
+- Added a complete application tutorial and downloadable Python/Node.js starter, compatibility table and GDPR mapping.
+- Corrected nested installation code blocks, service/manual-server instructions and the report sorting example.
+- Added a five-step browser tour and aligned simulator disclosure sorting with the documented terminal rule.
+- Restored the homepage wordmark and removed synthetic-data warning labels.
+- Documented the reported native 0.5.1 disclosed-sort gap; added name, alias and ordinal compatibility cases and made the specification table explicit about sort keys. Native 0.5.2 has not been retested for this issue.
+- Added automated tutorial checks; native Engine integration remains a separate, explicit verification step.
+
+
 ## 0.5.2
 
 Licensing and distribution. DEP Engine, DEP CLI and Hoopeo Studio are now distributed as binaries under the
@@ -29,8 +79,9 @@ DEP Engine
 
 DEP.js
 - Follows DEP Engine 0.5: the same rules, errors (with the engine's SQLSTATEs and messages), DEP notes and
-  audit records. `compat.js` runs 280 statements on DEP Engine and on DEP.js and compares every
-  result; all are the same.
+  audit records. `compat.js` originally compared 280 statements on DEP Engine and DEP.js with matching
+  results. The updated simulator follows the specification for disclosed sorting, and added regression cases
+  expose a reported native 0.5.1 gap. See the compatibility guide; current full parity is not claimed.
 - Transactions: BEGIN, COMMIT, ROLLBACK, savepoints and transactional schema changes; other connections
   read the last commit; one writer at a time (55P03), 40001 and 25P02 as in the engine.
 - Constraints (PRIMARY KEY, also on a protected column, UNIQUE, NOT NULL, REFERENCES) with the engine's

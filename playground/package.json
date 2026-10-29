@@ -8,7 +8,8 @@
     "build": "python3 build.py",
     "test": "node test.js",
     "compat": "node compat.js",
-    "start": "python3 -m http.server 8000 --directory site"
+    "start": "python3 -m http.server 8000 --directory site",
+    "test:docs": "node test-docs.js"
   },
   "devDependencies": {
     "sql.js": "1.12.0"

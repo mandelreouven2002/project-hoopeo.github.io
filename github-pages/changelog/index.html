@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Website and documentation changes. The native DEP Engine version remains 0.5.2.">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/changelog/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Changelog | Project Hoopeo">
+<meta property="og:description" content="Website and documentation changes. The native DEP Engine version remains 0.5.2.">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/changelog/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Changelog | Project Hoopeo">
+<meta name="twitter:description" content="Website and documentation changes. The native DEP Engine version remains 0.5.2.">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap section"><div class="prose"><h1 id="changelog">Changelog</h1>
+<h2 id="clear-presence-test-examples-2026-10-29">Clear presence-test examples (2026-10-29)</h2>
+<ul>
+<li>Distinguished a missing stored value from a protected value displayed as NULL.</li>
+<li>Added one permission table and separate examples for presence filters, returned flags, COUNT(column) and COUNT(*), with both <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access paths</a> and implementation status.</li>
+<li>Aligned the glossary and server chapter with the explanation and linked them to the same examples.</li>
+</ul>
+<h2 id="rule-precision-and-known-differences-2026-10-29">Rule precision and known differences (2026-10-29)</h2>
+<ul>
+<li>Stated the presence rule everywhere it appears: on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a> a protected value cannot be tested for presence (<code>IS NULL</code>, <code>COUNT(col)</code>, ZD102); on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a> presence may be tested in a condition and never returned (ZD101). This resolves a conflict between the SQL chapter and the guarantees in chapter 8.</li>
+<li>Stated the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a> precisely: a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosed</a> value may be returned, renamed or cast, and is not a <code>DISTINCT</code> key or the argument of a function or operator.</li>
+<li>DEP.js follows both rules, and no longer accepts a scalar subquery over a disclosed value as a sort key. The 38 simulator checks and the tutorial and book checks pass.</li>
+<li>Chapter 6: the native disclosed-sort gap is now confirmed by native testing of DEP Engine 0.5.1, and three further differences of DEP Engine 0.5.2 are documented (presence tests, computing on disclosed values, unchecked <code>VALUES</code> rows). Fixes exist in the Engine's development source and are not yet released.</li>
+<li>Corrected chapter numbers carried over from the design proposal, and the main navigation now reads Learn DEP, since the book covers more than the language.</li>
+<li>Homepage: the example <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a> is <code>email_address</code>, the status link is named for what it opens, and internal links use a plain arrow.</li>
+</ul>
+<h2 id="code-led-homepage-introduction-2026-10-27">Code-led homepage introduction (2026-10-27)</h2>
+<ul>
+<li>Paired the DEP introduction with a compact, highlighted users/email lookup and its protected NULL output.</li>
+<li>Moved the client-to-database enforcement diagram into How DEP works and kept the detailed clinic comparison below.</li>
+</ul>
+<h2 id="concept-first-homepage-2026-10-27">Concept-first homepage (2026-10-27)</h2>
+<ul>
+<li>Introduced Database-Enforced Privacy before the clinic, with a general explanation of value use, linkage and disclosure and a client-to-database enforcement diagram.</li>
+<li>Moved the four verified SQL comparisons and clinic schema into a worked-example section after the conceptual explanation.</li>
+<li>Kept the playground query links, code coloring and task paths, and updated homepage links to canonical book chapters.</li>
+</ul>
+<h2 id="unified-documentation-2026-10-27">Unified documentation (2026-10-27)</h2>
+<ul>
+<li>Consolidated the design proposal and implementation guides into eight ordered chapters, with chapter navigation, previous/next links and chapter-specific browser titles.</li>
+<li>Kept Privacy as Code as a beginner introduction leading to chapter 7; restored one clear main navigation and moved reference into a collapsible menu.</li>
+<li>Merged errors and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP notes</a>, embedded playground help, removed duplicate tutorial bodies, and preserved old URLs and section links with redirects.</li>
+<li>Retained all 30 illustration families, the architectural views and all 16 Mermaid definitions; diagrams render locally with licensed Mermaid Tiny.</li>
+<li>Corrected conflicting proposal material for current SQL behavior and identified future features and the existing native disclosed-sort difference.</li>
+<li>Added checks for the book structure, historical links, illustration inventory and executable function examples.</li>
+</ul>
+<h2 id="website-update-2026-10-27">Website update (2026-10-27)</h2>
+<p>Website and documentation changes. The native DEP Engine version remains 0.5.2.</p>
+<p>Follow-up: restored GitHub and Install in the main navigation; added local SQL/DEP syntax highlighting, four verified interactive homepage comparisons, a query-reading guide, complete role commands, Node verification and troubleshooting.</p>
+<ul>
+<li>Added a demonstration-first homepage, task-based navigation, documentation search and code copying.</li>
+<li>Added a complete application tutorial and downloadable Python/Node.js starter, compatibility table and GDPR mapping.</li>
+<li>Corrected nested installation code blocks, service/manual-server instructions and the report sorting example.</li>
+<li>Added a five-step browser tour and aligned simulator disclosure sorting with the documented terminal rule.</li>
+<li>Restored the homepage wordmark and removed synthetic-data warning labels.</li>
+<li>Documented the reported native 0.5.1 disclosed-sort gap; added name, alias and ordinal compatibility cases and made the specification table explicit about sort keys. Native 0.5.2 has not been retested for this issue.</li>
+<li>Added automated tutorial checks; native Engine integration remains a separate, explicit verification step.</li>
+</ul>
+<h2 id="052">0.5.2</h2>
+<p>Licensing and distribution. DEP Engine, DEP CLI and Hoopeo Studio are now distributed as binaries under the
+Project Hoopeo Evaluation License; DEP.js, the specification and the examples are unchanged. No changes to the
+behavior of DEP Engine or DEP CLI.</p>
+<ul>
+<li>The source of DEP Engine, DEP CLI and Hoopeo Studio is not published. The installers are published as
+  GitHub Releases of the public repository, with <code>SHA256SUMS</code>, and the Docker image of DEP Engine as
+  <code>ghcr.io/mandelreouven2002/dep-engine</code>.</li>
+<li>The AGPL 3.0 and the additional permission for DEP CLI no longer apply. Every installer carries the
+  Evaluation License, the notice and the third-party notices.</li>
+<li>Hoopeo Studio: Help &gt; Licenses and Notices shows the Evaluation License, the notice and the third-party
+  notices.</li>
+<li>New: guides and a reference (<code>docs/guides</code>, <code>docs/reference</code>), and a website built from this repository.</li>
+<li>The playground loads its fonts from its own files instead of Google Fonts.</li>
+</ul>
+<h2 id="051">0.5.1</h2>
+<p>DEP Engine
+- Fixed: <code>current_date</code>, <code>now()</code> and the other functions of the current time failed in every statement
+  ("invoke should not be called on a simplified current_date() function"). Each statement now has its start
+  time, and the arguments of a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a> are folded to values before its body runs, so
+  <code>monthly_fund_report(current_date)</code> works.
+- Fixed: an ORDER BY could be ignored when the query also had a filter on a cast column, such as
+  <code>WHERE CAST(starts_at AS DATE) = d ORDER BY starts_at</code> (DataFusion 55 inferred that the column was
+  constant). The cast's input in a filter now goes through an internal function that stops the inference.</p>
+<p>DEP.js
+- Follows DEP Engine 0.5: the same rules, errors (with the engine's SQLSTATEs and messages), DEP notes and
+  audit records. <code>compat.js</code> originally compared 280 statements on DEP Engine and DEP.js with <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>
+  results. The updated simulator follows the specification for disclosed sorting, and added regression cases
+  expose a reported native 0.5.1 gap. See the compatibility guide; current full parity is not claimed.
+- Transactions: BEGIN, COMMIT, ROLLBACK, savepoints and transactional schema changes; other connections
+  read the last commit; one writer at a time (55P03), 40001 and 25P02 as in the engine.
+- Constraints (PRIMARY KEY, also on a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a>, UNIQUE, NOT NULL, REFERENCES) with the engine's
+  messages; indexes (CREATE [UNIQUE] INDEX, DROP INDEX, REINDEX); EXPLAIN with the engine's Read: lines.
+- IN lists, NOT IN and OR on protected columns are lookups, as in the engine; IS NULL is allowed.
+- Roles with LOGIN and PASSWORD, GRANT CONNECT ON <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">ENDPOINT</a> (instead of the <code>\hba</code> command), SET ROLE,
+  <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limits</a> per role, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> (SHOW AUDIT), the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a>, key rotation, and the other SHOW
+  commands.
+- The playground's clinic is examples/clinic.sql (with its dates moved to today). New example tabs
+  (list of IDs, transaction, constraints, indexes, roles, match limit, audit, who can match); each result
+  shows its DEP notes; new Access and Audit tabs.
+- Removed: qualified access (<code>ALTER TABLE ... SET (qualified_access)</code>), <code>ALTER TABLE ... ADD COLUMN</code>, the
+  <code>plain</code> server option and the statement log, which the engine does not have.</p>
+<h2 id="050">0.5.0</h2>
+<p>DEP Engine
+- Storage on disk: rows and indexes are read from data.redb when queries need them, in batches and in
+  parallel partitions; nothing about a table is kept in memory, and starting the server reads only the
+  catalog. Rows use a compact binary encoding. Writes change only the rows they touch.
+- Indexes: every primary key, unique key, reference and PROTECTED column has one; CREATE [UNIQUE] INDEX,
+  DROP INDEX, REINDEX, SHOW INDEXES. Equality and IN on an indexed column read only the matching rows; on a
+  protected column the key is the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">blind index</a> entry. EXPLAIN shows how each table is read.
+- Constraints enforced: PRIMARY KEY (also composite), UNIQUE, NOT NULL, REFERENCES (NO ACTION), with
+  PostgreSQL's SQLSTATEs (23505, 23502, 23503). Errors on protected columns never show the value.
+- Savepoints: SAVEPOINT, ROLLBACK TO SAVEPOINT, RELEASE SAVEPOINT.
+- Transactional schema changes: tables, indexes, functions, roles, grants and endpoints can be created and
+  dropped inside a transaction; others see them only after COMMIT, and ROLLBACK undoes them.
+- Bounded query memory (--memory-limit), with spilling to encrypted temporary files.
+- Query results stream to the client over the wire protocol.
+- The audit log moved to audit.redb, written with group commit.
+- Idle transactions are ended after --idle-in-transaction-timeout (default 300 s); --max-connections
+  (default 200); --cache-size for the data file.
+- The extended protocol infers parameter types for INSERT, UPDATE and DELETE.
+- Values of bound parameters are removed from every error message, on the wire protocol and the HTTP API, and
+  the HTTP API returns each statement as sent ($1), never with the values.
+- New metrics: index lookups, full scans, rows read, spilled bytes, idle transactions ended, query memory.
+- 0.4 data directories are converted on first open (keys with existing duplicates are kept but not
+  enforced, until REINDEX).</p>
+<ul>
+<li>examples/clinic.sql: patients.national_id is UNIQUE (enforced through blind index entries).</li>
+</ul>
+<p>DEP CLI
+- <code>\di [TABLE]</code> lists indexes.</p>
+<p>Hoopeo Studio
+- No demo database: the Demo Clinic profiles, the Open Demo Clinic command and the option to load the demo
+  into a new database are gone (examples/clinic.sql is still in the source distribution).
+- The Output tab's error and DEP-note badges count only the latest run, and explain themselves on hover.
+- Tools &gt; Indexes; the object browser shows row counts, unique keys and references.</p>
+<h2 id="040">0.4.0</h2>
+<p>DEP Engine
+- Storage in redb (<code>data.redb</code>): the catalog, rows by row id, the audit log and the key fingerprint. Each
+  commit writes only the changed rows, in one durable write transaction. Data directories from 0.3 are
+  migrated on first open (the old files are kept in <code>legacy-0.3/</code>).
+- The DEP Transaction Manager: BEGIN, COMMIT, ROLLBACK; snapshot reads; one writer at a time with a lock
+  timeout (55P03); write conflicts (40001); aborted transactions (25P02); schema changes outside
+  transactions (25001).
+- <code>CREATE TEMPORARY TABLE</code>: tables kept in memory only.
+- The audit log (<code>SHOW AUDIT</code>): protected matches, disclosures, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a>, refusals, rate limits, key rotation;
+  never a protected value or the statement text.
+- Match limits per role (<code>ALTER ROLE ... MATCH LIMIT n PER MINUTE | NONE | DEFAULT</code>) and a server default
+  (<code>--match-limit</code>); <code>DEP_MATCH_RATE_LIMITED</code> (ZD109) is now enforced.
+- <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#master-key" data-term="Master key" data-def="The one secret from which every other key is derived.">Master key</a> rotation (<code>ALTER SYSTEM ROTATE MASTER KEY</code>), crash-safe, with a key fingerprint check at start.
+- PostgreSQL wire protocol: the extended protocol (prepared statements and parameters), typed columns,
+  transaction status, one connection per client socket, <code>--tls-required</code>.
+- HTTP API on Axum (<code>--http-listen</code>): <code>/v1/query</code>, <code>/v1/health</code>, <code>/metrics</code> (Prometheus), over HTTPS with the
+  server's certificate.
+- A missing table is now SQLSTATE 42P01.</p>
+<p>DEP CLI
+- The prompt shows the transaction state (<code>=*&gt;</code>, <code>=!&gt;</code>); <code>\audit</code>.</p>
+<p>Hoopeo Studio
+- Session &gt; Begin Transaction; the status bar shows an open or failed transaction; Tools &gt; Audit Log; the
+  reference covers transactions, the audit log, match limits and key rotation.</p>
+<h2 id="030">0.3.0</h2>
+<ul>
+<li>Project Hoopeo: DEP Engine, DEP CLI and Hoopeo Studio (renamed from DEP Developer).</li>
+<li>DEP notes, the privacy matrix, client and server TLS.</li>
+<li>Hoopeo Studio rebuilt: native menus, square design, splash screen, connections to remote, local and
+  served databases.</li>
+<li>Installers for macOS (script), Linux, Docker and source; layered licensing.</li>
+</ul></div></div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

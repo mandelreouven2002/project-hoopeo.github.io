@@ -1,0 +1,34 @@
+/* IDE-style SQL palette, in both website themes. Output remains plain text. */
+pre code.hljs { display:block; overflow-x:visible; color:var(--ink); background:none; }
+.hljs-keyword,.hljs-selector-tag {color:#174cb5;font-weight:600}
+.hljs-string,.hljs-regexp {color:#126335}
+.hljs-comment,.hljs-quote {color:#526477;font-style:italic}
+.hljs-number,.hljs-literal {color:#9b3500}
+.hljs-type,.hljs-built_in {color:#7a318c}
+.hljs-title,.hljs-function,.hljs-title.function_ {color:#795209}
+.hljs-attr,.hljs-attribute,.hljs-variable,.hljs-params {color:#175f7f}
+.hljs-meta {color:#6b397b}
+.proof-query code.hljs,.schema-example code.hljs {color:#e8eff9}
+.proof-query .hljs-keyword,.schema-example .hljs-keyword {color:#8dc7ff}
+.proof-query .hljs-string,.schema-example .hljs-string {color:#b6dba5}
+.proof-query .hljs-number,.schema-example .hljs-number {color:#edbc88}
+.proof-query .hljs-type,.schema-example .hljs-type,.proof-query .hljs-built_in,.schema-example .hljs-built_in {color:#dcb4fa}
+.proof-query .hljs-comment,.schema-example .hljs-comment {color:#a5b6c9}
+:root[data-theme=dark] .hljs-keyword,:root[data-theme=dark] .hljs-selector-tag{color:#8dc7ff}
+:root[data-theme=dark] .hljs-string,:root[data-theme=dark] .hljs-regexp{color:#b6dba5}
+:root[data-theme=dark] .hljs-comment,:root[data-theme=dark] .hljs-quote{color:#a5b6c9}
+:root[data-theme=dark] .hljs-number,:root[data-theme=dark] .hljs-literal{color:#edbc88}
+:root[data-theme=dark] .hljs-type,:root[data-theme=dark] .hljs-built_in{color:#dcb4fa}
+:root[data-theme=dark] .hljs-title,:root[data-theme=dark] .hljs-function{color:#e4cf92}
+:root[data-theme=dark] .hljs-attr,:root[data-theme=dark] .hljs-variable,:root[data-theme=dark] .hljs-params{color:#8fd7e8}
+:root[data-theme=dark] .hljs-meta{color:#dcb4fa}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .hljs-keyword{color:#8dc7ff}:root:not([data-theme=light]) .hljs-string{color:#b6dba5}:root:not([data-theme=light]) .hljs-comment{color:#a5b6c9}:root:not([data-theme=light]) .hljs-number,:root:not([data-theme=light]) .hljs-literal{color:#edbc88}:root:not([data-theme=light]) .hljs-type,:root:not([data-theme=light]) .hljs-built_in{color:#dcb4fa}:root:not([data-theme=light]) .hljs-title{color:#e4cf92}:root:not([data-theme=light]) .hljs-attr,:root:not([data-theme=light]) .hljs-variable,:root:not([data-theme=light]) .hljs-params{color:#8fd7e8}}
+/* Editor overlay: the textarea stays the keyboard/screen-reader control. */
+.sql-editor{position:relative;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:5px;background:var(--code-bg)}
+.sql-editor #sql,.sql-editor .sql-colors{font:400 .86rem/1.55 var(--f-code);tab-size:4;letter-spacing:normal;padding:12px;margin:0;border:0;border-radius:0;width:100%;height:180px;min-height:180px;white-space:pre;overflow:auto;box-sizing:border-box}
+.sql-editor .sql-colors{position:absolute;inset:0;pointer-events:none;background:transparent;max-height:none;color:var(--ink);scrollbar-width:none}
+.sql-editor .sql-colors::-webkit-scrollbar{display:none}.sql-editor .sql-colors code{padding:0;font:inherit;background:none;white-space:pre;overflow-wrap:normal;word-break:normal}
+.sql-editor #sql{position:relative;z-index:1;background:transparent;color:transparent;caret-color:var(--ink);-webkit-text-fill-color:transparent;resize:vertical;display:block}
+.sql-editor #sql::selection{background:#528cdd55}.sql-editor:focus-within{outline:2px solid var(--focus);outline-offset:2px}.sql-editor #sql:focus-visible{outline:0}
+@media(forced-colors:active){.sql-editor .sql-colors{display:none}.sql-editor #sql{color:CanvasText;-webkit-text-fill-color:CanvasText}}
+.sql-editor .sql-colors{height:100%;min-height:100%}

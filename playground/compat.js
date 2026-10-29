@@ -86,6 +86,10 @@ const CASES = [
   A("SELECT national_id = '123456782' AS hit FROM patients ORDER BY patient_id"),
   A("SELECT count(*) FROM monthly_fund_report(DATE '2026-10-01') GROUP BY national_id"),
   A("SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY national_id LIMIT 2"),
+  // Terminal-rule regressions: keep native differences visible until the Engine is fixed.
+  A("SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY national_id"),
+  A("SELECT national_id AS exposed_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY exposed_id"),
+  A("SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY 1"),
   A("SELECT * FROM monthly_fund_report(DATE '2026-10-01') WHERE national_id IS NULL"),
   A("SELECT max(national_id) FROM monthly_fund_report(DATE '2026-10-01')"),
   A('SELECT full_name, count(*) OVER (PARTITION BY national_id) FROM patients'),

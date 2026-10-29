@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy as Code | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="A privacy decision is easier to apply when a system can read it, test it and enforce it. Privacy as Code means expressing those decisions in artifacts that teams can version and review, alongside...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/privacy-as-code/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Privacy as Code | Project Hoopeo">
+<meta property="og:description" content="A privacy decision is easier to apply when a system can read it, test it and enforce it. Privacy as Code means expressing those decisions in artifacts that teams can version and review, alongside...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/privacy-as-code/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-privacy-as-code.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy as Code | Project Hoopeo">
+<meta name="twitter:description" content="A privacy decision is easier to apply when a system can read it, test it and enforce it. Privacy as Code means expressing those decisions in artifacts that teams can version and review, alongside...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-privacy-as-code.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/" aria-current="page">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap section"><div class="prose"><h1 id="privacy-as-code">Privacy as Code</h1>
+<p>A privacy decision is easier to apply when a system can read it, test it and enforce it. Privacy as Code means expressing those decisions in artifacts that teams can version and review, alongside the software that handles the data.</p>
+<p>You do not need SQL knowledge for this introduction. <a href="/project-hoopeo.github.io/docs/privacy/">Chapter 7: Privacy as Code &amp; GDPR</a> develops the ideas, technical controls and limits in detail.</p>
+<p><span id="1-the-problem"></span></p>
+<h2 id="a-simple-example-finding-a-patient">A simple example: finding a patient</h2>
+<p>A receptionist needs to find the patient who presents an ID number. A dashboard needs statistics. A billing job sometimes needs to send an ID to an authorized recipient. These are three different tasks, and they need different permissions.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>What the application needs</th>
+<th>What DEP can make explicit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reception</td>
+<td>Find the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> record</td>
+<td>Use the supplied ID for a lookup; return ordinary fields and NULL for the protected ID</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Read approved statistics</td>
+<td>An analytics connection and, when needed, an approved <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a> function</td>
+</tr>
+<tr>
+<td>Billing</td>
+<td>Release an identifier for a defined job</td>
+<td>A named <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosure</a> function, granted to the billing role</td>
+</tr>
+</tbody>
+</table></div>
+<p>Hiding a number on a screen handles that screen. Database permissions, restricted views and stored procedures can also constrain access. DEP adds a language model that distinguishes using a protected value, linking records through it and releasing it.</p>
+<p><picture class="for-light"><source media="(max-width: 640px)" srcset="/project-hoopeo.github.io/docs/images/diagrams/roles-narrow.png"><img loading="lazy" class="diagram" src="/project-hoopeo.github.io/docs/images/diagrams/roles.png" alt="Reception, doctors, analytics and billing use different operations on the same clinic data" width="1000" height="390"><details class="diagram-text"><summary>Diagram text description</summary><p>Reception, doctors, analytics and billing use different operations on the same clinic data</p></details></picture><picture class="for-dark"><source media="(max-width: 640px)" srcset="/project-hoopeo.github.io/docs/images/diagrams/roles-narrow-dark.png"><img loading="lazy" class="diagram" src="/project-hoopeo.github.io/docs/images/diagrams/roles-dark.png" alt="" width="1000" height="390"></picture></p>
+<h2 id="from-a-decision-to-an-enforced-rule">From a decision to an enforced rule</h2>
+<ol>
+<li><strong>Describe the task.</strong> Record who needs which operation and why.</li>
+<li><strong>Express the decision.</strong> Put protection, roles and approved exceptions in the schema and grants.</li>
+<li><strong>Review and test.</strong> Check that required work succeeds and unwanted uses fail.</li>
+<li><strong>Enforce and inspect.</strong> The server applies the implemented rules; its audit and metadata support review.</li>
+</ol>
+<p>This is a way of engineering privacy decisions. A comment saying “billing” does not establish a lawful purpose, and a test passing does not prove that the decision itself was appropriate.</p>
+<p><span id="2-privacy-as-code-in-the-engine"></span>
+<span id="3-the-model"></span></p>
+<h2 id="how-dep-applies-the-idea">How DEP applies the idea</h2>
+<p>DEP stands for Database-Enforced Privacy. Applications can use a protected identifier to find a record without receiving the stored identifier in ordinary query output. Broader protected linkage and plaintext disclosure need <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a> with explicit permissions.</p>
+<p><picture class="for-light"><source media="(max-width: 640px)" srcset="/project-hoopeo.github.io/docs/images/diagrams/statement-path-narrow.png"><img loading="lazy" class="diagram" src="/project-hoopeo.github.io/docs/images/diagrams/statement-path.png" alt="Statements pass through the DEP analyzer before planning; operations that violate the implemented rules are refused" width="1000" height="531"><details class="diagram-text"><summary>Diagram text description</summary><p>Statements pass through the DEP analyzer before planning; operations that violate the implemented rules are refused</p></details></picture><picture class="for-dark"><source media="(max-width: 640px)" srcset="/project-hoopeo.github.io/docs/images/diagrams/statement-path-narrow-dark.png"><img loading="lazy" class="diagram" src="/project-hoopeo.github.io/docs/images/diagrams/statement-path-dark.png" alt="" width="1000" height="531"></picture></p>
+<p>The database provides a point of enforcement shared by its connected clients. Other Privacy as Code tools may check application code, configurations or policy decisions; DEP can work alongside those controls.</p>
+<p><span id="4-how-it-maps-to-privacy-by-design"></span>
+<span id="5-what-dep-does-not-protect-against"></span></p>
+<h2 id="where-gdpr-fits">Where GDPR fits</h2>
+<p>Technical controls can support data minimisation, protection by design, security and accountability. GDPR also concerns the purpose and lawful basis of processing, people's rights and the organization's wider practices. DEP does not establish GDPR compliance, and protected identifiers do not make the rest of a record anonymous.</p>
+<p><a href="/project-hoopeo.github.io/docs/privacy/">Chapter 7</a> explains the relationship and what remains outside the database. <a href="/project-hoopeo.github.io/docs/server/#compatibility">Current capabilities and differences</a> describe the available implementation.</p>
+<p><span id="6-try-it"></span></p>
+<h2 id="continue-at-your-own-pace">Continue at your own pace</h2>
+<ul>
+<li><strong>Understand the complete model:</strong> <a href="/project-hoopeo.github.io/docs/">start the DEP guide</a>.</li>
+<li><strong>Read the privacy discussion:</strong> <a href="/project-hoopeo.github.io/docs/privacy/">chapter 7: Privacy as Code &amp; GDPR</a>.</li>
+<li><strong>See one operation change:</strong> <a href="/project-hoopeo.github.io/playground/">try the playground</a>.</li>
+</ul></div></div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

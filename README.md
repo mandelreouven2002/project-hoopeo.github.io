@@ -2,7 +2,7 @@
 
 # Project Hoopeo
 
-Project Hoopeo builds **DEP SQL**: SQL in which the privacy rules are part of the database. Mark a column `PROTECTED`, and applications can still use it to find, check and connect records, but no query gets the value back; the few exceptions are named, granted and audited functions. **DEP Engine** is the database server that enforces it, **DEP CLI** and **Hoopeo Studio** are its shell and developer application, and **DEP.js** runs it in the browser. New here? Read [DEP SQL in five minutes](docs/guides/overview.md).
+Project Hoopeo builds **DEP SQL**: SQL in which the privacy rules are part of the database. Mark a column `PROTECTED`, and applications can still use it to find, check and connect records, but no query gets the value back; the few exceptions are named, granted and audited functions. **DEP Engine** is the database server that enforces it, **DEP CLI** and **Hoopeo Studio** are its shell and developer application, and **DEP.js** runs it in the browser. New here? Read [Understand DEP](docs/book/01-understand.md).
 
 This repository holds the open layers of the project: the specification, the documentation, DEP.js and the playground, the examples, the website, and the installers, which are published as [GitHub Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).
 
@@ -52,14 +52,15 @@ DEP:  Output column national_id is PROTECTED column patients.national_id (MATCH 
 (1 row)
 ```
 
-Plain SQL gets no notes. A DEP rule gets a note, and a violation gets an error with a `ZDnnn` SQLSTATE and a hint. Over the PostgreSQL protocol the notes are `NOTICE` messages, so `psql` shows them as `NOTICE:  DEP: ...`. The [getting started guide](docs/guides/getting-started.md) runs this against a server.
+Plain SQL gets no notes. A DEP rule gets a note, and a violation gets an error with a `ZDnnn` SQLSTATE and a hint. Over the PostgreSQL protocol the notes are `NOTICE` messages, so `psql` shows them as `NOTICE:  DEP: ...`. The [application chapter](docs/book/05-application.md#run-the-full-clinic) runs this against a server.
 
 ## Contents of this repository
 
 ```
 docs/
-  design/       the design proposal, the roadmap and the diagrams
-  guides/       getting started, concepts, DEP SQL, transactions, administration, applications
+  design/       the roadmap, diagrams and a pointer to the unified guide
+  book/         the eight chapters of the DEP guide
+  guides/       compatibility pointers to the unified chapters
   reference/    errors, notes, SHOW commands, server options, HTTP API, DEP CLI
 examples/       the demo clinic (clinic.sql) and the guided tour
 playground/     DEP.js: the DEP SQL Playground, its tests and the compatibility test
@@ -67,6 +68,8 @@ site/           the source of the website
 branding/       logos and icons (see BRAND.md)
 LICENSES/       the license texts
 ```
+
+See [WEBSITE.md](WEBSITE.md) for website development, local preview, GitHub Pages builds and verification.
 
 The source of DEP Engine, DEP CLI and Hoopeo Studio is in a private repository. Their installers are in the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).
 

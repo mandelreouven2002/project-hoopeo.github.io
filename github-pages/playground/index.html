@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DEP SQL Playground | Project Hoopeo</title>
+<meta name="description" content="DEP SQL Playground: a browser simulator of Database-Enforced Privacy. It runs the DEP rules in your browser and shows the same statement in a regular database, on the masked read path and on the operational path.">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="DEP SQL Playground: a browser simulator of Database-Enforced Privacy, running the DEP rules in your browser.">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/playground/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="DEP SQL Playground | Project Hoopeo">
+<meta property="og:description" content="DEP SQL Playground: a browser simulator of Database-Enforced Privacy, running the DEP rules in your browser.">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/playground/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-playground.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DEP SQL Playground | Project Hoopeo">
+<meta name="twitter:description" content="DEP SQL Playground: a browser simulator of Database-Enforced Privacy, running the DEP rules in your browser.">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-playground.png">
+<style>
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-sans-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans Condensed'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-sans-condensed-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-sans-condensed-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans Condensed'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-sans-condensed-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2'); }
+
+/* Design tokens of Project Hoopeo, shared by the website and the playground.
+   The five brand colors are sampled from the logos in branding/:
+     hoopoe orange #FC910A (the crest), deep orange #F76312, brand blue #0370DE,
+     navy #011A3E (the wordmark text), teal #02D0D1.
+   Orange and teal fail WCAG AA as text on white, so they are used for rules, fills and highlights, and for
+   text only on navy. The text variants below are darker (light theme) or the brand color itself (dark theme).
+   In the playground, color says what a value is: plain (red), masked path (orange), operational path (teal),
+   protected (blue), disclosed (violet). */
+:root {
+  color-scheme: light;
+  --brand-orange: #FC910A; --brand-deep-orange: #F76312; --brand-blue: #0370DE; --brand-navy: #011A3E; --brand-teal: #02D0D1;
+
+  --bg: #F4F7FB; --surface: #FFFFFF; --surface-2: #EDF2F8; --ink: #011A3E; --muted: #475A76; --line: #D3DCE8;
+  --link: #0258B8; --primary: #0258B8; --primary-hover: #014A9C; --on-primary: #FFFFFF;
+  --accent: var(--brand-orange); --accent-2: var(--brand-teal);
+  --code-bg: #EEF3F9; --focus: #0258B8; --header-bg: #011A3E; --header-ink: #F4F7FB;
+
+  --plain: #B3261E;  --plain-soft: #FBE9E7;
+  --masked: #9A4F00; --masked-soft: #FDEBD3;
+  --op: #036C74;     --op-soft: #DDF4F4;
+  --prot: #0258B8;   --prot-soft: #E1ECFA;
+  --disc: #6A35C0;   --disc-soft: #EFE8FB;
+  --plain-line: #D9382B; --masked-line: #FC910A; --op-line: #02D0D1; --prot-line: #0370DE; --disc-line: #8A5CE0;
+  --good: #17724A; --bad: #B3261E; --bad-soft: #FBE9E7;
+
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-label: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
+  --f-code: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --r: 8px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --bg: #07101D; --surface: #0D1A2D; --surface-2: #132238; --ink: #EAF1FA; --muted: #A3B3C9; --line: #22344D;
+  --link: #6DB3FF; --primary: #0370DE; --primary-hover: #2A86E8; --on-primary: #FFFFFF;
+  --code-bg: #0A1526; --focus: #6DB3FF; --header-bg: #050B14; --header-ink: #EAF1FA;
+  --plain: #FF8F85; --plain-soft: #3A1B1C; --masked: #FC910A; --masked-soft: #33230D;
+  --op: #02D0D1; --op-soft: #0B3033; --prot: #6DB3FF; --prot-soft: #12284A; --disc: #C3A2FF; --disc-soft: #2A1D47;
+  --plain-line: #FF8F85; --disc-line: #C3A2FF; --prot-line: #6DB3FF;
+  --good: #5FD39A; --bad: #FF8A80; --bad-soft: #3A1B1C; } }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07101D; --surface: #0D1A2D; --surface-2: #132238; --ink: #EAF1FA; --muted: #A3B3C9; --line: #22344D;
+  --link: #6DB3FF; --primary: #0370DE; --primary-hover: #2A86E8; --on-primary: #FFFFFF;
+  --code-bg: #0A1526; --focus: #6DB3FF; --header-bg: #050B14; --header-ink: #EAF1FA;
+  --plain: #FF8F85; --plain-soft: #3A1B1C; --masked: #FC910A; --masked-soft: #33230D;
+  --op: #02D0D1; --op-soft: #0B3033; --prot: #6DB3FF; --prot-soft: #12284A; --disc: #C3A2FF; --disc-soft: #2A1D47;
+  --plain-line: #FF8F85; --disc-line: #C3A2FF; --prot-line: #6DB3FF;
+  --good: #5FD39A; --bad: #FF8A80; --bad-soft: #3A1B1C; }
+
+/* Left: the same statement in three panes (regular SQL, masked path, operational path).
+   Right: query tabs over the editor, and the schema below. One column on phones, editor first.
+   Color says what a value is: plain (red), masked path (orange), operational path (teal), protected (blue),
+   disclosed (violet). The tokens are in site/assets/css/tokens.css. */
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--f-body); min-height: 100vh; display: flex; flex-direction: column; }
+*, *::before, *::after { box-sizing: border-box; }
+button, select, input, textarea { font: inherit; color: inherit; }
+code, pre, textarea, select, .mono { font-family: var(--f-code); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.skip { position: absolute; left: -999px; top: 0; background: var(--primary); color: var(--on-primary); padding: 8px 14px; z-index: 100; }
+.skip:focus { left: 8px; top: 8px; }
+/* the bar that site/build.py replaces with the site header (and footer) */
+.site-header { background: var(--header-bg); color: var(--header-ink); border-bottom: 3px solid var(--brand-orange); }
+.site-header .wrap { display: flex; align-items: center; gap: 8px 18px; min-height: 56px; flex-wrap: wrap; padding: 6px 16px; max-width: none; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--header-ink); text-decoration: none; font: 600 1.05rem var(--f-body); }
+.brand img { width: 32px; height: auto; display: block; }
+.nav { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: auto; align-items: center; }
+.nav a { color: var(--header-ink); text-decoration: none; padding: 7px 10px; font: 500 0.95rem var(--f-label); border-bottom: 3px solid transparent; border-radius: 6px 6px 0 0; }
+.nav a:hover { background: rgba(255, 255, 255, 0.1); }
+.nav a[aria-current="page"] { border-bottom-color: var(--brand-orange); font-weight: 600; }
+.theme-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: var(--header-ink); border-radius: 6px; cursor: pointer; }
+.theme-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.theme-btn .i-sun { display: none; }
+:root[data-theme="dark"] .theme-btn .i-moon { display: none; }
+:root[data-theme="dark"] .theme-btn .i-sun { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .i-moon { display: none; }
+  :root:not([data-theme="light"]) .theme-btn .i-sun { display: block; }
+}
+.site-header :focus-visible { outline-color: #fff; }
+
+.app { flex: 1 0 auto; height: calc(100vh - 62px); box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px; }
+.standalone .app { height: calc(100vh - 62px); }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+h1 { margin: 0; font: 600 1.25rem/1.2 var(--f-body); letter-spacing: -0.005em; }
+.top .spacer { flex: 1 1 auto; }
+.btn { border: 2px solid var(--primary); background: var(--primary); color: var(--on-primary); border-radius: 6px; padding: 6px 16px; font: 600 0.88rem var(--f-label); letter-spacing: 0.03em; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn.ghost { background: transparent; color: var(--link); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--link); background: var(--surface-2); }
+
+.main { flex: 1 1 auto; min-height: 0; display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "plain ide" "masked ide" "op schema"; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.box > .body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+#pane-plain { grid-area: plain; } #pane-masked { grid-area: masked; } #pane-op { grid-area: op; }
+#ide { grid-area: ide; } #schema { grid-area: schema; }
+
+@media (max-width: 1099px) {
+  body { min-height: 0; }
+  .app, .standalone .app { height: auto; }
+  .main { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "ide" "plain" "masked" "op" "schema"; }
+  .box.pane > .body { max-height: 60vh; }
+  #schema > .body { max-height: 70vh; }
+}
+
+/* pane headers */
+.phead { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); border-top: 4px solid var(--line); }
+.phead h2 { margin: 0; font: 600 0.95rem var(--f-label); letter-spacing: 0.02em; }
+.phead .sub { font-size: 0.74rem; color: var(--muted); background: none; padding: 0; }
+.phead select { background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; font-size: 0.78rem; }
+.phead .sum { margin-left: auto; font: 600 0.74rem var(--f-code); padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.phead .sum.ok { color: var(--good); }
+.phead .sum:empty { display: none; }
+.phead .sum.err { color: var(--bad); background: var(--bad-soft); }
+#pane-plain .phead { border-top-color: var(--plain-line); } #pane-plain h2 { color: var(--plain); }
+#pane-masked .phead { border-top-color: var(--masked-line); } #pane-masked h2 { color: var(--masked); }
+#pane-op .phead { border-top-color: var(--op-line); } #pane-op h2 { color: var(--op); }
+
+/* results */
+.res { border-bottom: 1px solid var(--line); }
+.res:last-child { border-bottom: 0; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+th, td { text-align: left; padding: 4px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font: 600 0.76rem var(--f-code); color: var(--muted); position: sticky; top: 0; background: var(--surface); }
+td { font-family: var(--f-code); font-size: 0.8rem; }
+tr:last-child td { border-bottom: 0; }
+.null { color: var(--muted); font-style: italic; } .null.prot { color: var(--prot); }
+.chip { display: inline-block; font: 600 0.64rem var(--f-label); letter-spacing: 0.05em; text-transform: uppercase; padding: 0 5px; border-radius: 3px; margin-left: 5px; vertical-align: 1px; }
+.chip.prot { color: var(--prot); background: var(--prot-soft); } .chip.disc { color: var(--disc); background: var(--disc-soft); } .chip.key { color: var(--muted); background: var(--surface-2); }
+.cmd { padding: 4px 12px 7px; font: 0.8rem var(--f-code); color: var(--good); }
+.stmt { padding: 5px 12px 0; font: 0.72rem/1.4 var(--f-code); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.notes { padding: 4px 12px; font: 0.74rem/1.45 var(--f-code); color: var(--muted); }
+.notes b { color: var(--prot); font-weight: 600; }
+.phead .txn { font: 600 0.68rem var(--f-label); letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; color: var(--op); background: var(--op-soft); }
+.phead .txn.bad { color: var(--bad); background: var(--bad-soft); }
+.idx { margin-top: 5px; padding-top: 5px; border-top: 1px dashed var(--line); display: grid; gap: 1px; font-size: 0.74rem; overflow-wrap: anywhere; }
+.spanel h4 { margin-top: 4px; }
+.cmd.muted { color: var(--muted); }
+.err { margin: 0; padding: 8px 12px; background: var(--bad-soft); font: 0.8rem/1.5 var(--f-code); white-space: pre-wrap; overflow-wrap: anywhere; }
+.err b { color: var(--bad); font-weight: 600; }
+.ran { margin: 0; padding: 6px 12px; font: 0.74rem/1.45 var(--f-code); color: var(--muted); background: var(--surface-2); border-bottom: 1px solid var(--line); white-space: pre-wrap; }
+.empty { padding: 12px; color: var(--muted); font-size: 0.86rem; }
+
+/* IDE */
+.extabs { display: flex; gap: 2px; padding: 6px 6px 0; overflow-x: auto; border-bottom: 1px solid var(--line); scrollbar-width: thin; flex: 0 0 auto; }
+.extab { flex: 0 0 auto; border: 1px solid transparent; border-bottom: 0; background: transparent; padding: 6px 10px; border-radius: 5px 5px 0 0; font: 500 0.82rem var(--f-label); color: var(--muted); cursor: pointer; white-space: nowrap; }
+.extab:hover { color: var(--ink); }
+.extab[aria-selected="true"] { background: var(--surface-2); border-color: var(--line); border-top: 3px solid var(--brand-orange); color: var(--ink); font-weight: 600; margin-bottom: -1px; }
+.extab.mine { margin-left: auto; }
+.ide { flex: 1 1 auto; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; }
+textarea { width: 100%; resize: none; background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 10px 12px; font-size: 0.86rem; line-height: 1.55; tab-size: 4; }
+#sql { height: 100%; min-height: 180px; }
+.idebar { display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+.idebar label { display: grid; gap: 2px; flex: 1 1 220px; min-width: 0; }
+.idebar label span { font: 600 0.7rem var(--f-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.kbd { font: 0.72rem var(--f-code); color: var(--muted); }
+
+/* schema box */
+.stabs { display: flex; flex-wrap: wrap; gap: 2px; padding: 5px 6px; border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+.stab { border: 0; background: transparent; padding: 4px 9px; border-radius: 4px; font: 600 0.8rem var(--f-label); color: var(--muted); cursor: pointer; }
+.stab:hover { color: var(--ink); }
+.stab[aria-selected="true"] { background: var(--primary); color: var(--on-primary); }
+.spanel { padding: 10px 12px; display: grid; gap: 10px; align-content: start; }
+.tbls { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.tbl { border: 1px solid var(--line); border-radius: 5px; padding: 7px 9px; min-width: 0; }
+.tbl h3 { margin: 0 0 4px; font: 600 0.86rem var(--f-code); }
+.tbl ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 0.8rem; }
+.tbl li { overflow-wrap: anywhere; }
+.ty, .ref { color: var(--muted); font: 0.74rem var(--f-code); }
+.muted { color: var(--muted); font-size: 0.8rem; margin: 0; }
+h4 { margin: 0; font: 600 0.72rem var(--f-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.fn { border: 1px solid var(--line); border-radius: 5px; padding: 7px 9px; display: grid; gap: 4px; font-size: 0.8rem; }
+.fn h3 { margin: 0; font: 600 0.82rem var(--f-code); overflow-wrap: anywhere; }
+.fn pre, .log pre, .setup pre { margin: 0; background: var(--code-bg); padding: 6px 8px; border-radius: 4px; font-size: 0.72rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.fn summary, .setup summary { cursor: pointer; color: var(--muted); font-size: 0.76rem; }
+.good { color: var(--good); } .bad { color: var(--bad); }
+.storagehead { display: flex; gap: 8px; align-items: center; }
+.storagehead select { background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; font-size: 0.8rem; }
+/* the compact footer of the website */
+.pg-foot { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
+.pg-foot a { color: var(--link); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+/* Guided experience, shared by hosted and offline playgrounds. */
+.app, .standalone .app { height:auto; max-width:1300px; width:100%; margin-inline:auto; gap:18px; padding-block:24px; }
+.tour-panel { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:20px; }
+.tour-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.simulator-label { font:500 .65rem var(--f-code); color:var(--op); letter-spacing:.04em; }
+.tour-steps { display:flex; gap:8px; margin:19px 0; flex-wrap:wrap; }
+.tour-step { flex:1 1 120px; text-align:left; background:var(--surface-2); color:var(--muted); border:1px solid var(--line); border-radius:5px; padding:10px 12px; cursor:pointer; font:500 .8rem var(--f-body); }
+.tour-step[aria-current="step"] { background:var(--primary); color:var(--on-primary); border-color:var(--primary); }
+.tour-explanation { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.tour-explanation h2 { margin:0 0 7px; font-size:1.2rem; }
+.tour-explanation p { margin:0; color:var(--muted); max-width:820px; font-size:.9rem; }
+.simulator-boundary { font-size:.74rem; color:var(--muted); border-top:1px solid var(--line); padding-top:12px; margin-bottom:0; }
+.main { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:auto auto auto; grid-template-areas:"ide ide ide" "plain masked op" "schema schema schema"; gap:16px; flex:none; }
+#ide .ide { grid-template-columns:1fr auto; grid-template-rows:1fr; align-items:end; }
+#sql { min-height:125px; height:125px; resize:vertical; }
+#ide .idebar { flex-direction:column; align-items:end; padding-bottom:3px; }
+.pane .body { min-height:170px; max-height:420px; }
+#schema .body { max-height:320px; }
+.extabs label { display:flex; align-items:center; gap:14px; padding:6px; font-size:.85rem; }
+.extabs select { padding:6px; border:1px solid var(--line); border-radius:4px; background:var(--surface); max-width:100%; }
+#status { color:var(--bad); }
+.notes { border-bottom:1px solid var(--line); }.notes summary { cursor:pointer; font-family:var(--f-body); padding:5px 0; }
+#tour-next { white-space:nowrap; }
+@media(max-width:900px) { .main {grid-template-columns:1fr;grid-template-areas:"ide" "plain" "masked" "op" "schema";grid-template-rows:none}.tour-explanation{align-items:start}.tour-steps{gap:6px}.tour-step{flex-basis:30%;font-size:.74rem}.app{padding-inline:14px}.pane .body{max-height:350px} }
+@media(max-width:500px) { .tour-panel{padding:14px}.tour-toolbar{align-items:start}.simulator-label{font-size:.54rem}.tour-toolbar .btn{font-size:.7rem;padding:4px 7px}.tour-explanation{flex-direction:column;gap:14px}.tour-step{padding:8px;flex-basis:30%}.tour-explanation p{font-size:.83rem}#ide .ide{grid-template-columns:1fr;grid-template-rows:1fr auto}#ide .idebar{flex-direction:row;align-items:center}#sql{min-height:150px}.main .box.pane>.body{max-height:350px} }
+</style><link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417"><link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body class="in-site">
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/" aria-current="page">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<div class="app">
+  <div class="top">
+    <h1>DEP SQL Playground</h1>
+    <span class="spacer"></span>
+    <span class="kbd" id="ver"></span>
+    <span class="kbd" id="status" role="status">Starting the database...</span>
+    <a class="btn ghost" id="guide" href="/project-hoopeo.github.io/playground/#help">Guide</a>
+    <a class="btn ghost" id="glossary" href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a>
+    <button class="btn ghost" id="reset" type="button">Reset</button>
+  </div>
+
+  <section class="tour-panel" aria-label="Guided SQL tour">
+    <div class="tour-toolbar"><span class="simulator-label">DEP.js · BROWSER SIMULATOR</span><button type="button" id="tour-mode" class="btn ghost" aria-pressed="false">Browse all examples</button></div>
+    <div class="tour-steps" id="tour-steps" aria-label="Tour steps"></div>
+    <div class="tour-explanation"><div><h2 id="tour-title">Find one patient</h2><p id="tour-description">Starting the guided tour…</p></div><button type="button" id="tour-next" class="btn">Next example →</button></div>
+    <p class="simulator-boundary">This simulator runs on SQLite in your browser. DEP Engine enforces the boundary on a server. A masked identifier does not make the returned name anonymous.</p>
+  </section>
+  <main class="main" id="main">
+    <section class="box pane" id="pane-plain" aria-label="Regular SQL">
+      <div class="phead"><h2>Regular SQL</h2><code class="sub">sql.js · clinic.db</code><span class="sum" id="sum-plain"></span></div>
+      <div class="body" id="out-plain"></div>
+    </section>
+    <section class="box pane" id="pane-masked" aria-label="DEP masked read path">
+      <div class="phead"><h2>DEP · masked read path</h2><code class="sub" id="who-masked">admin@clinic:analytics</code><span class="txn" id="txn-masked" hidden></span><span class="sum" id="sum-masked"></span></div>
+      <div class="body" id="out-masked"></div>
+    </section>
+    <section class="box pane" id="pane-op" aria-label="DEP operational path">
+      <div class="phead"><h2>DEP · operational path</h2><code class="sub" id="who-op">admin@clinic:operational</code><span class="txn" id="txn-op" hidden></span><span class="sum" id="sum-op"></span></div>
+      <div class="body" id="out-op"></div>
+    </section>
+
+    <section class="box" id="ide" aria-label="SQL editor">
+      <div class="extabs" id="extabs" hidden></div>
+      <div class="ide">
+        <textarea id="sql" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL"></textarea>
+        <div class="idebar">
+          <span class="kbd">Ctrl / ⌘ + Enter</span>
+          <button class="btn" id="run" type="button">Run</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="box" id="schema" aria-label="Schema">
+      <div class="stabs" role="tablist">
+        <button class="stab" role="tab" aria-selected="true" data-p="sp-schema">Tables</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-catalog">Functions</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-access">Access</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-audit">Audit</button>
+        <button class="stab" role="tab" aria-selected="false" data-p="sp-storage">Storage</button>
+      </div>
+      <div class="body">
+        <div class="spanel" id="sp-schema"></div>
+        <div class="spanel" id="sp-catalog" hidden></div>
+        <div class="spanel" id="sp-access" hidden></div>
+        <div class="spanel" id="sp-audit" hidden></div>
+        <div class="spanel" id="sp-storage" hidden>
+          <div class="storagehead"><select id="storageTable" aria-label="Table"></select></div>
+          <div id="storageView"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- sql.js 1.12.0
+MIT license
+===========
+
+Copyright (c) 2017 sql.js authors (see AUTHORS)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+# Some portions of the Makefile taken from:
+Copyright 2017 Ryusei Yamaguchi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<script src="sql-wasm.js"></script>
+<script src="depsql.js"></script>
+<script>
+(function (global) {
+'use strict';
+/* The clinic of examples/clinic.sql, with its dates moved so that "today" is the day the page is
+   opened (test.js checks that the two stay the same apart from the dates). */
+function day(offset, hhmm) {
+  const d = new Date(); d.setDate(d.getDate() + offset);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}` + (hhmm ? ` ${hhmm}:00` : '');
+}
+function data(T) {
+  return `-- Sample data (fictional)
+INSERT INTO patients (patient_id, national_id, phone, full_name, health_fund) VALUES
+    (1, '123456782', '+972-50-0000001', 'Dana Cohen',    'Clalit'),
+    (2, '234567893', '+972-50-0000002', 'Yossi Levi',    'Maccabi'),
+    (3, '345678904', '+972-50-0000003', 'Noa Mizrahi',   'Clalit'),
+    (4, '456789015', '+972-50-0000004', 'Avi Peretz',    'Meuhedet'),
+    (5, '567890126', '+972-50-0000005', 'Maya Friedman', 'Leumit'),
+    (6, '678901237', '+972-50-0000006', 'Omer Biton',    'Maccabi');
+
+INSERT INTO appointments (appointment_id, patient_id, starts_at, visit_type) VALUES
+    (101, 1, '${T(0, '10:30')}', 'Follow-up'),
+    (102, 2, '${T(0, '11:15')}', 'First visit'),
+    (103, 3, '${T(1, '09:00')}', 'Vaccination'),
+    (104, 1, '${T(1, '12:45')}', 'Lab results'),
+    (105, 4, '${T(1, '16:00')}', 'Follow-up'),
+    (106, 5, '${T(-3, '10:00')}', 'First visit'),
+    (107, 6, '${T(-8, '08:30')}', 'Follow-up'),
+    (108, 2, '${T(-12, '14:00')}', 'Lab results'),
+    (109, 3, '${T(-20, '09:45')}', 'Follow-up'),
+    (110, 6, '${T(7, '13:30')}', 'Vaccination');
+
+INSERT INTO medical_records (record_id, patient_national_id, diagnosis, recorded_at) VALUES
+    (201, '123456782', 'Asthma',           '${T(-200)}'),
+    (202, '123456782', 'Seasonal allergy', '${T(0)}'),
+    (203, '234567893', 'Diabetes',         '${T(-12)}'),
+    (204, '345678904', 'Asthma',           '${T(-20)}'),
+    (205, '456789015', 'Hypertension',     '${T(-60)}'),
+    (206, '678901237', 'Diabetes',         '${T(-8)}');
+`;
+}
+
+function clinicSetup() {
+  const T = (o, h) => day(o, h);
+  return `-- The clinic from the DEP design proposal, for depsql on DataFusion.
+-- Load it with:  dep-cli --init examples/clinic.sql
+-- It runs as the superuser admin. Every role below has the password 'demo'.
+
+-- Roles: one per application, job, and person
+CREATE ROLE privacy_admin    LOGIN PASSWORD 'demo';
+CREATE ROLE reception_app    LOGIN PASSWORD 'demo';
+CREATE ROLE doctors_app      LOGIN PASSWORD 'demo';
+CREATE ROLE reminder_job     LOGIN PASSWORD 'demo';
+CREATE ROLE billing_job      LOGIN PASSWORD 'demo';
+CREATE ROLE bi_dashboard     LOGIN PASSWORD 'demo';
+CREATE ROLE scheduling_agent LOGIN PASSWORD 'demo';
+CREATE ROLE app_developer    LOGIN PASSWORD 'demo';
+
+-- Which role may connect through which endpoint (and so on which access path)
+GRANT CONNECT ON ENDPOINT operational TO privacy_admin, reception_app, doctors_app, reminder_job, billing_job, app_developer;
+GRANT CONNECT ON ENDPOINT analytics   TO bi_dashboard, scheduling_agent;
+
+CREATE TABLE patients (
+    patient_id  BIGINT PRIMARY KEY,
+    national_id TEXT PROTECTED MATCH DOMAIN person_id UNIQUE,   -- unique, checked through blind index entries
+    phone       TEXT PROTECTED MATCH DOMAIN phone_number,
+    full_name   TEXT,
+    health_fund TEXT
+);
+
+CREATE TABLE appointments (
+    appointment_id BIGINT PRIMARY KEY,
+    patient_id     BIGINT REFERENCES patients (patient_id),               -- link not sensitive: ordinary key
+    starts_at      TIMESTAMP,
+    visit_type     TEXT
+);
+
+CREATE TABLE medical_records (
+    record_id           BIGINT PRIMARY KEY,
+    patient_national_id TEXT PROTECTED REFERENCES patients (national_id),  -- link sensitive: protected key
+    diagnosis           TEXT,
+    recorded_at         DATE
+);
+
+${data(T)}
+-- MATCH cells: privilege on exactly the protected columns each role may match on
+GRANT SELECT (patient_id, national_id, full_name, health_fund) ON patients TO reception_app, doctors_app;
+GRANT INSERT, UPDATE ON patients TO reception_app;
+GRANT SELECT ON appointments TO reception_app, doctors_app;
+GRANT SELECT, INSERT ON medical_records TO doctors_app;
+
+-- Masked consumers read ordinary fields only
+GRANT SELECT (patient_id, health_fund) ON patients TO bi_dashboard, scheduling_agent;
+GRANT SELECT ON appointments TO bi_dashboard, scheduling_agent;
+
+-- Who may declare functions, per match domain. Declared functions run with
+-- their owner's privileges, so the privacy administrator also reads the tables.
+GRANT DISCLOSE ON MATCH DOMAIN person_id    TO privacy_admin;
+GRANT LINK     ON MATCH DOMAIN person_id    TO privacy_admin;
+GRANT DISCLOSE ON MATCH DOMAIN phone_number TO privacy_admin;
+GRANT SELECT ON patients, appointments, medical_records TO privacy_admin;
+
+SET ROLE privacy_admin;
+
+-- Reminders: phone x Reminders = DISCLOSE
+CREATE FUNCTION appointment_reminders(day DATE)
+RETURNS TABLE (phone TEXT, starts_at TIMESTAMP)
+LANGUAGE sql
+DISCLOSES phone_number
+AS $$
+    SELECT REVEAL(p.phone), a.starts_at
+    FROM appointments AS a
+    JOIN patients AS p USING (patient_id)
+    WHERE CAST(a.starts_at AS DATE) = day
+$$;
+
+-- Visit report: national_id x Visit report = DISCLOSE
+CREATE FUNCTION monthly_fund_report(report_month DATE)
+RETURNS TABLE (national_id TEXT, visit_date DATE, visit_type TEXT, health_fund TEXT)
+LANGUAGE sql
+DISCLOSES person_id
+AS $$
+    SELECT REVEAL(p.national_id), CAST(a.starts_at AS DATE), a.visit_type, p.health_fund
+    FROM appointments AS a
+    JOIN patients AS p USING (patient_id)
+    WHERE date_trunc('month', a.starts_at) = date_trunc('month', CAST(report_month AS TIMESTAMP))
+$$;
+
+-- Statistics: national_id and medical_records x Statistics = LINK
+CREATE FUNCTION diagnoses_per_fund()
+RETURNS TABLE (health_fund TEXT, diagnosis TEXT, patients BIGINT)
+LANGUAGE sql
+LINKS person_id
+AS $$
+    SELECT p.health_fund, m.diagnosis, COUNT(*)
+    FROM patients AS p
+    JOIN medical_records AS m ON m.patient_national_id = p.national_id
+    GROUP BY p.health_fund, m.diagnosis
+$$;
+
+-- Claims: national_id x Claims = DISCLOSE + LINK
+CREATE FUNCTION fund_claims_report(report_month DATE)
+RETURNS TABLE (national_id TEXT, diagnosis TEXT, recorded_at DATE)
+LANGUAGE sql
+DISCLOSES person_id
+LINKS person_id
+AS $$
+    SELECT REVEAL(p.national_id), m.diagnosis, m.recorded_at
+    FROM medical_records AS m
+    JOIN patients AS p ON p.national_id = m.patient_national_id
+    WHERE date_trunc('month', CAST(m.recorded_at AS TIMESTAMP)) = date_trunc('month', CAST(report_month AS TIMESTAMP))
+$$;
+
+COMMENT ON FUNCTION appointment_reminders(DATE) IS 'Purpose: SMS appointment reminders. Owner: operations.';
+COMMENT ON FUNCTION monthly_fund_report(DATE)   IS 'Purpose: monthly visit report to health funds. Owner: billing.';
+COMMENT ON FUNCTION diagnoses_per_fund()        IS 'Purpose: diagnosis statistics per health fund. Owner: management.';
+COMMENT ON FUNCTION fund_claims_report(DATE)    IS 'Purpose: monthly diagnosis claims to health funds. Owner: billing.';
+
+-- DISCLOSE and LINK cells: who may run each declared function
+GRANT EXECUTE ON FUNCTION appointment_reminders(DATE) TO reminder_job;
+GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE)   TO billing_job;
+GRANT EXECUTE ON FUNCTION fund_claims_report(DATE)    TO billing_job;
+GRANT EXECUTE ON FUNCTION diagnoses_per_fund()        TO bi_dashboard;
+
+RESET ROLE;
+`;
+}
+
+/* The same clinic as an ordinary SQLite database, for the Regular SQL pane (sql.js only).
+   SQLite has no CREATE FUNCTION in SQL, so the functions the examples call become views. */
+function clinicSqlite() {
+  const T = (o, h) => day(o, h);
+  return `CREATE TABLE patients (
+    patient_id  BIGINT PRIMARY KEY,
+    national_id TEXT UNIQUE,
+    phone       TEXT,
+    full_name   TEXT,
+    health_fund TEXT
+);
+
+CREATE TABLE appointments (
+    appointment_id BIGINT PRIMARY KEY,
+    patient_id     BIGINT REFERENCES patients (patient_id),
+    starts_at      TIMESTAMP,
+    visit_type     TEXT
+);
+
+CREATE TABLE medical_records (
+    record_id           BIGINT PRIMARY KEY,
+    patient_national_id TEXT REFERENCES patients (national_id),
+    diagnosis           TEXT,
+    recorded_at         DATE
+);
+
+${data(T)}
+CREATE VIEW diagnoses_per_fund AS
+    SELECT p.health_fund, m.diagnosis, COUNT(*) AS patients
+    FROM patients AS p
+    JOIN medical_records AS m ON m.patient_national_id = p.national_id
+    GROUP BY p.health_fund, m.diagnosis;
+
+CREATE VIEW monthly_fund_report AS
+    SELECT p.national_id, date(a.starts_at) AS visit_date, a.visit_type, p.health_fund
+    FROM appointments AS a
+    JOIN patients AS p USING (patient_id);
+`;
+}
+const api = { clinicSetup, clinicSqlite, day };
+if (typeof module !== 'undefined' && module.exports) module.exports = api;
+global.DepClinic = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+(function () {
+'use strict';
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const store = { get(k, d) { try { const v = localStorage.getItem('depsql5.' + k); return v === null ? d : v; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('depsql5.' + k, v); } catch (e) { /* unavailable */ } } };
+
+/* Each example runs on the three panes. `sqlite` is the regular SQL version when it differs;
+   null when regular SQL has no equivalent. */
+const EX = [
+  { label: 'Select', sql: 'SELECT full_name, national_id, health_fund\nFROM patients;' },
+  { label: 'Lookup by ID', sql: "SELECT full_name, national_id, health_fund\nFROM patients\nWHERE national_id = '123456782';" },
+  { label: 'Partial match', sql: "SELECT full_name\nFROM patients\nWHERE national_id LIKE '1234%';" },
+  { label: 'List of IDs', sql: "SELECT full_name, health_fund\nFROM patients\nWHERE national_id IN ('123456782', '345678904');" },
+  { label: 'Join one', sql: "SELECT p.full_name, m.diagnosis, m.recorded_at\nFROM patients AS p\nJOIN medical_records AS m\n  ON m.patient_national_id = p.national_id\nWHERE p.national_id = '123456782';" },
+  { label: 'Join all', sql: 'SELECT p.full_name, m.diagnosis\nFROM patients AS p\nJOIN medical_records AS m\n  ON m.patient_national_id = p.national_id;' },
+  { label: 'Linking', sql: 'SELECT *\nFROM diagnoses_per_fund();', sqlite: 'SELECT *\nFROM diagnoses_per_fund;' },
+  { label: 'Disclosing', sql: 'SELECT *\nFROM monthly_fund_report(current_date);', sqlite: "SELECT *\nFROM monthly_fund_report\nWHERE strftime('%Y-%m', visit_date) = strftime('%Y-%m', 'now', 'localtime');" },
+  { label: 'Join disclosed', sql: 'SELECT r.national_id, m.diagnosis\nFROM monthly_fund_report(current_date) AS r\nJOIN medical_records AS m\n  ON m.patient_national_id = r.national_id;', sqlite: "SELECT r.national_id, m.diagnosis\nFROM monthly_fund_report AS r\nJOIN medical_records AS m\n  ON m.patient_national_id = r.national_id\nWHERE strftime('%Y-%m', r.visit_date) = strftime('%Y-%m', 'now', 'localtime');" },
+  { label: 'Update', sql: "UPDATE patients\nSET health_fund = 'Clalit'\nWHERE national_id = '123456782';" },
+  { label: 'Transaction', sql: "-- Changes are kept only at COMMIT; ROLLBACK TO undoes part of a transaction.\nBEGIN;\nUPDATE patients SET health_fund = 'Maccabi' WHERE national_id = '123456782';\nSAVEPOINT before_phone;\nUPDATE patients SET phone = '+972-50-9999999' WHERE patient_id = 1;\nROLLBACK TO SAVEPOINT before_phone;\nSELECT full_name, health_fund FROM patients WHERE patient_id = 1;\nROLLBACK;" },
+  { label: 'Constraints', sql: "-- A duplicate ordinary key is shown in the error; a duplicate PROTECTED value is not.\nINSERT INTO patients (patient_id, full_name) VALUES (1, 'Second Dana');\nINSERT INTO patients (patient_id, national_id, full_name) VALUES (7, '123456782', 'Dana Twin');\nINSERT INTO medical_records (record_id, patient_national_id, diagnosis) VALUES (207, '999999999', 'Flu');" },
+  { label: 'Indexes', sql: "CREATE INDEX ON appointments (visit_type);\nEXPLAIN SELECT appointment_id FROM appointments WHERE visit_type = 'Vaccination';\nEXPLAIN SELECT full_name FROM patients WHERE national_id = '123456782';\nSHOW INDEXES FROM patients;\nDROP INDEX appointments_visit_type_idx;", sqlite: "CREATE INDEX appointments_visit_type_idx ON appointments (visit_type);\nEXPLAIN QUERY PLAN SELECT appointment_id FROM appointments WHERE visit_type = 'Vaccination';\nEXPLAIN QUERY PLAN SELECT full_name FROM patients WHERE national_id = '123456782';\nDROP INDEX appointments_visit_type_idx;" },
+  { label: 'Roles', sql: "-- The reception application may match national_id, but not phone.\nSET ROLE reception_app;\nSELECT full_name, phone FROM patients WHERE national_id = '123456782';\nSELECT full_name FROM patients WHERE national_id = '123456782';\nRESET ROLE;", sqlite: "SELECT full_name, phone FROM patients WHERE national_id = '123456782';\nSELECT full_name FROM patients WHERE national_id = '123456782';" },
+  { label: 'Match limit', sql: "ALTER ROLE reception_app MATCH LIMIT 2 PER MINUTE;\nSET ROLE reception_app;\nSELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893', '345678904');\nRESET ROLE;\nALTER ROLE reception_app MATCH LIMIT DEFAULT;", sqlite: "SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893', '345678904');" },
+  { label: 'Audit', sql: 'SHOW AUDIT 15;', sqlite: null },
+  { label: 'Who can match', sql: 'SHOW PRIVACY MATRIX;', sqlite: null },
+  { label: 'Read IDs', sql: 'SELECT national_id\nFROM patients;' }
+];
+const TOUR = [
+  { index: 1, label: '1. Lookup', title: 'Find one patient. Keep the ID protected.', description: 'Regular SQL returns the ID. DEP operational finds the same patient and returns NULL for the ID. DEP masked read refuses the lookup entirely.' },
+  { index: EX.findIndex(example => example.label === 'Read IDs'), label: '2. Read IDs', title: 'A match privilege does not export every identifier.', description: 'Regular SQL returns all six IDs. Both DEP paths return six NULLs. The rows still exist; their protected values cannot leave through an ordinary SELECT. Pattern searches such as LIKE are a different operation, and are refused.' },
+  { index: 4, label: '3. Join one', title: 'Connect the records of the patient in front of you.', description: 'The WHERE equality anchors this protected join to one supplied value. DEP operational permits it; masked read cannot match protected inputs.' },
+  { index: 5, label: '4. Join everyone', title: 'Whole-dataset linkage needs an explicit exception.', description: 'Removing the anchor changes the scope of the operation. DEP operational refuses the protected join with ZD107. Approved bulk linkage belongs in a LINKS function.' },
+  { index: 7, label: '5. Disclose', title: 'Release an identifier through a declared function.', description: 'The demo admin can call this approved DISCLOSES function on the operational path. Masked read cannot disclose. In an application, grant EXECUTE only to the role that needs it.' }
+];
+let tourStep = 0;
+function updateTour(i) {
+  const at = TOUR.findIndex((step) => step.index === Number(i));
+  if (at >= 0) { tourStep = at; $('#tour-title').textContent = TOUR[at].title; $('#tour-description').textContent = TOUR[at].description; }
+  else { $('#tour-title').textContent = 'Explore another example'; $('#tour-description').textContent = 'These examples share a synthetic database. Reset restores the demo; use the five tour steps to return to the guided path.'; }
+  $$('#tour-steps button').forEach((button, index) => { if (index === at) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current'); });
+  $('#tour-next').textContent = at === TOUR.length - 1 ? 'Restart tour ↺' : 'Next example →';
+  const picker = $('#example-picker'); if (picker) picker.value = String(i);
+}
+const MINE = "SELECT full_name, health_fund\nFROM patients\nWHERE national_id = '234567893';";
+
+let SQLlib, server, sqlite, current = null;
+const conn = {};
+
+function start() {
+  /* depsql.js: one DEP server with two connections. sql.js: one ordinary SQLite database. */
+  if (conn.masked) conn.masked.close();
+  if (conn.op) conn.op.close();
+  server = new window.DepSQL.Server(SQLlib, { setup: window.DepClinic.clinicSetup });
+  conn.masked = server.connect('admin', 'analytics');
+  conn.op = server.connect('admin', 'operational');
+  if (sqlite) sqlite.close();
+  sqlite = new SQLlib.Database();
+  sqlite.exec('PRAGMA foreign_keys = ON');
+  sqlite.exec(window.DepClinic.clinicSqlite());
+}
+
+/* ---------- rendering */
+function cell(v, tag) {
+  if (v === null || v === undefined) return `<span class="null${tag === 'protected' ? ' prot' : ''}">NULL</span>`;
+  return esc(v);
+}
+function table(cols, rows) {
+  const head = cols.map((c) => `<th>${esc(c.name)}${c.tag ? `<span class="chip ${c.tag === 'protected' ? 'prot' : 'disc'}">${c.tag}</span>` : ''}</th>`).join('');
+  const body = rows.map((r) => '<tr>' + r.map((v, i) => `<td>${cell(v, cols[i] && cols[i].tag)}</td>`).join('') + '</tr>').join('');
+  return `<div class="tablewrap"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+function notesHtml(r) { return (r.notes || []).length ? `<details class="notes"><summary>Why DEP handled it this way (${r.notes.length})</summary>${r.notes.map((n) => `<div><b>NOTE:</b>  ${esc(n)}</div>`).join('')}</details>` : ''; }
+function resultHtml(r) {
+  const stmt = r.text ? `<div class="stmt">${esc(r.text.replace(/\s+/g, ' ').slice(0, 140))}</div>` : '';
+  if (!r.ok) {
+    const e = r.error;
+    const lines = [`<b>ERROR:</b>  ${esc(e.message)}`];
+    if (e.hint) lines.push(`<b>HINT:</b>  ${esc(e.hint)}`);
+    if (e.sqlstate) lines.push(`<b>SQLSTATE:</b>  ${esc(e.sqlstate)}${e.code ? ' (' + esc(e.code) + ')' : ''}`);
+    return `<div class="res">${stmt}${notesHtml(r)}<pre class="err">${lines.join('\n')}</pre></div>`;
+  }
+  if (r.kind === 'rows') return `<div class="res">${stmt}${notesHtml(r)}${table(r.columns, r.rows)}<div class="cmd muted">(${r.rows.length} row${r.rows.length === 1 ? '' : 's'})</div></div>`;
+  return `<div class="res">${stmt}${notesHtml(r)}<div class="cmd">${esc(r.tag)}</div></div>`;
+}
+function summary(list) {
+  const failed = list.find((r) => !r.ok);
+  if (failed) return { text: failed.error.code || 'ERROR' + (failed.error.sqlstate ? ' ' + failed.error.sqlstate : ''), cls: 'err' };
+  const last = list[list.length - 1];
+  if (!last) return { text: '', cls: '' };
+  if (last.kind === 'rows') return { text: `${last.rows.length} row${last.rows.length === 1 ? '' : 's'}`, cls: 'ok' };
+  return { text: String(last.tag).split(' (')[0], cls: 'ok' };
+}
+function renderPane(id, list, note) {
+  const showStmt = list.length > 1;
+  $('#out-' + id).innerHTML = (note && (!showStmt || !list.length) ? `<pre class="ran">${esc(note)}</pre>` : '') + (list.length ? list.map((r) => resultHtml(showStmt ? r : Object.assign({}, r, { text: '' }))).join('') : '');
+  const s = summary(list); const el = $('#sum-' + id); el.textContent = s.text; el.className = 'sum ' + s.cls;
+}
+function paneStatus() {
+  for (const p of ['masked', 'op']) {
+    const c = conn[p];
+    $('#who-' + p).textContent = `${c.role}@clinic:${c.endpoint}`;
+    const t = $('#txn-' + p);
+    t.hidden = !c.inTransaction;
+    t.textContent = c.transactionFailed ? 'transaction failed' : 'in transaction';
+    t.className = 'txn' + (c.transactionFailed ? ' bad' : '');
+  }
+}
+
+/* ---------- running */
+/* Regular SQL: straight to sql.js, statement by statement, like a SQLite shell. */
+function runSqlite(src) {
+  const out = [];
+  try {
+    for (const st of sqlite.iterateStatements(src)) {
+      const text = st.getSQL();
+      try {
+        const cols = st.getColumnNames();
+        if (cols.length) {
+          const rows = []; while (st.step()) rows.push(st.get());
+          out.push({ ok: true, text, kind: 'rows', columns: cols.map((n) => ({ name: n })), rows });
+        } else {
+          st.step();
+          const verb = (text.trim().match(/^\w+/) || [''])[0].toUpperCase();
+          const n = sqlite.getRowsModified();
+          out.push({ ok: true, text, kind: 'cmd', tag: verb === 'INSERT' ? 'INSERT 0 ' + n : ['UPDATE', 'DELETE'].includes(verb) ? verb + ' ' + n : verb });
+        }
+      } catch (e) { out.push({ ok: false, text, error: { message: e.message } }); }
+      finally { st.free(); }
+    }
+  } catch (e) { out.push({ ok: false, error: { message: e.message } }); }
+  return out;
+}
+function runAll() {
+  if (!server) return;
+  const src = $('#sql').value; if (!src.trim()) return;
+  const ex = current !== null && current !== 'mine' ? EX[Number(current)] : null;
+  const out = { masked: [], op: [] };
+  let stmts;
+  try { stmts = window.DepSQL.split(src); }
+  catch (e) { const r = { ok: false, text: src, error: { message: e.message, sqlstate: e.sqlstate || '42601' } }; out.masked.push(r); out.op.push(r); stmts = []; }
+  for (const s of stmts) {
+    if (s.toks[0].t === 'meta') { const r = { ok: false, text: s.text, error: { message: 'meta-commands are not available here', sqlstate: '42601' } }; out.masked.push(r); out.op.push(r); continue; }
+    for (const p of ['masked', 'op']) out[p].push(...conn[p].exec(s));
+  }
+  if (ex && ex.sqlite === null) renderPane('plain', [], 'No equivalent in regular SQL.');
+  else {
+    const sqliteSrc = ex && ex.sqlite ? ex.sqlite : src;
+    renderPane('plain', runSqlite(sqliteSrc), sqliteSrc !== src ? sqliteSrc : null);
+  }
+  renderPane('masked', out.masked); renderPane('op', out.op);
+  paneStatus();
+  refreshSide();
+}
+
+/* ---------- tabs */
+function renderTabs() {
+  $('#extabs').innerHTML = '<label>Choose an example <select id="example-picker" aria-label="Example">' + EX.map((ex, i) => `<option value="${i}">${esc(ex.label)}</option>`).join('') + '<option value="mine">Your code</option></select></label>';
+  $('#example-picker').addEventListener('change', (event) => select(event.target.value));
+  $('#tour-steps').innerHTML = TOUR.map((step, index) => `<button type="button" class="tour-step" data-step="${index}">${esc(step.label)}</button>`).join('');
+  $$('#tour-steps button').forEach((button) => button.addEventListener('click', () => select(String(TOUR[Number(button.dataset.step)].index))));
+  $('#tour-next').addEventListener('click', () => select(String(TOUR[(tourStep + 1) % TOUR.length].index)));
+  $('#tour-mode').addEventListener('click', () => {
+    const open = $('#extabs').hidden;
+    $('#extabs').hidden = !open;
+    $('#tour-mode').setAttribute('aria-pressed', String(open));
+    $('#tour-mode').textContent = open ? 'Hide example browser' : 'Browse all examples';
+    if (open) $('#example-picker').focus();
+  });
+}
+function markTab(i) { updateTour(i); }
+function select(i) {
+  current = i; markTab(i);
+  $('#sql').value = i === 'mine' ? store.get('mine', MINE) : EX[Number(i)].sql;
+  document.dispatchEvent(new CustomEvent('hoopeo:querychange'));
+  runAll();
+}
+
+/* ---------- schema box (as the operational connection sees it) */
+function refreshSide() {
+  const d = server.describe(conn.op);
+  $('#sp-schema').innerHTML = `<div class="tbls">${d.tables.map((t) => `<div class="tbl"><h3>${esc(t.name)} <span class="ty">${t.rows === null ? '' : t.rows + ' rows'}${t.temporary ? ' · temporary' : ''}</span></h3><ul>${t.columns.map((c) => `<li><code>${esc(c.name)}</code> <span class="ty">${esc(c.type)}</span>${c.domain ? `<span class="chip prot">protected · ${esc(c.domain)}</span>` : ''}${c.pk ? '<span class="chip key">pk</span>' : c.unique ? '<span class="chip key">unique</span>' : ''}${c.references ? ` <span class="ref">→ ${esc(c.references.table)}.${esc(c.references.col)}</span>` : ''}</li>`).join('')}</ul><div class="idx">${t.indexes.map((i) => `<div><code>${esc(i.name)}</code> <span class="ty">(${esc(i.columns.join(', '))})${i.primary ? ' primary key' : i.unique ? ' unique' : ''}${i.auto ? '' : ' · CREATE INDEX'}</span></div>`).join('')}</div></div>`).join('')}</div>`;
+  $('#sp-catalog').innerHTML = d.functions.map((f) => `<div class="fn"><h3>${esc(f.signature)}</h3><div class="ty">${[f.discloses.length ? 'DISCLOSES ' + f.discloses.join(', ') : '', f.links.length ? 'LINKS ' + f.links.join(', ') : ''].filter(Boolean).map(esc).join(' · ') || 'not declared'} · owner ${esc(f.owner)} · executable by ${esc(f.executableBy.join(', ') || 'owner only')} · masked path ${f.maskedOk ? 'yes' : 'no'}</div>${f.comment ? `<div class="muted">${esc(f.comment)}</div>` : ''}<pre>${esc(f.body.trim())}</pre></div>`).join('') || '<p class="muted">No functions.</p>';
+  $('#sp-access').innerHTML = `<h4>Roles</h4>${table([{ name: 'role' }, { name: 'endpoints' }, { name: 'match limit' }], d.roles.map((r) => [r.name + (r.superuser ? ' (superuser)' : ''), r.endpoints.join(', '), r.matchLimit === 'default' ? '' : r.matchLimit]))}<h4>Endpoints</h4>${table([{ name: 'endpoint' }, { name: 'path' }], d.endpoints.map((e) => [e.name, e.path]))}<h4>Grants</h4>${table([{ name: 'grantee' }, { name: 'privilege' }], d.grants.map((g) => [g.grantee, g.privilege]))}`;
+  const recs = server.auditLog.slice(-60).reverse();
+  $('#sp-audit').innerHTML = recs.length ? table([{ name: 'seq' }, { name: 'role' }, { name: 'path' }, { name: 'kind' }, { name: 'object' }, { name: 'domain' }, { name: 'count' }, { name: 'detail' }], recs.map((r) => [r.seq, r.role, r.path, r.kind, r.object, r.domain, r.count || null, r.detail])) : '<p class="muted">No audit records yet. Every protected match, every call of a declared function, and every refused statement is recorded here, without values.</p>';
+  const sel = $('#storageTable'); const cur = sel.value || 'patients';
+  sel.innerHTML = d.tables.map((t) => `<option${t.name === cur ? ' selected' : ''}>${esc(t.name)}</option>`).join('');
+  renderStorage();
+}
+function renderStorage() {
+  const v = server.storage($('#storageTable').value, conn.op); if (!v) { $('#storageView').innerHTML = ''; return; }
+  const short = (x) => (x === null ? null : String(x).length > 22 ? String(x).slice(0, 20) + '…' : x);
+  $('#storageView').innerHTML = table(v.columns.map((n) => ({ name: n })), v.rows.map((r) => r.map((x, i) => (/__ct$/.test(v.columns[i]) || /^ie1:/.test(String(x)) ? short(x) : x))));
+}
+
+async function boot() {
+  try {
+    const opts = window.__SQLJS_WASM__ ? { wasmBinary: Uint8Array.from(atob(window.__SQLJS_WASM__), (c) => c.charCodeAt(0)) } : { locateFile: (f) => f };
+    SQLlib = await window.initSqlJs(opts);
+  } catch (e) { $('#status').textContent = 'The database could not start: ' + e.message; return; }
+  start();
+  $('#status').textContent = '';
+  $('#ver').textContent = 'DEP.js ' + window.DepSQL.version;
+  renderTabs();
+  $$('.stab').forEach((b) => b.addEventListener('click', () => { $$('.stab').forEach((x) => x.setAttribute('aria-selected', x === b ? 'true' : 'false')); $$('.spanel').forEach((p) => { p.hidden = p.id !== b.dataset.p; }); }));
+  $('#run').addEventListener('click', runAll);
+  $('#storageTable').addEventListener('change', renderStorage);
+  $('#reset').addEventListener('click', () => { start(); select(current === null ? '0' : current); });
+  $('#sql').addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runAll(); }
+    if (e.key === 'Tab' && e.altKey && !e.shiftKey) { e.preventDefault(); const t = e.target, s = t.selectionStart; t.value = t.value.slice(0, s) + '    ' + t.value.slice(t.selectionEnd); t.selectionStart = t.selectionEnd = s + 4; }
+  });
+  $('#sql').addEventListener('input', () => { if (current !== 'mine') { current = 'mine'; markTab('mine'); } store.set('mine', $('#sql').value); });
+  const requested = new URLSearchParams(location.search).get('example');
+  const homepageExamples = {'lookup':'1','read-all':String(EX.findIndex(example => example.label === 'Read IDs')),'join-one':'4','join-all':'5'};
+  select(homepageExamples[requested] || '1');
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+</script>
+<details class="playground-help wrap" id="help"><summary>Using the playground</summary><div class="prose"><h2 id="help-using-the-playground">Using the playground</h2>
+<p>Begin with the five-step guided tour. “Browse all examples” opens the complete example collection. Expand <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP notes</a> to see why an operation was allowed or refused. <a href="/project-hoopeo.github.io/docs/server/#known-difference-sorting-disclosed-values">Known native differences</a> are documented in chapter 6.</p>
+<p>The DEP SQL Playground runs Database-Enforced Privacy (DEP) in your browser. New to DEP? Read <a href="/project-hoopeo.github.io/docs/#1-the-problem">Understand DEP</a> first. You write DEP SQL against a small clinic, and you see the same statement run three times, side by side: in a regular database, on DEP's <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a>, and on DEP's <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a>. Nothing is installed and nothing is sent anywhere: the page runs entirely in your browser.</p>
+<p><a href="/project-hoopeo.github.io/playground/">Open the playground</a>. The page is also available as a <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/playground/dep-sql-playground.html">single HTML file</a> that works offline.</p>
+<blockquote>
+<p><strong>A simulator.</strong> The playground has no trust boundary, because everything runs in your browser, and its cryptography is a stand-in. It illustrates the rules and protects nothing. For real enforcement use DEP Engine, DEP CLI or Hoopeo Studio, which are distributed as binaries (see <a href="/project-hoopeo.github.io/install/">Install</a>).</p>
+</blockquote>
+<h3 id="help-the-page">The page</h3>
+<p>The hosted page has four areas: the guided tour, the editable SQL, three result panes, and the database views.</p>
+<ol>
+<li><strong>Guided tour:</strong> Find one → Read IDs → Join one → Join everyone → Disclose. Each step explains the task and expected difference.</li>
+<li><strong>SQL editor:</strong> edit the syntax-colored query, then press Run or Ctrl/⌘+Enter. Colors aid reading; the query text remains ordinary SQL.</li>
+<li><strong>Results:</strong> compare the same operation in the regular database and both DEP paths. Expand the DEP notes to understand a result or refusal.</li>
+<li><strong>Schema and governance:</strong> inspect Tables, Functions, Access, Audit and Storage below the results.</li>
+</ol>
+<p><a href="/project-hoopeo.github.io/docs/#25-ordinary-sql-and-dep-side-by-side">Chapter 1: Understand DEP</a> explains why reading all IDs returns NULL, while an <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">unanchored</a> protected join is refused.</p>
+<p><strong>The three result panes.</strong> Every statement you run appears in all three, with its DEP notes.</p>
+<ul>
+<li><strong>Regular SQL</strong> is an ordinary SQLite database with the same clinic, where ID numbers and phone numbers are plain text. It shows what a regular database does with your statement. SQLite has no <code>CREATE FUNCTION</code>, so in this copy the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a> are views, and the examples that call them run the equivalent query on the views and show it above the result. A few examples, such as the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> and the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a>, have no regular equivalent, and say so.</li>
+<li><strong>DEP masked read path</strong> is a connection as <code>admin</code> through the <code>analytics</code> <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> (<code>MASKED_READ</code>). Protected values come back as NULL, and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> them is refused.</li>
+<li><strong>DEP operational path</strong> is a connection as <code>admin</code> through the <code>operational</code> endpoint (<code>OPERATIONAL</code>). Protected values can be matched one value at a time, and come back as NULL.</li>
+</ul>
+<p>A pane shows when its connection is inside a transaction, or in a failed one.</p>
+<p><strong>The editor and complete example collection.</strong> Click <strong>Browse all examples</strong>, then choose from the dropdown. The five tour steps remain available. The editor can hold several statements; output and error text are not SQL commands.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Example</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select</td>
+<td>A plain <code>SELECT</code> of the patients: the ID numbers are plain on the regular path and NULL on both DEP paths</td>
+</tr>
+<tr>
+<td>Read IDs</td>
+<td>A direct read of all identifiers: six values in regular SQL, six NULLs in DEP</td>
+</tr>
+<tr>
+<td>Lookup by ID</td>
+<td>A lookup by a protected value: matched through the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">blind index</a>, returned as NULL</td>
+</tr>
+<tr>
+<td>Partial match</td>
+<td><code>LIKE</code> on a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a>: refused with <code>ZD101</code></td>
+</tr>
+<tr>
+<td>List of IDs</td>
+<td><code>IN</code> with a list: a set of lookups</td>
+</tr>
+<tr>
+<td>Join one, Join all</td>
+<td>A join on protected columns, anchored to one value and not anchored</td>
+</tr>
+<tr>
+<td><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">Linking</a></td>
+<td>A function declared <code>LINKS</code>: statistics without matching</td>
+</tr>
+<tr>
+<td><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">Disclosing</a></td>
+<td>A function declared <code>DISCLOSES</code>: the one place ID numbers leave</td>
+</tr>
+<tr>
+<td>Join disclosed</td>
+<td>The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a>: a disclosed value cannot be joined</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>A write on the operational path</td>
+</tr>
+<tr>
+<td>Transaction</td>
+<td><code>BEGIN</code>, a savepoint, <code>ROLLBACK TO</code>, <code>ROLLBACK</code></td>
+</tr>
+<tr>
+<td>Constraints</td>
+<td>Duplicate keys: an ordinary key is shown, a protected value is not</td>
+</tr>
+<tr>
+<td>Indexes</td>
+<td><code>CREATE INDEX</code>, <code>EXPLAIN</code> and <code>SHOW INDEXES</code></td>
+</tr>
+<tr>
+<td>Roles</td>
+<td><code>SET ROLE</code>: reception may match <code>national_id</code> but not <code>phone</code></td>
+</tr>
+<tr>
+<td><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">Match limit</a></td>
+<td>A role limited to two protected matches a minute</td>
+</tr>
+<tr>
+<td>Audit</td>
+<td><code>SHOW AUDIT</code>: every protected match, without values</td>
+</tr>
+<tr>
+<td>Who can match</td>
+<td><code>SHOW PRIVACY MATRIX</code></td>
+</tr>
+<tr>
+<td>Your code</td>
+<td>Your own statements. They are kept in this browser's local storage, and nowhere else</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Below the results: the schema</strong>, as the operational connection sees it. <strong>Tables</strong> shows each table with its row count, keys and indexes. <strong>Functions</strong> lists the declared functions. <strong>Access</strong> shows roles, endpoints and grants. <strong>Audit</strong> is the audit log. <strong>Storage</strong> shows a table as the DEP server keeps it: index entries and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#ciphertext" data-term="Ciphertext" data-def="The encrypted copy of a protected value, stored next to its index entry.">ciphertexts</a>, never the values.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-audit.png" title="Open at full size"><img loading="lazy" alt="The Audit tab of the schema area, after a few lookups: each protected match and each refusal, without values" src="/project-hoopeo.github.io/docs/images/playground/playground-audit.png" / width="1440" height="900"></a></p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-storage.png" title="Open at full size"><img loading="lazy" alt="The Storage tab: the table as the DEP server keeps it, with index entries and ciphertexts" src="/project-hoopeo.github.io/docs/images/playground/playground-storage.png" / width="1440" height="900"></a></p>
+<p>The two DEP panes are two connections to one DEP server, so a transaction open in one is isolated from the other. <strong>Reset</strong> rebuilds both databases from the setup script and clears the panes. Your own code tab is kept.</p>
+<h3 id="help-notes-and-errors">Notes and errors</h3>
+<p>Each DEP result carries its <strong>DEP notes</strong>, in the pane below the statement: one sentence for each rule that applied, such as "PROTECTED column patients.national_id is matched by equality through the blind index". Plain SQL gets none. A refused statement shows the specified <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a>: a message, a hint, and a SQLSTATE with a DEP code such as <code>ZD107</code> (<code>DEP_UNANCHORED_MATCH</code>). The <a href="/project-hoopeo.github.io/docs/reference/errors/">error reference</a> lists them all.</p>
+<p>Try this: run <strong>Lookup by ID</strong>, then <strong>Join all</strong>, then <strong>Join disclosed</strong>. The first is matched and returned as NULL, the second is refused because nothing anchors it to a single value, and the third is refused because a disclosed value can be returned and nothing else. <a href="/project-hoopeo.github.io/docs/#4-core-concepts">Concepts</a> explains why.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-unanchored.png" title="Open at full size"><img loading="lazy" alt="Join all: the regular pane answers, and both DEP panes refuse the join" src="/project-hoopeo.github.io/docs/images/playground/playground-unanchored.png" / width="1440" height="900"></a></p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-disclosing.png" title="Open at full size"><img loading="lazy" alt="Disclosing: the disclosed column on the operational pane" src="/project-hoopeo.github.io/docs/images/playground/playground-disclosing.png" / width="1440" height="900"></a></p>
+<h3 id="help-what-depjs-is">What DEP.js is</h3>
+<p>DEP.js is the software behind the playground. It is a simulator of DEP Engine: a compiler and a server for DEP SQL, written in JavaScript, that runs the compiled statements on <a href="https://github.com/sql-js/sql.js">sql.js</a> (SQLite compiled to WebAssembly). It targets DEP SQL rules, errors, DEP notes and audit records, with the implementation differences listed below. The source is open, under the Apache License 2.0.</p>
+<p>The repository includes <code>compat.js</code>, a suite comparing statements on a running DEP Engine and DEP.js. Its earlier 280-statement parity result predates the disclosed-sort correction. The current simulator rejects disclosed sort keys in accordance with the specification; a project review reports that native 0.5.1 accepts them. Native 0.5.2 has not been retested here for this issue. Name, alias and ordinal cases are included in the compatibility suite. See the <a href="/project-hoopeo.github.io/docs/server/#known-difference-sorting-disclosed-values">known difference and examples</a>.</p>
+<h4 id="help-where-depjs-differs-from-dep-engine">Where DEP.js differs from DEP Engine</h4>
+<ul>
+<li><code>EXPLAIN</code> shows the SQLite statement DEP.js runs, then the engine's <code>Read:</code> lines. The engine shows DataFusion's plan there.</li>
+<li>A second writer fails at once with <code>55P03</code>, where the engine waits up to <code>--lock-timeout</code>.</li>
+<li>Readers in a transaction see the latest commit rather than a snapshot taken at <code>BEGIN</code>.</li>
+<li>Results come from SQLite: dates and times are text, and a few functions behave like SQLite's (division by zero gives NULL, for example).</li>
+<li><code>current_date</code> and <code>now()</code> are in the browser's time zone. The engine uses UTC.</li>
+<li><code>\connect role [endpoint]</code> opens a new connection inside a script. It is a simulator command, like <code>\c</code> in DEP CLI.</li>
+<li>The cryptography is a stand-in. There is no trust boundary in a browser.</li>
+</ul>
+<h3 id="help-using-depsqljs-as-a-library">Using <code>depsql.js</code> as a library</h3>
+<p><code>depsql.js</code> runs in a page or in Node. It needs sql.js. Download it from the <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/latest/download/depsql.js">latest release</a>, or take <code>playground/depsql.js</code> from the repository.</p>
+<pre class="highlight"><code class="language-js">const SQL = await initSqlJs();                                  // sql.js
+const server = new DepSQL.Server(SQL, { setup: clinicSql });    // a DEP server; clinicSql is a DEP SQL script
+const conn = server.connect('reception_app', 'operational');    // role and endpoint
+const [r] = conn.exec('SELECT full_name FROM patients WHERE national_id = $1', ['123456782']);
+// r: { ok, kind: 'rows' | 'command', columns, rows, tag, notes, error: { message, code, sqlstate, hint }, session }
+conn.exec('BEGIN; ...; COMMIT');
+conn.close();                                                   // rolls back an open transaction</code></pre>
+<p><code>new DepSQL.Server(SQL, { setup, matchLimit: '1000/minute' })</code> sets a default match limit for roles that are not superusers, as <code>--match-limit</code> does. <code>server.describe(conn)</code>, <code>server.storage(table, conn)</code> and <code>server.auditLog</code> return the catalog, the stored form of a table and the audit records. <code>DepSQL.parse(sql)</code> returns the syntax tree. In Node, <code>require('./depsql.js')</code> returns the same object.</p>
+<p>The code and its tests are in the <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/tree/main/playground"><code>playground/</code> folder</a> of the repository. <code>npm test</code> runs the playground's own tests, <code>npm run build</code> writes the page and the single file, and <code>npm run compat</code> runs the compatibility test against a DEP Engine server you run yourself.</p>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-lookup.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/playground/playground-lookup.png" alt="Compare a direct SQL result with NULL suppression on a DEP connection." width="1000" height="625"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/playground/playground-lookup-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/playground/playground-lookup-dark.png" alt="" width="1000" height="625"></a></p>
+<figcaption>Compare a direct SQL result with NULL suppression on a DEP connection.</figcaption>
+</figure></div></details><footer class="pg-foot"><span><strong>Experimental.</strong> An experimental, conceptual project: see the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>.</span>
+  <a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a><a href="/project-hoopeo.github.io/legal/terms/">Terms</a><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a>
+  <a href="/project-hoopeo.github.io/">Project Hoopeo</a><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

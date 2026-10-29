@@ -100,3 +100,113 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
 })();
+
+/* Deep links also open the relevant in-page help or collapsed explanation. */
+(function () {
+  function openTarget() {
+    let id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const target = id && document.getElementById(id);
+    if (!target) return;
+    let node = target;
+    let opened = false;
+    while (node) {
+      if (node.tagName === 'DETAILS' && !node.open) { node.open = true; opened = true; }
+      node = node.parentElement;
+    }
+    if (opened) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  }
+  openTarget();
+  window.addEventListener('hashchange', openTarget);
+})();
+
+/* Developer edition: navigation, code copying and a local documentation index. */
+(function () {
+  'use strict';
+  const menu = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('main-nav');
+  if (menu && nav) {
+    menu.addEventListener('click', () => {
+      const open = menu.getAttribute('aria-expanded') !== 'true';
+      menu.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
+        menu.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); menu.focus();
+      }
+    });
+  }
+  document.querySelectorAll('main pre').forEach((pre) => {
+    if (pre.closest('.proof-window') || pre.closest('.code-wrap') || pre.closest('.sql-editor')) return;
+    const code = pre.querySelector('code');
+    if (!code) return;
+    const wrap = document.createElement('div'); wrap.className = 'code-wrap';
+    pre.before(wrap); wrap.append(pre);
+    const lang = document.createElement('span'); lang.className = 'code-language';
+    lang.textContent = (code.className.match(/language-([\w-]+)/) || [null, 'code'])[1];
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'code-copy';
+    button.textContent = 'Copy'; button.setAttribute('aria-label', 'Copy code');
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        button.textContent = 'Copied!';
+      } catch (_) {
+        const selection = window.getSelection(); const range = document.createRange();
+        range.selectNodeContents(code); selection.removeAllRanges(); selection.addRange(range);
+        button.textContent = 'Selected · copy manually';
+      }
+      setTimeout(() => { button.textContent = 'Copy'; }, 1800);
+    });
+    wrap.append(lang, button);
+  });
+  const launchers = [...document.querySelectorAll('.search-open')];
+  if (!launchers.length) return;
+  const dialog = document.createElement('dialog'); dialog.className = 'search-dialog';
+  dialog.setAttribute('aria-label', 'Search documentation');
+  dialog.innerHTML = '<div class="search-head"><input type="search" aria-label="Search documentation" placeholder="Search concepts, SQL, setup…"><button type="button" class="search-close" aria-label="Close search">Esc</button></div><div class="search-results" aria-live="polite"></div>';
+  document.body.append(dialog);
+  const input = dialog.querySelector('input'); const results = dialog.querySelector('.search-results');
+  let index = null; let loading = null;
+  const script = [...document.scripts].find((script) => script.src && new URL(script.src).pathname.endsWith('/assets/js/site.js'));
+  const indexURL = new URL('../../search-index.json', script.src);
+  function notice(message) { const p = document.createElement('p'); p.className = 'search-empty'; p.textContent = message; results.replaceChildren(p); }
+  function search() {
+    if (!index) return;
+    const query = input.value.trim().toLowerCase();
+    if (!query) { notice('Try “protected”, “Python”, “TLS” or “GDPR”.'); return; }
+    const words = query.split(/\s+/);
+    const matches = index.map((page) => ({...page, score: words.reduce((score, word) => score + (page.title.toLowerCase().includes(word) ? 10 : 0) + (page.text.toLowerCase().includes(word) ? 1 : 0), 0)}))
+      .filter((page) => words.every((word) => (page.title + ' ' + page.text).toLowerCase().includes(word)))
+      .sort((a, b) => b.score - a.score).slice(0, 12);
+    results.replaceChildren();
+    const count = document.createElement('p'); count.className = 'search-count'; count.textContent = `${matches.length} result${matches.length === 1 ? '' : 's'}`; results.append(count);
+    if (!matches.length) { notice('No matching pages. Try a shorter search.'); return; }
+    matches.forEach((page) => {
+      const a = document.createElement('a'); a.className = 'search-result'; a.href = page.url;
+      const title = document.createElement('strong'); title.textContent = page.title;
+      const excerpt = document.createElement('p');
+      const at = Math.max(0, page.text.toLowerCase().indexOf(words[0]) - 65);
+      excerpt.textContent = (at ? '…' : '') + page.text.slice(at, at + 180).replace(/\s+/g, ' ') + '…';
+      a.append(title, excerpt); results.append(a);
+    });
+  }
+  async function open() {
+    if (!dialog.open) dialog.showModal(); input.focus();
+    if (!index) {
+      notice('Loading documentation…');
+      try {
+        if (!loading) loading = fetch(indexURL).then((response) => { if (!response.ok) throw new Error('Index unavailable'); return response.json(); });
+        index = await loading;
+      } catch (_) { loading = null; notice('Search could not load. Close and try again, or browse Docs from the navigation.'); return; }
+    }
+    search();
+  }
+  launchers.forEach((button) => button.addEventListener('click', open));
+  input.addEventListener('input', search);
+  dialog.querySelector('.search-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
+  document.addEventListener('keydown', (event) => {
+    if ((event.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) || ((event.metaKey || event.ctrlKey) && event.key === 'k')) { event.preventDefault(); open(); }
+  });
+})();

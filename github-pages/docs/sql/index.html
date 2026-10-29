@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write DEP SQL | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="1. The server decides the path when the connection authenticates, from the endpoint the client connected to and its identity. 2. The path cannot be changed for the rest of the session, by any...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/sql/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Write DEP SQL | Project Hoopeo">
+<meta property="og:description" content="1. The server decides the path when the connection authenticates, from the endpoint the client connected to and its identity. 2. The path cannot be changed for the rest of the session, by any...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/sql/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Write DEP SQL | Project Hoopeo">
+<meta name="twitter:description" content="1. The server decides the path when the connection authenticates, from the endpoint the client connected to and its identity. 2. The path cannot be changed for the rest of the session, by any...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/" aria-current="page"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/" aria-current="page"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 2 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#6-two-access-paths">Two access paths</a><ul><li><a href="#61-what-an-access-path-is">What an access path is</a></li><li><a href="#62-create-endpoint">CREATE ENDPOINT</a></li><li><a href="#63-the-operational-path">The operational path</a></li><li><a href="#64-the-masked-read-path">The masked read path</a></li><li><a href="#65-capabilities-of-each-path">Capabilities of each path</a></li><li><a href="#66-who-may-match-on-what">Who may match on what</a></li><li><a href="#67-the-path-cannot-change">The path cannot change</a></li><li><a href="#68-choosing-a-path-for-a-consumer">Choosing a path for a consumer</a></li></ul></li><li><a href="#7-writing-dep-sql">Writing DEP SQL</a><ul><li><a href="#71-declaring-a-protected-column">Declaring a protected column</a></li><li><a href="#72-inserting-and-updating-protected-values">Inserting and updating protected values</a></li><li><a href="#73-finding-a-record-by-a-protected-value">Finding a record by a protected value</a></li><li><a href="#74-selecting-a-protected-column">Selecting a protected column</a></li><li><a href="#75-queries-on-the-masked-path">Queries on the masked path</a></li><li><a href="#76-joining-on-protected-columns">Joining on protected columns</a></li><li><a href="#77-comparing-protected-columns-match-domains">Comparing protected columns: match domains</a></li><li><a href="#78-operations-that-are-not-allowed">Operations that are not allowed</a></li><li><a href="#79-parameters-and-literals">Parameters and literals</a></li><li><a href="#710-protected-foreign-keys">Protected foreign keys</a></li><li><a href="#711-requiring-qualified-access">Requiring qualified access</a></li></ul></li><li><a href="#roles-grants-and-endpoints">Roles, grants and endpoints</a><ul><li><a href="#set-role">SET ROLE</a></li></ul></li><li><a href="#match-limits">Match limits</a></li><li><a href="#clinic-schema">Clinic schema</a></li></ul></details><div class="prose"><h1 id="write-dep-sql">Write DEP SQL</h1>
+<h2 id="6-two-access-paths">Two access paths</h2>
+<p><strong>In one sentence:</strong> every connection is fixed, when it logs in, to one of two paths, and the path sets the most the connection can ever do with protected values.</p>
+<h3 id="61-what-an-access-path-is">What an access path is</h3>
+<p><strong>What is it?</strong> An <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a> is a property of a connection that decides which operations on protected values are available to it. DEP has two paths: <code>OPERATIONAL</code> and <code>MASKED_READ</code>.</p>
+<p><strong>Why is it needed?</strong> Permissions decide what a <em>role</em> may do, and roles can be granted by mistake, inherited, and switched. The path adds a ceiling that does not depend on any of that: whatever privileges a masked connection holds, it cannot match on protected values.</p>
+<p><strong>Example.</strong> The same query, sent by two consumers:</p>
+<pre class="highlight"><code class="language-sql">SELECT full_name FROM patients WHERE national_id = $1;   -- $1 = '123456782'</code></pre>
+<p><strong>Output on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a> (reception)</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>full_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dana Cohen</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Output on the masked path (the AI assistant)</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_ENDPOINT_OPERATION
+DETAIL: Matching PROTECTED values is unavailable on a MASKED_READ connection.</code></pre>
+<p><strong>Explanation:</strong> reception's connection was fixed to the operational path when it logged in, so the lookup runs. The assistant's connection was fixed to the masked path, so <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> on <code>national_id</code> is not available to it at all, whatever privileges its role holds.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>The server decides the path when the connection authenticates, from the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> the client connected to and its identity.</li>
+<li>The path cannot be changed for the rest of the session, by any statement, setting, or role switch (<a href="/project-hoopeo.github.io/docs/sql/#67-the-path-cannot-change">The path cannot change</a>).</li>
+<li>The path is an upper bound. Ordinary column privileges decide what a role may do beneath it (<a href="/project-hoopeo.github.io/docs/sql/#66-who-may-match-on-what">Who may match on what</a>).</li>
+<li>On both paths, an ordinary query never returns a protected value.</li>
+</ol>
+<h3 id="62-create-endpoint">CREATE ENDPOINT</h3>
+<p><strong>What is it?</strong> <code>CREATE ENDPOINT</code> defines a server address that clients connect to, and binds it to one access path.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE ENDPOINT endpoint_name MODE { OPERATIONAL | MASKED_READ };</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoint_name</code></td>
+<td>A name for the endpoint, unique in the server.</td>
+</tr>
+<tr>
+<td><code>MODE OPERATIONAL</code></td>
+<td>Connections through this endpoint receive the operational path.</td>
+</tr>
+<tr>
+<td><code>MODE MASKED_READ</code></td>
+<td>Connections through this endpoint receive the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Example.</strong> The clinic defines one endpoint per path:</p>
+<pre class="highlight"><code class="language-sql">CREATE ENDPOINT operational MODE OPERATIONAL;
+CREATE ENDPOINT analytics   MODE MASKED_READ;</code></pre>
+<p><strong>Explanation:</strong> reception, the doctors' application, the reminder job, and billing connect to <code>operational</code>. The dashboard and the scheduling assistant connect to <code>analytics</code>. Choosing an endpoint is the only way a client "chooses" a path, and only if its identity is allowed to connect there.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li><code>CREATE ENDPOINT</code> is a server-level administrative command, not something an application runs.</li>
+<li>DEP Engine 0.5.2 controls endpoint access with <code>GRANT CONNECT ON ENDPOINT operational TO role_name</code>. The endpoint is selected as the database name at login; two endpoints do not require two TCP ports.</li>
+</ol>
+<figure>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/access-paths-narrow.png" alt="The connection path sets which operations are available; privileges still decide which objects a role may use." width="1000" height="2705"><details class="diagram-text"><summary>Diagram text description</summary><p>The connection path sets which operations are available; privileges still decide which objects a role may use.</p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/access-paths-narrow-dark.png" alt="" width="1000" height="2705"></p>
+<figcaption>The connection path sets which operations are available; privileges still decide which objects a role may use.</figcaption>
+</figure>
+<h3 id="63-the-operational-path">The operational path</h3>
+<p><strong>What is it?</strong> The path for applications that must find, create, and update records.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Allows</strong></td>
+<td>Reads and writes within ordinary permissions; inserting protected values; finding, updating, and connecting records by one protected value; calling <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a> the role may execute</td>
+</tr>
+<tr>
+<td><strong>Does not allow</strong></td>
+<td>Returning protected values from an ordinary query; <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">unanchored</a> matching outside a <code>LINKS</code> function; processing protected values (casts, substrings, ordering)</td>
+</tr>
+<tr>
+<td><strong>Typical consumers</strong></td>
+<td>Reception, the doctors' application, the reminder job, the billing job</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="64-the-masked-read-path">The masked read path</h3>
+<p><strong>What is it?</strong> A read-only path on which protected values cannot be used for matching at all.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Allows</strong></td>
+<td>Reading ordinary fields; joining on ordinary keys; aggregates; calling <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a> functions that take no protected input</td>
+</tr>
+<tr>
+<td><strong>Does not allow</strong></td>
+<td>Any matching on protected values, even for one value; any write; calling <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosing</a> functions; calling linking functions that take a protected input</td>
+</tr>
+<tr>
+<td><strong>Typical consumers</strong></td>
+<td>Analysts, BI tools, and AI agents. The masked path is the default for any new consumer.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Example.</strong> The assistant studies appointment patterns:</p>
+<pre class="highlight"><code class="language-sql">SELECT visit_type, extract(hour FROM starts_at) AS hour, COUNT(*)
+FROM appointments
+GROUP BY visit_type, hour
+ORDER BY COUNT(*) DESC;</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>visit_type</th>
+<th>hour</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Follow-up</td>
+<td>10</td>
+<td>214</td>
+</tr>
+<tr>
+<td>First visit</td>
+<td>9</td>
+<td>187</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the query uses only ordinary fields, so it runs exactly as in ordinary SQL. The masked path does not get in the way of the assistant's real work; it only removes access to identifiers.</p>
+<h3 id="65-capabilities-of-each-path">Capabilities of each path</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th><code>OPERATIONAL</code></th>
+<th><code>MASKED_READ</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read ordinary fields</td>
+<td>Allowed within ordinary permissions</td>
+<td>Allowed within ordinary permissions</td>
+</tr>
+<tr>
+<td>Join on ordinary fields</td>
+<td>Allowed</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>Insert or update data</td>
+<td>Allowed within ordinary permissions</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Supply a value for a protected field on insert</td>
+<td>Allowed</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Find or update a record by one protected value</td>
+<td>Allowed, for columns the role may use; recorded</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Join on protected fields, anchored to one protected value</td>
+<td>Allowed, for columns the role may use; recorded</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Join on protected fields across whole datasets</td>
+<td>Rejected outside a <code>LINKS</code> function</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Return a protected field directly</td>
+<td>Suppressed (<code>NULL</code>)</td>
+<td>Suppressed (<code>NULL</code>)</td>
+</tr>
+<tr>
+<td>Call a <code>LINKS</code> function that takes no protected input</td>
+<td>Allowed with <code>EXECUTE</code></td>
+<td>Allowed with <code>EXECUTE</code></td>
+</tr>
+<tr>
+<td>Call a <code>LINKS</code> function that takes a protected input</td>
+<td>Allowed with <code>EXECUTE</code></td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Call a <code>DISCLOSES</code> function</td>
+<td>Allowed with <code>EXECUTE</code></td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Use <code>REVEAL</code> in an ordinary query</td>
+<td>Rejected</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td>Extract parts of, cast, or pass a protected field to a general function</td>
+<td>Rejected</td>
+<td>Rejected</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="66-who-may-match-on-what">Who may match on what</h3>
+<p><strong>What is it?</strong> On the operational path, a role may match on a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a> if, and only if, it holds ordinary SQL privilege on that column.</p>
+<p><strong>Why is it needed?</strong> It lets DEP reuse the privileges SQL already has, instead of inventing a new permission system. DEP only changes what a privilege can reveal: because a protected value is never returned by an ordinary query, privilege on a protected column means only <strong>"may use this column for matching."</strong></p>
+<p><strong>Example 1: Reception may search by ID number</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT SELECT (patient_id, national_id, full_name, health_fund) ON patients TO reception_app;
+
+-- as reception_app
+SELECT full_name FROM patients WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>full_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dana Cohen</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> reception holds privilege on <code>national_id</code>, so it may use it to find Dana. It still never receives the ID number itself.</p>
+<p><strong>Example 2: Reception may not search by phone number</strong></p>
+<pre class="highlight"><code class="language-sql">-- as reception_app
+SELECT full_name FROM patients WHERE phone = $1;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  permission denied for column phone</code></pre>
+<p><strong>Explanation:</strong> reception holds no privilege on <code>phone</code>, so it cannot perform a reverse lookup by phone number, which would let a receptionist identify an unknown caller. This is an ordinary SQL permission error, not a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a>.</p>
+<p><strong>Three layers.</strong> Every decision about a protected column is made by exactly one of three layers:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Decides</th>
+<th>In the clinic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The path</td>
+<td>Whether matching is possible at all</td>
+<td>The assistant, on the masked path, cannot match on anything</td>
+</tr>
+<tr>
+<td>Column privileges</td>
+<td>Who may match on which column</td>
+<td>Reception may match on <code>national_id</code>, but not on <code>phone</code></td>
+</tr>
+<tr>
+<td><code>PROTECTED</code></td>
+<td>What a match can ever reveal</td>
+<td>No ordinary query returns either column</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Key point:</strong> every protected match on the operational path is written to the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> with the identity that made it, and protected lookups are rate-limited per identity (<a href="/project-hoopeo.github.io/docs/internals/#144-recording-and-auditing">Recording and auditing</a>).</p>
+<h3 id="67-the-path-cannot-change">The path cannot change</h3>
+<p><strong>What is it?</strong> A rule: once a connection has logged in, its path stays the same until it disconnects.</p>
+<p><strong>Example.</strong> The assistant, connected to <code>analytics</code>, tries to promote itself:</p>
+<pre class="highlight"><code class="language-sql">SET dep.path = 'OPERATIONAL';</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_PATH_IMMUTABLE
+DETAIL: The access path of this connection is MASKED_READ and cannot be changed.
+HINT:   The path is fixed at authentication. Connect through the operational endpoint instead.</code></pre>
+<p><strong>Explanation:</strong> the path belongs to the connection as it logged in, not to anything the client can set afterwards. The same applies to <code>SET ROLE</code>, <code>SET SESSION AUTHORIZATION</code>, and pooled connections.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_PATH_IMMUTABLE</code></a>.</p>
+<h3 id="68-choosing-a-path-for-a-consumer">Choosing a path for a consumer</h3>
+<p><strong>How is a path chosen?</strong> From what the consumer must do with protected values:</p>
+<ol>
+<li>A consumer that must match on a protected value connects on the <strong>operational</strong> path.</li>
+<li>A consumer that must disclose values does so through a disclosing function, on the <strong>operational</strong> path.</li>
+<li>A consumer whose only protected access is through linking functions that take no protected input connects on the <strong>masked</strong> path.</li>
+<li>A consumer with no use for protected values connects on the <strong>masked</strong> path.</li>
+<li>Any new consumer starts on the <strong>masked</strong> path, and moves only when someone decides, with a written reason, that it needs to match.</li>
+</ol>
+<p><strong>In the clinic</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Consumer</th>
+<th>Path</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reception_app</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>Matches on <code>national_id</code></td>
+</tr>
+<tr>
+<td><code>doctors_app</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>Matches on <code>national_id</code> and <code>medical_records.patient_national_id</code></td>
+</tr>
+<tr>
+<td><code>reminder_job</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>Calls a disclosing function</td>
+</tr>
+<tr>
+<td><code>billing_job</code></td>
+<td><code>OPERATIONAL</code></td>
+<td>Calls disclosing functions</td>
+</tr>
+<tr>
+<td><code>bi_dashboard</code></td>
+<td><code>MASKED_READ</code></td>
+<td>Only calls a linking function without protected input</td>
+</tr>
+<tr>
+<td><code>scheduling_agent</code></td>
+<td><code>MASKED_READ</code></td>
+<td>Has no use for protected values</td>
+</tr>
+</tbody>
+</table></div>
+<p><a href="/project-hoopeo.github.io/docs/designing/#10-designing-with-dep">Chapter 4</a> derives these assignments from the clinic's <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a>.</p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>Two paths: operational for applications that find and update records; masked for analysts, dashboards, and agents.</li>
+<li>The path is fixed at login and cannot be changed by any statement.</li>
+<li>Column privileges decide who may match on which column, beneath the path.</li>
+<li>New consumers start on the masked path.</li>
+</ul>
+<hr />
+<h2 id="7-writing-dep-sql">Writing DEP SQL</h2>
+<p><strong>In one sentence:</strong> this chapter shows every DEP construct used in ordinary statements, one at a time, turning the clinic's database into a DEP database.</p>
+<p><strong>Before you start.</strong> Parameters written as <code>$1</code>, <code>$2</code> are values sent separately from the query text, through the PostgreSQL protocol. Writing a value directly in the query works the same way (<a href="/project-hoopeo.github.io/docs/sql/#79-parameters-and-literals">Parameters and literals</a>). All examples run on the operational path unless stated otherwise.</p>
+<h3 id="71-declaring-a-protected-column">Declaring a protected column</h3>
+<pre class="highlight"><code class="language-sql">CREATE [TEMPORARY] TABLE name (
+    column type [PROTECTED MATCH DOMAIN domain] [constraints],
+    column type PROTECTED REFERENCES other (column),
+    ...
+);</code></pre>
+<p><code>PROTECTED MATCH DOMAIN d</code> declares a protected column and names its <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a>. A domain is created by its first use. A column that references a protected column is itself protected and takes the same domain: write <code>PROTECTED REFERENCES t (c)</code>, without repeating the domain. Constraints (<code>PRIMARY KEY</code>, <code>UNIQUE</code>, <code>NOT NULL</code>, <code>REFERENCES</code>) work on protected columns too; the engine checks them through the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">blind index</a>, and the error never shows the value.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE patients (
+    patient_id  BIGINT PRIMARY KEY,
+    national_id TEXT PROTECTED MATCH DOMAIN person_id UNIQUE,
+    full_name   TEXT
+);
+CREATE TABLE
+
+admin@operational=&gt; CREATE TABLE records (
+    record_id           BIGINT PRIMARY KEY,
+    patient_national_id TEXT PROTECTED REFERENCES patients (national_id),
+    diagnosis           TEXT
+);
+CREATE TABLE
+
+admin@operational=&gt; SHOW COLUMNS FROM records;
+       column        |  type  | match_domain | primary_key |       references       | not_null | unique
+---------------------+--------+--------------+-------------+------------------------+----------+--------
+ record_id           | BIGINT | NULL         | yes         | NULL                   | yes      | yes
+ patient_national_id | TEXT   | person_id    |             | patients (national_id) |          |
+ diagnosis           | TEXT   | NULL         |             | NULL                   |          |
+(3 rows)</code></pre>
+<p>The reference and the column it references must agree, and the engine checks it:</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE bad1 (id BIGINT PRIMARY KEY, nid TEXT PROTECTED);
+ERROR:  PROTECTED column nid needs a match domain
+HINT:  Write TEXT PROTECTED MATCH DOMAIN name, or PROTECTED REFERENCES a protected column.
+SQLSTATE:  42601
+
+admin@operational=&gt; CREATE TABLE bad2 (id BIGINT PRIMARY KEY, nid TEXT PROTECTED MATCH DOMAIN phone_number REFERENCES patients (national_id));
+ERROR:  Column bad2.nid (match domain phone_number) references patients.national_id (match domain person_id).
+HINT:  A reference and the column it references must have the same match domain.
+SQLSTATE:  ZD103 (DEP_MATCH_DOMAIN_MISMATCH)
+
+admin@operational=&gt; CREATE TABLE bad3 (id BIGINT PRIMARY KEY, nid TEXT REFERENCES patients (national_id));
+ERROR:  Column bad3.nid references PROTECTED column patients.national_id (match domain person_id) but is not PROTECTED.
+HINT:  Declare it TEXT PROTECTED REFERENCES patients (national_id), so the reference is kept as an index entry.
+SQLSTATE:  ZD006 (DEP_REFERENCE_MISMATCH)</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROTECTED</code> with no domain and no reference</td>
+<td><code>42601</code> syntax error</td>
+</tr>
+<tr>
+<td>A reference in a different domain from its target</td>
+<td><code>ZD103</code> <code>DEP_MATCH_DOMAIN_MISMATCH</code></td>
+</tr>
+<tr>
+<td>A protected column that references an ordinary one, or the reverse</td>
+<td><code>ZD006</code> <code>DEP_REFERENCE_MISMATCH</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Only a superuser creates tables. A protected value is never stored in an ordinary column; the next section shows the error.</p>
+<h3 id="72-inserting-and-updating-protected-values">Inserting and updating protected values</h3>
+<p><strong>What is it?</strong> Protected values are written with ordinary <code>INSERT</code> and <code>UPDATE</code> statements. The server converts them to their protected form immediately.</p>
+<p><strong>Example 1: Registering a patient</strong></p>
+<pre class="highlight"><code class="language-sql">INSERT INTO patients (patient_id, national_id, full_name, health_fund)
+VALUES ($1, $2, $3, $4);</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">INSERT 0 1</code></pre>
+<p><strong>Explanation:</strong> the ID number in <code>$2</code> is normalized, turned into an index entry and a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#ciphertext" data-term="Ciphertext" data-def="The encrypted copy of a protected value, stored next to its index entry.">ciphertext</a>, and stored. It never appears in the server's logs.</p>
+<p><strong>Example 2: Updating a record found by its ID number</strong></p>
+<p>Dana has changed her family name. Reception updates it, and uses the ID number only to locate the record:</p>
+<pre class="highlight"><code class="language-sql">UPDATE patients
+SET full_name = $2
+WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">UPDATE 1</code></pre>
+<p><strong>Explanation:</strong> <code>WHERE national_id = $1</code> is an anchored lookup (<a href="/project-hoopeo.github.io/docs/sql/#73-finding-a-record-by-a-protected-value">Finding a record by a protected value</a>): it finds one patient by one value.</p>
+<p><strong>Example 3: The same update from the masked path</strong></p>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_ENDPOINT_OPERATION
+DETAIL: Writes are unavailable on a MASKED_READ connection.</code></pre>
+<p><strong>Explanation:</strong> the masked path is read-only.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>Writing protected values is allowed only on the operational path.</li>
+<li>A value written into a protected column is a protected input: normalized, converted, and redacted from any recorded statement text.</li>
+<li>A protected column can be used in the <code>WHERE</code> clause of an <code>UPDATE</code> or <code>DELETE</code> only as an anchor.</li>
+</ol>
+<h3 id="73-finding-a-record-by-a-protected-value">Finding a record by a protected value</h3>
+<p>A protected column can be compared with a value for equality. The value is a literal (<code>'123456782'</code>) or a parameter (<code>$1</code>); the engine treats both the same way and, for a parameter, never puts the value in an error message.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Works</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>col = value</code></td>
+<td>yes</td>
+<td>A lookup through the blind index</td>
+</tr>
+<tr>
+<td><code>col IN (v1, v2, ...)</code></td>
+<td>yes</td>
+<td>A list of lookups</td>
+</tr>
+<tr>
+<td><code>col = v1 OR col = v2</code></td>
+<td>yes</td>
+<td>Each side is a lookup</td>
+</tr>
+<tr>
+<td><code>CASE WHEN col = v THEN ... END</code></td>
+<td>yes</td>
+<td>The comparison is a lookup</td>
+</tr>
+<tr>
+<td><code>col NOT IN (...)</code>, <code>NOT (col = v)</code></td>
+<td>yes</td>
+<td>The same lookups, negated</td>
+</tr>
+<tr>
+<td><code>col IS NULL</code>, <code>col IS NOT NULL</code></td>
+<td>filtering on the operational path</td>
+<td>These test whether a stored value is missing or present. Filtering, returning the test and counting values have different rules; see <a href="#protected-value-presence">Checking whether a protected value is present</a>.</td>
+</tr>
+<tr>
+<td><code>col = other_protected_col</code></td>
+<td>in a join</td>
+<td>The two columns must be in the same domain</td>
+</tr>
+<tr>
+<td><code>col &lt;&gt; v</code>, <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code></td>
+<td>no</td>
+<td><code>ZD101</code></td>
+</tr>
+</tbody>
+</table></div>
+<pre class="highlight"><code class="language-text">reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893');
+DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+ Yossi Levi
+(2 rows)
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id = '123456782' OR national_id = '345678904';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+  full_name
+-------------
+ Dana Cohen
+ Noa Mizrahi
+(2 rows)</code></pre>
+<p>Each lookup on the operational path is counted for the role's <a href="#match-limits">match limit</a> and written to the audit log, without the value. A lookup needs the privilege <code>SELECT (column)</code> on the protected column. On the masked read path it is refused altogether:</p>
+<pre class="highlight"><code class="language-text">bi_dashboard@analytics=&gt; SELECT health_fund FROM patients WHERE national_id = '123456782';
+ERROR:  Matching PROTECTED values is unavailable on a MASKED_READ connection.
+HINT:  This operation requires an OPERATIONAL connection.
+SQLSTATE:  ZD102 (DEP_ENDPOINT_OPERATION)</code></pre>
+<p>A comparison with a value of the wrong kind does not match and does not fail: <code>national_id = 123</code> compares an integer with text and finds no row. Compare with a string.</p>
+<h4 id="protected-value-presence">Checking whether a protected value is present</h4>
+<p>A missing value and a hidden value are different. A protected column comes back as <code>NULL</code> in ordinary query output even when the database stores a value. That output does not tell you whether the stored value is missing.</p>
+<p>Three SQL forms answer different questions:</p>
+<ul>
+<li><strong><code>IS NULL</code> / <code>IS NOT NULL</code></strong> checks whether the stored value in one row is missing or present.</li>
+<li><strong><code>COUNT(national_id)</code></strong> counts the rows whose stored <code>national_id</code> is not <code>NULL</code>.</li>
+<li><strong><code>COUNT(*)</code></strong> counts rows, without checking whether <code>national_id</code> has a value.</li>
+</ul>
+<p>Assume <code>patients.national_id</code> is protected and the role has the required ordinary <code>SELECT</code> privileges. The DEP rules distinguish these operations:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Operational</th>
+<th>Masked read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filter rows with <code>WHERE national_id IS NOT NULL</code> (or <code>IS NULL</code>)</td>
+<td>Allowed</td>
+<td>Refused: <code>ZD102</code></td>
+</tr>
+<tr>
+<td>Return the test with <code>SELECT national_id IS NULL</code> (or <code>IS NOT NULL</code>)</td>
+<td>Refused: <code>ZD101</code></td>
+<td>Refused: <code>ZD102</code></td>
+</tr>
+<tr>
+<td>Count stored values with <code>COUNT(national_id)</code></td>
+<td>Refused: <code>ZD101</code></td>
+<td>Refused: <code>ZD102</code></td>
+</tr>
+<tr>
+<td>Count rows with <code>COUNT(*)</code></td>
+<td>Allowed</td>
+<td>Allowed</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Filter rows: allowed on the operational path.</strong> The application can select rows that have an identifier without returning the identifier or a separate presence flag.</p>
+<pre class="highlight"><code class="language-sql">SELECT patient_id
+FROM patients
+WHERE national_id IS NOT NULL;</code></pre>
+<p><strong>Count rows: allowed on either path.</strong> This counts the rows the query selects, including rows whose identifier is missing. Adding a protected-value filter is a separate operation, and follows the rule in the first row of the table.</p>
+<pre class="highlight"><code class="language-sql">SELECT COUNT(*) AS patient_count
+FROM patients;</code></pre>
+<p><strong>Return a presence flag or count stored identifiers: refused on either path.</strong> These reveal information about the protected column rather than simply counting rows.</p>
+<pre class="highlight"><code class="language-sql">-- Refused: return whether an identifier is missing.
+SELECT national_id IS NULL AS identifier_missing
+FROM patients;
+
+-- Refused: count non-NULL identifiers.
+SELECT COUNT(national_id) AS identifiers_present
+FROM patients;</code></pre>
+<p>Allowing a presence test in a filter does <strong>not</strong> allow <code>COUNT(national_id)</code> inside a condition such as <code>HAVING</code>. Use the distinct rules above rather than treating every presence-related expression as interchangeable.</p>
+<p><strong>Implementation status:</strong> this table describes the DEP rules, not a guarantee that every released Engine enforces them. DEP Engine 0.5.2 has a <a href="/project-hoopeo.github.io/docs/server/#other-known-differences-in-dep-engine-052">documented presence-test difference</a>.</p>
+<h3 id="74-selecting-a-protected-column">Selecting a protected column</h3>
+<p><strong>What is it?</strong> When an ordinary query selects a protected column, the value is replaced with a real SQL <code>NULL</code> before the result is sent. This is called <strong>suppression</strong>.</p>
+<p><strong>Why is it needed?</strong> Existing applications, ORMs, and reports that select every column should keep working, without receiving identifiers.</p>
+<p><strong>Example 1: Asking for the ID number with the name</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT full_name, national_id
+FROM patients
+WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>full_name</th>
+<th>national_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dana Cohen</td>
+<td><code>NULL</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the match still works: Dana was found. But a protected value never leaves the database in an ordinary query, so <code>national_id</code> comes back as <code>NULL</code>.</p>
+<p><strong>Example 2: <code>SELECT *</code></strong></p>
+<pre class="highlight"><code class="language-sql">SELECT * FROM patients WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>patient_id</th>
+<th>national_id</th>
+<th>phone</th>
+<th>full_name</th>
+<th>health_fund</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>NULL</code></td>
+<td><code>NULL</code></td>
+<td>Dana Cohen</td>
+<td>Clalit</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> both protected columns are suppressed. An application that always selects every column keeps working; it simply never receives the identifiers.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>Suppression happens at the output boundary, on both paths, in every result format.</li>
+<li>The value is a real SQL <code>NULL</code>: not the string <code>"NULL"</code>, not the stored ciphertext, and not a reusable token.</li>
+<li>The column keeps its declared type in the result description.</li>
+</ol>
+<p><strong>Notes</strong></p>
+<ul>
+<li><strong>Why not a token?</strong> Returning stable "gibberish" in place of the ID would let clients track Dana across results.</li>
+<li><strong>Why not an error?</strong> Because selecting is harmless once the value is suppressed. <em>Processing</em> a protected value, as opposed to selecting it, is an error (<a href="/project-hoopeo.github.io/docs/sql/#78-operations-that-are-not-allowed">Operations that are not allowed</a>).</li>
+<li><strong>Telling suppression from absence.</strong> Whether a client can tell a suppressed value from a missing one is an open question (<a href="/project-hoopeo.github.io/docs/design/roadmap/#7-open-questions">Roadmap and Release</a>). Protected status is always visible in the schema.</li>
+</ul>
+<h3 id="75-queries-on-the-masked-path">Queries on the masked path</h3>
+<p><strong>What is it?</strong> On the masked path, queries over ordinary fields run exactly as in ordinary SQL, and any matching on protected values is rejected.</p>
+<p><strong>Example 1: Statistics the dashboard needs</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT p.health_fund, COUNT(*)
+FROM appointments AS a
+JOIN patients AS p USING (patient_id)
+GROUP BY p.health_fund;</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>health_fund</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clalit</td>
+<td>1,284</td>
+</tr>
+<tr>
+<td>Maccabi</td>
+<td>903</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the query joins through the ordinary key <code>patient_id</code> and touches no protected column, so it runs as usual.</p>
+<p><strong>Example 2: The assistant tries to look Dana up</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT full_name FROM patients WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_ENDPOINT_OPERATION
+DETAIL: Matching PROTECTED values is unavailable on a MASKED_READ connection.
+HINT:   This operation requires an OPERATIONAL connection.</code></pre>
+<p><strong>Explanation:</strong> the response is an error, not zero rows. An unsupported operation is a different outcome from an unsuccessful lookup, so the assistant cannot even learn whether Dana is a patient.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_ENDPOINT_OPERATION</code></a>.</p>
+<h3 id="76-joining-on-protected-columns">Joining on protected columns</h3>
+<p>Two protected columns in the same domain can be joined, if the join is <strong>anchored</strong>: the query also contains an equality between one of the columns and a single value, at the top level of the <code>WHERE</code> clause.</p>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/anchoring-narrow.png" alt="An anchored join is allowed, an unanchored one is refused, and a LINKS function may join without an anchor" width="1000" height="2820"><details class="diagram-text"><summary>Diagram text description</summary><p>An anchored join is allowed, an unanchored one is refused, and a LINKS function may join without an anchor</p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/anchoring-narrow-dark.png" alt="" width="1000" height="2820"></p>
+<pre class="highlight"><code class="language-text">doctors_app@operational=&gt; SELECT p.full_name, m.diagnosis
+FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id
+WHERE p.national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+DEP:  Join of PROTECTED columns medical_records.patient_national_id and patients.national_id (MATCH DOMAIN person_id) is anchored to a single protected value.
+ full_name  |    diagnosis
+------------+------------------
+ Dana Cohen | Asthma
+ Dana Cohen | Seasonal allergy
+(2 rows)</code></pre>
+<p>Without the anchor, the join would connect every patient to every record, and it is refused with <code>ZD107</code> <code>DEP_UNANCHORED_MATCH</code>. These are also unanchored matches, and refused in the same way:</p>
+<pre class="highlight"><code class="language-text">doctors_app@operational=&gt; SELECT m.diagnosis FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id
+WHERE p.national_id = '123456782' OR p.full_name = 'Yossi Levi';
+ERROR:  Join on PROTECTED columns patients.national_id and medical_records.patient_national_id is not anchored to a single protected value.
+HINT:  Anchor the join with a lookup such as WHERE patients.national_id = $1, or perform it inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)
+
+doctors_app@operational=&gt; SELECT full_name FROM patients WHERE national_id IN (SELECT patient_national_id FROM medical_records);
+ERROR:  Match of PROTECTED column patients.national_id against a subquery is not anchored to a single protected value.
+HINT:  Anchor the join with a lookup such as WHERE patients.national_id = $1, or perform it inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)
+
+doctors_app@operational=&gt; SELECT patient_national_id, count(*) FROM medical_records GROUP BY patient_national_id;
+ERROR:  GROUP BY on PROTECTED column medical_records.patient_national_id links every row that shares a value.
+HINT:  Group by ordinary columns, or perform the grouping inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)
+
+doctors_app@operational=&gt; SELECT DISTINCT patient_national_id FROM medical_records;
+ERROR:  DISTINCT on PROTECTED column medical_records.patient_national_id links every row that shares a value.
+HINT:  Perform it inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)
+
+doctors_app@operational=&gt; SELECT p.full_name FROM patients p, medical_records m WHERE p.national_id = m.patient_national_id;
+ERROR:  Join on PROTECTED columns medical_records.patient_national_id and patients.national_id is not anchored to a single protected value.
+HINT:  Anchor the join with a lookup such as WHERE medical_records.patient_national_id = $1, or perform it inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)</code></pre>
+<p>An anchor under <code>OR</code> is not an anchor, a subquery is a join written differently, and grouping or <code>DISTINCT</code> on a protected column links every row that shares a value. Joins on ordinary keys, such as <code>appointments.patient_id</code>, are ordinary SQL.</p>
+<p>The only way to run an unanchored match is inside a function declared <code>LINKS</code> for the domain; see <a href="/project-hoopeo.github.io/docs/functions/">Declared functions</a>.</p>
+<h3 id="77-comparing-protected-columns-match-domains">Comparing protected columns: match domains</h3>
+<p><strong>What is it?</strong> A rule: two protected columns can be compared only if they belong to the same match domain.</p>
+<p><strong>Example 1: Comparing ID numbers with ID numbers</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT m.diagnosis
+FROM patients AS p
+JOIN medical_records AS m ON m.patient_national_id = p.national_id
+WHERE p.national_id = $1;</code></pre>
+<p><strong>Explanation:</strong> both columns are in <code>person_id</code>, so the comparison is allowed (and anchored).</p>
+<p><strong>Example 2: Comparing an ID number with a phone number</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT full_name FROM patients WHERE national_id = phone;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_MATCH_DOMAIN_MISMATCH
+DETAIL: patients.national_id (person_id) cannot be compared with patients.phone (phone_number).
+HINT:   Only PROTECTED fields in the same match domain can be compared.</code></pre>
+<p><strong>Explanation:</strong> ID numbers and phone numbers are different kinds of value, even if some digits happen to coincide. Each domain has its own key, so their index entries are unrelated.</p>
+<p><strong>Example 3: Comparing a protected column with an ordinary one</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT p.full_name
+FROM patients AS p
+JOIN my_id_list AS l ON l.id = p.national_id;     -- l.id is ordinary TEXT</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_PROTECTED_OPERATION</code></pre>
+<p><strong>Explanation:</strong> a protected column can be compared only with a protected input or with another protected column of the same domain. A client therefore cannot load a list of identifiers into a table of its own and join it against protected data.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_MATCH_DOMAIN_MISMATCH</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_PROTECTED_OPERATION</code></a>.</p>
+<h3 id="78-operations-that-are-not-allowed">Operations that are not allowed</h3>
+<p>Everything other than full-value equality is refused on a protected value, on every path, in any position of a query, with <code>ZD101</code> <code>DEP_PROTECTED_OPERATION</code>:</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-refused.png" title="Open at full size"><img loading="lazy" alt="Hoopeo Studio refusing an unanchored join, with the error code and the hint" src="/project-hoopeo.github.io/docs/images/studio/studio-refused.png" / width="1440" height="900"></a></p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SELECT full_name FROM patients WHERE national_id LIKE '1234%';
+ERROR:  LIKE is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT full_name FROM patients WHERE national_id &lt;&gt; '123456782';
+ERROR:  Operator != is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT full_name FROM patients ORDER BY national_id;
+ERROR:  ORDER BY is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT CAST(national_id AS TEXT) FROM patients;
+ERROR:  Conversion from PROTECTED to plain TEXT is forbidden (patients.national_id).
+HINT:  To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT length(national_id) FROM patients;
+ERROR:  Function character_length() is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT coalesce(national_id, 'none') FROM patients;
+ERROR:  Function coalesce() is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT min(national_id) FROM patients;
+ERROR:  Aggregate min() is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; SELECT full_name FROM patients WHERE national_id = full_name;
+ERROR:  Comparison with a non-PROTECTED column is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LIKE</code>, <code>ILIKE</code>, <code>~</code>, <code>SIMILAR TO</code></td>
+<td>Reveals the structure of the value</td>
+</tr>
+<tr>
+<td><code>&lt;&gt;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code>, <code>ORDER BY</code></td>
+<td>Reveals order</td>
+</tr>
+<tr>
+<td><code>CAST</code>, <code>::</code>, <code>COALESCE</code>, any function or aggregate (<code>min</code>, <code>max</code>, <code>length</code>, ...)</td>
+<td>Produces or releases a derived value</td>
+</tr>
+<tr>
+<td>Comparing with an ordinary column</td>
+<td>The ordinary column is plaintext</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>COUNT(*)</code> counts rows and is allowed on either path. <code>COUNT(column)</code> is allowed for ordinary columns; counting a protected column is refused because it reveals how many stored values are present. See the <a href="#protected-value-presence">presence-test table</a>.</p>
+<p>DEP fails closed. A form the engine cannot analyze is rejected with <code>ZD108</code> <code>DEP_UNSUPPORTED_FORM</code> rather than run with uncertain protection.</p>
+<p>A protected column read by <code>SELECT</code> comes back as <code>NULL</code>:</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SELECT patient_id, national_id, phone FROM patients WHERE patient_id = 1;
+DEP:  Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL.
+DEP:  Output column phone is PROTECTED column patients.phone (MATCH DOMAIN phone_number) and is returned as NULL.
+ patient_id | national_id | phone
+------------+-------------+-------
+ 1          | NULL        | NULL
+(1 row)</code></pre>
+<h3 id="79-parameters-and-literals">Parameters and literals</h3>
+<p><strong>What is it?</strong> A <strong>protected input</strong> is a value the client sends in a protected position. It can arrive in two forms, and both are allowed:</p>
+<ul>
+<li>a <strong>protected parameter</strong>, sent separately from the query text, as <code>$1</code>;</li>
+<li>a <strong>protected literal</strong>, written in the query text, as <code>'123456782'</code>.</li>
+</ul>
+<p><strong>Why is it needed?</strong> DEP is SQL, and a query that searches for Dana has to send her ID number to the server.</p>
+<p><strong>What counts as a protected position?</strong> A value compared with a protected column, joined against one, or inserted into one.</p>
+<p><strong>Example 1: The same lookup, both ways</strong></p>
+<pre class="highlight"><code class="language-sql">-- As a parameter: the value travels separately from the query text
+SELECT full_name FROM patients WHERE national_id = $1;
+
+-- As a literal: the value is written in the query text
+SELECT full_name FROM patients WHERE national_id = '123456782';</code></pre>
+<p><strong>Output (both)</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>full_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dana Cohen</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> both are anchored lookups, follow the same rules, and are recorded the same way.</p>
+<p><strong>Example 2: Literals in an insert and an update</strong></p>
+<pre class="highlight"><code class="language-sql">INSERT INTO patients (patient_id, national_id, full_name, phone)
+VALUES (3, '345678904', 'Noa Mizrahi', '+972-50-0000003');   -- both stored protected
+
+UPDATE patients SET full_name = 'Dana Cohen-Levi'
+WHERE national_id = '123456782';                              -- used for matching</code></pre>
+<p><strong>Explanation:</strong> <code>'345678904'</code> and <code>'+972-50-0000003'</code> go into protected columns, so they are protected literals. <code>'Noa Mizrahi'</code> goes into an ordinary column, so it is ordinary.</p>
+<p><strong>Example 3: What the server's log records</strong></p>
+<pre class="highlight"><code class="language-text">LOG:  statement: UPDATE patients SET full_name = 'Dana Cohen-Levi' WHERE national_id = &lt;protected&gt;</code></pre>
+<p><strong>Explanation:</strong> the protected literal is redacted wherever the server records the statement. The ordinary literal is not.</p>
+<p><strong>Rules in detail.</strong> From the moment the statement is parsed, a protected input is:</p>
+<ol>
+<li>normalized and converted to an index entry with the match domain's key, and used only for matching or storage;</li>
+<li>unavailable to the rest of the query, which cannot read, transform, or return it;</li>
+<li>redacted from the statement text wherever the server records or echoes it: logs, query statistics, audit records, and error messages.</li>
+</ol>
+<p><strong>Notes</strong></p>
+<ul>
+<li><strong>Protection is positional.</strong> DEP recognizes a value as protected because of <em>where it is used</em>, not because of what it looks like. A value written elsewhere (<code>SELECT '123456782'</code>, for instance) is ordinary text, and the server has no way to know it is an ID number.</li>
+<li><strong>Parameters are still recommended.</strong> They keep the value out of the query text entirely, and they are the standard defense against SQL injection.</li>
+<li><strong>Client-side substitution.</strong> Some drivers substitute values into the query text before sending it. To the server, that is a literal, and it is handled as one.</li>
+</ul>
+<h3 id="710-protected-foreign-keys">Protected foreign keys</h3>
+<p><strong>What is it?</strong> A protected foreign key is a foreign key from a protected column to a protected column of the same match domain.</p>
+<p><strong>Why is it needed?</strong> A foreign key promises that every value in one column also appears in another. When the referenced column is protected, the protected value now lives in two places; these rules keep the second place as protected as the first.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">column_name base_type PROTECTED REFERENCES table_name ( protected_column )</code></pre>
+<p><strong>Example 1: Linking diagnoses through the protected ID number</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE TABLE medical_records (
+    record_id           BIGINT PRIMARY KEY,
+    patient_national_id TEXT PROTECTED REFERENCES patients (national_id),  -- inherits person_id
+    diagnosis           TEXT,
+    recorded_at         DATE
+);</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">CREATE TABLE</code></pre>
+<p><strong>Explanation:</strong> the clinic links diagnoses to patients through the protected ID number, not through <code>patient_id</code>, because a list of patients next to their diagnoses is exactly the kind of link that must be guarded. The match domain <code>person_id</code> is inherited from <code>patients.national_id</code>.</p>
+<p><strong>Example 2: Forgetting <code>PROTECTED</code></strong></p>
+<pre class="highlight"><code class="language-sql">CREATE TABLE medical_records (
+    record_id           BIGINT PRIMARY KEY,
+    patient_national_id TEXT REFERENCES patients (national_id),
+    diagnosis           TEXT
+);</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_REFERENCE_MISMATCH
+DETAIL: medical_records.patient_national_id references patients.national_id, which is PROTECTED.
+HINT:   Declare the column TEXT PROTECTED REFERENCES patients (national_id).</code></pre>
+<p><strong>Explanation:</strong> without <code>PROTECTED</code>, the second table would hold an ordinary copy of every ID number, and a plain <code>SELECT</code> on it would return them all.</p>
+<p><strong>Example 3: Recording a diagnosis for a patient who does not exist</strong></p>
+<pre class="highlight"><code class="language-sql">INSERT INTO medical_records (record_id, patient_national_id, diagnosis)
+VALUES (104, $1, 'Migraine');        -- $1 is not any patient's ID number</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  insert or update on table "medical_records" violates foreign key constraint "medical_records_patient_national_id_fkey"</code></pre>
+<p><strong>Explanation:</strong> the check happened inside the engine, on index entries. The error names only the constraint, never the value. But the failure itself reveals that no patient has that ID number, so the check is counted as a protected lookup, audited and rate-limited.</p>
+<p><strong>How a write is checked</strong></p>
+<figure class="book-diagram"><div class="mermaid">sequenceDiagram
+    participant App as Doctors' application
+    participant DEP as DEP server
+    participant IDX as Index of patients.national_id
+    participant AUD as Audit and rate limit
+    App-&gt;&gt;DEP: INSERT INTO medical_records ... VALUES ($1, $2, $3)
+    DEP-&gt;&gt;DEP: Normalize $2 and compute its index entry with the person_id key
+    DEP-&gt;&gt;AUD: Count one protected lookup for this identity
+    DEP-&gt;&gt;IDX: Look up the index entry
+    alt The patient exists
+        IDX--&gt;&gt;DEP: Found
+        DEP-&gt;&gt;DEP: Store the row with its own index entry and encrypted value
+        DEP--&gt;&gt;App: INSERT 0 1
+    else No such patient
+        IDX--&gt;&gt;DEP: Not found
+        DEP--&gt;&gt;App: ERROR 23503, naming the constraint only
+    end</div><figcaption>Protected foreign keys</figcaption><details><summary>Diagram source and text</summary><pre><code>sequenceDiagram
+    participant App as Doctors' application
+    participant DEP as DEP server
+    participant IDX as Index of patients.national_id
+    participant AUD as Audit and rate limit
+    App-&gt;&gt;DEP: INSERT INTO medical_records ... VALUES ($1, $2, $3)
+    DEP-&gt;&gt;DEP: Normalize $2 and compute its index entry with the person_id key
+    DEP-&gt;&gt;AUD: Count one protected lookup for this identity
+    DEP-&gt;&gt;IDX: Look up the index entry
+    alt The patient exists
+        IDX--&gt;&gt;DEP: Found
+        DEP-&gt;&gt;DEP: Store the row with its own index entry and encrypted value
+        DEP--&gt;&gt;App: INSERT 0 1
+    else No such patient
+        IDX--&gt;&gt;DEP: Not found
+        DEP--&gt;&gt;App: ERROR 23503, naming the constraint only
+    end</code></pre></details></figure>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li><strong>The referencing column must be declared <code>PROTECTED</code>, and inherits the match domain.</strong> <code>PROTECTED</code> must be written, so that anyone reading the schema sees it wherever the value lives. If the domain is written, it must match. The same applies in the other direction (a protected column referencing an ordinary one) and across domains.</li>
+<li><strong>The integrity check happens inside the engine</strong>, by comparing index entries, without decrypting anything.</li>
+<li><strong>The check counts as a protected lookup</strong>, because its outcome carries information. A delete blocked by <code>RESTRICT</code> likewise reveals that a patient has records.</li>
+<li><strong>Joins through the key follow the matching rules</strong> (<a href="/project-hoopeo.github.io/docs/sql/#76-joining-on-protected-columns">Joining on protected columns</a>).</li>
+<li><strong>Privileges are not inherited.</strong> The referencing column has its own privileges. Only the doctors receive privilege on both protected columns, which is how the clinic keeps reception away from diagnoses:</li>
+</ol>
+<pre class="highlight"><code class="language-sql">GRANT SELECT (patient_id, national_id, full_name, health_fund) ON patients TO doctors_app;
+GRANT SELECT ON appointments, medical_records TO doctors_app;</code></pre>
+<ol start="6">
+<li><strong>Creating the key requires <code>REFERENCES</code> privilege</strong> on the referenced column, so adding a second home for a protected value is itself a decision someone must approve.</li>
+</ol>
+<p><strong>What is inherited</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Taken from the referenced column?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROTECTED</code></td>
+<td>Required, and must be written</td>
+</tr>
+<tr>
+<td>Match domain</td>
+<td>Yes, inherited</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>The same as any protected column</td>
+</tr>
+<tr>
+<td>Privilege to match on the column</td>
+<td>No; each column has its own</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Notes.</strong> <code>ON UPDATE CASCADE</code> recomputes the index entries of the referencing rows, and <code>ON DELETE CASCADE</code> or <code>RESTRICT</code> locates them through the index. Deferred constraints, and foreign keys spanning several columns of which some are protected, are outside the first version.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_REFERENCE_MISMATCH</code></a>; standard SQLSTATE <code>23503</code> for violations, naming only the constraint.</p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>A copy of a protected value must itself be protected.</li>
+<li>Checks run on index entries and count as lookups.</li>
+<li>Use a protected foreign key only when the link itself is sensitive.</li>
+</ul>
+<h3 id="711-requiring-qualified-access">Requiring qualified access</h3>
+<blockquote>
+<p><strong>Future design, not supported in DEP Engine 0.5.2.</strong> This section records an idea from the proposal. The ALTER TABLE option below is not runnable on the current Engine; ZD105 is reserved. Current protected-join anchoring does not prohibit every unfiltered ordinary read or write.</p>
+</blockquote>
+<p><strong>What is it?</strong> A table can require <strong>qualified access</strong>: every operational read or write on it must be anchored to one protected value or to its primary key.</p>
+<p><strong>Why is it needed?</strong> For tables where every legitimate access is targeted, it turns an accidental <code>UPDATE</code> without a <code>WHERE</code>, or a full scan, into an explicit error.</p>
+<p><strong>Syntax.</strong> The exact form is not yet fixed. One possibility is a table option:</p>
+<pre class="highlight"><code class="language-sql">ALTER TABLE patients SET (qualified_access = true);</code></pre>
+<p><strong>Example 1: An update that names one patient</strong></p>
+<pre class="highlight"><code class="language-sql">UPDATE patients SET full_name = $2 WHERE national_id = $1;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">UPDATE 1</code></pre>
+<p><strong>Example 2: An update that names nobody</strong></p>
+<pre class="highlight"><code class="language-sql">UPDATE patients SET full_name = $1;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_UNQUALIFIED_ACCESS
+DETAIL: UPDATE on patients requires a qualifying lookup predicate.
+HINT:   Locate the record by a single PROTECTED value or by its primary key.</code></pre>
+<p><strong>Explanation:</strong> without qualified access, the second statement would have renamed all 50,000 patients.</p>
+<p><strong>Notes.</strong> Which tables should require qualified access, and whether it should be the default for tables with protected columns, is an open question (<a href="/project-hoopeo.github.io/docs/design/roadmap/#7-open-questions">Roadmap and Release</a>).</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_UNQUALIFIED_ACCESS</code></a>.</p>
+<hr />
+<h2 id="roles-grants-and-endpoints">Roles, grants and endpoints</h2>
+<pre class="highlight"><code class="language-sql">CREATE ROLE name [LOGIN | NOLOGIN] [SUPERUSER | NOSUPERUSER] [PASSWORD 'secret' | PASSWORD NULL];
+ALTER ROLE name [same options] [MATCH LIMIT n PER unit | NONE | DEFAULT];
+CREATE ENDPOINT name MODE OPERATIONAL | MASKED_READ;
+
+GRANT privilege [, ...] ON object TO role [, ...];
+REVOKE privilege [, ...] ON object FROM role [, ...];</code></pre>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/cli-access-paths.png" title="Open at full size"><img loading="lazy" alt="DEP CLI on the analytics endpoint: protected outputs are NULL, matching is refused, a LINKS function works" src="/project-hoopeo.github.io/docs/images/terminal/cli-access-paths.png" / width="2068" height="1272"></a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Privilege</th>
+<th>On</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT [(columns)]</code>, <code>INSERT</code>, <code>UPDATE [(columns)]</code>, <code>DELETE</code>, <code>ALL</code></td>
+<td>A table</td>
+<td>Ordinary privileges. On a protected column, <code>SELECT</code> is the privilege to <em>match</em> on it.</td>
+</tr>
+<tr>
+<td><code>EXECUTE</code></td>
+<td><code>FUNCTION name(types)</code></td>
+<td>Call a declared function. Never to <code>PUBLIC</code> for a declared function.</td>
+</tr>
+<tr>
+<td><code>DISCLOSE</code>, <code>LINK</code></td>
+<td><code>MATCH DOMAIN d</code></td>
+<td>Declare functions with <code>DISCLOSES d</code> or <code>LINKS d</code>. Never to <code>PUBLIC</code>.</td>
+</tr>
+<tr>
+<td><code>CONNECT</code></td>
+<td><code>ENDPOINT e</code></td>
+<td>Log in through an endpoint, and so on its access path</td>
+</tr>
+</tbody>
+</table></div>
+<p>A role can connect only through endpoints it was granted, and an endpoint is bound to one path, so the grant decides the path. Only superusers create roles, endpoints and tables. The <code>GRANT SELECT (columns)</code> form is what makes the privacy matrix. Here <code>support</code> may match on <code>email</code> and <code>marketing</code> may not, because it connects through the masked read path:</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE accounts (id BIGINT PRIMARY KEY, email TEXT PROTECTED MATCH DOMAIN email, name TEXT);
+CREATE TABLE
+
+admin@operational=&gt; CREATE ROLE support LOGIN PASSWORD 'x';
+CREATE ROLE
+
+admin@operational=&gt; CREATE ROLE marketing LOGIN PASSWORD 'x';
+CREATE ROLE
+
+admin@operational=&gt; GRANT CONNECT ON ENDPOINT operational TO support;
+GRANT
+
+admin@operational=&gt; GRANT CONNECT ON ENDPOINT analytics TO marketing;
+GRANT
+
+admin@operational=&gt; GRANT SELECT (id, email, name) ON accounts TO support;
+GRANT
+
+admin@operational=&gt; GRANT SELECT (id, name) ON accounts TO marketing;
+GRANT
+
+admin@operational=&gt; SHOW PRIVACY MATRIX;
+ match_domain |     column     |   role    |                       paths                        | may_match | discloses_via | links_via
+--------------+----------------+-----------+----------------------------------------------------+-----------+---------------+-----------
+ email        | accounts.email | admin     | analytics (MASKED_READ), operational (OPERATIONAL) | yes       |               |
+ email        | accounts.email | marketing | analytics (MASKED_READ)                            | no        |               |
+ email        | accounts.email | support   | operational (OPERATIONAL)                          | yes       |               |
+(3 rows)</code></pre>
+<p><code>SHOW PRIVACY MATRIX</code> lists, for every protected column and every role, whether the role may match on it, through which paths, and which declared functions it may use to disclose or link it. It is computed from the grants, so it cannot drift.</p>
+<h3 id="set-role">SET ROLE</h3>
+<p>A superuser can act as another role without reconnecting. It is the way to test what a role sees.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SET ROLE reception_app;
+SET
+
+reception_app@operational=&gt; SHOW ROLE;
+     role
+---------------
+ reception_app
+(1 row)
+
+reception_app@operational=&gt; SELECT phone FROM patients;
+ERROR:  permission denied for column phone of table patients
+HINT:  In DEP, the privilege on a PROTECTED column is the privilege to match on it. GRANT SELECT (phone) ON patients TO reception_app would allow it.
+SQLSTATE:  42501
+
+reception_app@operational=&gt; RESET ROLE;
+SET
+
+admin@operational=&gt; SHOW ROLE;
+ role
+-------
+ admin
+(1 row)</code></pre>
+<p><code>SET ROLE</code> changes the privileges that apply. It does not change the access path of the connection, which is fixed at login.</p>
+<h2 id="match-limits">Match limits</h2>
+<p>A lookup on a protected column is a question, "is this value in the table?", and a program that can ask it without limit can guess every value. A <strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limit</a></strong> caps how many protected matches a role can make in a period. It is set per role, with a server default for roles that are not superusers (<code>--match-limit</code>).</p>
+<pre class="highlight"><code class="language-sql">ALTER ROLE reception_app MATCH LIMIT 600 PER HOUR;   -- units: SECOND, MINUTE, HOUR, DAY
+ALTER ROLE reception_app MATCH LIMIT NONE;           -- no limit for this role
+ALTER ROLE reception_app MATCH LIMIT DEFAULT;        -- the server default</code></pre>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; ALTER ROLE reception_app MATCH LIMIT 2 PER MINUTE;
+ALTER ROLE
+
+admin@operational=&gt; \c operational reception_app
+You are now connected as "reception_app" through endpoint "operational" (OPERATIONAL).
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893');
+DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+ Yossi Levi
+(2 rows)
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id = '345678904';
+ERROR:  Role reception_app has made 2 protected matches of the 2 PER MINUTE it is allowed; this statement would make 1 more.
+HINT:  Wait for the period to pass, or ask a superuser to change the limit (ALTER ROLE ... MATCH LIMIT n PER MINUTE).
+SQLSTATE:  ZD109 (DEP_MATCH_RATE_LIMITED)</code></pre>
+<p>A statement over the limit fails with <code>ZD109</code> <code>DEP_MATCH_RATE_LIMITED</code> before it reads anything, and the refusal is audited. Every value in an <code>IN</code> list counts.</p>
+<h2 id="clinic-schema">Clinic schema</h2>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · ordinary key · open"| A["appointments"]
+    P -.-|"national_id · protected key · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4</div><figcaption>Clinic schema</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    P["patients&lt;br/&gt;identity"] ---|"patient_id · ordinary key · open"| A["appointments"]
+    P -.-|"national_id · protected key · guarded"| M["medical_records&lt;br/&gt;diagnoses"]
+    linkStyle 0 stroke:#16a34a,stroke-width:2px
+    linkStyle 1 stroke:#d97706,stroke-width:2px,stroke-dasharray:6 4</code></pre></details></figure>
+<p>The complete executable setup, including roles, grants, data and functions, is <a href="/project-hoopeo.github.io/examples/clinic.sql">clinic.sql</a>. Load it once using <a href="/project-hoopeo.github.io/docs/application/#run-the-full-clinic">the clinic setup instructions</a>. The clinic uses ordinary keys for appointments and protected keys for diagnoses; this is a modeling decision for this example, not a claim that appointment data is always non-sensitive.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/"><small>Previous</small>Understand DEP</a><a class="next" href="/project-hoopeo.github.io/docs/functions/"><small>Next</small>Declared functions</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#6-two-access-paths">Two access paths</a><ul><li><a href="#61-what-an-access-path-is">What an access path is</a></li><li><a href="#62-create-endpoint">CREATE ENDPOINT</a></li><li><a href="#63-the-operational-path">The operational path</a></li><li><a href="#64-the-masked-read-path">The masked read path</a></li><li><a href="#65-capabilities-of-each-path">Capabilities of each path</a></li><li><a href="#66-who-may-match-on-what">Who may match on what</a></li><li><a href="#67-the-path-cannot-change">The path cannot change</a></li><li><a href="#68-choosing-a-path-for-a-consumer">Choosing a path for a consumer</a></li></ul></li><li><a href="#7-writing-dep-sql">Writing DEP SQL</a><ul><li><a href="#71-declaring-a-protected-column">Declaring a protected column</a></li><li><a href="#72-inserting-and-updating-protected-values">Inserting and updating protected values</a></li><li><a href="#73-finding-a-record-by-a-protected-value">Finding a record by a protected value</a></li><li><a href="#74-selecting-a-protected-column">Selecting a protected column</a></li><li><a href="#75-queries-on-the-masked-path">Queries on the masked path</a></li><li><a href="#76-joining-on-protected-columns">Joining on protected columns</a></li><li><a href="#77-comparing-protected-columns-match-domains">Comparing protected columns: match domains</a></li><li><a href="#78-operations-that-are-not-allowed">Operations that are not allowed</a></li><li><a href="#79-parameters-and-literals">Parameters and literals</a></li><li><a href="#710-protected-foreign-keys">Protected foreign keys</a></li><li><a href="#711-requiring-qualified-access">Requiring qualified access</a></li></ul></li><li><a href="#roles-grants-and-endpoints">Roles, grants and endpoints</a><ul><li><a href="#set-role">SET ROLE</a></li></ul></li><li><a href="#match-limits">Match limits</a></li><li><a href="#clinic-schema">Clinic schema</a></li></ul></aside>
+</div><script src="/project-hoopeo.github.io/assets/vendor/mermaid/mermaid.tiny.js?v=ea0cdf04eb" defer></script><script src="/project-hoopeo.github.io/assets/js/diagrams.js?v=a3fd689319" defer></script>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

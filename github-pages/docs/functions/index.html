@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Declared functions | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="The billing job calls the function from REVEAL with ordinary SQL:">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/functions/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Declared functions | Project Hoopeo">
+<meta property="og:description" content="The billing job calls the function from REVEAL with ordinary SQL:">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/functions/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Declared functions | Project Hoopeo">
+<meta name="twitter:description" content="The billing job calls the function from REVEAL with ordinary SQL:">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/" aria-current="page"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/" aria-current="page"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 3 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#81-why-declared-functions-are-needed">Why declared functions are needed</a></li><li><a href="#82-reveal">REVEAL</a></li><li><a href="#83-create-function--discloses">CREATE FUNCTION ... DISCLOSES</a></li><li><a href="#84-create-function--links">CREATE FUNCTION ... LINKS</a></li><li><a href="#85-declaring-both">Declaring both</a></li><li><a href="#86-grant-disclose-and-grant-link">GRANT DISCLOSE and GRANT LINK</a></li><li><a href="#87-grant-execute-on-declared-functions">GRANT EXECUTE on declared functions</a></li><li><a href="#88-the-rules-for-declared-functions">The rules for declared functions</a></li><li><a href="#89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</a></li><li><a href="#810-documenting-purpose-comment-on-function">Documenting purpose: COMMENT ON FUNCTION</a></li><li><a href="#811-inspect-declared-functions">Inspect declared functions</a></li><li><a href="#812-the-mapping-to-rust">The mapping to Rust</a></li><li><a href="#813-future-extension-partial-disclosure">Future extension: partial disclosure</a></li></ul></details><div class="prose"><h1 id="declared-functions">Declared functions</h1>
+<p><span id="8-declared-functions"></span></p>
+<p><strong>In one sentence:</strong> a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a> is a SQL function whose signature states that it discloses protected values, links datasets through them, or both, and it is the only place where either can happen.</p>
+<h2 id="81-why-declared-functions-are-needed">Why declared functions are needed</h2>
+<p><strong>What problem do they solve?</strong> Most of the clinic's work is <em>pull</em> work: someone arrives with a value and asks for the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> record. Reception and the doctors work this way, with <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">anchored</a> matching, and never need the value back. Two kinds of legitimate work do not fit that pattern:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Kind of work</th>
+<th>In the clinic</th>
+<th>Why ordinary queries cannot do it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Releasing the values themselves</strong></td>
+<td>The monthly report to the health funds; appointment reminders by SMS; diagnosis claims</td>
+<td>The database is the only party that knows the values at that moment, and ordinary queries never return them</td>
+</tr>
+<tr>
+<td><strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">Linking</a> whole datasets</strong></td>
+<td>Diagnoses per health fund, for the dashboard</td>
+<td>Ordinary queries may match only one value at a time</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why not a permission?</strong> A general "read permission" or "link permission" would collapse back into the column privileges DEP was meant to improve on. DEP instead forbids both by default and makes each exception an explicit construct of the language, as Rust does with <code>unsafe</code>. There are two such constructs: <code>DISCLOSES</code> and <code>LINKS</code>.</p>
+<figure>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/declared-functions-narrow.png" alt="Disclosure and linkage are separate declarations, each with domain privileges and explicit callers." width="1000" height="2123"><details class="diagram-text"><summary>Diagram text description</summary><p><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">Disclosure</a> and linkage are separate declarations, each with domain privileges and explicit callers.</p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/declared-functions-narrow-dark.png" alt="" width="1000" height="2123"></p>
+<figcaption>Disclosure and linkage are separate declarations, each with domain privileges and explicit callers.</figcaption>
+</figure>
+<h2 id="82-reveal">REVEAL</h2>
+<p><strong>What is it?</strong> <code>REVEAL</code> is the only operation that turns a protected value into an ordinary one.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">REVEAL ( protected_column )</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>protected_column</code></td>
+<td>A <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a> of <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a> <code>d</code>.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Return value.</strong> The value, with the base type of the column: <code>REVEAL</code> of a <code>TEXT PROTECTED</code> column returns <code>TEXT</code>. The result is a <strong>disclosed value</strong> (<a href="/project-hoopeo.github.io/docs/functions/#89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</a>).</p>
+<p><strong>Example 1: <code>REVEAL</code> inside a disclosing function</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION monthly_fund_report(report_month DATE)
+RETURNS TABLE (national_id TEXT, visit_date DATE, visit_type TEXT, health_fund TEXT)
+LANGUAGE sql
+DISCLOSES person_id
+AS $$
+    SELECT REVEAL(p.national_id), a.starts_at::date, a.visit_type, p.health_fund
+    FROM appointments AS a
+    JOIN patients AS p USING (patient_id)
+    WHERE date_trunc('month', a.starts_at) = date_trunc('month', CAST(report_month AS TIMESTAMP));
+$$;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">CREATE FUNCTION</code></pre>
+<p><strong>Explanation:</strong> <code>REVEAL(p.national_id)</code> is allowed, because the function declares <code>DISCLOSES person_id</code> and <code>national_id</code> belongs to <code>person_id</code>.</p>
+<p><strong>Example 2: <code>REVEAL</code> in an ordinary query</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT REVEAL(national_id) FROM patients;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_REVEAL_OUTSIDE_DISCLOSURE
+DETAIL: REVEAL() of patients.national_id (match domain person_id) appears outside a disclosing function.
+HINT:   Move the disclosure into a function declared DISCLOSES person_id.</code></pre>
+<p><strong>Explanation:</strong> outside a disclosing function, <code>REVEAL</code> does not exist as far as the client is concerned.</p>
+<p><strong>Example 3: <code>REVEAL</code> of the wrong domain</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION phones_and_ids()
+RETURNS TABLE (phone TEXT, national_id TEXT)
+LANGUAGE sql
+DISCLOSES phone_number
+AS $$
+    SELECT REVEAL(phone), REVEAL(national_id) FROM patients;
+$$;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_REVEAL_OUTSIDE_DISCLOSURE
+DETAIL: REVEAL() of patients.national_id (match domain person_id) appears outside a disclosing function.</code></pre>
+<p><strong>Explanation:</strong> the function may reveal phone numbers, but not ID numbers. Each domain must be declared separately. The check runs when the function is created, not only when it runs.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_REVEAL_OUTSIDE_DISCLOSURE</code></a>.</p>
+<h2 id="83-create-function--discloses">CREATE FUNCTION ... DISCLOSES</h2>
+<p><strong>What is it?</strong> A <strong>disclosing function</strong> is a function declared <code>DISCLOSES d</code>. Inside its body, values of match domain <code>d</code> may be revealed.</p>
+<p><strong>Why is it needed?</strong> For any workflow that needs protected values to leave the database: a report, a file for an external system, a message to a person.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION function_name ( [ parameter_name type [, ...] ] )
+RETURNS TABLE ( column_name type [, ...] )
+LANGUAGE sql
+DISCLOSES domain_name [, ...]
+[ LINKS domain_name [, ...] ]
+AS $$
+    query
+$$;</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Clause</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>function_name</code>, parameters</td>
+<td>As in any PostgreSQL function.</td>
+</tr>
+<tr>
+<td><code>RETURNS TABLE (...)</code></td>
+<td>The columns the caller receives. A disclosed column has the base type of the protected column it comes from.</td>
+</tr>
+<tr>
+<td><code>LANGUAGE sql</code></td>
+<td>Required, so the engine can analyze the body when the function is created.</td>
+</tr>
+<tr>
+<td><code>DISCLOSES domain_name</code></td>
+<td>The match domains whose values the body may <code>REVEAL</code>.</td>
+</tr>
+<tr>
+<td><code>LINKS domain_name</code></td>
+<td>Optional; also allows unanchored matching in that domain (<a href="/project-hoopeo.github.io/docs/functions/#85-declaring-both">Declaring both</a>).</td>
+</tr>
+<tr>
+<td><code>AS $$ ... $$</code></td>
+<td>The function body, in ordinary PostgreSQL syntax.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Working with the loaded clinic.</strong> Its functions already exist. Use SHOW FUNCTIONS to inspect them. The definitions below explain their construction; an administrator can use CREATE OR REPLACE FUNCTION to update one, or choose a new function name when experimenting.</p>
+<p><strong>Example 1: Calling the monthly report</strong></p>
+<p>The billing job calls the function from <a href="/project-hoopeo.github.io/docs/functions/#82-reveal">REVEAL</a> with ordinary SQL:</p>
+<pre class="highlight"><code class="language-sql">SELECT * FROM monthly_fund_report('2026-10-01');</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>national_id</th>
+<th>visit_date</th>
+<th>visit_type</th>
+<th>health_fund</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>123456782</td>
+<td>2026-10-14</td>
+<td>Follow-up</td>
+<td>Clalit</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the billing job receives a real ID number, as ordinary <code>TEXT</code>, because that is what the signature promises. This is one of only two places in the clinic where ID numbers can leave the database.</p>
+<p><strong>Example 2: Reminders, in the other domain</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION appointment_reminders(day DATE)
+RETURNS TABLE (phone TEXT, starts_at TIMESTAMPTZ)
+LANGUAGE sql
+DISCLOSES phone_number
+AS $$
+    SELECT REVEAL(p.phone), a.starts_at
+    FROM appointments AS a
+    JOIN patients AS p USING (patient_id)
+    WHERE CAST(a.starts_at AS DATE) = day;
+$$;
+
+SELECT * FROM appointment_reminders(DATE '2026-10-21');     -- as reminder_job</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>phone</th>
+<th>starts_at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+972-50-0000001</td>
+<td>2026-10-21 10:30</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the function returns the phone number and the time, and nothing else. A reminder SMS does not need to say what the visit is for, so the visit type never leaves with the phone number. A declared function should return only what its purpose requires.</p>
+<p><strong>Example 3: Calling a disclosing function from the masked path</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT * FROM monthly_fund_report('2026-10-01');     -- as bi_dashboard</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_ENDPOINT_OPERATION
+DETAIL: Disclosing functions are unavailable on a MASKED_READ connection.</code></pre>
+<p><strong>Explanation:</strong> disclosure happens only on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a>, even for a role that somehow holds <code>EXECUTE</code>.</p>
+<p><strong>Rules in detail.</strong> The creator needs <code>DISCLOSE ON MATCH DOMAIN d</code> (<a href="/project-hoopeo.github.io/docs/functions/#86-grant-disclose-and-grant-link">GRANT DISCLOSE and GRANT LINK</a>); the function is never executable by <code>PUBLIC</code> (<a href="/project-hoopeo.github.io/docs/functions/#87-grant-execute-on-declared-functions">GRANT EXECUTE on declared functions</a>); it runs only on the operational path; and its disclosed output columns are terminal (<a href="/project-hoopeo.github.io/docs/functions/#89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</a>). The full list is in <a href="/project-hoopeo.github.io/docs/functions/#88-the-rules-for-declared-functions">The rules for declared functions</a>.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_DECLARATION_PRIVILEGE</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_DECLARED_LANGUAGE</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_DECLARED_CALL</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_REVEAL_OUTSIDE_DISCLOSURE</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_ENDPOINT_OPERATION</code></a>.</p>
+<h2 id="84-create-function--links">CREATE FUNCTION ... LINKS</h2>
+<p><strong>What is it?</strong> A <strong>linking function</strong> is a function declared <code>LINKS d</code>. Inside its body, protected values of domain <code>d</code> may be matched without an anchor, linking whole datasets.</p>
+<p><strong>Why is it needed?</strong> For a workflow that must connect whole datasets through a protected value, typically to compute statistics, without releasing the values.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION function_name ( [ parameter_name type [, ...] ] )
+RETURNS TABLE ( column_name type [, ...] )
+LANGUAGE sql
+LINKS domain_name [, ...]
+AS $$
+    query
+$$;</code></pre>
+<p><strong>Example 1: Diagnoses per health fund</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION diagnoses_per_fund()
+RETURNS TABLE (health_fund TEXT, diagnosis TEXT, patients BIGINT)
+LANGUAGE sql
+LINKS person_id
+AS $$
+    SELECT p.health_fund, m.diagnosis, COUNT(*)
+    FROM patients AS p
+    JOIN medical_records AS m ON m.patient_national_id = p.national_id
+    GROUP BY p.health_fund, m.diagnosis;
+$$;
+
+GRANT EXECUTE ON FUNCTION diagnoses_per_fund() TO bi_dashboard;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">CREATE FUNCTION
+GRANT</code></pre>
+<p><strong>Explanation:</strong> the join inside the body has no anchor; it links every patient to every diagnosis. That is allowed only because the function declares <code>LINKS person_id</code>.</p>
+<p><strong>Example 2: The dashboard calls it from the masked path</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT * FROM diagnoses_per_fund();</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>health_fund</th>
+<th>diagnosis</th>
+<th>patients</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clalit</td>
+<td>Diabetes</td>
+<td>412</td>
+</tr>
+<tr>
+<td>Maccabi</td>
+<td>Asthma</td>
+<td>187</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> the function returns only counts, so it discloses nothing. The dashboard receives the result of a linkage the clinic approved, without gaining any ability to link anything itself. It sends no protected value, so it cannot use the function to probe for one, which is why a linking function without protected input may run on the masked path.</p>
+<p><strong>Example 3: The dashboard tries the same join itself</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT p.health_fund, m.diagnosis, COUNT(*)
+FROM patients AS p
+JOIN medical_records AS m ON m.patient_national_id = p.national_id
+GROUP BY p.health_fund, m.diagnosis;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_ENDPOINT_OPERATION
+DETAIL: Matching PROTECTED values is unavailable on a MASKED_READ connection.</code></pre>
+<p><strong>Explanation:</strong> the permission belongs to the reviewed function, not to the caller. The same SQL, written outside the function, is rejected.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>The creator needs <code>LINK ON MATCH DOMAIN d</code>.</li>
+<li><code>LINKS</code> alone does not permit <code>REVEAL</code>.</li>
+<li>A linking function that takes <strong>no protected input</strong> may be called on both paths.</li>
+<li>A linking function that takes a protected value as a parameter may be called only on the operational path, because calling it is itself a form of matching.</li>
+</ol>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_DECLARATION_PRIVILEGE</code></a>, <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_ENDPOINT_OPERATION</code></a>.</p>
+<h2 id="85-declaring-both">Declaring both</h2>
+<p><strong>What is it?</strong> A function may declare both <code>DISCLOSES d</code> and <code>LINKS d</code> when it must link datasets <em>and</em> release values.</p>
+<p><strong>Example: The diagnosis claims</strong></p>
+<pre class="highlight"><code class="language-sql">CREATE FUNCTION fund_claims_report(report_month DATE)
+RETURNS TABLE (national_id TEXT, diagnosis TEXT, recorded_at DATE)
+LANGUAGE sql
+DISCLOSES person_id
+LINKS person_id
+AS $$
+    SELECT REVEAL(p.national_id), m.diagnosis, m.recorded_at
+    FROM medical_records AS m
+    JOIN patients AS p ON p.national_id = m.patient_national_id
+    WHERE date_trunc('month', CAST(m.recorded_at AS TIMESTAMP)) = date_trunc('month', CAST(report_month AS TIMESTAMP));
+$$;
+
+GRANT EXECUTE ON FUNCTION fund_claims_report(DATE) TO billing_job;</code></pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>The join links every diagnosis of the month to its patient, which requires <code>LINKS person_id</code>.</li>
+<li>The output includes the ID number, which requires <code>DISCLOSES person_id</code>.</li>
+<li>"Returns ID numbers" and "links patients to diagnoses" are two different privacy decisions, and a reviewer should see both in the signature. <code>DISCLOSES</code> alone does not permit linking, and <code>LINKS</code> alone does not permit <code>REVEAL</code>.</li>
+</ul>
+<p><strong>The working idiom: match first, reveal last.</strong> The join happens through internal matching on protected fields, and <code>REVEAL</code> appears only in the final projection, on the column the value is disclosed from.</p>
+<h2 id="86-grant-disclose-and-grant-link">GRANT DISCLOSE and GRANT LINK</h2>
+<p><strong>What is it?</strong> <code>GRANT DISCLOSE</code> and <code>GRANT LINK</code> give a role the privilege to <em>create</em> disclosing and linking functions for one match domain.</p>
+<p><strong>Why is it needed?</strong> Declaring a function is adding "unsafe code" to the database. Only designated roles should be able to do it, domain by domain.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT  { DISCLOSE | LINK } ON MATCH DOMAIN domain_name TO   role_name [, ...];
+REVOKE { DISCLOSE | LINK } ON MATCH DOMAIN domain_name FROM role_name [, ...];</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DISCLOSE</code></td>
+<td>Allows creating or altering functions declared <code>DISCLOSES domain_name</code>.</td>
+</tr>
+<tr>
+<td><code>LINK</code></td>
+<td>Allows creating or altering functions declared <code>LINKS domain_name</code>.</td>
+</tr>
+<tr>
+<td><code>domain_name</code></td>
+<td>The match domain the privilege applies to.</td>
+</tr>
+<tr>
+<td><code>role_name</code></td>
+<td>The role receiving the privilege.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Example 1: The clinic's privacy administrator</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT DISCLOSE ON MATCH DOMAIN person_id    TO privacy_admin;
+GRANT LINK     ON MATCH DOMAIN person_id    TO privacy_admin;
+GRANT DISCLOSE ON MATCH DOMAIN phone_number TO privacy_admin;</code></pre>
+<p><strong>Explanation:</strong> every declared function in the clinic is created by <code>privacy_admin</code>. Note what is missing: nobody may declare <code>LINKS phone_number</code>, so phone numbers can never be used to link datasets.</p>
+<p><strong>Example 2: A developer tries to declare a linking function</strong></p>
+<pre class="highlight"><code class="language-sql">-- as app_developer
+CREATE FUNCTION all_diagnoses() RETURNS TABLE (diagnosis TEXT)
+LANGUAGE sql LINKS person_id AS $$ ... $$;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_DECLARATION_PRIVILEGE
+DETAIL: Role app_developer may not declare functions LINKS person_id.
+HINT:   This function must be created by a role holding LINK ON MATCH DOMAIN person_id.</code></pre>
+<p><strong>Explanation:</strong> the developer may write the function, but it must be reviewed and created by a role holding the privilege.</p>
+<p><strong>Notes.</strong> These are the only two privileges DEP adds. They decide who may <em>write</em> declared functions, not who may <em>call</em> them.</p>
+<h2 id="87-grant-execute-on-declared-functions">GRANT EXECUTE on declared functions</h2>
+<p><strong>What is it?</strong> Who may <em>call</em> a declared function is decided by the ordinary <code>GRANT EXECUTE</code>, with one difference: declared functions are never executable by <code>PUBLIC</code>.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT EXECUTE ON FUNCTION function_name ( argument_types ) TO role_name [, ...];</code></pre>
+<p><strong>Example 1: Granting the reports to their jobs</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;
+GRANT EXECUTE ON FUNCTION appointment_reminders(DATE)      TO reminder_job;</code></pre>
+<p><strong>Explanation:</strong> each consumer appears in the grants by name, so the list of who may receive disclosed values is explicit.</p>
+<p><strong>Example 2: Opening a disclosing function to everyone</strong></p>
+<pre class="highlight"><code class="language-sql">GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO PUBLIC;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_PUBLIC_EXECUTE
+DETAIL: monthly_fund_report is declared DISCLOSES person_id and cannot be executable by PUBLIC.
+HINT:   Grant EXECUTE to the specific roles that need it.</code></pre>
+<p><strong>Explanation:</strong> in PostgreSQL, new functions are executable by <code>PUBLIC</code> by default. For declared functions that default would make every disclosure available to everyone, so DEP removes it.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>Declared functions are created with no <code>EXECUTE</code> privilege for anyone but their owner.</li>
+<li>Granting <code>EXECUTE</code> on a declared function to <code>PUBLIC</code> is rejected.</li>
+<li>A caller needs only <code>EXECUTE</code>, not privilege on the protected columns the function matches on internally (<a href="/project-hoopeo.github.io/docs/functions/#88-the-rules-for-declared-functions">The rules for declared functions</a>, rule 8).</li>
+</ol>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_PUBLIC_EXECUTE</code></a>.</p>
+<h2 id="88-the-rules-for-declared-functions">The rules for declared functions</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Location of <code>REVEAL</code></strong></td>
+<td>If <code>x</code> has type <code>T PROTECTED</code> in domain <code>d</code>, then <code>REVEAL(x)</code> has type <code>T</code> and is valid only in the body of a function declared <code>DISCLOSES d</code>. Checked at creation.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Location of unanchored matching</strong></td>
+<td>Unanchored matching on values of domain <code>d</code> is valid only in the body of a function declared <code>LINKS d</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Analyzable bodies</strong></td>
+<td>Declared functions must be <code>LANGUAGE sql</code>. They may call user-defined functions only if those are declared for the same purpose and domain; otherwise a protected or revealed value could reach code that was never reviewed.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Disclosed values are terminal</strong></td>
+<td>Values produced by <code>REVEAL</code> may be returned to the client, renamed or cast, but not used in a predicate, join condition, grouping, <code>DISTINCT</code>, aggregate, sort key, insert, or as the argument of a function or operator (<a href="/project-hoopeo.github.io/docs/functions/#89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</a>).</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Paths</strong></td>
+<td>Disclosing functions run only on the operational path. Linking functions run on the operational path, and on the masked path when they take no protected input.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Declaring is privileged</strong></td>
+<td><code>DISCLOSES d</code> requires <code>DISCLOSE ON MATCH DOMAIN d</code>; <code>LINKS d</code> requires <code>LINK ON MATCH DOMAIN d</code> (<a href="/project-hoopeo.github.io/docs/functions/#86-grant-disclose-and-grant-link">GRANT DISCLOSE and GRANT LINK</a>).</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>No public execution</strong></td>
+<td>Declared functions are never executable by <code>PUBLIC</code> (<a href="/project-hoopeo.github.io/docs/functions/#87-grant-execute-on-declared-functions">GRANT EXECUTE on declared functions</a>).</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Matching runs under the declaration</strong></td>
+<td>The matches inside a declared function were reviewed as part of the function, so a caller needs only <code>EXECUTE</code>, much like <code>SECURITY DEFINER</code> in PostgreSQL. That is why the dashboard, which has no privilege on any protected column, can call <code>diagnoses_per_fund</code>.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</h2>
+<p><strong>What is it?</strong> A <strong>disclosed value</strong> is a value produced by <code>REVEAL</code>. The <strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a></strong> says that a disclosed value may only be returned to the client: it is the end of the line inside the database.</p>
+<p><strong>Implementation status:</strong> DEP.js applies the whole rule. DEP Engine 0.5.2 accepts three uses it forbids: a disclosed value as a sort key, as the argument of a function or operator, and as a <code>DISTINCT</code> key. See the <a href="/project-hoopeo.github.io/docs/server/#known-difference-sorting-disclosed-values">known differences</a> before relying on the rule in a released Engine.</p>
+<p><strong>Why is it needed?</strong> Without it, the report approved for the health funds could be turned into a tool for linking patients to diagnoses inside the database.</p>
+<p><strong>Example 1: Returning a disclosed value (allowed)</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT national_id, visit_date FROM monthly_fund_report('2026-10-01');</code></pre>
+<p><strong>Output</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>national_id</th>
+<th>visit_date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>123456782</td>
+<td>2026-10-14</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Explanation:</strong> returning the value is exactly what the function is for.</p>
+<p><strong>Example 2: Joining a disclosed value back to diagnoses (rejected)</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT r.national_id, m.diagnosis
+FROM monthly_fund_report('2026-10-01') AS r
+JOIN medical_records AS m ON m.patient_national_id = r.national_id;</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_DISCLOSED_VALUE_USE
+DETAIL: Column national_id of monthly_fund_report() is a disclosed value and cannot be used in a join condition.
+HINT:   Disclosed values can only be returned. Perform the match on PROTECTED fields inside a declared function, before REVEAL.</code></pre>
+<p><strong>Explanation:</strong> the signature says <code>TEXT</code>, and the developer sees an ordinary column. But the engine recorded that this column comes from <code>REVEAL</code>, so it may not be used as a join key. The report cannot become a linking tool.</p>
+<p><strong>Example 3: Filtering a disclosed value (rejected)</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT r.national_id
+FROM monthly_fund_report('2026-10-01') AS r
+WHERE r.national_id LIKE '1%';</code></pre>
+<p><strong>Output</strong></p>
+<pre class="highlight"><code class="language-text">ERROR:  DEP_DISCLOSED_VALUE_USE</code></pre>
+<p><strong>Explanation:</strong> filtering is a use, not a return. If the billing job needs only some rows, the filter belongs inside the declared function.</p>
+<p><strong>Rules in detail</strong></p>
+<ol>
+<li>The engine records which output columns of a declared function come from <code>REVEAL</code>.</li>
+<li>Those columns may be returned to the client, renamed (<code>AS</code>) or cast, and nothing else: no predicate, join condition, grouping, <code>DISTINCT</code>, aggregate, sort key, insert, or argument of a function or operator (<code>upper(national_id)</code>, <code>national_id || ''</code>, <code>CASE</code>). Nothing is computed from a disclosed value inside the database.</li>
+<li>A disclosed value keeps its base type. A revealed <code>DATE</code> remains a <code>DATE</code>; the terminal rule already prevents further processing, so converting everything to text would add no protection.</li>
+</ol>
+<p><strong>What the rule does not prevent</strong></p>
+<ul>
+<li><strong>Use after release.</strong> The rule governs what happens inside the database. Once a value is returned, DEP cannot control its use. The billing job can send the ID numbers back as parameters to later queries, but each is then an anchored lookup, audited and rate-limited.</li>
+<li><strong>Linkage through ordinary keys.</strong> The rule stops the <em>marked value</em> from being used as a key. If <code>monthly_fund_report</code> also returned <code>patient_id</code>, its output could be joined freely to every table that holds <code>patient_id</code>:</li>
+</ul>
+<pre class="highlight"><code class="language-sql">-- Would be allowed, if the function returned patient_id: the join uses an ordinary key.
+SELECT r.national_id, a.visit_type
+FROM monthly_fund_report('2026-10-01') AS r
+JOIN appointments AS a USING (patient_id);</code></pre>
+<p>Two design rules follow, and <a href="/project-hoopeo.github.io/docs/designing/#10-designing-with-dep">Designing with DEP</a> applies both: a declared function returns only what its purpose requires (none of the clinic's functions returns <code>patient_id</code>), and a key that links sensitive datasets should itself be protected.</p>
+<p><strong>Errors.</strong> <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_DISCLOSED_VALUE_USE</code></a>.</p>
+<h2 id="810-documenting-purpose-comment-on-function">Documenting purpose: COMMENT ON FUNCTION</h2>
+<p><strong>What is it?</strong> The purpose of a declared function is recorded with the standard <code>COMMENT ON FUNCTION</code>, which keeps it in the catalog without new syntax.</p>
+<p><strong>Syntax</strong></p>
+<pre class="highlight"><code class="language-sql">COMMENT ON FUNCTION function_name ( argument_types ) IS 'text';</code></pre>
+<p><strong>Example</strong></p>
+<pre class="highlight"><code class="language-sql">COMMENT ON FUNCTION monthly_fund_report(DATE) IS 'Purpose: monthly visit report to health funds. Owner: billing.';
+COMMENT ON FUNCTION appointment_reminders(DATE)      IS 'Purpose: SMS appointment reminders. Owner: operations.';
+COMMENT ON FUNCTION diagnoses_per_fund()      IS 'Purpose: diagnosis statistics per health fund. Owner: management.';
+COMMENT ON FUNCTION fund_claims_report(DATE)  IS 'Purpose: monthly diagnosis claims to health funds. Owner: billing.';</code></pre>
+<p><strong>Explanation:</strong> the comment appears in the <code>comment</code> column of <code>SHOW FUNCTIONS</code> (<a href="/project-hoopeo.github.io/docs/functions/#811-inspect-declared-functions">Inspect declared functions</a>), next to the declaration it explains.</p>
+<p><strong>Notes.</strong> Whether purpose should become a first-class, machine-checked part of a declaration is an open question (<a href="/project-hoopeo.github.io/docs/design/roadmap/#7-open-questions">Roadmap and Release</a>).</p>
+<h2 id="811-inspect-declared-functions">Inspect declared functions</h2>
+<p>Use the implemented <code>SHOW FUNCTIONS</code> command to list signatures, <code>discloses</code> and <code>links</code> domains, owner, masked-path availability, comments, callers and SQL bodies.</p>
+<pre class="highlight"><code class="language-sql">SHOW FUNCTIONS;
+SHOW GRANTS;
+SHOW PRIVACY MATRIX;</code></pre>
+<p>The earlier <code>dep.declared_functions</code> SQL catalog view remains a design idea, not an implemented query interface. Use <a href="/project-hoopeo.github.io/docs/reference/show/#show-functions">SHOW commands</a> for exact columns and examples.</p>
+<h2 id="812-the-mapping-to-rust">The mapping to Rust</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Rust</th>
+<th>DEP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An unsafe operation (dereferencing a raw pointer)</td>
+<td><code>REVEAL</code>, or unanchored matching on a protected value</td>
+</tr>
+<tr>
+<td><code>unsafe fn</code> or an <code>unsafe</code> block</td>
+<td>A function body declared <code>DISCLOSES d</code> or <code>LINKS d</code></td>
+</tr>
+<tr>
+<td>A safe wrapper that exposes an ordinary API</td>
+<td>A declared function whose signature returns ordinary types</td>
+</tr>
+<tr>
+<td>A <code># Safety</code> comment documenting the contract</td>
+<td><code>COMMENT ON FUNCTION</code> describing the purpose</td>
+</tr>
+<tr>
+<td><code>cargo geiger</code>, which counts every <code>unsafe</code> in a project</td>
+<td>The <code>SHOW FUNCTIONS</code> command</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="813-future-extension-partial-disclosure">Future extension: partial disclosure</h2>
+<blockquote>
+<p><strong>Future design.</strong> Suffix disclosure syntax is not supported in DEP Engine 0.5.2.</p>
+</blockquote>
+<p><strong>What is the idea?</strong> Some recipients need less than the full value. A letter to Dana might show only the last four digits of her ID number, to confirm it reached the right person. A later version could make the <em>form</em> of disclosure part of the declaration, so that data minimization becomes a check at creation time:</p>
+<pre class="highlight"><code class="language-sql">DISCLOSES person_id AS SUFFIX(4)</code></pre>
+<p><strong>Explanation:</strong> in such a body only <code>REVEAL_SUFFIX(x, 4)</code> would be legal; writing the full <code>REVEAL(x)</code> would be an error. This is intentionally outside the first version.</p>
+<p><strong>Key points</strong></p>
+<ul>
+<li><code>REVEAL</code> exists only inside <code>DISCLOSES</code> functions; unanchored matching only inside <code>LINKS</code> functions.</li>
+<li>Declaring needs a per-domain privilege; calling needs <code>EXECUTE</code>, never <code>PUBLIC</code>.</li>
+<li>Disclosed values can only be returned, never reused inside the database.</li>
+<li>The catalog lists every declared function, so it is the complete answer to "where can values leave?"</li>
+</ul>
+<hr />
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-function.png" title="Open at full size"><img loading="lazy" alt="A permitted disclosure is shown as declared output in the client." src="/project-hoopeo.github.io/docs/images/studio/studio-function.png" / width="1440" height="900"></a></p>
+<figcaption>A permitted disclosure is shown as declared output in the client.</figcaption>
+</figure></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/sql/"><small>Previous</small>Write DEP SQL</a><a class="next" href="/project-hoopeo.github.io/docs/designing/"><small>Next</small>Design with DEP</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#81-why-declared-functions-are-needed">Why declared functions are needed</a></li><li><a href="#82-reveal">REVEAL</a></li><li><a href="#83-create-function--discloses">CREATE FUNCTION ... DISCLOSES</a></li><li><a href="#84-create-function--links">CREATE FUNCTION ... LINKS</a></li><li><a href="#85-declaring-both">Declaring both</a></li><li><a href="#86-grant-disclose-and-grant-link">GRANT DISCLOSE and GRANT LINK</a></li><li><a href="#87-grant-execute-on-declared-functions">GRANT EXECUTE on declared functions</a></li><li><a href="#88-the-rules-for-declared-functions">The rules for declared functions</a></li><li><a href="#89-disclosed-values-and-the-terminal-rule">Disclosed values and the terminal rule</a></li><li><a href="#810-documenting-purpose-comment-on-function">Documenting purpose: COMMENT ON FUNCTION</a></li><li><a href="#811-inspect-declared-functions">Inspect declared functions</a></li><li><a href="#812-the-mapping-to-rust">The mapping to Rust</a></li><li><a href="#813-future-extension-partial-disclosure">Future extension: partial disclosure</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

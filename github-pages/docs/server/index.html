@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run the server | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Know the supported forms and version differences before deploying a server or choosing an integration.">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/server/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Run the server | Project Hoopeo">
+<meta property="og:description" content="Know the supported forms and version differences before deploying a server or choosing an integration.">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/server/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Run the server | Project Hoopeo">
+<meta name="twitter:description" content="Know the supported forms and version differences before deploying a server or choosing an integration.">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/" aria-current="page"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/" aria-current="page"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 6 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#compatibility">Compatibility</a></li><li><a href="#what-you-are-running">What you are running</a></li><li><a href="#support-at-a-glance">Support at a glance</a></li><li><a href="#clients-tested-by-the-project">Clients tested by the project</a></li><li><a href="#the-simulator-and-the-server">The simulator and the server</a><ul><li><a href="#known-difference-sorting-disclosed-values">Known difference: sorting disclosed values</a></li><li><a href="#other-known-differences-in-dep-engine-052">Other known differences in DEP Engine 0.5.2</a></li></ul></li><li><a href="#version-licensing-and-readiness">Version, licensing and readiness</a></li><li><a href="#server-administration">Server administration</a></li><li><a href="#running-the-server">Running the server</a><ul><li><a href="#the-admin-password">The admin password</a></li></ul></li><li><a href="#tls">TLS</a></li><li><a href="#the-data-directory-and-the-master-key">The data directory and the master key</a></li><li><a href="#resources-and-limits">Resources and limits</a><ul><li><a href="#match-limits">Match limits</a></li></ul></li><li><a href="#the-audit-log">The audit log</a></li><li><a href="#key-rotation">Key rotation</a></li><li><a href="#upgrading-and-migrating">Upgrading and migrating</a></li><li><a href="#metrics">Metrics</a></li><li><a href="#a-checklist-for-an-evaluation-server">A checklist for an evaluation server</a></li><li><a href="#transactions">Transactions</a><ul><li><a href="#after-an-error">After an error</a></li><li><a href="#savepoints">Savepoints</a></li><li><a href="#schema-changes-are-transactional">Schema changes are transactional</a></li><li><a href="#concurrent-transactions">Concurrent transactions</a></li></ul></li><li><a href="#constraints">Constraints</a></li><li><a href="#indexes">Indexes</a></li><li><a href="#explain">EXPLAIN</a></li></ul></details><div class="prose"><h1 id="run-the-server">Run the server</h1>
+<p>Know the supported forms and version differences before deploying a server or choosing an integration.</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>Know what DEP Engine 0.5.2 supports before choosing it for an application. This is an experimental reference server for evaluation and non-production testing.</p>
+<h2 id="what-you-are-running">What you are running</h2>
+<p>DEP Engine is built on <strong>Apache DataFusion</strong>. It accepts DEP SQL and speaks the <strong>PostgreSQL wire protocol</strong>. It is a separate database server: these additions cannot be installed by running <code>CREATE EXTENSION</code> in an existing PostgreSQL database.</p>
+<p>PostgreSQL drivers can connect, but PostgreSQL wire compatibility does not mean that PostgreSQL SQL, extensions, catalogs or ORM migrations are all supported.</p>
+<h2 id="support-at-a-glance">Support at a glance</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Current behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ordinary queries</td>
+<td>SELECT, joins, CTEs, subqueries, aggregates and window functions, within the analyzer's supported forms</td>
+</tr>
+<tr>
+<td>Writing</td>
+<td>INSERT, UPDATE and DELETE</td>
+</tr>
+<tr>
+<td>Protected <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a></td>
+<td>Whole-value equality and lists of values; appropriate privileges and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">OPERATIONAL path</a> required</td>
+</tr>
+<tr>
+<td>Protected output</td>
+<td>NULL in ordinary query output; explicit <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">DISCLOSES</a> functions may release values</td>
+</tr>
+<tr>
+<td>Protected joins</td>
+<td>A single-value anchor, or a declared <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">LINKS</a> function, is required</td>
+</tr>
+<tr>
+<td>Transactions</td>
+<td>Transactions and savepoints; one writer at a time</td>
+</tr>
+<tr>
+<td>Constraints</td>
+<td>PRIMARY KEY, UNIQUE, NOT NULL and REFERENCES, including <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a></td>
+</tr>
+<tr>
+<td>Schema migration</td>
+<td>ALTER TABLE is not supported</td>
+</tr>
+<tr>
+<td>Defaults and validation</td>
+<td>DEFAULT and CHECK are not supported</td>
+</tr>
+<tr>
+<td>Bulk statements</td>
+<td>COPY and MERGE are not supported</td>
+</tr>
+<tr>
+<td>Referential actions</td>
+<td>NO ACTION only; no ON DELETE CASCADE</td>
+</tr>
+<tr>
+<td><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">Declared functions</a></td>
+<td>LANGUAGE sql and RETURNS TABLE; no PL/pgSQL</td>
+</tr>
+<tr>
+<td>Protected transformations</td>
+<td>No LIKE, range, sort, cast, substring or arbitrary function calls on protected values. The design allows presence tests in operational filters, but refuses returning the test or <code>COUNT(col)</code> on either path. See the <a href="/project-hoopeo.github.io/docs/sql/#protected-value-presence">presence-test table</a> and the native differences below.</td>
+</tr>
+<tr>
+<td>Disclosed values</td>
+<td>The specification permits output only (renamed or cast); filtering, joining, grouping, <code>DISTINCT</code>, sorting, storing and function arguments are forbidden. DEP Engine 0.5.2 does not apply all of it: see the known differences below.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <a href="/project-hoopeo.github.io/docs/sql/#7-writing-dep-sql">language guide</a> defines the rules and their error codes. <a href="/project-hoopeo.github.io/docs/server/#transactions">Transactions and constraints</a> covers concurrency, indexes and EXPLAIN.</p>
+<h2 id="clients-tested-by-the-project">Clients tested by the project</h2>
+<p>The examples of <a href="/project-hoopeo.github.io/docs/application/">chapter 5</a> are documented as tested against DEP Engine 0.5.2 with:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Documented version</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>psql</td>
+<td>16</td>
+<td>Connection and query examples</td>
+</tr>
+<tr>
+<td>Python psycopg</td>
+<td>3.3</td>
+<td>Application examples</td>
+</tr>
+<tr>
+<td>node-postgres</td>
+<td>8.23</td>
+<td>Application examples</td>
+</tr>
+<tr>
+<td>Other PostgreSQL drivers</td>
+<td>Not verified</td>
+<td>Expected to connect; not individually verified by that guide</td>
+</tr>
+<tr>
+<td>ORMs and migration frameworks</td>
+<td>Not verified</td>
+<td>No general compatibility claim; test generated SQL and catalog access</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use explicit SQL for the first application. Before introducing an ORM, check its connection probes, schema introspection, transaction behavior and migrations against the supported forms.</p>
+<h2 id="the-simulator-and-the-server">The simulator and the server</h2>
+<p><strong>DEP.js</strong> runs in your browser on sql.js / SQLite, using the synthetic clinic. It demonstrates DEP SQL rules; enforcement for connected applications is provided by DEP Engine on the server.</p>
+<p><strong>DEP Engine</strong> enforces the rules on the server for connected clients. The server, operating system and administrator are trusted. Identifiers are stored as a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">blind index</a> and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#ciphertext" data-term="Ciphertext" data-def="The encrypted copy of a protected value, stored next to its index entry.">ciphertext</a>; authorized matches still reveal that a record exists.</p>
+<p>Ordinary names, dates and ordinary join keys remain governed by ordinary permissions. Aggregates can identify people in small groups. Values released to a client are outside DEP's control. Read <a href="/project-hoopeo.github.io/docs/privacy/">DEP and GDPR</a> for the implications.</p>
+<h3 id="known-difference-sorting-disclosed-values">Known difference: sorting disclosed values</h3>
+<p>The <a href="/project-hoopeo.github.io/docs/functions/#89-disclosed-values-and-the-terminal-rule">terminal rule</a> in chapter 3 forbids using a disclosed value as a sort key. DEP.js follows this rule and returns <strong>ZD104 (DEP_DISCLOSED_VALUE_USE)</strong> for each query below:</p>
+<pre class="highlight"><code class="language-sql">-- Sort by the disclosed column's name.
+SELECT national_id FROM monthly_fund_report(DATE '2026-10-01')
+ORDER BY national_id;
+
+-- Sort by an alias of the disclosed column.
+SELECT national_id AS exposed_id FROM monthly_fund_report(DATE '2026-10-01')
+ORDER BY exposed_id;
+
+-- Sort by the disclosed column's position in the result.
+SELECT national_id FROM monthly_fund_report(DATE '2026-10-01')
+ORDER BY 1;</code></pre>
+<p>Native testing of DEP Engine 0.5.1 confirmed that <strong>it accepts all three forms</strong>, contrary to the specification. Version 0.5.2 changed licensing and distribution only, and its query behavior is the same, so assume that 0.5.2 accepts them too.</p>
+<p>Sort reports by an ordinary output column, such as <code>visit_date</code> or <code>visit_type</code>. This keeps examples within the specified rules; it does not repair enforcement in an affected Engine. The compatibility suite includes name, alias and ordinal cases without suppressing differences.</p>
+<h3 id="other-known-differences-in-dep-engine-052">Other known differences in DEP Engine 0.5.2</h3>
+<p>The same testing found three more places where the native analyzer checks less than the specification. DEP.js follows the specification in all three.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>DEP.js and the specification</th>
+<th>DEP Engine 0.5.2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presence of a protected value</td>
+<td>A filter such as <code>WHERE national_id IS NOT NULL</code> is allowed only on the operational path. Returning the test or using <code>COUNT(national_id)</code> is refused on either path (<code>ZD101</code> operational; <code>ZD102</code> masked). <code>COUNT(*)</code> counts rows and is allowed on either. <a href="/project-hoopeo.github.io/docs/sql/#protected-value-presence">Examples and permission table</a>.</td>
+<td>Accepts <code>IS NULL</code>, <code>IS NOT NULL</code> and <code>COUNT(col)</code> on both paths, so a masked connection can learn whether a person has a value on record</td>
+</tr>
+<tr>
+<td>Computing on a disclosed value</td>
+<td><code>upper(national_id)</code>, <code>concat(national_id, '')</code>, <code>CASE</code> over a disclosed value and <code>SELECT DISTINCT national_id</code> are refused (<code>ZD104</code>); renaming and casting are allowed</td>
+<td>Accepts functions, operators and <code>DISTINCT</code> over a disclosed value in the output</td>
+</tr>
+<tr>
+<td>Rows of a <code>VALUES</code> list</td>
+<td>Checked like any projection, including scalar subqueries</td>
+<td>Not checked. A DataFusion limitation currently stops a scalar subquery inside <code>VALUES</code> from running, so no value leaks today, but the analyzer does not enforce the rules there</td>
+</tr>
+</tbody>
+</table></div>
+<p>Fixes for all four differences, with regression tests, exist in the development source of DEP Engine and are not yet in a release. Until a release includes them, test these cases against the Engine you run, and do not rely on the specification's guarantees for them.</p>
+<h2 id="version-licensing-and-readiness">Version, licensing and readiness</h2>
+<ul>
+<li><strong>Current documented engine:</strong> 0.5.2. The release is available as binary packages.</li>
+<li><strong>Readiness:</strong> experimental evaluation software, not a production-readiness assurance.</li>
+<li><strong>Open material:</strong> specification and documentation under CC BY 4.0; DEP.js, the playground and examples under Apache 2.0.</li>
+<li><strong>Binary licensing:</strong> evaluation terms apply to Engine, CLI and Studio. A commercial license is a licensing arrangement, not evidence of production readiness.</li>
+<li><strong>Future plans:</strong> the <a href="/project-hoopeo.github.io/docs/design/roadmap/">design roadmap</a> discusses possible future work, including PostgreSQL. It is not the current feature list.</li>
+</ul>
+<p>See <a href="/project-hoopeo.github.io/legal/licensing/">licensing</a> and <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/releases">the current releases</a>.</p>
+<h2 id="server-administration">Server administration</h2>
+<p>This guide is for the person who runs DEP Engine as a server for other people or programs: configuration, TLS, the data directory and its key, resources, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a>, key rotation, upgrades and metrics.</p>
+<p class="muted"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>.</p>
+
+<h2 id="running-the-server">Running the server</h2>
+<pre class="highlight"><code class="language-sh">dep-engine --listen 127.0.0.1:5433 --data-dir /var/lib/dep-engine/data --http-listen 127.0.0.1:8433</code></pre>
+<p>Every option has an environment variable too, which is how the packages configure the server. The <a href="/project-hoopeo.github.io/docs/reference/server-options/">server options reference</a> lists them all.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Installed as</th>
+<th>Configuration</th>
+<th>Data</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux <code>.deb</code></td>
+<td><code>/etc/dep-engine/dep-engine.env</code>, then <code>sudo systemctl restart dep-engine</code></td>
+<td><code>/var/lib/dep-engine/data</code></td>
+<td>A systemd service as the <code>dep-engine</code> user. The admin password of a new database is in <code>/etc/dep-engine/admin-password</code></td>
+</tr>
+<tr>
+<td>Linux tarball</td>
+<td><code>sudo ./install.sh</code> installs the same service</td>
+<td>the same</td>
+<td><code>sudo ./install.sh --uninstall</code> removes it and keeps the data</td>
+</tr>
+<tr>
+<td>macOS service</td>
+<td>A launch agent, started at login</td>
+<td><code>~/Library/Application Support/Project Hoopeo/data</code></td>
+<td>Listens on 127.0.0.1:5433</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>Environment variables (<code>DEP_ADMIN_PASSWORD</code>, ...)</td>
+<td>the volume at <code>/var/lib/dep-engine</code></td>
+<td>Self-signed TLS by default</td>
+</tr>
+</tbody>
+</table></div>
+<p>Logs: <code>journalctl -u dep-engine</code> on Linux, <code>/tmp/dep-engine.log</code> for the macOS service, and <code>docker logs</code> in a container.</p>
+<h3 id="the-admin-password">The admin password</h3>
+<p><code>admin</code> is the superuser of a new database. Set its password with <code>--admin-password</code> (at every start) or <code>--init-admin-password-file</code> (for a new database only, read from a file). With neither, a random password is printed once, when the database is created:</p>
+<pre class="highlight"><code class="language-sh">dep-engine --listen 127.0.0.1:5433 --data-dir /var/lib/dep-engine/data</code></pre>
+<pre class="highlight"><code class="language-text">DEP Engine 0.5.2 listening on 127.0.0.1:5433
+  data directory: /var/lib/dep-engine/data (new)
+  TLS: off (use --tls-cert and --tls-key, or --tls-self-signed)
+  query memory: 6144 MB (beyond it, encrypted spill files); data file cache: 3072 MB; idle transactions end after 300 s; at most 200 connections
+  password for admin: d251f045a4d6029dddcc681f
+  dep-cli -h 127.0.0.1 -p 5433 -U admin -d operational   (OPERATIONAL)
+  dep-cli -h 127.0.0.1 -p 5433 -U admin -d analytics     (MASKED_READ)</code></pre>
+<p>Create a role for each application, grant it only the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> and the columns it needs, and keep <code>admin</code> for administration. See <a href="/project-hoopeo.github.io/docs/sql/#roles-grants-and-endpoints">chapter 2</a>.</p>
+<h2 id="tls">TLS</h2>
+<p>Without TLS, passwords and results cross the network in clear text. A server that accepts connections from other machines should use it.</p>
+<ul>
+<li><code>--tls-cert FILE --tls-key FILE</code> use your own PEM certificate chain and private key.</li>
+<li><code>--tls-self-signed</code> creates a self-signed certificate in <code>DATA_DIR/tls</code>, valid for <code>localhost</code> and each <code>--tls-host NAME</code>.</li>
+<li><code>--tls-required</code> refuses connections without TLS.</li>
+</ul>
+<p>The same certificate serves the HTTP API, which then runs over HTTPS. Clients choose the mode: <code>--sslmode require</code> encrypts, and <code>verify-full</code> also checks the certificate against a CA file (<code>--sslrootcert</code>; for a self-signed certificate, the certificate itself).</p>
+<pre class="highlight"><code class="language-sh">dep-engine --listen 127.0.0.1:5433 --data-dir /var/lib/dep-engine/data --tls-self-signed --tls-required --admin-password admin
+export DEP_PASSWORD=admin
+# Without TLS
+dep-cli -h 127.0.0.1 -p 5433 -U admin -d operational --sslmode disable -c "SELECT 1;" 2&gt;&amp;1
+# Verified TLS, with the server's own certificate as the CA
+dep-cli -h localhost -p 5433 -U admin -d operational --sslmode verify-full \
+        --sslrootcert /var/lib/dep-engine/data/tls/server.crt -c '\conninfo'</code></pre>
+<pre class="highlight"><code class="language-text">ERROR:  this DEP Engine server accepts only TLS connections
+HINT:  Connect with sslmode=require (dep-cli --sslmode require).
+SQLSTATE:  28000
+Role "admin", endpoint "operational", access path OPERATIONAL, server localhost:5433.</code></pre>
+<p>Keep the private key readable only by the server's user. The packages do this for the files they create.</p>
+<h2 id="the-data-directory-and-the-master-key">The data directory and the master key</h2>
+<p>The data directory holds the database (<code>data.redb</code>), the audit log (<code>audit.redb</code>), a lock file and, with <code>--tls-self-signed</code>, the certificate. The <strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#master-key" data-term="Master key" data-def="The one secret from which every other key is derived.">master key</a></strong> (<code>master.key</code>) is the secret from which every protected value's index key and encryption key derive. Without it the protected values cannot be read or matched, and with it anyone with the data can read them.</p>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/keys-narrow.png" alt="The master key and the keys derived from it for each match domain" width="1000" height="2543"><details class="diagram-text"><summary>Diagram text description</summary><p>The master key and the keys derived from it for each <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a></p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/keys-narrow-dark.png" alt="" width="1000" height="2543"></p>
+<ul>
+<li>By default the key is in the data directory. <strong>Keep it apart:</strong> <code>--key-file /etc/dep-engine/master.key</code> on another volume, with its own permissions and its own backup. A stolen backup of the data alone then holds only ciphertext and index entries.</li>
+<li>Neither file is useful without the other, so back up both, and test the restore.</li>
+<li>Back up while the server is stopped, or from a filesystem snapshot. Copying <code>data.redb</code> while the server writes can produce a file that does not open.</li>
+<li>The key file and the data directory should be readable only by the server's user.</li>
+</ul>
+<pre class="highlight"><code class="language-sh">dep-engine --data-dir /var/lib/dep-engine/data --key-file /etc/dep-engine/master.key --admin-password admin
+find /var/lib/dep-engine /etc/dep-engine -type f | sort</code></pre>
+<pre class="highlight"><code class="language-text">/etc/dep-engine/master.key
+/var/lib/dep-engine/data/.lock
+/var/lib/dep-engine/data/audit.redb
+/var/lib/dep-engine/data/data.redb</code></pre>
+<p>Data persists across restarts when <code>--data-dir</code> is set. Without it the database lives in memory and is lost when the server stops.</p>
+<h2 id="resources-and-limits">Resources and limits</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--memory-limit</code></td>
+<td>a quarter of RAM</td>
+<td>Memory for running queries. Beyond it, sorts and aggregations spill to <strong>encrypted</strong> temporary files, since they can hold values a disclosing function released. A hash join whose smaller side exceeds it fails with <code>53200</code>.</td>
+</tr>
+<tr>
+<td><code>--cache-size</code></td>
+<td>an eighth of RAM, at most 4 GB</td>
+<td>Page cache of the data file</td>
+</tr>
+<tr>
+<td><code>--max-connections</code></td>
+<td>200</td>
+<td>Client connections served at once (<code>0</code>: no limit)</td>
+</tr>
+<tr>
+<td><code>--idle-in-transaction-timeout</code></td>
+<td>300 s</td>
+<td>A transaction left idle is rolled back (<code>0</code>: never)</td>
+</tr>
+<tr>
+<td><code>--lock-timeout</code></td>
+<td>30 s</td>
+<td>How long a writer waits for the write lock before <code>55P03</code></td>
+</tr>
+<tr>
+<td><code>--match-limit</code></td>
+<td>none</td>
+<td>Default limit on protected matches for roles that are not superusers, for example <code>1000/minute</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>In a container the defaults follow the container's memory limit, not the host's. One transaction writes at a time; readers never wait.</p>
+<h3 id="match-limits">Match limits</h3>
+<p>A lookup on a protected column answers the question "is this value here?", and a client that can ask without limit can guess every value. Set a default for all roles that are not superusers with <code>--match-limit</code>, and a specific limit per role with <code>ALTER ROLE r MATCH LIMIT 600 PER HOUR</code>. A statement over the limit is refused with <code>ZD109</code> and recorded. See <a href="/project-hoopeo.github.io/docs/sql/#match-limits">chapter 2</a>.</p>
+<h2 id="the-audit-log">The audit log</h2>
+<p>The audit log is <code>audit.redb</code>, written with group commit: a statement returns only after its records are on disk. It records:</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-audit.png" title="Open at full size"><img loading="lazy" alt="The audit log in Hoopeo Studio" src="/project-hoopeo.github.io/docs/images/studio/studio-audit.png" / width="1440" height="900"></a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><code>kind</code></th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>match</code></td>
+<td>A protected match, with the number of values matched</td>
+</tr>
+<tr>
+<td><code>disclose</code>, <code>link</code></td>
+<td>A call of a function declared <code>DISCLOSES</code> or <code>LINKS</code></td>
+</tr>
+<tr>
+<td><code>denied</code></td>
+<td>A refused statement, with the error code</td>
+</tr>
+<tr>
+<td><code>rate_limited</code></td>
+<td>A statement over a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limit</a></td>
+</tr>
+<tr>
+<td><code>key_rotated</code></td>
+<td>A master key rotation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each record has a sequence number, a time, the session user and the current role, the endpoint and path, the object and match domain, and the count. It never holds a protected value, a disclosed value, or the text of a statement. Superusers read it with <code>SHOW AUDIT [n]</code> (the latest <code>n</code> records, default 100; DEP CLI's <code>\audit</code> shows 50). The log is not rotated or truncated by the server.</p>
+<pre class="highlight"><code class="language-text">reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893');
+DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+ Yossi Levi
+(2 rows)
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id LIKE '1%';
+ERROR:  LIKE is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+reception_app@operational=&gt; \c operational billing_job
+You are now connected as "billing_job" through endpoint "operational" (OPERATIONAL).
+
+billing_job@operational=&gt; SELECT count(*) FROM monthly_fund_report(DATE '2026-10-01');
+DEP:  monthly_fund_report() is declared DISCLOSES person_id: the columns it declares are returned in plaintext.
+ count(*)
+----------
+ 10
+(1 row)
+
+billing_job@operational=&gt; \c operational admin
+You are now connected as "admin" through endpoint "operational" (OPERATIONAL).
+
+admin@operational=&gt; SHOW AUDIT 10;
+ seq |            at            | session_user  |     role      |  endpoint   |    path     |   kind   |        object         |  domain   | count |         detail
+-----+--------------------------+---------------+---------------+-------------+-------------+----------+-----------------------+-----------+-------+-------------------------
+ 3   | 2026-10-23T12:27:12.903Z | billing_job   | billing_job   | operational | OPERATIONAL | disclose | monthly_fund_report() | person_id | NULL  | NULL
+ 2   | 2026-10-23T12:27:12.900Z | reception_app | reception_app | operational | OPERATIONAL | denied   | SELECT                | NULL      | NULL  | DEP_PROTECTED_OPERATION
+ 1   | 2026-10-23T12:27:12.899Z | reception_app | reception_app | operational | OPERATIONAL | match    | patients.national_id  | person_id | 2     | NULL
+(3 rows)</code></pre>
+<h2 id="key-rotation">Key rotation</h2>
+<p><code>ALTER SYSTEM ROTATE MASTER KEY</code> replaces the master key. Every protected value is decrypted with the old key and re-indexed and re-encrypted with a new one, and every index is rebuilt, in a single commit. A crash at any point leaves either the old key and data or the new ones. It needs a superuser, and it cannot run in a transaction block. Take a backup of the key file and the data first; the old key stops working.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; ALTER SYSTEM ROTATE MASTER KEY;
+DEP:  The master key was replaced: 18 protected values were indexed and encrypted again with the new key, and the indexes were rebuilt. The old key no longer opens this data.
+ALTER SYSTEM
+
+admin@operational=&gt; SELECT full_name FROM patients WHERE national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+(1 row)</code></pre>
+<p>With <code>--key-file</code>, the new key is written to the key file. The rotation is recorded in the audit log.</p>
+<h2 id="upgrading-and-migrating">Upgrading and migrating</h2>
+<p>Replace the binary or the package and restart. Older data directories are converted the first time they are opened:</p>
+<ul>
+<li>a <strong>0.4</strong> directory is converted in place (rows are re-encoded, indexes are built, the audit log moves to <code>audit.redb</code>);</li>
+<li>a <strong>0.3</strong> directory is converted into a new <code>data.redb</code>, and its old files are kept in <code>legacy-0.3/</code>;</li>
+<li>a primary or unique key whose existing rows have duplicates (0.4 did not enforce keys) is kept, but not enforced. The server says so when it starts, and <code>SHOW INDEXES</code> shows <code>enforced</code> empty. Remove the duplicates, then run <code>REINDEX TABLE t</code>.</li>
+</ul>
+<p>Back up the data directory and the key before upgrading. A directory converted by a newer version is not guaranteed to open in an older one, so do not move back.</p>
+<h2 id="metrics">Metrics</h2>
+<p><code>GET /metrics</code> on the HTTP port (no authentication, no data) returns counters in the Prometheus text format, and <code>GET /v1/health</code> returns <code>{"status":"ok", ...}</code>. Both are meant for a local monitor or a firewall-protected port.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dep_statements_total</code>, <code>dep_commits_total</code>, <code>dep_rollbacks_total</code></td>
+<td>Statements and transactions</td>
+</tr>
+<tr>
+<td><code>dep_protected_matches_total</code>, <code>dep_disclosures_total</code>, <code>dep_links_total</code></td>
+<td>Protected matches, and calls of <code>DISCLOSES</code> and <code>LINKS</code> functions</td>
+</tr>
+<tr>
+<td><code>dep_rate_limited_total</code></td>
+<td>Statements refused by a match limit</td>
+</tr>
+<tr>
+<td><code>dep_index_lookups_total</code>, <code>dep_full_scans_total</code>, <code>dep_rows_read_total</code></td>
+<td>How tables were read</td>
+</tr>
+<tr>
+<td><code>dep_idle_transactions_ended_total</code></td>
+<td>Transactions ended by the idle timeout</td>
+</tr>
+<tr>
+<td><code>dep_wire_connections_total</code>, <code>dep_wire_connections_active</code>, <code>dep_http_requests_total</code></td>
+<td>Connections and requests</td>
+</tr>
+<tr>
+<td><code>dep_tables</code>, <code>dep_rows</code>, <code>dep_persistent</code></td>
+<td>Size of the database, and whether it is kept on disk</td>
+</tr>
+<tr>
+<td><code>dep_query_memory_limit_bytes</code>, <code>dep_spilled_bytes_total</code></td>
+<td>Query memory and the bytes spilled to encrypted files</td>
+</tr>
+<tr>
+<td><code>dep_errors_total{code="..."}</code></td>
+<td>Failed statements, by SQLSTATE or DEP code</td>
+</tr>
+</tbody>
+</table></div>
+<pre class="highlight"><code class="language-sh">curl -s http://127.0.0.1:8433/metrics | grep -v '^#' | head -12</code></pre>
+<pre class="highlight"><code class="language-text">dep_statements_total 40
+dep_protected_matches_total 0
+dep_disclosures_total 0
+dep_links_total 0
+dep_rate_limited_total 0
+dep_commits_total 38
+dep_rollbacks_total 0
+dep_wire_connections_total 1
+dep_wire_connections_active 0
+dep_http_requests_total 0
+dep_index_lookups_total 0
+dep_full_scans_total 0</code></pre>
+<h2 id="a-checklist-for-an-evaluation-server">A checklist for an evaluation server</h2>
+<p>Experimental software calls for caution, so treat this as the minimum for a shared evaluation server, and not as a statement that anything is production-ready.</p>
+<ol>
+<li>Remember that the project is experimental: read the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>.</li>
+<li>TLS on, and <code>--tls-required</code> if clients are remote.</li>
+<li>A strong admin password, and one role per application.</li>
+<li>The master key on a separate volume, with its own permissions.</li>
+<li>A match limit as the default.</li>
+<li>Memory and connection limits sized for the machine.</li>
+<li>The HTTP port bound to <code>127.0.0.1</code> or behind a firewall.</li>
+<li>Backups of the data and the key, tested by a restore.</li>
+<li>Someone reads <code>SHOW AUDIT</code> and <code>/metrics</code>.</li>
+</ol>
+<p>This guide covers the parts of DEP Engine that behave like an ordinary SQL database: transactions and savepoints, transactional schema changes, constraints, indexes and <code>EXPLAIN</code>. DEP's privacy rules apply inside all of them. Examples run against the demo clinic, and the output is real.</p>
+<h2 id="transactions">Transactions</h2>
+<p>Every statement runs in a transaction: its own, or one you open.</p>
+<pre class="highlight"><code class="language-sql">BEGIN;                 -- or START TRANSACTION
+...
+COMMIT;                -- or END
+ROLLBACK;              -- or ABORT</code></pre>
+<p>A transaction sees a consistent snapshot of the data and its own writes. Nobody else sees them until <code>COMMIT</code>, which is one durable write. <code>SHOW TRANSACTION ISOLATION LEVEL</code> reports <code>repeatable read</code>.</p>
+<p>DEP CLI marks the prompt: <code>=*&gt;</code> inside a transaction, <code>=!&gt;</code> after an error.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; INSERT INTO patients (patient_id, national_id, phone, full_name, health_fund)
+VALUES (7, '789012348', '+972-50-0000007', 'Lior Katz', 'Clalit');
+DEP:  PROTECTED column patients.national_id (MATCH DOMAIN person_id) is stored as a blind index and ciphertext.
+DEP:  PROTECTED column patients.phone (MATCH DOMAIN phone_number) is stored as a blind index and ciphertext.
+INSERT 0 1
+
+admin@operational=*&gt; SELECT full_name FROM patients WHERE national_id = '789012348';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+ full_name
+-----------
+ Lior Katz
+(1 row)
+
+admin@operational=*&gt; ROLLBACK;
+ROLLBACK
+
+admin@operational=&gt; SELECT count(*) FROM patients;
+ count(*)
+----------
+ 6
+(1 row)</code></pre>
+<h3 id="after-an-error">After an error</h3>
+<p>An error inside a transaction aborts it. Every later statement fails with <code>25P02</code> until you run <code>ROLLBACK</code>, or <code>ROLLBACK TO</code> a savepoint.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; INSERT INTO patients (patient_id, national_id, phone, full_name, health_fund)
+VALUES (7, '789012348', '+972-50-0000007', 'Lior Katz', 'Clalit');
+DEP:  PROTECTED column patients.national_id (MATCH DOMAIN person_id) is stored as a blind index and ciphertext.
+DEP:  PROTECTED column patients.phone (MATCH DOMAIN phone_number) is stored as a blind index and ciphertext.
+INSERT 0 1
+
+admin@operational=*&gt; INSERT INTO patients (patient_id, national_id, phone, full_name, health_fund)
+VALUES (8, '789012348', '+972-50-0000008', 'Second', 'Clalit');
+ERROR:  duplicate key value violates unique constraint "patients_national_id_key": Key (national_id) already exists.
+SQLSTATE:  23505
+
+admin@operational=!&gt; SELECT 1;
+ERROR:  current transaction is aborted, commands ignored until end of transaction block
+HINT:  ROLLBACK (or ROLLBACK TO a savepoint), then run the statements again.
+SQLSTATE:  25P02
+
+admin@operational=!&gt; ROLLBACK;
+ROLLBACK</code></pre>
+<p>The second insert reuses an ID number, and the unique constraint refuses it without showing the value. A DEP rule violation, such as an <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">unanchored</a> join, aborts a transaction in the same way.</p>
+<h3 id="savepoints">Savepoints</h3>
+<p><code>SAVEPOINT name</code>, <code>ROLLBACK TO SAVEPOINT name</code> and <code>RELEASE SAVEPOINT name</code> work as in PostgreSQL. Rolling back to a savepoint also ends the aborted state.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/cli-transaction.png" title="Open at full size"><img loading="lazy" alt="A transaction with a savepoint in DEP CLI, and the prompts of an open and a failed transaction" src="/project-hoopeo.github.io/docs/images/terminal/cli-transaction.png" / width="2394" height="980"></a></p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; SAVEPOINT before_change;
+SAVEPOINT
+
+admin@operational=*&gt; UPDATE patients SET health_fund = 'Leumit' WHERE patient_id = 1;
+UPDATE 1
+
+admin@operational=*&gt; SELECT health_fund FROM patients WHERE patient_id = 1;
+ health_fund
+-------------
+ Leumit
+(1 row)
+
+admin@operational=*&gt; ROLLBACK TO SAVEPOINT before_change;
+ROLLBACK
+
+admin@operational=*&gt; SELECT health_fund FROM patients WHERE patient_id = 1;
+ health_fund
+-------------
+ Clalit
+(1 row)
+
+admin@operational=*&gt; COMMIT;
+COMMIT</code></pre>
+<h3 id="schema-changes-are-transactional">Schema changes are transactional</h3>
+<p><code>CREATE</code> and <code>DROP</code> of tables, indexes, functions, roles, grants and endpoints happen on the transaction's own copy of the catalog. Other connections see them after <code>COMMIT</code>, and <code>ROLLBACK</code> undoes them.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; CREATE TABLE visitors (visitor_id BIGINT PRIMARY KEY, name TEXT);
+CREATE TABLE
+
+admin@operational=*&gt; INSERT INTO visitors VALUES (1, 'Guest');
+INSERT 0 1
+
+admin@operational=*&gt; SHOW TABLES;
+      table      |  protected_columns  | rows | temporary
+-----------------+---------------------+------+-----------
+ appointments    |                     | 10   |
+ medical_records | patient_national_id | 6    |
+ patients        | national_id, phone  | 6    |
+ visitors        |                     | 1    |
+(4 rows)
+
+admin@operational=*&gt; ROLLBACK;
+ROLLBACK
+
+admin@operational=&gt; SHOW TABLES;
+      table      |  protected_columns  | rows | temporary
+-----------------+---------------------+------+-----------
+ appointments    |                     | 10   |
+ medical_records | patient_national_id | 6    |
+ patients        | national_id, phone  | 6    |
+(3 rows)</code></pre>
+<p><code>ALTER SYSTEM ROTATE MASTER KEY</code> is the exception: it cannot run inside a transaction block (<code>25001</code>).</p>
+<h3 id="concurrent-transactions">Concurrent transactions</h3>
+<p>Readers never wait for writers, and never see uncommitted data. <strong>One transaction writes at a time.</strong> A second writer waits up to <code>--lock-timeout</code> (30 seconds by default) and then fails with <code>55P03</code>. A transaction that writes a table which another transaction changed after it began fails with <code>40001</code>; roll back and run it again. This script starts the server with <code>--lock-timeout 2</code> and shows both:</p>
+<pre class="highlight"><code class="language-python">import psycopg
+dsn = "host=127.0.0.1 port=5433 user=admin password=admin dbname=operational sslmode=disable"
+a = psycopg.connect(dsn, autocommit=True)
+b = psycopg.connect(dsn, autocommit=True)
+
+a.execute("BEGIN")
+a.execute("UPDATE patients SET health_fund = 'Maccabi' WHERE patient_id = 1")
+print("a sees:", a.execute("SELECT health_fund FROM patients WHERE patient_id = 1").fetchall())
+print("b sees:", b.execute("SELECT health_fund FROM patients WHERE patient_id = 1").fetchall())
+try:
+    b.execute("UPDATE patients SET health_fund = 'Leumit' WHERE patient_id = 2")
+except psycopg.Error as e:
+    print("b write:", e.sqlstate, str(e).strip())
+a.execute("COMMIT")
+print("b now sees:", b.execute("SELECT health_fund FROM patients WHERE patient_id = 1").fetchall())
+
+# b takes a snapshot, then a commits a change to patients; b may no longer write that table
+b.execute("BEGIN")
+b.execute("SELECT count(*) FROM patients")
+a.execute("UPDATE patients SET health_fund = 'Clalit' WHERE patient_id = 1")
+try:
+    b.execute("UPDATE patients SET health_fund = 'Leumit' WHERE patient_id = 2")
+except psycopg.Error as e:
+    print("b write after a committed:", e.sqlstate, str(e).strip())
+b.execute("ROLLBACK")</code></pre>
+<pre class="highlight"><code class="language-text">a sees: [('Maccabi',)]
+b sees: [('Clalit',)]
+b write: 55P03 could not obtain the write lock within 2 s: another transaction is writing
+HINT:  Commit or roll back the other transaction, or retry.
+b now sees: [('Maccabi',)]
+b write after a committed: 40001 could not serialize access due to a concurrent update of patients
+HINT:  Another transaction committed a change to this table after this transaction began. Roll back and run it again.</code></pre>
+<p>A transaction left idle holds the write lock, so the server ends it. After <code>--idle-in-transaction-timeout</code> (300 seconds by default; <code>0</code> never) the transaction is rolled back and the next statement on the connection fails with <code>25P03</code>.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>SQLSTATE</th>
+<th>Meaning</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>25P02</code></td>
+<td>The transaction is aborted</td>
+<td><code>ROLLBACK</code>, or <code>ROLLBACK TO</code> a savepoint</td>
+</tr>
+<tr>
+<td><code>40001</code></td>
+<td>Another transaction changed a table you want to write</td>
+<td>Roll back and retry</td>
+</tr>
+<tr>
+<td><code>55P03</code></td>
+<td>The write lock was not free within <code>--lock-timeout</code></td>
+<td>Retry, or find the long transaction</td>
+</tr>
+<tr>
+<td><code>25P03</code></td>
+<td>The transaction was idle too long and was rolled back</td>
+<td>Start again, and keep transactions short</td>
+</tr>
+<tr>
+<td><code>25001</code></td>
+<td><code>ALTER SYSTEM ROTATE MASTER KEY</code> inside a transaction</td>
+<td>Run it on its own</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="constraints">Constraints</h2>
+<p><code>PRIMARY KEY</code> (single or composite), <code>UNIQUE</code>, <code>NOT NULL</code> and <code>REFERENCES</code> (<code>NO ACTION</code>) are enforced, with PostgreSQL's SQLSTATEs. <code>DEFAULT</code>, <code>CHECK</code> and <code>ON DELETE CASCADE</code> are not supported.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; INSERT INTO patients (patient_id, national_id) VALUES (1, '999999990');
+ERROR:  duplicate key value violates unique constraint "patients_pkey": Key (patient_id)=(1) already exists.
+SQLSTATE:  23505
+
+admin@operational=&gt; INSERT INTO patients (patient_id, national_id) VALUES (NULL, '999999990');
+ERROR:  null value in column "patient_id" of relation "patients" violates not-null constraint
+SQLSTATE:  23502
+
+admin@operational=&gt; INSERT INTO appointments VALUES (999, 77, '2026-10-30 10:00:00', 'Follow-up');
+ERROR:  insert or update on table "appointments" violates foreign key constraint "appointments_patient_id_fkey": Key (patient_id)=(77) is not present in table "patients".
+SQLSTATE:  23503
+
+admin@operational=&gt; DELETE FROM patients WHERE patient_id = 1;
+ERROR:  update or delete on table "patients" violates foreign key constraint "appointments_patient_id_fkey" on table "appointments": Key (patient_id)=(1) is still referenced from table "appointments".
+SQLSTATE:  23503</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>SQLSTATE</th>
+<th>Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>23505</code></td>
+<td>A primary or unique key already exists</td>
+</tr>
+<tr>
+<td><code>23502</code></td>
+<td>A <code>NOT NULL</code> column received NULL</td>
+</tr>
+<tr>
+<td><code>23503</code></td>
+<td>A reference points at nothing, or a referenced row is changed or deleted</td>
+</tr>
+</tbody>
+</table></div>
+<p>A constraint on an ordinary column shows its key in the message. A constraint on a <strong>protected</strong> column never does: the unique key on <code>national_id</code> is checked through blind index entries, and the error names the column only.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; INSERT INTO patients (patient_id, national_id, phone, full_name, health_fund)
+VALUES (9, '123456782', '+972-50-0000009', 'Copy', 'Clalit');
+ERROR:  duplicate key value violates unique constraint "patients_national_id_key": Key (national_id) already exists.
+SQLSTATE:  23505
+
+admin@operational=&gt; INSERT INTO medical_records VALUES (300, '000000000', 'Asthma', DATE '2026-10-01');
+ERROR:  insert or update on table "medical_records" violates foreign key constraint "medical_records_patient_national_id_fkey": Key (patient_national_id) is not present in table "patients".
+SQLSTATE:  23503</code></pre>
+<h2 id="indexes">Indexes</h2>
+<p>The engine keeps an index for every primary key, unique key, reference and protected column. On a protected column the key is the blind index entry, so a lookup never needs a plaintext value. <code>CREATE [UNIQUE] INDEX</code> adds more, and <code>DROP INDEX</code> removes only those you made.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/cli-explain.png" title="Open at full size"><img loading="lazy" alt="The indexes of patients, and EXPLAIN reading two keys of the blind index" src="/project-hoopeo.github.io/docs/images/terminal/cli-explain.png" / width="2784" height="980"></a></p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE INDEX appointments_by_type ON appointments (visit_type);
+CREATE INDEX
+
+admin@operational=&gt; CREATE UNIQUE INDEX appointments_by_time ON appointments (starts_at);
+CREATE INDEX
+
+admin@operational=&gt; CREATE UNIQUE INDEX appointments_by_type_u ON appointments (visit_type);
+ERROR:  duplicate key value violates unique constraint "appointments_by_type_u": Key (visit_type)=(Follow-up) already exists.
+HINT:  The table has rows with equal keys; remove the duplicates first.
+SQLSTATE:  23505
+
+admin@operational=&gt; SHOW INDEXES FROM appointments;
+    table     |            index            |    columns     |    kind     | enforced |   made_by    |  keys
+--------------+-----------------------------+----------------+-------------+----------+--------------+--------
+ appointments | appointments_pkey           | appointment_id | primary key | yes      | engine       | values
+ appointments | appointments_patient_id_idx | patient_id     |             |          | engine       | values
+ appointments | appointments_by_type        | visit_type     |             |          | CREATE INDEX | values
+ appointments | appointments_by_time        | starts_at      | unique      | yes      | CREATE INDEX | values
+(4 rows)
+
+admin@operational=&gt; DROP INDEX appointments_by_type;
+DROP INDEX
+
+admin@operational=&gt; DROP INDEX appointments_pkey;
+ERROR:  cannot drop index appointments_pkey: the engine keeps it for a key, a reference or a PROTECTED column of appointments
+SQLSTATE:  2BP01</code></pre>
+<p>An index on a protected column answers equality only:</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE INDEX phones ON patients (phone);
+DEP:  Index phones keys PROTECTED column(s) phone by their blind index entries: it answers equality only, and holds no plaintext.
+CREATE INDEX</code></pre>
+<p><code>REINDEX TABLE t</code> rebuilds the indexes of a table. After a <a href="/project-hoopeo.github.io/docs/server/#upgrading-and-migrating">data directory migration</a>, it also makes a key enforced again once its duplicates are removed.</p>
+<h2 id="explain">EXPLAIN</h2>
+<p><code>EXPLAIN</code> shows the plan after the DEP rewrite, and below it a <code>Read:</code> section that says how each table is read: an index lookup, or every row. Reading by an index touches only the matching rows; reading every row is a scan.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-explain.png" title="Open at full size"><img loading="lazy" alt="Explain Plan in Hoopeo Studio" src="/project-hoopeo.github.io/docs/images/studio/studio-explain.png" / width="1440" height="900"></a></p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; EXPLAIN SELECT * FROM appointments WHERE appointment_id = 101;
+                                                      dep_plan
+---------------------------------------------------------------------------------------------------------------------
+ Projection: appointments.appointment_id, appointments.patient_id, appointments.starts_at, appointments.visit_type
+   Projection: appointments.appointment_id, appointments.patient_id, appointments.starts_at, appointments.visit_type
+     Filter: appointments.appointment_id = Int64(101)
+       TableScan: appointments
+ Read:
+   appointments: index appointments_pkey, 1 key(s)
+(6 rows)
+
+admin@operational=&gt; EXPLAIN SELECT * FROM appointments WHERE starts_at &gt; '2026-10-01';
+                                                      dep_plan
+---------------------------------------------------------------------------------------------------------------------
+ Projection: appointments.appointment_id, appointments.patient_id, appointments.starts_at, appointments.visit_type
+   Projection: appointments.appointment_id, appointments.patient_id, appointments.starts_at, appointments.visit_type
+     Filter: appointments.starts_at &gt; Utf8("2026-10-01")
+       TableScan: appointments
+ Read:
+   appointments: every row
+(6 rows)
+
+admin@operational=&gt; EXPLAIN SELECT full_name FROM patients WHERE national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+                                             dep_plan
+--------------------------------------------------------------------------------------------------
+ Projection: patients.full_name
+   Projection: patients.full_name
+     Filter: patients.national_id = dep_index(Utf8("person_id"), CAST(Utf8("123456782") AS Utf8))
+       TableScan: patients
+ Read:
+   patients: index patients_national_id_key, 1 key(s)
+(6 rows)</code></pre>
+<p>In the last plan the protected value has become a call of the internal function <code>dep_index</code>, which computes the blind index entry. The statement and its plan are shown to the role that sent them, and never recorded in the audit log.</p>
+<p><code>/metrics</code> counts index lookups, full scans and rows read; see the <a href="/project-hoopeo.github.io/docs/server/#metrics">administration guide</a>.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/application/"><small>Previous</small>Build an application</a><a class="next" href="/project-hoopeo.github.io/docs/privacy/"><small>Next</small>Privacy as Code &amp; GDPR</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#compatibility">Compatibility</a></li><li><a href="#what-you-are-running">What you are running</a></li><li><a href="#support-at-a-glance">Support at a glance</a></li><li><a href="#clients-tested-by-the-project">Clients tested by the project</a></li><li><a href="#the-simulator-and-the-server">The simulator and the server</a><ul><li><a href="#known-difference-sorting-disclosed-values">Known difference: sorting disclosed values</a></li><li><a href="#other-known-differences-in-dep-engine-052">Other known differences in DEP Engine 0.5.2</a></li></ul></li><li><a href="#version-licensing-and-readiness">Version, licensing and readiness</a></li><li><a href="#server-administration">Server administration</a></li><li><a href="#running-the-server">Running the server</a><ul><li><a href="#the-admin-password">The admin password</a></li></ul></li><li><a href="#tls">TLS</a></li><li><a href="#the-data-directory-and-the-master-key">The data directory and the master key</a></li><li><a href="#resources-and-limits">Resources and limits</a><ul><li><a href="#match-limits">Match limits</a></li></ul></li><li><a href="#the-audit-log">The audit log</a></li><li><a href="#key-rotation">Key rotation</a></li><li><a href="#upgrading-and-migrating">Upgrading and migrating</a></li><li><a href="#metrics">Metrics</a></li><li><a href="#a-checklist-for-an-evaluation-server">A checklist for an evaluation server</a></li><li><a href="#transactions">Transactions</a><ul><li><a href="#after-an-error">After an error</a></li><li><a href="#savepoints">Savepoints</a></li><li><a href="#schema-changes-are-transactional">Schema changes are transactional</a></li><li><a href="#concurrent-transactions">Concurrent transactions</a></li></ul></li><li><a href="#constraints">Constraints</a></li><li><a href="#indexes">Indexes</a></li><li><a href="#explain">EXPLAIN</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

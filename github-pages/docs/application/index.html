@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build an application | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="This chapter builds the downloadable starter, a smaller clinic with a records table. Earlier book examples use the full clinic with medicalrecords. These are separate databases; the section Run...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/application/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Build an application | Project Hoopeo">
+<meta property="og:description" content="This chapter builds the downloadable starter, a smaller clinic with a records table. Earlier book examples use the full clinic with medicalrecords. These are separate databases; the section Run...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/application/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build an application | Project Hoopeo">
+<meta name="twitter:description" content="This chapter builds the downloadable starter, a smaller clinic with a records table. Earlier book examples use the full clinic with medicalrecords. These are separate databases; the section Run...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/" aria-current="page"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/" aria-current="page"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 5 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#1-prepare-the-tools">1. Prepare the tools</a></li><li><a href="#2-start-an-isolated-server">2. Start an isolated server</a></li><li><a href="#3-inspect-the-schema-and-grants">3. Inspect the schema and grants</a></li><li><a href="#4-find-a-patient-without-receiving-their-id">4. Find a patient without receiving their ID</a></li><li><a href="#5-connect-from-your-application">5. Connect from your application</a><ul><li><a href="#python--psycopg">Python / psycopg</a></li><li><a href="#nodejs--node-postgres">Node.js / node-postgres</a></li></ul></li><li><a href="#6-connect-related-records">6. Connect related records</a></li><li><a href="#7-declare-a-narrow-disclosure">7. Declare a narrow disclosure</a></li><li><a href="#8-verify-the-boundaries-and-inspect-the-audit">8. Verify the boundaries and inspect the audit</a></li><li><a href="#restarting-and-changing-your-schema">Restarting and changing your schema</a></li><li><a href="#if-something-does-not-work">If something does not work</a></li><li><a href="#connection-settings">Connection settings</a></li><li><a href="#parameters">Parameters</a></li><li><a href="#notes-and-errors">Notes and errors</a></li><li><a href="#pools-roles-and-sessions">Pools, roles and sessions</a></li><li><a href="#http-clients">HTTP clients</a></li><li><a href="#run-the-full-clinic">Run the full clinic</a></li><li><a href="#1-choose-a-local-environment">1. Choose a local environment</a></li><li><a href="#2-start-the-clinic-or-use-your-running-service">2. Start the clinic, or use your running service</a><ul><li><a href="#option-a-isolated-manual-server-recommended-for-this-tour">Option A: isolated manual server (recommended for this tour)</a></li><li><a href="#option-b-the-installed-background-service">Option B: the installed background service</a></li></ul></li><li><a href="#3-connect">3. Connect</a><ul><li><a href="#dep-cli">DEP CLI</a></li><li><a href="#psql-or-any-postgresql-driver">psql, or any PostgreSQL driver</a></li><li><a href="#the-http-api">The HTTP API</a></li></ul></li></ul></details><div class="prose"><h1 id="build-an-application">Build an application</h1>
+<p>This chapter builds the downloadable starter, a smaller clinic with a <code>records</code> table. Earlier book examples use the full clinic with <code>medical_records</code>. These are separate databases; the section <a href="#run-the-full-clinic">Run the full clinic</a> below prepares the earlier examples.</p>
+<p>Create a small patient lookup application with a protected identifier. You will set up an isolated local server, create a schema and roles, connect from Python or Node.js, and verify both permitted and refused operations.</p>
+<p><strong>Target:</strong> DEP Engine 0.5.2. <strong>Time:</strong> about 15 minutes after installing the tools. This walkthrough builds an application for the example clinic.</p>
+<p><a href="/project-hoopeo.github.io/downloads/dep-starter.zip">Download the complete starter</a>: schema, Python and Node.js examples, environment files and a verification script. The website's SQL examples are checked against DEP.js; verify them against your installed Engine before relying on an integration.</p>
+<h2 id="1-prepare-the-tools">1. Prepare the tools</h2>
+<p>Install <strong>DEP Engine</strong> and <strong>DEP CLI</strong> from the <a href="/project-hoopeo.github.io/install/">Install page</a>, then extract the starter and open a terminal in its <code>dep-starter</code> folder.</p>
+<p>The walkthrough uses <strong>127.0.0.1:5543</strong> to avoid the service port 5433 that an installer may already use. It creates a separate database in <code>./data</code>. You do not need to stop an existing service.</p>
+<p>You also need either Python 3.10+ with a virtual environment, or Node.js 22+. For a browser-only introduction, use the <a href="/project-hoopeo.github.io/playground/">playground</a>.</p>
+<h2 id="2-start-an-isolated-server">2. Start an isolated server</h2>
+<p><strong>Terminal A: keep this running:</strong></p>
+<pre class="highlight"><code class="language-sh">dep-engine --listen 127.0.0.1:5543 --data-dir ./data \
+  --admin-password local-dev-only --init ./schema.sql</code></pre>
+<p>The initialization script runs only when this database is new. It creates <code>patients</code>, a related <code>records</code> table, a lookup role <code>demo_app</code>, and a separate <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosure</a> role <code>export_job</code>.</p>
+<p>The passwords in the starter are deliberately local demonstration values. The server binds to loopback. For a shared server, use your own credentials and TLS; follow <a href="/project-hoopeo.github.io/docs/server/#server-administration">Administration</a>.</p>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/engine-start.png" title="Open at full size"><img loading="lazy" alt="The server reports its listeners and storage configuration at startup." src="/project-hoopeo.github.io/docs/images/terminal/engine-start.png" / width="2418" height="436"></a></p>
+<figcaption>The server reports its listeners and storage configuration at startup.</figcaption>
+</figure>
+<h2 id="3-inspect-the-schema-and-grants">3. Inspect the schema and grants</h2>
+<p>The starter's <code>schema.sql</code> runs as admin. These are the core declarations already executed by schema.sql. Read them here; do not execute them a second time in the initialized database:</p>
+<pre class="highlight"><code class="language-sql">CREATE TABLE patients (
+    patient_id BIGINT PRIMARY KEY,
+    national_id TEXT PROTECTED MATCH DOMAIN person_id UNIQUE,
+    full_name TEXT
+);
+
+CREATE TABLE records (
+    record_id BIGINT PRIMARY KEY,
+    patient_national_id TEXT PROTECTED REFERENCES patients (national_id),
+    diagnosis TEXT
+);
+
+INSERT INTO patients VALUES (1, '123456782', 'Dana Cohen');
+INSERT INTO records VALUES (1, '123456782', 'Synthetic example');
+
+CREATE ROLE demo_app LOGIN PASSWORD 'demo-local';
+GRANT CONNECT ON ENDPOINT operational TO demo_app;
+GRANT SELECT (patient_id, full_name, national_id) ON patients TO demo_app;
+GRANT SELECT ON records TO demo_app;
+ALTER ROLE demo_app MATCH LIMIT 600 PER HOUR;</code></pre>
+<p>Both <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a> belong to <code>person_id</code>; the protected reference inherits its domain. A SELECT grant on the protected column allows <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>, not plaintext output.</p>
+<p><strong>Terminal B: connect as the application:</strong></p>
+<pre class="highlight"><code class="language-sh">DEP_PASSWORD=demo-local dep-cli -h 127.0.0.1 -p 5543 -U demo_app -d operational</code></pre>
+<p>Here the database name <code>operational</code> chooses the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> and fixes the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a> for the session. Use a separate connection or pool for another role or endpoint.</p>
+<h2 id="4-find-a-patient-without-receiving-their-id">4. Find a patient without receiving their ID</h2>
+<pre class="highlight"><code class="language-sql">SELECT full_name, national_id
+FROM patients
+WHERE national_id = '123456782';</code></pre>
+<p>Expected result:</p>
+<pre class="highlight"><code class="language-text"> full_name  | national_id
+------------+------------
+ Dana Cohen | NULL</code></pre>
+<p>The identifier matched by equality. The NULL is protected output, not proof that the stored identifier is missing. <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP notes</a> explain the operation.</p>
+<p>This query must be refused with <strong>ZD101</strong>:</p>
+<pre class="highlight"><code class="language-sql">SELECT full_name FROM patients WHERE national_id LIKE '123%';</code></pre>
+<h2 id="5-connect-from-your-application">5. Connect from your application</h2>
+<p>Exit the shell with <code>\q</code> before running these terminal commands. Choose one language; you do not need both.</p>
+<div class="tabs">
+<div aria-label="Application language" class="tablist" role="tablist">
+<p><a role="tab" href="#app-python" aria-selected="true">Python</a>
+<a role="tab" href="#app-node" aria-selected="false">Node.js</a></p>
+</div>
+<section class="tabpanel" id="app-python">
+<h3 id="python--psycopg">Python / psycopg</h3>
+<p>The starter includes requirements for psycopg 3.3 and loads connection settings from the environment.</p>
+<pre class="highlight"><code class="language-sh">python3 -m venv .venv
+. .venv/bin/activate
+pip install -r python/requirements.txt
+export DEP_DSN='host=127.0.0.1 port=5543 user=demo_app password=demo-local dbname=operational sslmode=disable'
+python python/app.py</code></pre>
+<p>The essential query uses a bound parameter:</p>
+<pre class="highlight"><code class="language-python">import os
+import psycopg
+
+with psycopg.connect(os.environ['DEP_DSN'], autocommit=True) as conn:
+    row = conn.execute(
+        'SELECT full_name, national_id FROM patients WHERE national_id = %s',
+        ('123456782',)
+    ).fetchone()
+    print(row)  # ('Dana Cohen', None)</code></pre>
+</section>
+<section class="tabpanel" id="app-node">
+<h3 id="nodejs--node-postgres">Node.js / node-postgres</h3>
+<pre class="highlight"><code class="language-sh">cd node
+npm install
+cp .env.example .env
+node --env-file=.env app.js</code></pre>
+<p>The essential query uses the same PostgreSQL parameter convention:</p>
+<pre class="highlight"><code class="language-javascript">const { Client } = require('pg');
+
+async function main() {
+  const client = new Client({ connectionString: process.env.DEP_DSN });
+  await client.connect();
+  try {
+    const result = await client.query(
+      'SELECT full_name, national_id FROM patients WHERE national_id = $1',
+      ['123456782']
+    );
+    console.log(result.rows); // national_id: null
+  } finally {
+    await client.end();
+  }
+}
+main().catch(error =&gt; { console.error(error.code || error.message); process.exitCode = 1; });</code></pre>
+<p>Run this as the application role demo_app, using the connection string in .env. The full starter also demonstrates handling a refused partial match.</p>
+</section>
+</div>
+<p><code>sslmode=disable</code> is appropriate only for this loopback demonstration. Use verified TLS when connecting over a network. Handle <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP errors</a> by SQLSTATE and avoid logging parameter values.</p>
+<h2 id="6-connect-related-records">6. Connect related records</h2>
+<p>This join is tied to one supplied protected value:</p>
+<pre class="highlight"><code class="language-sql">SELECT p.full_name, r.diagnosis
+FROM patients AS p
+JOIN records AS r ON r.patient_national_id = p.national_id
+WHERE p.national_id = '123456782';</code></pre>
+<p>Removing the WHERE anchor must produce <strong>ZD107</strong>, because the join would match whole datasets. A justified dataset-wide match belongs inside a function declared <code>LINKS person_id</code>.</p>
+<h2 id="7-declare-a-narrow-disclosure">7. Declare a narrow disclosure</h2>
+<p>The complete starter also creates <code>privacy_owner</code> (a NOLOGIN role) and <code>export_job</code>. As admin, it grants the owner the operational endpoint, SELECT and DISCLOSE, switches to that owner to declare the function, then resets the role. The following explains the existing schema.sql setup; it is not an additional initialization step:</p>
+<pre class="highlight"><code class="language-sql">GRANT CONNECT ON ENDPOINT operational TO privacy_owner;
+GRANT SELECT ON patients TO privacy_owner;
+GRANT DISCLOSE ON MATCH DOMAIN person_id TO privacy_owner;
+
+SET ROLE privacy_owner;
+CREATE FUNCTION patient_identifier(id BIGINT)
+RETURNS TABLE (national_id TEXT)
+LANGUAGE sql
+DISCLOSES person_id
+AS $$
+    SELECT REVEAL(p.national_id)
+    FROM patients AS p
+    WHERE p.patient_id = id
+$$;
+COMMENT ON FUNCTION patient_identifier(BIGINT)
+IS 'Purpose: approved single-patient identifier export for this local demo.';
+GRANT EXECUTE ON FUNCTION patient_identifier(BIGINT) TO export_job;
+RESET ROLE;</code></pre>
+<p>To call it yourself, open a <strong>new connection as export_job</strong>. This role was created by schema.sql and has EXECUTE on this function, but no direct table-read grant.</p>
+<p><strong>Terminal command:</strong></p>
+<pre class="highlight"><code class="language-sh">DEP_PASSWORD=export-local dep-cli -h 127.0.0.1 -p 5543 -U export_job -d operational</code></pre>
+<p><strong>SQL in that connection:</strong></p>
+<pre class="highlight"><code class="language-sql">SELECT * FROM patient_identifier(1);</code></pre>
+<p>Expected output:</p>
+<pre class="highlight"><code class="language-text">national_id
+-----------
+123456782</code></pre>
+<p>The synthetic ID is returned. <code>demo_app</code> has no EXECUTE grant and cannot call this function. Under the specification, the disclosed ID may only be returned: do not sort, filter or join on it. Match inside the function before <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#reveal" data-term="REVEAL" data-def="The one operation that decrypts a protected value.">REVEAL</a>. See the <a href="/project-hoopeo.github.io/docs/server/#known-difference-sorting-disclosed-values">known native sorting difference</a> for implementation status.</p>
+<h2 id="8-verify-the-boundaries-and-inspect-the-audit">8. Verify the boundaries and inspect the audit</h2>
+<p>The starter's checks connect with separate application identities. Use the version for the language you installed:</p>
+<p><strong>Python: from the starter root, with the virtual environment activated:</strong></p>
+<pre class="highlight"><code class="language-sh">python python/verify.py</code></pre>
+<p><strong>Node.js: from the starter's node folder:</strong></p>
+<pre class="highlight"><code class="language-sh">npm run verify</code></pre>
+<p>Both print PASS when the required boundaries hold. They fail if the connected Engine behaves differently from the documented rules.</p>
+<p>Both also require disclosed sorting to fail with ZD104. A review reports that native 0.5.1 accepts it, so an affected Engine will fail this check. Keep that failure visible until native enforcement is fixed; it does not indicate an application setup error. Native 0.5.2 has not been retested here for this issue.</p>
+<p>They verify that lookup output is NULL, a partial match fails with ZD101, an <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">unanchored</a> join fails with ZD107, disclosure fails for demo_app, and export_job can call its approved function. This requires the running DEP Engine and the dependency for your chosen language from step 5.</p>
+<p>Connect <strong>as admin</strong> to inspect governance:</p>
+<pre class="highlight"><code class="language-sh">DEP_PASSWORD=local-dev-only dep-cli -h 127.0.0.1 -p 5543 -U admin -d operational</code></pre>
+<pre class="highlight"><code class="language-sql">SHOW PRIVACY MATRIX;
+SHOW AUDIT 20;</code></pre>
+<p>Audit records attribute protected operations to roles without recording the protected values. Inspect <a href="/project-hoopeo.github.io/docs/application/#notes-and-errors">notes and errors</a>, <a href="/project-hoopeo.github.io/docs/sql/#match-limits">match limits</a>, and the <a href="/project-hoopeo.github.io/docs/server/#server-administration">server guide</a> before expanding the application.</p>
+<h2 id="restarting-and-changing-your-schema">Restarting and changing your schema</h2>
+<p>Stop Terminal A with Ctrl+C, then run the same server command to reopen <code>./data</code>. The initialization script will not run again. DEP Engine 0.5.2 has no ALTER TABLE support: for a different tutorial schema, choose a new directory such as <code>./data-v2</code>, or plan an explicit migration. Do not assume an ORM's migration commands will work.</p>
+<h2 id="if-something-does-not-work">If something does not work</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What to check</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dep-engine or dep-cli: command not found</td>
+<td>The binary was not installed, or your shell PATH has not refreshed</td>
+<td>Follow the Install page for your OS; open a new terminal after installation</td>
+</tr>
+<tr>
+<td>Address already in use</td>
+<td>Another server is listening on the selected port</td>
+<td>This tutorial uses 5543; choose another local port and update every client connection consistently</td>
+</tr>
+<tr>
+<td>patients already exists</td>
+<td>The schema was imported into a database that already contains it</td>
+<td>Connect without importing again, or start a new isolated data directory</td>
+</tr>
+<tr>
+<td>The changed schema.sql seems ignored</td>
+<td>--init runs only for a new database</td>
+<td>Use a new directory such as ./data-v2 when testing a new tutorial schema</td>
+</tr>
+<tr>
+<td>SQLSTATE ZD102 on a lookup</td>
+<td>The connection is on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">MASKED_READ</a> path</td>
+<td>Open a new authorized operational connection; SET cannot change the path</td>
+</tr>
+<tr>
+<td>SQLSTATE 42501 on the disclosure</td>
+<td>The connection is demo_app, or an EXECUTE/owner privilege is missing</td>
+<td>Use export_job for the approved export; inspect grants as admin</td>
+</tr>
+<tr>
+<td>national_id is NULL</td>
+<td>The selected output is protected</td>
+<td>This is expected. Match on the input value or call an explicitly approved disclosure function</td>
+</tr>
+<tr>
+<td>An integration check fails</td>
+<td>Installed Engine behavior or the loaded schema differs from this guide</td>
+<td>Keep the SQLSTATE and compare the exact version and schema; the website build verifies DEP.js, not a native Engine process</td>
+</tr>
+</tbody>
+</table></div>
+<p>For a slower explanation of each operation and result, read <a href="/project-hoopeo.github.io/docs/#25-ordinary-sql-and-dep-side-by-side">Understand the examples</a>.</p>
+<h2 id="connection-settings">Connection settings</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host, port</td>
+<td>The server's <code>--listen</code> address (default <code>127.0.0.1:5433</code>)</td>
+</tr>
+<tr>
+<td>User</td>
+<td>The <strong>role</strong>, for example <code>reception_app</code></td>
+</tr>
+<tr>
+<td>Database</td>
+<td>The <strong>endpoint</strong>, for example <code>operational</code> or <code>analytics</code>. It fixes the access path.</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>The role's password</td>
+</tr>
+<tr>
+<td>SSL mode</td>
+<td><code>require</code> or <code>verify-full</code> for any server that is not on the same machine; see the <a href="/project-hoopeo.github.io/docs/server/#tls">administration guide</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>The role is a database role, not a person, in most deployments: one role per application or job, each granted the endpoint, columns and functions it needs and nothing more. Connect an analytics tool through <code>analytics</code> and it cannot match, write, or disclose, whatever its role is granted.</p>
+<p>A connection keeps its role and path for its whole life. The path is fixed when it logs in, and cannot be changed by <code>SET</code>. If an application needs two access paths, it opens two connections, ideally with two roles.</p>
+<h2 id="parameters">Parameters</h2>
+<p>Use parameters, as with any database. DEP treats a protected parameter (<code>$1</code> compared with a protected column, or inserted into one) exactly as it treats a protected literal. In the extended protocol the engine infers the types of parameters for queries and for <code>INSERT</code>, <code>UPDATE</code> and <code>DELETE</code>. An error message never carries the value of a bound parameter.</p>
+<h2 id="notes-and-errors">Notes and errors</h2>
+<ul>
+<li><strong>Notes.</strong> Each rule that applies produces a DEP note, sent as a PostgreSQL <code>NOTICE</code> whose text starts with <code>DEP:</code>. Drivers deliver notices through a handler (<code>add_notice_handler</code> in psycopg, the <code>notice</code> event in node-postgres). They need no handling: ignore them in production and read them while developing.</li>
+<li><strong>Errors.</strong> A DEP error has a <code>ZDnnn</code> SQLSTATE and a message and a hint. Branch on the SQLSTATE. The <code>DEP_...</code> name is not sent over the PostgreSQL protocol; the <a href="/project-hoopeo.github.io/docs/reference/errors/">error reference</a> maps one to the other. Constraint violations use PostgreSQL's SQLSTATEs (<code>23505</code>, <code>23502</code>, <code>23503</code>), and <code>40001</code> means the transaction should be retried.</li>
+<li><strong>Protected columns come back as NULL.</strong> <code>SELECT national_id</code> returns a row with NULL, never an error. An application that needs the value must call a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a>, and the role must have <code>EXECUTE</code> on it.</li>
+</ul>
+<h2 id="pools-roles-and-sessions">Pools, roles and sessions</h2>
+<ul>
+<li><strong>One pool per role and endpoint.</strong> A connection's identity is its role and path, so do not share a pool between applications. The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> attributes every protected match to the role that made it.</li>
+<li><strong>Do not rely on <code>SET ROLE</code>.</strong> Only a superuser may use it, and it changes the privileges that apply without changing the path. Use separate connections.</li>
+<li><strong>Keep transactions short.</strong> One transaction writes at a time, and a transaction left idle for <code>--idle-in-transaction-timeout</code> is rolled back. See <a href="/project-hoopeo.github.io/docs/server/#concurrent-transactions">Transactions</a>.</li>
+<li><strong>Retry on <code>40001</code>.</strong> It means another transaction changed a table this one wanted to write.</li>
+<li><strong>Mind the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limit</a>.</strong> An application that looks up many protected values in a short time can reach its role's limit (<code>ZD109</code>). The limit counts every value of an <code>IN</code> list.</li>
+</ul>
+<h2 id="http-clients">HTTP clients</h2>
+<p>Clients without a PostgreSQL driver can use <a href="/project-hoopeo.github.io/docs/reference/http-api/">POST /v1/query</a>. It uses role authentication and the same endpoint and grants. Open transactions must finish in one HTTP request; see the API reference for request and result formats.</p>
+<h2 id="run-the-full-clinic">Run the full clinic</h2>
+<h2 id="1-choose-a-local-environment">1. Choose a local environment</h2>
+<p>This setup loads the full clinic used in chapters 1 to 4, instead of the smaller starter database above.</p>
+<p>Install <strong>DEP Engine</strong> and <strong>DEP CLI</strong> from <a href="/project-hoopeo.github.io/install/">Install</a>. Studio can also run an embedded database: choose New Local Database and load the clinic there, without starting another server.</p>
+<p>Download <a href="/project-hoopeo.github.io/examples/clinic.sql">clinic.sql</a> into your current folder. The commands below use <code>./clinic.sql</code>, not a repository-relative examples path.</p>
+<h2 id="2-start-the-clinic-or-use-your-running-service">2. Start the clinic, or use your running service</h2>
+<p>Choose one option. An installer may already have started a persistent service on port 5433.</p>
+<h3 id="option-a-isolated-manual-server-recommended-for-this-tour">Option A: isolated manual server (recommended for this tour)</h3>
+<p>Use port <strong>5543</strong> so the tour can run beside an installed service. Keep Terminal A running:</p>
+<pre class="highlight"><code class="language-sh">dep-engine --listen 127.0.0.1:5543 --init ./clinic.sql --admin-password local-dev-only --http-listen 127.0.0.1:8543</code></pre>
+<p>This instance is in memory: its data disappears when it stops. Every connection below uses port 5543 and the HTTP examples use 8543. The clinic's application-role passwords are <code>demo</code>.</p>
+<h3 id="option-b-the-installed-background-service">Option B: the installed background service</h3>
+<p>Use the service on <strong>5433</strong> instead of starting another process. Import <code>./clinic.sql</code> only into a fresh evaluation database. <code>--init</code> only runs when a database is new.</p>
+<p>On Linux, read the package-generated admin password and import the clinic:</p>
+<pre class="highlight"><code class="language-sh">export DEP_PASSWORD=$(sudo cat /etc/dep-engine/admin-password)
+dep-cli -h 127.0.0.1 -p 5433 -U admin -d operational -f ./clinic.sql</code></pre>
+<p>On macOS:</p>
+<pre class="highlight"><code class="language-sh">export DEP_PASSWORD=$(cat "$HOME/Library/Application Support/Project Hoopeo/admin-password")
+dep-cli -h 127.0.0.1 -p 5433 -U admin -d operational -f ./clinic.sql</code></pre>
+<p>If you choose this option, replace <strong>5543 with 5433</strong> in the connection examples below. The service's HTTP API is optional: do not assume port 8543 exists. Use CLI or psql, or configure the HTTP listener explicitly through <a href="/project-hoopeo.github.io/docs/server/#server-administration">Administration</a>.</p>
+<p><strong>Already loaded the clinic?</strong> Connect to it without importing again. Existing table errors mean that this is not an empty database. For an isolated first try, use Option A.</p>
+<p>The clinic has three tables, eight roles and two endpoints. The database name is the endpoint: <code>operational</code> permits authorized matching and writes; <code>analytics</code> is MASKED_READ. The access path is fixed at login.</p>
+<h2 id="3-connect">3. Connect</h2>
+<p>The user name is the <strong>role</strong>, and the database name is the <strong>endpoint</strong>. There are three ways in.</p>
+<h3 id="dep-cli">DEP CLI</h3>
+<pre class="highlight"><code class="language-sh">dep-cli -h 127.0.0.1 -p 5543 -U reception_app -d operational</code></pre>
+<p>The password comes from <code>DEP_PASSWORD</code>, <code>PGPASSWORD</code> or a prompt. For a first try without a server, DEP CLI can hold the clinic itself, in memory:</p>
+<pre class="highlight"><code class="language-sh">dep-cli --memory --init ./clinic.sql -U reception_app</code></pre>
+<p>Type <code>\dt</code> to list the tables, and any statement to run it. DEP notes are printed before each result:</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/cli-first-steps.png" title="Open at full size"><img loading="lazy" alt="DEP CLI: the tables, a lookup with its DEP notes, and a refused partial match" src="/project-hoopeo.github.io/docs/images/terminal/cli-first-steps.png" / width="2068" height="1106"></a></p>
+<h3 id="psql-or-any-postgresql-driver">psql, or any PostgreSQL driver</h3>
+<p>DEP Engine speaks the PostgreSQL wire protocol, so <code>psql</code> works as it is. The DEP notes of each statement arrive as ordinary <code>NOTICE</code> messages.</p>
+<pre class="highlight"><code class="language-sh">export PGPASSWORD=demo
+psql "host=127.0.0.1 port=5543 user=reception_app dbname=operational sslmode=disable" \
+     -c "SELECT full_name, national_id FROM patients WHERE national_id = '123456782'"</code></pre>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/terminal/engine-psql.png" title="Open at full size"><img loading="lazy" alt="psql connected to DEP Engine, with the DEP notes as notices" src="/project-hoopeo.github.io/docs/images/terminal/engine-psql.png" / width="2198" height="478"></a></p>
+<p><code>sslmode=disable</code> is for this local try. See the <a href="/project-hoopeo.github.io/docs/server/#server-administration">administration guide</a> for TLS.</p>
+<h3 id="the-http-api">The HTTP API</h3>
+<pre class="highlight"><code class="language-sh">curl -s -u reception_app:demo "http://127.0.0.1:8543/v1/query?endpoint=operational" \
+     -H 'Content-Type: application/json' \
+     -d '{"sql": "SELECT full_name, national_id FROM patients WHERE national_id = $1", "params": ["123456782"]}'</code></pre>
+<pre class="highlight"><code class="language-text">{"endpoint":"operational","open_transaction_rolled_back":false,"path":"OPERATIONAL","results":[{"columns":["full_name","national_id"],"elapsed_ms":3.13,"notes":["PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.","Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL."],"row_count":1,"rows":[["Dana Cohen",null]],"statement":"SELECT full_name, national_id FROM patients WHERE national_id = $1"}],"role":"reception_app"}</code></pre>
+<p>The <a href="/project-hoopeo.github.io/docs/reference/http-api/">HTTP API reference</a> describes the request and the response.</p>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-connect-dialog.png" title="Open at full size"><img loading="lazy" alt="In Studio, a connection identifies the server, role and endpoint." src="/project-hoopeo.github.io/docs/images/studio/studio-connect-dialog.png" / width="780" height="397"></a></p>
+<figcaption>In Studio, a connection identifies the server, role and endpoint.</figcaption>
+</figure>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-connect.png" title="Open at full size"><img loading="lazy" alt="Studio can open a connection to a running server." src="/project-hoopeo.github.io/docs/images/studio/studio-connect.png" / width="1440" height="900"></a></p>
+<figcaption>Studio can open a connection to a running server.</figcaption>
+</figure>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-lookup.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/studio/studio-lookup.png" alt="A successful lookup returns ordinary fields while the protected identifier is NULL." width="1000" height="625"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-lookup-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/studio/studio-lookup-dark.png" alt="" width="1000" height="625"></a></p>
+<figcaption>A successful lookup returns ordinary fields while the protected identifier is NULL.</figcaption>
+</figure>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-newlocal.png" title="Open at full size"><img loading="lazy" alt="Studio also supports a local embedded database for exploration." src="/project-hoopeo.github.io/docs/images/studio/studio-newlocal.png" / width="1440" height="900"></a></p>
+<figcaption>Studio also supports a local embedded database for exploration.</figcaption>
+</figure>
+<figure>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-newlocal-dialog.png" title="Open at full size"><img loading="lazy" alt="The local-database dialog chooses the database location and initial setup." src="/project-hoopeo.github.io/docs/images/studio/studio-newlocal-dialog.png" / width="520" height="352"></a></p>
+<figcaption>The local-database dialog chooses the database location and initial setup.</figcaption>
+</figure></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/designing/"><small>Previous</small>Design with DEP</a><a class="next" href="/project-hoopeo.github.io/docs/server/"><small>Next</small>Run the server</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#1-prepare-the-tools">1. Prepare the tools</a></li><li><a href="#2-start-an-isolated-server">2. Start an isolated server</a></li><li><a href="#3-inspect-the-schema-and-grants">3. Inspect the schema and grants</a></li><li><a href="#4-find-a-patient-without-receiving-their-id">4. Find a patient without receiving their ID</a></li><li><a href="#5-connect-from-your-application">5. Connect from your application</a><ul><li><a href="#python--psycopg">Python / psycopg</a></li><li><a href="#nodejs--node-postgres">Node.js / node-postgres</a></li></ul></li><li><a href="#6-connect-related-records">6. Connect related records</a></li><li><a href="#7-declare-a-narrow-disclosure">7. Declare a narrow disclosure</a></li><li><a href="#8-verify-the-boundaries-and-inspect-the-audit">8. Verify the boundaries and inspect the audit</a></li><li><a href="#restarting-and-changing-your-schema">Restarting and changing your schema</a></li><li><a href="#if-something-does-not-work">If something does not work</a></li><li><a href="#connection-settings">Connection settings</a></li><li><a href="#parameters">Parameters</a></li><li><a href="#notes-and-errors">Notes and errors</a></li><li><a href="#pools-roles-and-sessions">Pools, roles and sessions</a></li><li><a href="#http-clients">HTTP clients</a></li><li><a href="#run-the-full-clinic">Run the full clinic</a></li><li><a href="#1-choose-a-local-environment">1. Choose a local environment</a></li><li><a href="#2-start-the-clinic-or-use-your-running-service">2. Start the clinic, or use your running service</a><ul><li><a href="#option-a-isolated-manual-server-recommended-for-this-tour">Option A: isolated manual server (recommended for this tour)</a></li><li><a href="#option-b-the-installed-background-service">Option B: the installed background service</a></li></ul></li><li><a href="#3-connect">3. Connect</a><ul><li><a href="#dep-cli">DEP CLI</a></li><li><a href="#psql-or-any-postgresql-driver">psql, or any PostgreSQL driver</a></li><li><a href="#the-http-api">The HTTP API</a></li></ul></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

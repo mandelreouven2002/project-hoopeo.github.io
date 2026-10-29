@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the engine | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="This chapter explains the architecture and design contract. It is not a line-by-line implementation audit. Features explicitly marked as future design are not available in the current Engine; see...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/internals/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Inside the engine | Project Hoopeo">
+<meta property="og:description" content="This chapter explains the architecture and design contract. It is not a line-by-line implementation audit. Features explicitly marked as future design are not available in the current Engine; see...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/internals/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Inside the engine | Project Hoopeo">
+<meta name="twitter:description" content="This chapter explains the architecture and design contract. It is not a line-by-line implementation audit. Features explicitly marked as future design are not available in the current Engine; see...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/" aria-current="page"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/" aria-current="page"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 8 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#12-architecture">Architecture</a><ul><li><a href="#121-the-trust-boundary">The trust boundary</a></li><li><a href="#122-overview">Overview</a></li><li><a href="#123-components">Components</a></li><li><a href="#124-how-the-components-fit-together">How the components fit together</a></li></ul></li><li><a href="#13-the-life-of-a-query">The life of a query</a><ul><li><a href="#131-the-query">The query</a></li><li><a href="#132-in-an-ordinary-engine">In an ordinary engine</a></li><li><a href="#133-in-dep">In DEP</a></li><li><a href="#134-step-by-step">Step by step</a></li></ul></li><li><a href="#14-how-declared-functions-and-anchoring-are-enforced">How declared functions and anchoring are enforced</a><ul><li><a href="#141-validation-at-creation">Validation at creation</a></li><li><a href="#142-tracking-disclosed-values-and-linking-regions">Tracking disclosed values and linking regions</a></li><li><a href="#143-deciding-whether-matching-is-anchored">Deciding whether matching is anchored</a></li><li><a href="#144-recording-and-auditing">Recording and auditing</a></li><li><a href="#145-foreign-keys">Foreign keys</a></li></ul></li><li><a href="#15-layers-of-enforcement">Layers of enforcement</a><ul><li><a href="#151-why-rewriting-the-query-is-not-enough">Why rewriting the query is not enough</a></li></ul></li><li><a href="#16-storage-and-matching">Storage and matching</a><ul><li><a href="#161-internal-columns">Internal columns</a></li><li><a href="#162-encrypted-storage">Encrypted storage</a></li><li><a href="#163-matching-with-a-keyed-index">Matching with a keyed index</a></li><li><a href="#164-foreign-key-columns">Foreign-key columns</a></li><li><a href="#165-rotation-is-three-different-things">Rotation is three different things</a></li><li><a href="#166-a-possible-later-extension-match-only-storage">A possible later extension: match-only storage</a></li></ul></li><li><a href="#17-leakage-channels">Leakage channels</a></li><li><a href="#18-guarantees-and-limits">Guarantees and limits</a><ul><li><a href="#181-who-is-trusted">Who is trusted</a></li><li><a href="#182-what-dep-guarantees">What DEP guarantees</a></li><li><a href="#183-matching-reveals-information">Matching reveals information</a></li><li><a href="#184-declared-functions-are-trusted-code">Declared functions are trusted code</a></li><li><a href="#185-released-values-are-beyond-deps-reach">Released values are beyond DEP&#x27;s reach</a></li><li><a href="#186-linkage-through-ordinary-keys">Linkage through ordinary keys</a></li><li><a href="#187-ordinary-data-is-not-anonymous-data">Ordinary data is not anonymous data</a></li><li><a href="#188-known-limitations-of-the-first-version">Known limitations of the first version</a></li><li><a href="#189-the-precise-promise">The precise promise</a></li></ul></li><li><a href="#reading-and-sources">Reading and sources</a></li><li><a href="#how-to-cite">How to cite</a></li><li><a href="#references">References</a></li><li><a href="#explore-the-architecture">Explore the architecture</a></li></ul></details><div class="prose"><h1 id="inside-the-engine">Inside the engine</h1>
+<p>This chapter explains the architecture and design contract. It is not a line-by-line implementation audit. Features explicitly marked as future design are not available in the current Engine; see <a href="/project-hoopeo.github.io/docs/server/#compatibility">current capabilities and native differences</a>.</p>
+<h2 id="12-architecture">Architecture</h2>
+<p><strong>In one sentence:</strong> a DEP server is an ordinary query pipeline with DEP's checks added at each stage, running in a process the client cannot reach.</p>
+<h3 id="121-the-trust-boundary">The trust boundary</h3>
+<p><strong>Definition.</strong> The trust boundary is the line between the client's process, which DEP does not trust, and the server's process, which it does. Every guarantee in DEP depends on one architectural fact: <strong>the client and the enforcement run in different processes, and the client controls only its own.</strong></p>
+<p><strong>What the client holds.</strong> A connection and the ability to send SQL. It never holds the data files, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> keys, the server's memory, or the code that enforces the rules. Everything it learns arrives through the protocol, after the output boundary.</p>
+<p><strong>Why DEP is a server and not a library.</strong> If the same rules ran inside the client's process (a query engine embedded in an application or a notebook), whoever runs that process could read the data directly, load the keys, or simply change the code. The rules would still <em>describe</em> correct behavior, but they would not <em>enforce</em> it. Such an embedded build can be useful as a playground for learning the syntax (<a href="/project-hoopeo.github.io/docs/design/roadmap/#4-distribution">Roadmap and Release</a>), but it must be labeled clearly: <strong>it offers no protection, because whoever runs it holds all the data.</strong></p>
+<p><strong>Two consequences.</strong></p>
+<ol>
+<li><strong>Keys never cross the boundary.</strong> Matching keys and encryption keys are loaded by the server from a location the client cannot reach: a key-management service, or at minimum a server-side file or environment variable.</li>
+<li><strong>The path is a property of the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a>.</strong> Each <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a> is bound to a listening endpoint and to authenticated identities at connection time. Nothing a client sends afterwards can change it.</li>
+</ol>
+<h3 id="122-overview">Overview</h3>
+<p>The figure shows the whole server, using the clinic's six consumers. Numbers give the order in which a statement passes through it.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/design/fig-architecture.png" title="Open at full size"><img loading="lazy" alt="The DEP server architecture: clients outside the trust boundary connect to two endpoints; statements pass through the parser, the DEP analyzer, the planner, and the executor; the output boundary returns results and errors." src="/project-hoopeo.github.io/docs/design/fig-architecture.png" / width="2400" height="1564"></a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td>The client sends SQL over the PostgreSQL protocol to the endpoint of its path.</td>
+</tr>
+<tr>
+<td>②</td>
+<td>The endpoint authenticates the client and fixes the path for the session.</td>
+</tr>
+<tr>
+<td>③</td>
+<td>The parser reads the statement, including DEP syntax, and marks protected literals. DDL that declares functions also goes to the declaration checker, which records declarations in the DEP catalog.</td>
+</tr>
+<tr>
+<td>④</td>
+<td>The DEP analyzer resolves names and types through the catalog, and checks typing, anchoring, and path rules. A forbidden statement is rejected here with an explicit <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a>, before any row is read.</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td>The planner optimizes the statement and re-checks the final plan.</td>
+</tr>
+<tr>
+<td>⑥</td>
+<td>The executor runs the plan.</td>
+</tr>
+<tr>
+<td>⑦</td>
+<td>Protected matching compares keyed <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">index entries</a> in protected storage, using the domain's key; every protected match is audited and counted against the rate limit.</td>
+</tr>
+<tr>
+<td>⑧</td>
+<td>Results pass to the output boundary.</td>
+</tr>
+<tr>
+<td>⑨</td>
+<td>The output boundary suppresses protected values, passes <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosed</a> values, scrubs errors, and sends the response.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="123-components">Components</h3>
+<p>The same logical architecture applies whichever query engine sits underneath.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Definition</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Endpoints</strong></td>
+<td>Listening server addresses, one per access path</td>
+<td>Authenticate the client and fix the access path for the session.</td>
+</tr>
+<tr>
+<td><strong>DEP catalog</strong></td>
+<td>The server's record of DEP objects</td>
+<td>Holds <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a>, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domains</a>, protected foreign keys, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a>, disclosed output columns, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a> regions, <code>DISCLOSE</code> and <code>LINK</code> privileges, and purposes.</td>
+</tr>
+<tr>
+<td><strong>Parser</strong></td>
+<td>The SQL parser, with DEP's additions to the grammar</td>
+<td>Understands <code>PROTECTED</code>, <code>MATCH DOMAIN</code>, <code>DISCLOSES</code>, <code>LINKS</code>, <code>GRANT DISCLOSE</code>, <code>GRANT LINK</code>, and <code>CREATE ENDPOINT</code>; identifies protected literals.</td>
+</tr>
+<tr>
+<td><strong>DEP analyzer</strong></td>
+<td>A checker over the resolved statement</td>
+<td>Checks every statement by its resolved meaning (which table, column, type, and operator), not by its spelling, including whether protected matching is <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">anchored</a>.</td>
+</tr>
+<tr>
+<td><strong>Declaration checker</strong></td>
+<td>A checker for declared functions</td>
+<td>Validates <code>DISCLOSES</code> and <code>LINKS</code> bodies at creation, and records disclosed columns and linking regions.</td>
+</tr>
+<tr>
+<td><strong>Plan re-check</strong></td>
+<td>A second check after optimization</td>
+<td>Ensures no transformation reintroduces a forbidden use.</td>
+</tr>
+<tr>
+<td><strong>Matching component</strong></td>
+<td>The part of execution that handles protected comparisons</td>
+<td>Performs lookups and joins on protected values through the internal matching index.</td>
+</tr>
+<tr>
+<td><strong>Protected storage</strong></td>
+<td>Internal columns that ordinary SQL cannot address</td>
+<td>Holds each protected value's index entry and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#ciphertext" data-term="Ciphertext" data-def="The encrypted copy of a protected value, stored next to its index entry.">ciphertext</a>.</td>
+</tr>
+<tr>
+<td><strong>Key management</strong></td>
+<td>The server-side source of keys</td>
+<td>Supplies one versioned matching key per match domain, and encryption keys.</td>
+</tr>
+<tr>
+<td><strong>Output boundary</strong></td>
+<td>The last stage before the protocol</td>
+<td>Suppresses protected values, passes disclosed values, and scrubs every outgoing message.</td>
+</tr>
+<tr>
+<td><strong>Audit and rate limiting</strong></td>
+<td>A server-side recorder and limiter</td>
+<td>Records every protected match on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a> and every call to a declared function, with the identity that made it; enforces per-identity limits; records withheld errors. Never records protected values.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="124-how-the-components-fit-together">How the components fit together</h3>
+<p><strong>The path selects the execution rules; DEP enforces them inside the server.</strong> The path does not rewrite queries for the client. Some queries run with suppressed output, some are rejected because the requested operation is forbidden, and some return disclosed values or linked results because a declared function says they may.</p>
+<hr />
+<h2 id="13-the-life-of-a-query">The life of a query</h2>
+<p><strong>In one sentence:</strong> DEP keeps the ordinary pipeline of a query engine (authenticate, analyze, plan, execute, return) and adds enforcement at every stage.</p>
+<h3 id="131-the-query">The query</h3>
+<p>Reception sends this query when Dana arrives, with <code>123456782</code> supplied as <code>$1</code>:</p>
+<pre class="highlight"><code class="language-sql">SELECT full_name, national_id
+FROM patients
+WHERE national_id = $1;</code></pre>
+<h3 id="132-in-an-ordinary-engine">In an ordinary engine</h3>
+<p>The query passes through four stages, and the protected column is treated like any other text:</p>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    C[Client] --&gt; A[Authentication]
+    A --&gt; P[Parse and&lt;br/&gt;semantic analysis]
+    P --&gt; PL[Planning and&lt;br/&gt;optimization]
+    PL --&gt; X[Execution&lt;br/&gt;plaintext comparison]
+    X --&gt; R[Result to client&lt;br/&gt;Dana Cohen, 123456782]</div><figcaption>In an ordinary engine</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    C[Client] --&gt; A[Authentication]
+    A --&gt; P[Parse and&lt;br/&gt;semantic analysis]
+    P --&gt; PL[Planning and&lt;br/&gt;optimization]
+    PL --&gt; X[Execution&lt;br/&gt;plaintext comparison]
+    X --&gt; R[Result to client&lt;br/&gt;Dana Cohen, 123456782]</code></pre></details></figure>
+<h3 id="133-in-dep">In DEP</h3>
+<p>The same pipeline, with DEP's additions highlighted:</p>
+<figure class="book-diagram"><div class="mermaid">flowchart LR
+    C[Client] --&gt; A[Authentication&lt;br/&gt;path mode fixed]
+    A --&gt; P[Parse and&lt;br/&gt;semantic analysis]
+    P --&gt; D{DEP contract&lt;br/&gt;check}
+    D -- forbidden --&gt; E[Explicit&lt;br/&gt;DEP error]
+    D -- allowed --&gt; PL[Planning and&lt;br/&gt;plan re-check]
+    PL --&gt; X[Execution with&lt;br/&gt;internal matching]
+    X --&gt; O[Output boundary&lt;br/&gt;suppression]
+    O --&gt; R[Result to client&lt;br/&gt;Dana Cohen, NULL]
+    classDef dep fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#0b1f4d
+    class A,D,E,PL,X,O dep</div><figcaption>In DEP</figcaption><details><summary>Diagram source and text</summary><pre><code>flowchart LR
+    C[Client] --&gt; A[Authentication&lt;br/&gt;path mode fixed]
+    A --&gt; P[Parse and&lt;br/&gt;semantic analysis]
+    P --&gt; D{DEP contract&lt;br/&gt;check}
+    D -- forbidden --&gt; E[Explicit&lt;br/&gt;DEP error]
+    D -- allowed --&gt; PL[Planning and&lt;br/&gt;plan re-check]
+    PL --&gt; X[Execution with&lt;br/&gt;internal matching]
+    X --&gt; O[Output boundary&lt;br/&gt;suppression]
+    O --&gt; R[Result to client&lt;br/&gt;Dana Cohen, NULL]
+    classDef dep fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#0b1f4d
+    class A,D,E,PL,X,O dep</code></pre></details></figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Ordinary engine</th>
+<th>DEP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authentication</td>
+<td>Identifies the user</td>
+<td>Also fixes the access path for the whole session</td>
+</tr>
+<tr>
+<td>Analysis</td>
+<td>Resolves names and types</td>
+<td>Also checks every use of a protected or disclosed value against the rules, and rejects forbidden ones with an explicit error</td>
+</tr>
+<tr>
+<td>Planning</td>
+<td>Optimizes the query</td>
+<td>Also re-checks the final plan, so no optimization reintroduces a forbidden use</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>Compares stored values directly</td>
+<td>Compares keyed index entries; the value itself is never compared or exposed</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Sends whatever was selected</td>
+<td>Suppresses protected values, passes only declared disclosed values, and scrubs every message</td>
+</tr>
+</tbody>
+</table></div>
+<figure>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/statement-path-narrow.png" alt="Follow a statement through parsing, privacy analysis, planning, execution and the output boundary." width="1000" height="2293"><details class="diagram-text"><summary>Diagram text description</summary><p>Follow a statement through parsing, privacy analysis, planning, execution and the output boundary.</p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/statement-path-narrow-dark.png" alt="" width="1000" height="2293"></p>
+<figcaption>Follow a statement through parsing, privacy analysis, planning, execution and the output boundary.</figcaption>
+</figure>
+<h3 id="134-step-by-step">Step by step</h3>
+<p><strong>Step 1: The connection already carries its path.</strong> At authentication the server fixed the path, here <code>OPERATIONAL</code>, and the client cannot change it. The path accompanies the query through checking and execution. It is not a separate engine; it is the context in which the engine runs.</p>
+<p><strong>Step 2: The engine resolves what the query means.</strong> DEP works on the engine's resolved internal representation: which table <code>patients</code> refers to, which column <code>national_id</code> refers to, what its type is and whether it is protected, which operator implements <code>=</code>, and which fields are meant to reach the client. At this point DEP sees two different uses of the same column: in <code>WHERE national_id = $1</code> it is used for <strong>matching</strong>, and in <code>SELECT national_id</code> it is a request to <strong>return</strong> the value.</p>
+<p><strong>Step 3: DEP checks the operations against the path.</strong> On the operational path, the match is allowed: the role holds privilege on <code>national_id</code>, and the match is anchored to the single value <code>$1</code>. Returning the value is not allowed, so the projection will be suppressed. On the masked path, the matching itself is forbidden, and the query is rejected before any search runs. The engine never deletes the <code>WHERE</code> clause to "legalize" a query; that would change its meaning and could return the whole table.</p>
+<p><strong>Step 4: The engine plans execution.</strong> Conceptually, the plan is: find the matching record using the protected identifier; read the permitted <code>full_name</code> field; produce <code>NULL</code> for the protected output column; return the result. The predicate <code>national_id = $1</code> is rewritten into a comparison between the column's internal index entries and the keyed hash of the normalized parameter. This is fundamentally different from replacing <code>national_id</code> with <code>NULL</code> everywhere, which would destroy the search. Because the optimizer can transform queries, DEP re-checks the final plan rather than trusting only the check before planning.</p>
+<p><strong>Step 5: The engine performs the internal match.</strong> The matching component computes the index entry for the parameter with the match domain's key and locates the record (<a href="/project-hoopeo.github.io/docs/internals/#163-matching-with-a-keyed-index">Matching with a keyed index</a>). The same mechanism serves joins between protected fields of the same domain: a join on two <code>person_id</code> columns becomes an equi-join on their index entries.</p>
+<p><strong>Step 6: The result crosses the output boundary.</strong> Before anything is sent, DEP enforces the output rules, in text and binary result formats and on every output path:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>full_name</th>
+<th>national_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dana Cohen</td>
+<td><code>NULL</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Had the same value been produced by <code>REVEAL</code> inside a disclosing function, the output boundary would have let it through as a disclosed value, and Step 3 would have rejected any attempt to use it for anything but output.</p>
+<hr />
+<h2 id="14-how-declared-functions-and-anchoring-are-enforced">How declared functions and anchoring are enforced</h2>
+<p><a href="/project-hoopeo.github.io/docs/functions/#8-declared-functions">Chapter 3</a> defines the rules for <code>REVEAL</code>, <code>DISCLOSES</code>, <code>LINKS</code>, and anchored matching. Enforcing them takes five mechanisms.</p>
+<h3 id="141-validation-at-creation">Validation at creation</h3>
+<p><strong>When.</strong> <code>CREATE FUNCTION ... DISCLOSES d</code> or <code>CREATE FUNCTION ... LINKS d</code> runs.</p>
+<p><strong>What the server does, in order:</strong></p>
+<ol>
+<li>checks that the creating role holds <code>DISCLOSE ON MATCH DOMAIN d</code> or <code>LINK ON MATCH DOMAIN d</code>, respectively;</li>
+<li>checks that the function is <code>LANGUAGE sql</code>, and parses and analyzes its body;</li>
+<li>checks that every <code>REVEAL</code> in the body applies to a domain the function declares <code>DISCLOSES</code>, and that every unanchored match applies to a domain it declares <code>LINKS</code>;</li>
+<li>checks that every user-defined function the body calls is itself declared for the same purpose and domain;</li>
+<li>determines which output columns come from <code>REVEAL</code>, and records them in the DEP catalog as <strong>disclosed columns</strong>;</li>
+<li>determines whether the function takes any parameter used for protected matching, and records whether it may be called on the masked path;</li>
+<li>creates the function with no <code>EXECUTE</code> privilege for <code>PUBLIC</code>;</li>
+<li>records the function, its kinds, its domains, its owner, and its comment in <code>SHOW FUNCTIONS</code>.</li>
+</ol>
+<p><strong>On failure.</strong> Any failure rejects the whole statement. Later attempts to <code>GRANT EXECUTE</code> on a declared function to <code>PUBLIC</code> are rejected.</p>
+<p><strong>Notes.</strong> The checks run unconditionally. If the underlying engine has a setting that skips function-body validation (as PostgreSQL does with <code>check_function_bodies</code>, which is turned off while restoring a dump), DEP's checks run regardless, and are repeated at execution time.</p>
+<h3 id="142-tracking-disclosed-values-and-linking-regions">Tracking disclosed values and linking regions</h3>
+<p><strong>The problem.</strong> A declared function is usually executed by expanding its body into the calling query, much as a view is. After expansion, the planner no longer sees a function boundary. Two things must survive this: the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a>, and the permission for unanchored matching.</p>
+<p><strong>Implementation difference:</strong> DEP Engine 0.5.2 does not yet track disclosed values through sorting, functions and <code>DISTINCT</code>; the gaps are documented in <a href="/project-hoopeo.github.io/docs/server/#known-difference-sorting-disclosed-values">chapter 6</a>. The following describes the specified tracking rule.</p>
+<p><strong>Marked expressions.</strong> DEP represents <code>REVEAL(x)</code> internally as a <strong>marked expression</strong>: ordinary for the purpose of output, but carrying a <em>disclosed</em> marker. The analyzer propagates the marker through aliases, subqueries, common table expressions, and projections, and rejects any plan in which a marked expression reaches a filter, a join key, an aggregate, a sort key, a function argument, or a write. The only legal destination of a marked expression is the output boundary.</p>
+<p><strong>Linking regions.</strong> In the same way, the expanded body of a linking function is marked as a <strong>linking region</strong>. Unanchored matching is accepted inside that region and rejected anywhere else in the same plan, so a caller cannot extend the function's permission to its own joins.</p>
+<p><strong>Symmetry.</strong> This is the same mechanism that keeps protected values protected, with the opposite permission: protected values may be <em>matched</em> but not <em>output</em>; disclosed values may be <em>output</em> but not <em>matched</em>.</p>
+<h3 id="143-deciding-whether-matching-is-anchored">Deciding whether matching is anchored</h3>
+<p><strong>Scope.</strong> Outside a linking region, joins between protected columns require a single-value anchor. Plain equality lookups and IN lists are permitted on the operational path; they do not by themselves authorize a protected join. The analyzer decides this on each query block of the resolved query.</p>
+<p><strong>Definitions.</strong></p>
+<ul>
+<li>A <strong>protected input</strong> is a parameter or a literal in a protected position (<a href="/project-hoopeo.github.io/docs/sql/#79-parameters-and-literals">Parameters and literals</a>).</li>
+<li>A <strong>top-level conjunct</strong> of a query block is a condition joined by <code>AND</code> at the top of its <code>WHERE</code> clause or of an inner join condition. It therefore holds in every row the block produces.</li>
+<li>The <strong>match graph</strong> of a query block has one vertex for each protected column, per table instance, that occurs in a matching comparison, and one edge for each equality between two protected columns.</li>
+<li>A vertex is <strong>anchored</strong> if the block contains, as a top-level conjunct, an equality between that column and a single protected input.</li>
+</ul>
+<p><strong>The rule.</strong> A query block is admissible if every connected component containing a protected-to-protected join edge contains an anchored vertex, or if the block lies inside a linking region for the component's domain.</p>
+<p><strong>Anchored lookup</strong></p>
+<pre class="highlight"><code class="language-sql">WHERE p.national_id = $1                 -- anchored
+WHERE p.national_id = '123456782'        -- anchored</code></pre>
+<p><strong>Anchored join.</strong> One component, <code>{p.national_id, m.patient_national_id}</code>, anchored through <code>p</code>:</p>
+<pre class="highlight"><code class="language-sql">FROM patients AS p
+JOIN medical_records AS m ON m.patient_national_id = p.national_id
+WHERE p.national_id = $1</code></pre>
+<p><strong>Not anchored</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A join between protected columns with no anchored lookup on either side</td>
+<td>Links whole datasets</td>
+</tr>
+<tr>
+<td><code>IN</code> with more than one value, or several equalities combined with <code>OR</code></td>
+<td>Allowed for lookups, but not a single-value anchor for a protected join</td>
+</tr>
+<tr>
+<td>Comparison with the result of a subquery, <code>IN (SELECT ...)</code>, <code>EXISTS</code> correlated on a protected column</td>
+<td>Asks about a whole dataset of values</td>
+</tr>
+<tr>
+<td>Comparison with a value computed inside the query</td>
+<td>Not a client-supplied value</td>
+</tr>
+<tr>
+<td>An anchor inside an <code>OR</code> or an outer join condition</td>
+<td>Does not hold in every row the block produces</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Design discussion.</strong> The following cases are retained from the proposal; use the supported-form examples in chapter 2 and test the installed Engine rather than assuming these proposals are implemented. Discussed further in the roadmap (<a href="/project-hoopeo.github.io/docs/design/roadmap/#7-open-questions">Roadmap and Release</a>), with a proposal for each:</p>
+<ul>
+<li><strong>Anchoring through a different protected column of the same table</strong> (a join on <code>national_id</code> restricted by <code>WHERE p.phone = $1</code>) counts as anchored, because it is still a single protected value.</li>
+<li><strong>Anchoring through an ordinary key</strong> (<code>WHERE p.patient_id = 42</code>) does not count, because it can be iterated over every key. At minimum, such queries count against the protected-lookup rate limit.</li>
+</ul>
+<h3 id="144-recording-and-auditing">Recording and auditing</h3>
+<p><strong>What is recorded.</strong> Every protected match on the operational path and every call to a declared function: which identity, when, which statement or function version, which protected columns were matched, and how many rows were returned.</p>
+<p><strong>What is never recorded.</strong> Protected values and disclosed values. An <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> holding every identifier that was ever looked up or released would itself become the most sensitive table in the system.</p>
+<p><strong>Rate limiting.</strong> The same component enforces the per-identity rate limit on protected lookups, and raises <a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors"><code>DEP_MATCH_RATE_LIMITED</code></a> when it is exceeded.</p>
+<h3 id="145-foreign-keys">Foreign keys</h3>
+<p>The rules for protected foreign keys (<a href="/project-hoopeo.github.io/docs/sql/#710-protected-foreign-keys">Protected foreign keys</a>) are enforced in three places:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>When</th>
+<th>What the server does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>At definition</strong></td>
+<td><code>CREATE TABLE</code> and <code>ALTER TABLE</code> check that a foreign key and the column it references have the same protection and match domain, fill in the inherited domain, and record the reference in the DEP catalog. A mismatch is rejected with <code>DEP_REFERENCE_MISMATCH</code>.</td>
+</tr>
+<tr>
+<td><strong>At write time</strong></td>
+<td>Referential checks compare index entries, never plaintext. Because both columns use the same domain key, an index entry computed for the referencing value can be looked up directly in the unique index of the referenced column. Cascading updates recompute index entries in the referencing rows; cascading deletes and <code>RESTRICT</code> locate them through the index. Each check passes through the audit and rate-limit component as one protected lookup.</td>
+</tr>
+<tr>
+<td><strong>On failure</strong></td>
+<td>Violation messages are reduced to the constraint's name before they reach the output boundary. The underlying engine's own message, which in most engines quotes the offending key, is never sent.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="15-layers-of-enforcement">Layers of enforcement</h2>
+<p><strong>In one sentence:</strong> no single check is trusted to catch everything, so each stage of execution enforces the rules that apply to it.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What DEP does there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Connection</strong></td>
+<td>Fixes the access path from the endpoint and the authenticated identity; rejects any later attempt to change it.</td>
+</tr>
+<tr>
+<td><strong>Function creation</strong></td>
+<td>Validates every <code>DISCLOSES</code> and <code>LINKS</code> body, records disclosed columns and linking regions, and withholds public execution (<a href="/project-hoopeo.github.io/docs/internals/#141-validation-at-creation">Validation at creation</a>).</td>
+</tr>
+<tr>
+<td><strong>Parsing and analysis</strong></td>
+<td>Detects every use of a protected field or disclosed value and checks it against what the path allows, including whether protected matching is anchored (<a href="/project-hoopeo.github.io/docs/internals/#143-deciding-whether-matching-is-anchored">Deciding whether matching is anchored</a>). Identifies protected literals and records their positions so the statement text can be redacted wherever it is kept.</td>
+</tr>
+<tr>
+<td><strong>Type checking</strong></td>
+<td>Rejects casts, functions, and operators not defined for protected values. Because the protected type defines no conversion to plain types, many attacks fail here by construction.</td>
+</tr>
+<tr>
+<td><strong>Planning</strong></td>
+<td>Re-validates the final plan, so that view inlining, function inlining, subquery flattening, or other transformations cannot reintroduce a forbidden use.</td>
+</tr>
+<tr>
+<td><strong>Execution</strong></td>
+<td>Performs permitted matches through the matching component. Protected comparison operations themselves verify the path, so indirect calls cannot bypass the earlier checks.</td>
+</tr>
+<tr>
+<td><strong>Intermediate results</strong></td>
+<td>Copying into a temporary table or passing through a common table expression does not turn a protected value into an ordinary one. Forms that cannot yet guarantee this are rejected as unsupported.</td>
+</tr>
+<tr>
+<td><strong>Output boundary</strong></td>
+<td>Suppresses protected values, passes disclosed values, and scrubs errors and notices, in every result format.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="151-why-rewriting-the-query-is-not-enough">Why rewriting the query is not enough</h3>
+<p>Editing the internal representation of a query is part of the implementation, but it is not sufficient on its own. If DEP only rewrote the outer query, a function, a view, or a subquery could route around it. Protection has to hold <strong>during execution</strong>, as the engine passes values between operations. That is why the protected type, the matching component, and the output boundary each enforce the rules independently, rather than relying on a single check at the start.</p>
+<hr />
+<h2 id="16-storage-and-matching">Storage and matching</h2>
+<p><strong>In one sentence:</strong> each protected value is stored twice inside the engine, once as a keyed hash used for matching and once encrypted, and SQL sees neither.</p>
+<h3 id="161-internal-columns">Internal columns</h3>
+<p><strong>Definition.</strong> A protected column is presented to SQL as one logical column, but stored as two internal columns that ordinary SQL cannot address.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Internal column</th>
+<th>Contents</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Index entry</strong></td>
+<td>Keyed hash of the normalized value, with a key version</td>
+<td>Matching, joins, uniqueness, and foreign-key checks</td>
+</tr>
+<tr>
+<td><strong>Ciphertext</strong></td>
+<td>The value under authenticated encryption</td>
+<td><code>REVEAL</code>, key rotation, and re-indexing</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rules.</strong></p>
+<ol>
+<li>Every protected column is stored the same way. There are no storage options for the user to choose in the first version.</li>
+<li><code>SELECT *</code>, the catalog's column listings, and every other introspection path show only the logical column.</li>
+<li>The internal columns are reachable only by the matching component and by <code>REVEAL</code>.</li>
+</ol>
+<h3 id="162-encrypted-storage">Encrypted storage</h3>
+<p>Protected values are stored with an established authenticated-encryption scheme, with keys held outside ordinary tables. Plaintext inputs are excluded from logs and error messages.</p>
+<p><strong>Role of encryption.</strong> Encryption is a complementary storage layer. DEP's query rules do not depend on a client being unable to decrypt a string it received, because clients never receive the stored representation in the first place.</p>
+<figure>
+<p><img loading="lazy" class="diagram for-light" src="/project-hoopeo.github.io/docs/images/diagrams/blind-index-narrow.png" alt="Matching uses the keyed index entry; authorized disclosure uses the ciphertext." width="1000" height="2500"><details class="diagram-text"><summary>Diagram text description</summary><p>Matching uses the keyed index entry; authorized disclosure uses the ciphertext.</p></details><img loading="lazy" class="diagram for-dark" src="/project-hoopeo.github.io/docs/images/diagrams/blind-index-narrow-dark.png" alt="" width="1000" height="2500"></p>
+<figcaption>Matching uses the keyed index entry; authorized disclosure uses the ciphertext.</figcaption>
+</figure>
+<h3 id="163-matching-with-a-keyed-index">Matching with a keyed index</h3>
+<p><strong>Definition.</strong> A <strong>keyed equality index</strong> (sometimes called a <em>blind index</em>) stores, alongside each protected value, a keyed hash of its normalized form. Lookups and joins compare these entries instead of the values.</p>
+<p><strong>What its design must define.</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Normalization</strong></td>
+<td>How leading zeros, whitespace, or check digits are treated, so that equal values always produce equal index entries.</td>
+</tr>
+<tr>
+<td><strong>Domain separation</strong></td>
+<td>Each match domain, and each tenant, uses its own key, so that index entries from different domains cannot be compared.</td>
+</tr>
+<tr>
+<td><strong>Key versions</strong></td>
+<td>Each entry records which key produced it, so keys can be rotated.</td>
+</tr>
+<tr>
+<td><strong>Collision handling</strong></td>
+<td>A matching index entry is confirmed against the ciphertext before it is treated as a match.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What it reveals.</strong> Such an index reveals equality patterns to anyone who can inspect storage directly: equal values have equal entries. This is acceptable under the threat model in <a href="/project-hoopeo.github.io/docs/internals/#18-guarantees-and-limits">Guarantees and limits</a>, but it is not evidence of anonymity, and the technique itself is not new.</p>
+<h3 id="164-foreign-key-columns">Foreign-key columns</h3>
+<p>A column that references a protected column stores its own index entry and ciphertext, like any protected column. Because both columns use the same domain key, their index entries are directly comparable, which is what makes internal referential checks and joins possible. The encrypted value now exists in two tables, which is one more reason to prefer ordinary internal keys unless the link itself is sensitive (<a href="/project-hoopeo.github.io/docs/designing/#102-step-2-classify-the-fields">Step 2: Classify the fields</a>).</p>
+<h3 id="165-rotation-is-three-different-things">Rotation is three different things</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What it changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Key rotation</strong></td>
+<td>Which keys are in use</td>
+</tr>
+<tr>
+<td><strong>Re-encryption</strong></td>
+<td>The stored ciphertext</td>
+</tr>
+<tr>
+<td><strong>Token rotation</strong></td>
+<td>Identifiers visible to consumers (outside the first version)</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of them can retract data that a client has already received.</p>
+<h3 id="166-a-possible-later-extension-match-only-storage">A possible later extension: match-only storage</h3>
+<p><strong>Idea.</strong> A protected column could, in principle, store only its index entry and discard the value itself. Matching, joins, uniqueness, and foreign-key checks would work unchanged; <code>REVEAL</code> would become impossible forever, and so would key rotation, re-normalization, migration, and correcting a mistyped value, unless the original values were re-supplied from elsewhere.</p>
+<p><strong>Why it is not planned.</strong> Its benefit is smaller than it appears. Against clients, DEP already prevents disclosure outside declared functions. Against theft of the database together with its keys, it protects little for low-entropy identifiers: there are only about 100 million valid Israeli ID numbers, and anyone holding both the index entries and the index key can hash every one of them. It protects well only high-entropy values that are verified and never read, which is password hashing, a technique that already exists.</p>
+<hr />
+<h2 id="17-leakage-channels">Leakage channels</h2>
+<p><strong>In one sentence:</strong> suppressing values in an ordinary <code>SELECT</code> is the easy part; a credible implementation must account for every other way a value can leave the server.</p>
+<p><strong>Rule.</strong> Each channel below must be either covered or rejected as unsupported.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Risk</th>
+<th>Treatment in the first version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text and binary result formats</td>
+<td>A value encoded before suppression</td>
+<td>Suppress before encoding, in both formats</td>
+</tr>
+<tr>
+<td><code>RETURNING</code></td>
+<td><code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> returning rows</td>
+<td>Suppress protected columns, or reject where unsupported</td>
+</tr>
+<tr>
+<td><code>COPY TO</code> and bulk export</td>
+<td>Output that bypasses ordinary result handling</td>
+<td>Reject for tables with protected columns</td>
+</tr>
+<tr>
+<td>DEP's own errors</td>
+<td>A message that quotes a value</td>
+<td>Never include values (<a href="/project-hoopeo.github.io/docs/reference/errors/#dep-errors">19.1</a>)</td>
+</tr>
+<tr>
+<td>The underlying engine's errors</td>
+<td>An internal error that quotes a literal or a row</td>
+<td>Scrub; replace with <code>DEP_ERROR_WITHHELD</code> when in doubt</td>
+</tr>
+<tr>
+<td>Constraint violations</td>
+<td>A unique-key or foreign-key error that reports the conflicting value</td>
+<td>Report the constraint name only; the violation itself still reveals whether the value exists, a documented limitation</td>
+</tr>
+<tr>
+<td>Foreign-key checks</td>
+<td>Inserts used to test identifiers one by one, without any <code>SELECT</code></td>
+<td>Each check counts as a protected lookup: audited and rate-limited (<a href="/project-hoopeo.github.io/docs/internals/#145-foreign-keys">Foreign keys</a>)</td>
+</tr>
+<tr>
+<td>Server logs</td>
+<td>Statement and parameter logging that records identifiers</td>
+<td>Never log protected parameters; redact protected literals from statement text</td>
+</tr>
+<tr>
+<td>Protected literals in statement text</td>
+<td>An identifier written in the query, recorded or echoed with it</td>
+<td>Redact at every place the text is kept: logs, query statistics, audit records, error messages (<a href="/project-hoopeo.github.io/docs/sql/#79-parameters-and-literals">Parameters and literals</a>)</td>
+</tr>
+<tr>
+<td><code>EXPLAIN</code></td>
+<td>Plans that show constants, parameters, or column statistics</td>
+<td>Reject for statements involving protected values</td>
+</tr>
+<tr>
+<td>Optimizer statistics</td>
+<td>Minimum, maximum, and most-common values of a column</td>
+<td>Never collect value statistics on internal protected columns; never expose them</td>
+</tr>
+<tr>
+<td>User-defined functions, triggers, notices</td>
+<td>User code that receives a value and emits it elsewhere</td>
+<td>Protected values cannot be passed to user code at all, except declared functions</td>
+</tr>
+<tr>
+<td>Views, temporary tables, <code>CREATE TABLE AS</code></td>
+<td>Derived objects that shed protection</td>
+<td>Views inherit protection; materializing protected columns is rejected until designed</td>
+</tr>
+<tr>
+<td>Disclosed values</td>
+<td>Reuse of a revealed value after <code>REVEAL</code></td>
+<td>The terminal rule (<a href="/project-hoopeo.github.io/docs/internals/#142-tracking-disclosed-values-and-linking-regions">Tracking disclosed values and linking regions</a>)</td>
+</tr>
+<tr>
+<td>Unanchored matching</td>
+<td>A join or lookup that links whole datasets without returning any identifier</td>
+<td>Rejected outside <code>LINKS</code> functions (<a href="/project-hoopeo.github.io/docs/internals/#143-deciding-whether-matching-is-anchored">Deciding whether matching is anchored</a>)</td>
+</tr>
+<tr>
+<td>Linkage through ordinary keys</td>
+<td>Datasets joined through an ordinary column, bypassing every linkage rule</td>
+<td>Outside the engine's reach; a design responsibility (<a href="/project-hoopeo.github.io/docs/internals/#186-linkage-through-ordinary-keys">Linkage through ordinary keys</a>)</td>
+</tr>
+<tr>
+<td>Timing</td>
+<td>Execution time that depends on whether a match exists</td>
+<td>Out of scope for the first version; documented as a known limitation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Protection is incomplete if a value is hidden in the result but appears in a log.</p>
+<hr />
+<h2 id="18-guarantees-and-limits">Guarantees and limits</h2>
+<p><strong>In one sentence:</strong> DEP makes four precise guarantees under stated assumptions, and is explicit about everything they do not cover.</p>
+<h3 id="181-who-is-trusted">Who is trusted</h3>
+<p><strong>Trusted.</strong> The database server and its code, the operating system it runs on, the deployment administrator, the key-management service, and the roles granted <code>DISCLOSE</code> or <code>LINK</code> on a match domain.</p>
+<p><strong>Not trusted.</strong> Clients: applications, analysts, BI tools, and AI agents, even when they are authenticated. Clients cannot install native code, disable DEP, replace type functions, declare functions without the corresponding privilege, or obtain administrative credentials.</p>
+<p><strong>Out of scope.</strong> DEP does not protect against a compromised operating system or an administrator who can read the server's memory. If an administrator can modify the server itself, the rules of the query language cannot stop them. Encrypted backup and restore require a separate, controlled administrative design. DEP is therefore complementary to client-side encryption, which assumes the opposite trust model.</p>
+<h3 id="182-what-dep-guarantees">What DEP guarantees</h3>
+<p><strong>Assumptions.</strong> The guarantees hold if:</p>
+<ol>
+<li>the server is trusted, as described in <a href="/project-hoopeo.github.io/docs/internals/#181-who-is-trusted">Who is trusted</a>;</li>
+<li>the rules are applied to the final plan of every statement, after views, common table expressions, and declared functions are expanded, and after optimization;</li>
+<li>declared functions are created only by roles holding the declaration privilege, and invoked only by roles granted <code>EXECUTE</code>;</li>
+<li>error text, logs, statistics, and plan output carry no protected values.</li>
+</ol>
+<p><strong>Two kinds of information flow.</strong> An <em>explicit</em> flow computes an output value from a protected value. An <em>implicit</em> flow lets a protected value decide which rows are produced, as a matching predicate does.</p>
+<p><strong>The four guarantees</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Guarantee</th>
+<th>Statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No return</strong></td>
+<td>In any statement, on either path, every output value computed from a protected value comes from <code>REVEAL</code> inside a declared disclosing function that the caller was explicitly allowed to execute. Every other protected value reaches the client as <code>NULL</code>. No statement can copy a protected value into an ordinary column, so a value cannot be laundered through storage.</td>
+</tr>
+<tr>
+<td><strong>Anchored linkage</strong></td>
+<td>On the operational path, an ordinary query combines records through a protected value only for the single value the client supplied. With a per-identity rate limit, this bounds how many people an operational client can link records for in a given period.</td>
+</tr>
+<tr>
+<td><strong>Terminal disclosure</strong></td>
+<td>A disclosed value never reaches a filter, join key, grouping, <code>DISTINCT</code>, sort key, aggregate, function argument, or write. A client can use disclosed values against protected data again only by sending them back one at a time, as anchored lookups. A disclosure therefore cannot be turned into bulk linkage inside the database.</td>
+</tr>
+<tr>
+<td><strong>Masked-path confinement</strong></td>
+<td>On the masked path, the result of a query does not depend on protected values at all, except through the outputs of approved linking functions. Two databases that differ only in their protected values give the same answer to any query on that path.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Notes.</strong> These are properties of the design. An implementation has them only to the extent that it applies the rules faithfully. The accompanying paper states them formally, with proof sketches. The masked-path guarantee depends on the rule that a masked connection cannot test whether a protected value is present (<code>IS NULL</code>, or <code>COUNT</code> of the column); without it, whether a value is present would be an implicit flow. DEP.js applies that rule; DEP Engine 0.5.2 does not yet (see <a href="/project-hoopeo.github.io/docs/server/#other-known-differences-in-dep-engine-052">chapter 6</a>).</p>
+<h3 id="183-matching-reveals-information">Matching reveals information</h3>
+<p><strong>The limit.</strong> Every permitted match is a question the database answers. A successful lookup confirms that a record with that value exists; a join associates it with an appointment or a diagnosis; a returned name can identify the person behind it, however well the identifier is hidden.</p>
+<p><strong>Enumeration.</strong> Low-entropy identifiers make this concrete. An Israeli national ID has nine digits, the last of which is a check digit, so there are only about 100 million valid values. A client allowed 10,000 lookups per second could test every one of them in under three hours. Anchored matching without limits would be an enumeration oracle: one value at a time, but as many times as the client likes.</p>
+<p><strong>DEP's answer: permit and attribute.</strong> On the operational path, a role may match on any protected column it is permitted to use, and DEP does not judge each individual lookup. Instead:</p>
+<ul>
+<li><strong>every protected match is audited,</strong> with the identity that made it, and without the value itself;</li>
+<li><strong>protected lookups are rate-limited per identity,</strong> so that one value at a time cannot become every value in an afternoon;</li>
+<li><strong>qualified access is a future proposal, not a current control:</strong> the proposed table option would require every operational read or write to be anchored (<a href="/project-hoopeo.github.io/docs/sql/#711-requiring-qualified-access">Requiring qualified access</a>);</li>
+<li><strong>ordinary column privileges decide who may match on what</strong> (<a href="/project-hoopeo.github.io/docs/sql/#66-who-may-match-on-what">Who may match on what</a>).</li>
+</ul>
+<h3 id="184-declared-functions-are-trusted-code">Declared functions are trusted code</h3>
+<p>A declared function is, by design, an opening in the wall. DEP guarantees that the opening is declared, located, limited by the rules, and listed in the catalog. It does not guarantee that the declared purpose is legitimate, nor that the recipient will use the data properly. The quality of these decisions depends on the people who hold the <code>DISCLOSE</code> and <code>LINK</code> privileges and on the review process around them.</p>
+<h3 id="185-released-values-are-beyond-deps-reach">Released values are beyond DEP's reach</h3>
+<blockquote>
+<p><strong>Disclosure tracking applies within database execution. Once a value is returned to a client, DEP cannot control its subsequent use.</strong></p>
+</blockquote>
+<p>A client that received identifiers from a disclosing function can keep them, combine them with other data, or send them back as parameters in later queries, within whatever matching its permissions allow.</p>
+<h3 id="186-linkage-through-ordinary-keys">Linkage through ordinary keys</h3>
+<p>DEP enforces anchoring and <code>LINKS</code> only on protected columns. If two datasets are connected through an ordinary key, linkage through that key is governed by ordinary permissions alone, and every rule about linkage can be bypassed through it. The same is true of an ordinary key returned by a declared function. This is a design responsibility, not an engine guarantee: keys that link sensitive datasets must themselves be protected, there must be no path made only of ordinary keys between identities and sensitive data, and declared functions should not return keys their recipients do not need (<a href="/project-hoopeo.github.io/docs/designing/#102-step-2-classify-the-fields">Step 2: Classify the fields</a>).</p>
+<h3 id="187-ordinary-data-is-not-anonymous-data">Ordinary data is not anonymous data</h3>
+<p>The masked path can run aggregate queries over ordinary fields and call linking functions that return aggregates, but that does not make results anonymous. Small groups and combinations of released attributes can still identify people. DEP is one control among several, not a replacement for anonymization or data-minimization practices.</p>
+<h3 id="188-known-limitations-of-the-first-version">Known limitations of the first version</h3>
+<ul>
+<li>Timing differences between matching and non-matching lookups are not addressed.</li>
+<li>Constraint violations on protected columns reveal whether a value exists, even though the error never contains the value: a duplicate in a <code>UNIQUE</code> column means it exists, and a failed foreign-key check means it does not. Both count as protected lookups.</li>
+<li>Only full-value equality is supported on protected values.</li>
+<li>SQL forms outside the published supported-forms list are rejected rather than supported.</li>
+<li>Protection of ordinary fields is left to ordinary permissions.</li>
+</ul>
+<h3 id="189-the-precise-promise">The precise promise</h3>
+<blockquote>
+<p><strong>Ordinary queries never return protected plaintext, and never link whole datasets through protected values. Protected values leave the database only through explicitly declared disclosures, and datasets are linked through them only in explicitly declared linking functions. Permitted matching can still reveal record existence and associations with returned data, and DEP does not guarantee that nothing can be inferred from permitted information.</strong></p>
+</blockquote>
+<hr />
+<h2 id="reading-and-sources">Reading and sources</h2>
+<p>The book develops the original DEP design by Reuven Mandelovich. Proposed extensions and comparisons are collected in <a href="/project-hoopeo.github.io/docs/design/roadmap/">Roadmap and release</a>.</p>
+<h2 id="how-to-cite">How to cite</h2>
+<p>This document is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. You may share and adapt it for any purpose, including commercially, with appropriate credit.</p>
+<blockquote>
+<p>Reuven Mandelovich. <em>DEP: Database-Enforced Privacy. A Design Proposal.</em> Version 1.0, October 2026. https://doi.org/<DOI></p>
+</blockquote>
+<pre class="highlight"><code class="language-bibtex">@techreport{mandelovich2026dep,
+  author      = {Reuven Mandelovich},
+  title       = {{DEP}: Database-Enforced Privacy. A Design Proposal},
+  year        = {2026},
+  month       = oct,
+  institution = {Self-published},
+  version     = {1.0},
+  doi         = {&lt;DOI&gt;},
+  url         = {https://github.com/&lt;GITHUB-USER&gt;/project-hoopeo}
+}</code></pre>
+<p>If you implement DEP's ideas in your own system, a mention in your documentation, "based on DEP by Reuven Mandelovich", is appreciated.</p>
+<hr />
+<h2 id="references">References</h2>
+<p>These sources describe existing capabilities, frameworks, and regulation that inform the design. They do not validate DEP, establish its novelty, or demonstrate its security. Sources on related products and research are listed in <a href="/project-hoopeo.github.io/docs/design/roadmap/#references">Roadmap and Release</a>.</p>
+<ol>
+<li>PostgreSQL documentation. <em>Privileges</em>: column-level privileges. https://www.postgresql.org/docs/current/ddl-priv.html</li>
+<li>PostgreSQL documentation. <em>CREATE FUNCTION</em>. https://www.postgresql.org/docs/current/sql-createfunction.html</li>
+<li>PostgreSQL documentation. <em>Frontend/Backend Protocol</em>. https://www.postgresql.org/docs/current/protocol.html</li>
+<li>PostgreSQL documentation. <em>The pg_hba.conf File</em>. https://www.postgresql.org/docs/current/auth-pg-hba-conf.html</li>
+<li>PostgreSQL documentation. <em>Client Connection Defaults</em> (<code>check_function_bodies</code>). https://www.postgresql.org/docs/current/runtime-config-client.html</li>
+<li>PostgreSQL documentation. <em>COMMENT</em>. https://www.postgresql.org/docs/current/sql-comment.html</li>
+<li>Paragon Initiative. <em>CipherSweet: blind indexes</em>. https://ciphersweet.paragonie.com/internals/blind-index</li>
+<li>Google Cloud. <em>Re-encrypting data</em>: key rotation versus re-encryption. https://docs.cloud.google.com/kms/docs/re-encrypt-data</li>
+<li>Regulation (EU) 2016/679 (General Data Protection Regulation). https://eur-lex.europa.eu/eli/reg/2016/679/oj</li>
+<li>Israel. Protection of Privacy Law, 5741-1981, as amended by Amendment No. 13 (in force August 2025).</li>
+<li>European Data Protection Board. <em>Guidelines 4/2019 on Article 25: Data Protection by Design and by Default</em>, version 2.0, adopted 20 October 2020. https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en</li>
+<li>A. Cavoukian. <em>Privacy by Design: The 7 Foundational Principles</em>. Information and Privacy Commissioner of Ontario. https://www.ietf.org/slides/slides-privacyws-privacy-by-design-the-seven-foundational-principles-00.pdf</li>
+<li>International Conference of Data Protection and Privacy Commissioners. <em>Resolution on Privacy by Design</em>, 32nd International Conference, Jerusalem, October 2010.</li>
+<li>S. Brooks, M. Garcia, N. Lefkovitz, S. Lightman, E. Nadeau. <em>An Introduction to Privacy Engineering and Risk Management in Federal Systems</em>, NISTIR 8062, NIST, January 2017. https://doi.org/10.6028/NIST.IR.8062</li>
+<li>NIST. <em>NIST Privacy Framework: A Tool for Improving Privacy through Enterprise Risk Management</em>, version 1.0, January 2020. https://doi.org/10.6028/NIST.CSWP.01162020</li>
+<li>Ethyca. <em>Creating privacy policies as code with Fides</em>. https://content.ethyca.com/?p=96024</li>
+<li>Privado. <em>Open source</em>. https://privado.ai/open-source</li>
+<li>Open Policy Agent. https://www.openpolicyagent.org/</li>
+<li>Cedar policy language. https://www.cedarpolicy.com/</li>
+</ol>
+<h2 id="explore-the-architecture">Explore the architecture</h2>
+<iframe class="architecture-frame" title="Interactive DEP architecture diagram" src="/project-hoopeo.github.io/docs/design/diagrams/dep-architecture.html" loading="lazy" width="1000" height="620"></iframe>
+
+<p><a href="/project-hoopeo.github.io/docs/design/diagrams/dep-architecture.html">Open the interactive architecture</a>.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/privacy/"><small>Previous</small>Privacy as Code &amp; GDPR</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#12-architecture">Architecture</a><ul><li><a href="#121-the-trust-boundary">The trust boundary</a></li><li><a href="#122-overview">Overview</a></li><li><a href="#123-components">Components</a></li><li><a href="#124-how-the-components-fit-together">How the components fit together</a></li></ul></li><li><a href="#13-the-life-of-a-query">The life of a query</a><ul><li><a href="#131-the-query">The query</a></li><li><a href="#132-in-an-ordinary-engine">In an ordinary engine</a></li><li><a href="#133-in-dep">In DEP</a></li><li><a href="#134-step-by-step">Step by step</a></li></ul></li><li><a href="#14-how-declared-functions-and-anchoring-are-enforced">How declared functions and anchoring are enforced</a><ul><li><a href="#141-validation-at-creation">Validation at creation</a></li><li><a href="#142-tracking-disclosed-values-and-linking-regions">Tracking disclosed values and linking regions</a></li><li><a href="#143-deciding-whether-matching-is-anchored">Deciding whether matching is anchored</a></li><li><a href="#144-recording-and-auditing">Recording and auditing</a></li><li><a href="#145-foreign-keys">Foreign keys</a></li></ul></li><li><a href="#15-layers-of-enforcement">Layers of enforcement</a><ul><li><a href="#151-why-rewriting-the-query-is-not-enough">Why rewriting the query is not enough</a></li></ul></li><li><a href="#16-storage-and-matching">Storage and matching</a><ul><li><a href="#161-internal-columns">Internal columns</a></li><li><a href="#162-encrypted-storage">Encrypted storage</a></li><li><a href="#163-matching-with-a-keyed-index">Matching with a keyed index</a></li><li><a href="#164-foreign-key-columns">Foreign-key columns</a></li><li><a href="#165-rotation-is-three-different-things">Rotation is three different things</a></li><li><a href="#166-a-possible-later-extension-match-only-storage">A possible later extension: match-only storage</a></li></ul></li><li><a href="#17-leakage-channels">Leakage channels</a></li><li><a href="#18-guarantees-and-limits">Guarantees and limits</a><ul><li><a href="#181-who-is-trusted">Who is trusted</a></li><li><a href="#182-what-dep-guarantees">What DEP guarantees</a></li><li><a href="#183-matching-reveals-information">Matching reveals information</a></li><li><a href="#184-declared-functions-are-trusted-code">Declared functions are trusted code</a></li><li><a href="#185-released-values-are-beyond-deps-reach">Released values are beyond DEP&#x27;s reach</a></li><li><a href="#186-linkage-through-ordinary-keys">Linkage through ordinary keys</a></li><li><a href="#187-ordinary-data-is-not-anonymous-data">Ordinary data is not anonymous data</a></li><li><a href="#188-known-limitations-of-the-first-version">Known limitations of the first version</a></li><li><a href="#189-the-precise-promise">The precise promise</a></li></ul></li><li><a href="#reading-and-sources">Reading and sources</a></li><li><a href="#how-to-cite">How to cite</a></li><li><a href="#references">References</a></li><li><a href="#explore-the-architecture">Explore the architecture</a></li></ul></aside>
+</div><script src="/project-hoopeo.github.io/assets/vendor/mermaid/mermaid.tiny.js?v=ea0cdf04eb" defer></script><script src="/project-hoopeo.github.io/assets/js/diagrams.js?v=a3fd689319" defer></script>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

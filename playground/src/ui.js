@@ -24,8 +24,25 @@ const EX = [
   { label: 'Roles', sql: "-- The reception application may match national_id, but not phone.\nSET ROLE reception_app;\nSELECT full_name, phone FROM patients WHERE national_id = '123456782';\nSELECT full_name FROM patients WHERE national_id = '123456782';\nRESET ROLE;", sqlite: "SELECT full_name, phone FROM patients WHERE national_id = '123456782';\nSELECT full_name FROM patients WHERE national_id = '123456782';" },
   { label: 'Match limit', sql: "ALTER ROLE reception_app MATCH LIMIT 2 PER MINUTE;\nSET ROLE reception_app;\nSELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893', '345678904');\nRESET ROLE;\nALTER ROLE reception_app MATCH LIMIT DEFAULT;", sqlite: "SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893', '345678904');" },
   { label: 'Audit', sql: 'SHOW AUDIT 15;', sqlite: null },
-  { label: 'Who can match', sql: 'SHOW PRIVACY MATRIX;', sqlite: null }
+  { label: 'Who can match', sql: 'SHOW PRIVACY MATRIX;', sqlite: null },
+  { label: 'Read IDs', sql: 'SELECT national_id\nFROM patients;' }
 ];
+const TOUR = [
+  { index: 1, label: '1. Lookup', title: 'Find one patient. Keep the ID protected.', description: 'Regular SQL returns the ID. DEP operational finds the same patient and returns NULL for the ID. DEP masked read refuses the lookup entirely.' },
+  { index: EX.findIndex(example => example.label === 'Read IDs'), label: '2. Read IDs', title: 'A match privilege does not export every identifier.', description: 'Regular SQL returns all six IDs. Both DEP paths return six NULLs. The rows still exist; their protected values cannot leave through an ordinary SELECT. Pattern searches such as LIKE are a different operation, and are refused.' },
+  { index: 4, label: '3. Join one', title: 'Connect the records of the patient in front of you.', description: 'The WHERE equality anchors this protected join to one supplied value. DEP operational permits it; masked read cannot match protected inputs.' },
+  { index: 5, label: '4. Join everyone', title: 'Whole-dataset linkage needs an explicit exception.', description: 'Removing the anchor changes the scope of the operation. DEP operational refuses the protected join with ZD107. Approved bulk linkage belongs in a LINKS function.' },
+  { index: 7, label: '5. Disclose', title: 'Release an identifier through a declared function.', description: 'The demo admin can call this approved DISCLOSES function on the operational path. Masked read cannot disclose. In an application, grant EXECUTE only to the role that needs it.' }
+];
+let tourStep = 0;
+function updateTour(i) {
+  const at = TOUR.findIndex((step) => step.index === Number(i));
+  if (at >= 0) { tourStep = at; $('#tour-title').textContent = TOUR[at].title; $('#tour-description').textContent = TOUR[at].description; }
+  else { $('#tour-title').textContent = 'Explore another example'; $('#tour-description').textContent = 'These examples share a synthetic database. Reset restores the demo; use the five tour steps to return to the guided path.'; }
+  $$('#tour-steps button').forEach((button, index) => { if (index === at) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current'); });
+  $('#tour-next').textContent = at === TOUR.length - 1 ? 'Restart tour ↺' : 'Next example →';
+  const picker = $('#example-picker'); if (picker) picker.value = String(i);
+}
 const MINE = "SELECT full_name, health_fund\nFROM patients\nWHERE national_id = '234567893';";
 
 let SQLlib, server, sqlite, current = null;
@@ -54,7 +71,7 @@ function table(cols, rows) {
   const body = rows.map((r) => '<tr>' + r.map((v, i) => `<td>${cell(v, cols[i] && cols[i].tag)}</td>`).join('') + '</tr>').join('');
   return `<div class="tablewrap"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
-function notesHtml(r) { return (r.notes || []).length ? `<div class="notes">${r.notes.map((n) => `<div><b>NOTE:</b>  ${esc(n)}</div>`).join('')}</div>` : ''; }
+function notesHtml(r) { return (r.notes || []).length ? `<details class="notes"><summary>Why DEP handled it this way (${r.notes.length})</summary>${r.notes.map((n) => `<div><b>NOTE:</b>  ${esc(n)}</div>`).join('')}</details>` : ''; }
 function resultHtml(r) {
   const stmt = r.text ? `<div class="stmt">${esc(r.text.replace(/\s+/g, ' ').slice(0, 140))}</div>` : '';
   if (!r.ok) {
@@ -139,13 +156,24 @@ function runAll() {
 
 /* ---------- tabs */
 function renderTabs() {
-  $('#extabs').innerHTML = EX.map((ex, i) => `<button class="extab" role="tab" data-i="${i}" aria-selected="false">${esc(ex.label)}</button>`).join('') + '<button class="extab mine" role="tab" data-i="mine" aria-selected="false">Your code</button>';
-  $$('#extabs .extab').forEach((b) => b.addEventListener('click', () => select(b.dataset.i)));
+  $('#extabs').innerHTML = '<label>Choose an example <select id="example-picker" aria-label="Example">' + EX.map((ex, i) => `<option value="${i}">${esc(ex.label)}</option>`).join('') + '<option value="mine">Your code</option></select></label>';
+  $('#example-picker').addEventListener('change', (event) => select(event.target.value));
+  $('#tour-steps').innerHTML = TOUR.map((step, index) => `<button type="button" class="tour-step" data-step="${index}">${esc(step.label)}</button>`).join('');
+  $$('#tour-steps button').forEach((button) => button.addEventListener('click', () => select(String(TOUR[Number(button.dataset.step)].index))));
+  $('#tour-next').addEventListener('click', () => select(String(TOUR[(tourStep + 1) % TOUR.length].index)));
+  $('#tour-mode').addEventListener('click', () => {
+    const open = $('#extabs').hidden;
+    $('#extabs').hidden = !open;
+    $('#tour-mode').setAttribute('aria-pressed', String(open));
+    $('#tour-mode').textContent = open ? 'Hide example browser' : 'Browse all examples';
+    if (open) $('#example-picker').focus();
+  });
 }
-function markTab(i) { $$('#extabs .extab').forEach((b) => b.setAttribute('aria-selected', b.dataset.i === String(i) ? 'true' : 'false')); }
+function markTab(i) { updateTour(i); }
 function select(i) {
   current = i; markTab(i);
   $('#sql').value = i === 'mine' ? store.get('mine', MINE) : EX[Number(i)].sql;
+  document.dispatchEvent(new CustomEvent('hoopeo:querychange'));
   runAll();
 }
 
@@ -182,10 +210,12 @@ async function boot() {
   $('#reset').addEventListener('click', () => { start(); select(current === null ? '0' : current); });
   $('#sql').addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runAll(); }
-    if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); const t = e.target, s = t.selectionStart; t.value = t.value.slice(0, s) + '    ' + t.value.slice(t.selectionEnd); t.selectionStart = t.selectionEnd = s + 4; }
+    if (e.key === 'Tab' && e.altKey && !e.shiftKey) { e.preventDefault(); const t = e.target, s = t.selectionStart; t.value = t.value.slice(0, s) + '    ' + t.value.slice(t.selectionEnd); t.selectionStart = t.selectionEnd = s + 4; }
   });
   $('#sql').addEventListener('input', () => { if (current !== 'mine') { current = 'mine'; markTab('mine'); } store.set('mine', $('#sql').value); });
-  select('0');
+  const requested = new URLSearchParams(location.search).get('example');
+  const homepageExamples = {'lookup':'1','read-all':String(EX.findIndex(example => example.label === 'Read IDs')),'join-one':'4','join-all':'5'};
+  select(homepageExamples[requested] || '1');
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

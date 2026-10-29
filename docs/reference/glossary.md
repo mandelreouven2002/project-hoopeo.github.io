@@ -10,7 +10,7 @@ Every term of DEP, with what it means, why it exists, an example from the demo c
 
 **A column whose values the database uses, but never returns.**
 
-A column is protected when the schema says so: `PROTECTED MATCH DOMAIN` after its type. Its type does not change; `national_id` is still `TEXT`. The database can compare it with a whole value for equality, so the column can still find a row, carry a primary or unique key, and connect two tables. What it cannot do is come back: in any query, on any path, for any role, including the administrator, a protected column in the output is returned as NULL. Anything that would reveal part of a value, or its order, is refused: `LIKE`, substrings, casts, sorting, ranges, `min` and `max`, or passing the value to a function. `IS NULL` is allowed.
+A column is protected when the schema says so: `PROTECTED MATCH DOMAIN` after its type. Its type does not change; `national_id` is still `TEXT`. The database can compare it with a whole value for equality, so the column can still find a row, carry a primary or unique key, and connect two tables. What it cannot do is come back: in any query, on any path, for any role, including the administrator, a protected column in the output is returned as NULL. Anything that would reveal part of a value, or its order, is refused: `LIKE`, substrings, casts, sorting, ranges, `min` and `max`, or passing the value to a function. On the operational path, `WHERE col IS NULL` or `IS NOT NULL` may filter rows. Returning the presence test and using `COUNT(col)` are refused on either path; `COUNT(*)` simply counts rows and is allowed on either. See the [presence-test examples and permission table](../book/02-sql.md#protected-value-presence) for the rules and implementation status.
 
 ```sql
 national_id TEXT PROTECTED MATCH DOMAIN person_id UNIQUE,
@@ -96,7 +96,7 @@ On `OPERATIONAL` a connection may [match](#matching) protected values, write, ch
 
 **For dashboards, reports and analysis: read what is ordinary, match nothing.**
 
-On `MASKED_READ` a connection reads ordinary columns, and protected columns come back as NULL. It may not match protected values, write, change the schema, or call a disclosing function (error ZD102). It may call a function declared `LINKS`, which is how a dashboard gets statistics that need protected values.
+On `MASKED_READ` a connection reads ordinary columns, and protected columns come back as NULL. It may not match protected values, test whether one is present, write, change the schema, or call a disclosing function (error ZD102). It may call a function declared `LINKS`, which is how a dashboard gets statistics that need protected values.
 
 ```text
 bi_dashboard@analytics=> SELECT patient_id FROM patients WHERE national_id = '123456782';
@@ -178,7 +178,7 @@ DEP:  Output column national_id is disclosed: Column national_id of monthly_fund
 
 **A disclosed value can be returned, and used for nothing else.**
 
-Once a value has been disclosed, it is plain text, and the database could no longer protect it in a further match. So it may only leave: it cannot be filtered on, joined, grouped, or matched again (error ZD104). A query that needs to match should do so on the protected column inside the function, before `REVEAL`.
+Once a value has been disclosed, it is plain text, and the database could no longer protect it in a further match. So it may only leave, renamed or cast at most: the specification forbids filtering, joining, grouping, sorting, computing on it or matching it again (error ZD104). A query that needs to match should do so on the protected column inside the function, before `REVEAL`. See the [known native differences](../guides/compatibility.md#known-difference-sorting-disclosed-values) before relying on enforcement in a released Engine.
 
 ```text
 ERROR:  Column national_id of monthly_fund_report() is a disclosed value and cannot be used in a join condition.

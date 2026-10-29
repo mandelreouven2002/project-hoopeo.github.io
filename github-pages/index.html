@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Hoopeo — Database-Enforced Privacy</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): privacy rules that the database engine enforces on every query, for every client.">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Project Hoopeo — Database-Enforced Privacy">
+<meta property="og:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): privacy rules that the database engine enforces on every query, for every client.">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Project Hoopeo — Database-Enforced Privacy">
+<meta name="twitter:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): privacy rules that the database engine enforces on every query, for every client.">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/" aria-current="page">Home</a><a href="/project-hoopeo.github.io/docs/">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<section class="new-hero concept-hero">
+  <div class="wrap">
+    <div class="release-line"><span class="version-dot"></span> DATABASE-ENFORCED PRIVACY <span class="release-divider">/</span> PROJECT HOOPEO <a href="/project-hoopeo.github.io/docs/server/#compatibility">Implementation status <span aria-hidden="true">→</span></a></div>
+    <div class="intro-grid">
+      <div class="intro-copy">
+        <div class="home-wordmark">
+          <img class="for-light" src="/project-hoopeo.github.io/assets/brand/wordmark-520.webp" width="520" height="183" alt="Project Hoopeo, Database-Enforced Privacy">
+          <img class="for-dark" src="/project-hoopeo.github.io/assets/brand/wordmark-dark-520.webp" width="520" height="183" alt="Project Hoopeo, Database-Enforced Privacy">
+        </div>
+        <h1>Database-enforced<br><span>privacy.</span></h1>
+        <p class="hero-description">Use sensitive values without exposing them in ordinary query results. Database-Enforced Privacy (DEP) separates permission to find records, link datasets and release protected values.</p>
+        <p class="hero-principle">Declare the rules in the schema. The database applies them to every connected client.</p>
+        <div class="hero-actions"><a class="btn" href="/project-hoopeo.github.io/docs/">Understand DEP <span aria-hidden="true">→</span></a><a class="text-link" href="#example">See it in action <span aria-hidden="true">↓</span></a></div>
+        <p class="engine-caption"><strong>The implementation:</strong> DEP SQL and the experimental DEP Engine, built on Apache DataFusion. Connect with PostgreSQL drivers. <a href="/project-hoopeo.github.io/docs/server/#compatibility">Check compatibility.</a></p>
+      </div>
+      <div class="proof-window hero-code" aria-labelledby="hero-code-title">
+        <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>A lookup, with DEP</span><span class="sql-label">DEP SQL</span></div>
+        <div class="hero-code-heading"><p class="eyebrow">Find it. Don't expose it.</p><h2 id="hero-code-title">Find the user.<br>Keep the email private.</h2></div>
+        <div class="hero-schema"><p class="hero-code-label">01 / Protect the column</p><pre class="schema-example"><code class="language-sql">email TEXT PROTECTED
+  MATCH DOMAIN email_address</code></pre><span class="hero-schema-note">Column definition in the users table</span></div>
+        <div class="hero-lookup"><p class="hero-code-label">02 / Use it to find a record</p><pre class="proof-query"><code class="language-sql">SELECT user_id, email
+FROM users
+WHERE email = 'dana@example.com';</code></pre></div>
+        <div class="hero-output"><div class="hero-output-heading"><span class="hero-code-label">03 / Get the permitted result</span><span class="hero-result-tag">DEP · operational</span></div><table><thead><tr><th scope="col">user_id</th><th scope="col">email</th></tr></thead><tbody><tr><td>42</td><td><span class="hero-null">NULL</span></td></tr></tbody></table><p>The email finds the record. It doesn't leave the database in this result.</p></div>
+        <a class="proof-bottom" href="#example">Explore lookups, reads and joins <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div class="trust-strip"><span><strong>PRIVACY AS CODE</strong> in the database</span><span>Rules in the schema</span><span>Explicit permissions</span><span>Audited operations</span></div>
+  </div>
+</section>
+<section class="wrap operation-summary" aria-label="Three separate permissions"><div><span>USE</span><h2>Find a known value</h2><p>Whole-value equality can locate a record without returning its protected identifier.</p></div><div><span>LINK</span><h2>Control the scope of joins</h2><p>A protected join needs one-person anchoring, or an approved <code>LINKS</code> function.</p></div><div><span>DISCLOSE</span><h2>Make release explicit</h2><p>Plaintext leaves through a granted <code>DISCLOSES</code> function with <code>REVEAL</code>.</p></div></section>
+<section class="model-section"><div class="wrap model-grid"><div><p class="eyebrow">How DEP works</p><h2>The right to use a value<br>doesn't have to mean<br>the right to read it.</h2><p>Different applications need different operations: look up a record, compute statistics, or release an identifier for an approved task. Express those decisions in the database schema and permissions.</p><a class="text-link" href="/project-hoopeo.github.io/docs/">Understand DEP <span aria-hidden="true">→</span></a><div class="model-list"><div><span>01</span><div><h3>Protect columns in the schema</h3><p><code>PROTECTED MATCH DOMAIN person_id</code> keeps identifiers searchable by whole-value equality while ordinary query output is <code>NULL</code>.</p></div></div><div><span>02</span><div><h3>Choose the access path at login</h3><p><code>operational</code> permits authorized lookups. <code>analytics</code> reads ordinary columns and approved <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a> functions, without protected <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>.</p></div></div><div><span>03</span><div><h3>Declare and audit the exceptions</h3><p><code>DISCLOSES</code> releases values through <code>REVEAL</code>. <code>LINKS</code> permits dataset-wide matching. Each function has explicit grants.</p></div></div></div></div><div class="enforcement-map" aria-labelledby="enforcement-title">
+        <div class="map-heading"><span class="eyebrow">One shared enforcement point</span><h2 id="enforcement-title">One database. Shared privacy rules.</h2></div>
+        <div class="map-clients" aria-label="Connected clients"><span>Applications</span><span>Analytics tools</span><span>AI agents</span></div>
+        <div class="map-connector"><span aria-hidden="true">↓</span> SQL queries</div>
+        <div class="map-database"><span class="map-server-label">DEP DATABASE</span><h3>Check how a value is used.</h3><p><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">Protected columns</a>, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access paths</a> and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a> define the permitted operations.</p><div class="map-rule-tags"><span>USE</span><span>LINK</span><span>DISCLOSE</span></div></div>
+        <div class="map-connector"><span aria-hidden="true">↓</span> Apply the rule before returning a result</div>
+        <div class="map-outcomes"><div><span class="map-outcome-label">ALLOWED USE</span><p>Return the permitted result.</p><small>Protected identifiers are NULL in ordinary output.</small></div><div><span class="map-outcome-label">FORBIDDEN USE</span><p>Refuse the operation.</p><small>Return an explicit <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a> and hint.</small></div></div>
+        <p class="map-footnote">An approved <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosure</a> function can explicitly release a protected value.</p>
+      </div></div></section>
+<section class="wrap worked-example" id="example" aria-labelledby="example-title">
+  <div class="section-heading"><div><p class="eyebrow">A worked example</p><h2 id="example-title">One dataset. Four operations.</h2></div></div>
+  <p class="example-intro">To make the rules concrete, this example uses a small clinic. Compare finding a record, reading identifiers and joining protected records with and without an anchor.</p>
+  <div class="example-grid">
+    <div class="example-schema">
+      <h3 id="schema-rule">Protection starts in the schema.</h3>
+      <p>Here, the national ID is the protected value. A shared <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a> lets related protected columns match each other.</p>
+      <pre class="schema-example"><code class="language-sql">CREATE TABLE patients (
+  patient_id  BIGINT PRIMARY KEY,
+  national_id TEXT PROTECTED MATCH DOMAIN person_id,
+  full_name   TEXT
+);</code></pre>
+      <p>Finding a record does not require returning its identifier. Linking the entire dataset is a separate operation.</p>
+      <a class="text-link" href="/project-hoopeo.github.io/docs/sql/">Learn the SQL and permissions <span aria-hidden="true">→</span></a>
+    </div>
+      <div class="proof-window" id="home-demo" aria-label="Compare ordinary SQL access and DEP operations">
+        <div class="window-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>Same data. Four different operations.</span><span class="sql-label">SQL / DEP</span></div>
+        <div class="demo-tabs" role="tablist" aria-label="Compare SQL operations">
+          <button type="button" role="tab" id="demo-tab-lookup" aria-controls="demo-panel" data-example="lookup" aria-selected="true" tabindex="0" disabled>1. Find one</button>
+          <button type="button" role="tab" id="demo-tab-read-all" aria-controls="demo-panel" data-example="read-all" aria-selected="false" tabindex="-1" disabled>2. Read IDs</button>
+          <button type="button" role="tab" id="demo-tab-join-one" aria-controls="demo-panel" data-example="join-one" aria-selected="false" tabindex="-1" disabled>3. Join one</button>
+          <button type="button" role="tab" id="demo-tab-join-all" aria-controls="demo-panel" data-example="join-all" aria-selected="false" tabindex="-1" disabled>4. Join all</button>
+        </div>
+        <div id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-lookup">
+          <p class="demo-task" id="demo-task">Find the patient who supplied this ID</p>
+          <pre class="proof-query"><code class="language-sql" id="demo-query">SELECT full_name, national_id
+FROM patients
+WHERE national_id = '123456782';</code></pre>
+          <div class="proof-result"><div class="result-heading"><span class="result-marker regular"></span> Regular SQL <span class="result-tag">DIRECT COLUMN ACCESS</span></div><div id="demo-regular" class="demo-table"><table><thead><tr><th>full_name</th><th>national_id</th></tr></thead><tbody><tr><td>Dana Cohen</td><td>123456782</td></tr></tbody></table></div></div>
+          <div class="proof-result protected-result"><div class="result-heading"><span class="result-marker protected"></span> DEP · operational <span class="result-tag">DOCTORS_APP</span></div><div id="demo-dep" class="demo-table"><table><thead><tr><th>full_name</th><th>national_id</th></tr></thead><tbody><tr><td>Dana Cohen</td><td class="demo-null">NULL</td></tr></tbody></table></div></div>
+          <div class="demo-explanation" aria-live="polite"><p id="demo-explanation">DEP uses the supplied ID to find Dana but does not return the stored identifier. Try reading all IDs or joining the whole dataset.</p><p id="demo-next">Build-verified simulator output · synthetic clinic data.</p></div>
+        </div>
+        <a class="proof-bottom" id="demo-run" href="/project-hoopeo.github.io/playground/?example=lookup">Run this exact query in the playground →</a>
+      </div>
+  </div>
+<p class="comparison-scope">The ordinary SQL comparison assumes direct SELECT access to the underlying column. Conventional databases can also enforce controls through restricted views, permissions and stored procedures. DEP makes these particular value-use rules explicit and applies them to analyzed queries.</p>
+
+</section>
+<section class="wrap journey-section" aria-labelledby="choose-path">
+  <div class="section-heading"><div><p class="eyebrow">Start with what you need</p><h2 id="choose-path">A short path to your first query.</h2></div><a class="text-link" href="/project-hoopeo.github.io/docs/">Read the DEP guide <span aria-hidden="true">→</span></a></div>
+  <div class="journeys">
+    <a class="journey" href="/project-hoopeo.github.io/playground/"><span class="step-no">01 / EXPLORE</span><h3>See the difference</h3><p>Run the same query in regular SQL and both DEP access paths. No installation.</p><span class="journey-action">Open the playground <span aria-hidden="true">→</span></span><span class="time">2 MIN · IN YOUR BROWSER</span></a>
+    <a class="journey recommended" href="/project-hoopeo.github.io/docs/application/"><span class="step-no">02 / BUILD <span class="small-tag">RECOMMENDED</span></span><h3>Build a small app</h3><p>Start a server, create a protected table, grant access, and connect from Python or Node.js.</p><span class="journey-action">Build your first app <span aria-hidden="true">→</span></span><span class="time">15 MIN · LOCAL DEVELOPMENT</span></a>
+    <a class="journey" href="/project-hoopeo.github.io/docs/server/"><span class="step-no">03 / OPERATE</span><h3>Run a shared server</h3><p>Configure persistent storage, TLS, application roles, match limits, and backups.</p><span class="journey-action">Read the server guide <span aria-hidden="true">→</span></span><span class="time">SHARED EVALUATION ENVIRONMENT</span></a>
+  </div>
+</section>
+<section class="wrap boundary-section"><div class="boundary-note"><span class="badge">Know the boundary</span><h2>Designed to demonstrate a model.</h2><p>DEP Engine is experimental software for evaluation. PostgreSQL wire compatibility is not full PostgreSQL compatibility. Protected identifiers do not make other fields anonymous, and DEP does not establish GDPR compliance.</p><div class="boundary-links"><a href="/project-hoopeo.github.io/docs/server/#compatibility">Current capabilities & limits →</a><a href="/project-hoopeo.github.io/docs/privacy/">Technical contributions to GDPR →</a><a href="/project-hoopeo.github.io/legal/licensing/">Source & evaluation licensing →</a></div></div></section>
+
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

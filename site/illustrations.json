@@ -1,0 +1,152 @@
+[
+  {
+    "asset": "docs/images/diagrams/dep-sql-adds.png",
+    "source": "docs/book/01-understand.md",
+    "caption": "The schema, connection path and declared exceptions are three separate parts of DEP."
+  },
+  {
+    "asset": "docs/images/diagrams/roles.png",
+    "source": "docs/book/01-understand.md",
+    "caption": "Compare the operations needed by reception, doctors, analytics and billing."
+  },
+  {
+    "asset": "docs/images/diagrams/access-paths.png",
+    "source": "docs/book/02-sql.md",
+    "caption": "The connection path sets which operations are available; privileges still decide which objects a role may use."
+  },
+  {
+    "asset": "docs/images/diagrams/anchoring.png",
+    "source": "docs/book/02-sql.md",
+    "caption": "One-value anchoring permits a protected join; broader linkage requires an approved LINKS function."
+  },
+  {
+    "asset": "docs/images/diagrams/declared-functions.png",
+    "source": "docs/book/03-functions.md",
+    "caption": "Disclosure and linkage are separate declarations, each with domain privileges and explicit callers."
+  },
+  {
+    "asset": "docs/images/diagrams/statement-path.png",
+    "source": "docs/book/08-internals.md",
+    "caption": "Follow a statement through parsing, privacy analysis, planning, execution and the output boundary."
+  },
+  {
+    "asset": "docs/images/diagrams/blind-index.png",
+    "source": "docs/book/08-internals.md",
+    "caption": "Matching uses the keyed index entry; authorized disclosure uses the ciphertext."
+  },
+  {
+    "asset": "docs/images/diagrams/keys.png",
+    "source": "docs/book/06-server.md",
+    "caption": "The server derives separate key material for each domain."
+  },
+  {
+    "asset": "docs/images/diagrams/products.png",
+    "source": "site/content/install.md",
+    "caption": "Engine, CLI, Studio and the browser simulator have different roles."
+  },
+  {
+    "asset": "docs/images/terminal/engine-start.png",
+    "source": "docs/book/05-application.md",
+    "caption": "The server reports its listeners and storage configuration at startup."
+  },
+  {
+    "asset": "docs/images/terminal/engine-psql.png",
+    "source": "docs/book/05-application.md",
+    "caption": "psql shows DEP notes as PostgreSQL NOTICE messages."
+  },
+  {
+    "asset": "docs/images/terminal/cli-first-steps.png",
+    "source": "docs/book/05-application.md",
+    "caption": "The CLI can list tables, run a lookup and explain a refused partial match."
+  },
+  {
+    "asset": "docs/images/terminal/cli-access-paths.png",
+    "source": "docs/book/02-sql.md",
+    "caption": "On the analytics endpoint, ordinary output is allowed and protected matching is refused."
+  },
+  {
+    "asset": "docs/images/terminal/cli-transaction.png",
+    "source": "docs/book/06-server.md",
+    "caption": "The CLI prompt distinguishes an open transaction from a failed transaction."
+  },
+  {
+    "asset": "docs/images/terminal/cli-explain.png",
+    "source": "docs/book/06-server.md",
+    "caption": "EXPLAIN and the index listing show how matching reads the stored index."
+  },
+  {
+    "asset": "docs/images/studio/studio-audit.png",
+    "source": "docs/book/06-server.md",
+    "caption": "Studio displays audit records for protected operations and their callers."
+  },
+  {
+    "asset": "docs/images/studio/studio-matrix.png",
+    "source": "docs/book/04-design.md",
+    "caption": "Compare the computed privacy matrix with the workflows and permissions you approved."
+  },
+  {
+    "asset": "docs/images/studio/studio-connect-dialog.png",
+    "source": "docs/book/05-application.md",
+    "caption": "In Studio, a connection identifies the server, role and endpoint."
+  },
+  {
+    "asset": "docs/images/studio/studio-function.png",
+    "source": "docs/book/03-functions.md",
+    "caption": "A permitted disclosure is shown as declared output in the client."
+  },
+  {
+    "asset": "docs/images/studio/studio-refused.png",
+    "source": "docs/reference/errors.md",
+    "caption": "A refused query includes a SQLSTATE, a message and a hint."
+  },
+  {
+    "asset": "docs/images/studio/studio-connect.png",
+    "source": "docs/book/05-application.md",
+    "caption": "Studio can open a connection to a running server."
+  },
+  {
+    "asset": "docs/images/studio/studio-lookup.png",
+    "source": "docs/book/05-application.md",
+    "caption": "A successful lookup returns ordinary fields while the protected identifier is NULL."
+  },
+  {
+    "asset": "docs/images/studio/studio-newlocal.png",
+    "source": "docs/book/05-application.md",
+    "caption": "Studio also supports a local embedded database for exploration."
+  },
+  {
+    "asset": "docs/images/studio/studio-newlocal-dialog.png",
+    "source": "docs/book/05-application.md",
+    "caption": "The local-database dialog chooses the database location and initial setup."
+  },
+  {
+    "asset": "docs/images/studio/studio-explain.png",
+    "source": "docs/book/06-server.md",
+    "caption": "Studio presents the query plan in its Explain pane."
+  },
+  {
+    "asset": "docs/images/playground/playground-audit.png",
+    "source": "site/content/playground-guide.md",
+    "caption": "The playground Audit tab illustrates attributed operations."
+  },
+  {
+    "asset": "docs/images/playground/playground-unanchored.png",
+    "source": "site/content/playground-guide.md",
+    "caption": "An unanchored protected join is refused, even when its output omits the ID."
+  },
+  {
+    "asset": "docs/images/playground/playground-storage.png",
+    "source": "site/content/playground-guide.md",
+    "caption": "The playground Storage tab illustrates internal index entries and ciphertext."
+  },
+  {
+    "asset": "docs/images/playground/playground-lookup.png",
+    "source": "site/content/playground-guide.md",
+    "caption": "Compare a direct SQL result with NULL suppression on a DEP connection."
+  },
+  {
+    "asset": "docs/images/playground/playground-disclosing.png",
+    "source": "site/content/playground-guide.md",
+    "caption": "A granted function can explicitly disclose its approved output."
+  }
+]
