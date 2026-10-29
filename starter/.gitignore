@@ -1,0 +1,5 @@
+data*/
+.venv/
+node/node_modules/
+node/.env
+__pycache__/

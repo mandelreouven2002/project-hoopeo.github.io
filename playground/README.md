@@ -2,13 +2,13 @@
 
 Part of Project Hoopeo. Licensed under the Apache License 2.0. This is the `playground/` folder of the public repository.
 
-A browser simulator of DEP (Database-Enforced Privacy) that follows DEP Engine 0.5.2. You write DEP SQL against the clinic from the design proposal and see the same statement run three times, side by side: in a regular database, on DEP's masked read path, and on DEP's operational path.
+A browser simulator of DEP (Database-Enforced Privacy), targeting the DEP SQL specification and DEP Engine 0.5.2, with the known difference documented below. You write DEP SQL against the clinic from the design proposal and see the same statement run three times, side by side: in a regular database, on DEP's masked read path, and on DEP's operational path.
 
 > **A simulator.** Everything runs in your browser, so there is no trust boundary and the cryptography is a stand-in: it illustrates the rules and protects nothing. For real enforcement, use DEP Engine, DEP CLI or Hoopeo Studio (binaries under the Project Hoopeo Evaluation License; see the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases)).
 
 ## Compatibility with DEP Engine
 
-DEP.js 0.5.2 implements the rules of DEP Engine 0.5.2 (the same rules as 0.5.1), with the engine's errors, SQLSTATEs, DEP notes and audit records. `compat.js` runs 226 cases (280 statements) on a DEP Engine server and on DEP.js, both loaded with `examples/clinic.sql`, and compares every result: rows, command tags, the full error (SQLSTATE, DEP code, message, hint) and the DEP notes. In this release every result is the same.
+DEP.js implements DEP SQL rules, errors, SQLSTATEs, DEP notes and audit records. `compat.js` runs the same statements on a DEP Engine server and DEP.js, both loaded with `examples/clinic.sql`, and compares rows, command tags, full errors and DEP notes. The historical 280-statement result predates the current disclosed-sort behavior. The suite now includes explicit name, alias and ordinal sorting cases; native parity has not been re-established. See the [known difference](../docs/guides/compatibility.md#known-difference-sorting-disclosed-values).
 
 What DEP.js has, as the engine does:
 
@@ -99,6 +99,8 @@ DEP_ENGINE_URL=http://127.0.0.1:8433 DEP_ADMIN_PASSWORD=admin npm run compat
 ```
 
 Start the server afresh for each run: the cases change its data, and expect the clinic as it was loaded.
+
+**Known difference:** DEP.js rejects sorting disclosed values by name, alias or ordinal with ZD104, following specification section 8.9. A project review reports that DEP Engine 0.5.1 accepts all three; native 0.5.2 has not been retested here. These cases remain in `compat.js` and must report differences against an affected server. See [compatibility and limitations](../docs/guides/compatibility.md#known-difference-sorting-disclosed-values). An earlier 280/280 result does not establish parity for the updated simulator or these regressions.
 
 ## License
 

@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHOW commands | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="SHOW statements describe the catalog, the privileges and the state of the connection. They are ordinary statements: they work in DEP CLI, in psql and from any driver, and they return rows. DEP...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/show/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="SHOW commands | Project Hoopeo">
+<meta property="og:description" content="SHOW statements describe the catalog, the privileges and the state of the connection. They are ordinary statements: they work in DEP CLI, in psql and from any driver, and they return rows. DEP...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/show/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SHOW commands | Project Hoopeo">
+<meta name="twitter:description" content="SHOW statements describe the catalog, the privileges and the state of the connection. They are ordinary statements: they work in DEP CLI, in psql and from any driver, and they return rows. DEP...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/" aria-current="page"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/" aria-current="page"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Reference</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#show-tables">SHOW TABLES</a></li><li><a href="#show-columns-from-t">SHOW COLUMNS FROM t</a></li><li><a href="#show-indexes-from-t">SHOW INDEXES [FROM t]</a></li><li><a href="#show-functions">SHOW FUNCTIONS</a></li><li><a href="#show-roles">SHOW ROLES</a></li><li><a href="#show-grants">SHOW GRANTS</a></li><li><a href="#show-endpoints">SHOW ENDPOINTS</a></li><li><a href="#show-privacy-matrix">SHOW PRIVACY MATRIX</a></li><li><a href="#show-storage-t-n">SHOW STORAGE t [n]</a></li><li><a href="#show-audit-n">SHOW AUDIT [n]</a></li><li><a href="#other-settings">Other settings</a></li></ul></details><div class="prose"><h1 id="show-commands">SHOW commands</h1>
+<p><code>SHOW</code> statements describe the catalog, the privileges and the state of the connection. They are ordinary statements: they work in DEP CLI, in <code>psql</code> and from any driver, and they return rows. DEP CLI's meta-commands run them (<code>\dt</code> runs <code>SHOW TABLES</code>).</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Needs</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SHOW TABLES</code></td>
+<td></td>
+<td>One row per table</td>
+</tr>
+<tr>
+<td><code>SHOW COLUMNS FROM t</code></td>
+<td></td>
+<td>One row per column</td>
+</tr>
+<tr>
+<td><code>SHOW INDEXES [FROM t]</code></td>
+<td></td>
+<td>One row per index</td>
+</tr>
+<tr>
+<td><code>SHOW FUNCTIONS</code></td>
+<td></td>
+<td>One row per <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a></td>
+</tr>
+<tr>
+<td><code>SHOW ROLES</code></td>
+<td></td>
+<td>One row per role</td>
+</tr>
+<tr>
+<td><code>SHOW GRANTS</code></td>
+<td></td>
+<td>One row per grant</td>
+</tr>
+<tr>
+<td><code>SHOW ENDPOINTS</code></td>
+<td></td>
+<td>One row per <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a></td>
+</tr>
+<tr>
+<td><code>SHOW PRIVACY MATRIX</code></td>
+<td></td>
+<td>One row per <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a> and role</td>
+</tr>
+<tr>
+<td><code>SHOW STORAGE t [n]</code></td>
+<td>superuser</td>
+<td>The first <code>n</code> rows of <code>t</code> as stored</td>
+</tr>
+<tr>
+<td><code>SHOW AUDIT [n]</code></td>
+<td>superuser</td>
+<td>The latest <code>n</code> audit records</td>
+</tr>
+<tr>
+<td><code>SHOW DEP NOTES</code></td>
+<td></td>
+<td>The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP notes</a> of the last statement</td>
+</tr>
+<tr>
+<td><code>SHOW dep.path</code></td>
+<td></td>
+<td>The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a> of the connection</td>
+</tr>
+<tr>
+<td><code>SHOW ROLE</code>, <code>SHOW CURRENT_USER</code></td>
+<td></td>
+<td>The current role</td>
+</tr>
+<tr>
+<td><code>SHOW SESSION AUTHORIZATION</code></td>
+<td></td>
+<td>The role the connection logged in as</td>
+</tr>
+<tr>
+<td><code>SHOW TRANSACTION ISOLATION LEVEL</code></td>
+<td></td>
+<td><code>repeatable read</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Each statement below was run against the demo clinic as <code>admin</code>.</p>
+<h2 id="show-tables">SHOW TABLES</h2>
+<p>Columns: <code>table</code>, <code>protected_columns</code>, <code>rows</code>, <code>temporary</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW TABLES;
+      table      |  protected_columns  | rows | temporary
+-----------------+---------------------+------+-----------
+ appointments    |                     | 10   |
+ medical_records | patient_national_id | 6    |
+ patients        | national_id, phone  | 6    |
+(3 rows)</code></pre>
+<h2 id="show-columns-from-t">SHOW COLUMNS FROM t</h2>
+<p>Columns: <code>column</code>, <code>type</code>, <code>match_domain</code> (NULL for an ordinary column), <code>primary_key</code>, <code>references</code>, <code>not_null</code>, <code>unique</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW COLUMNS FROM medical_records;
+       column        |  type  | match_domain | primary_key |       references       | not_null | unique
+---------------------+--------+--------------+-------------+------------------------+----------+--------
+ record_id           | BIGINT | NULL         | yes         | NULL                   | yes      | yes
+ patient_national_id | TEXT   | person_id    |             | patients (national_id) |          |
+ diagnosis           | TEXT   | NULL         |             | NULL                   |          |
+ recorded_at         | DATE   | NULL         |             | NULL                   |          |
+(4 rows)</code></pre>
+<h2 id="show-indexes-from-t">SHOW INDEXES [FROM t]</h2>
+<p>Columns: <code>table</code>, <code>index</code>, <code>columns</code>, <code>kind</code> (<code>primary key</code>, <code>unique</code> or empty), <code>enforced</code>, <code>made_by</code> (<code>engine</code> or <code>CREATE INDEX</code>), <code>keys</code> (<code>values</code>, or <code>blind index entries</code> for a protected column).</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW INDEXES FROM patients;
+  table   |          index           |   columns   |    kind     | enforced | made_by |        keys
+----------+--------------------------+-------------+-------------+----------+---------+---------------------
+ patients | patients_pkey            | patient_id  | primary key | yes      | engine  | values
+ patients | patients_national_id_key | national_id | unique      | yes      | engine  | blind index entries
+ patients | patients_phone_idx       | phone       |             |          | engine  | blind index entries
+(3 rows)</code></pre>
+<h2 id="show-functions">SHOW FUNCTIONS</h2>
+<p>Columns: <code>function</code> (with its argument types), <code>discloses</code>, <code>links</code>, <code>owner</code>, <code>masked_path</code> (<code>yes</code> when it can be called on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a>), <code>comment</code>, <code>executable_by</code>, <code>body</code>. DEP CLI's <code>\df</code> shows the first six without <code>comment</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW FUNCTIONS;
+          function           |  discloses   |   links   |     owner     | masked_path |                              comment                               | executable_by |                                                          body
+-----------------------------+--------------+-----------+---------------+-------------+--------------------------------------------------------------------+---------------+------------------------------------------------------------------------------------------------------------------------
+ appointment_reminders(DATE) | phone_number |           | privacy_admin | no          | Purpose: SMS appointment reminders. Owner: operations.             | reminder_job  | SELECT REVEAL(p.phone), a.starts_at     FROM appointments AS a     JOIN patients AS p USING (patient_id)     WHERE CAST(a.starts_at AS DATE) = day
+ monthly_fund_report(DATE)   | person_id    |           | privacy_admin | no          | Purpose: monthly visit report to health funds. Owner: billing.     | billing_job   | SELECT REVEAL(p.national_id), CAST(a.starts_at AS DATE), a.visit_type, p.health_fund     FROM appointments AS a     JOIN patients AS p USING (patient_id)     WHERE date_trunc('month', a.starts_at) = date_trunc('month', CAST(report_month AS TIMESTAMP))
+ diagnoses_per_fund()        |              | person_id | privacy_admin | yes         | Purpose: diagnosis statistics per health fund. Owner: management.  | bi_dashboard  | SELECT p.health_fund, m.diagnosis, COUNT(*)     FROM patients AS p     JOIN medical_records AS m ON m.patient_national_id = p.national_id     GROUP BY p.health_fund, m.diagnosis
+ fund_claims_report(DATE)    | person_id    | person_id | privacy_admin | no          | Purpose: monthly diagnosis claims to health funds. Owner: billing. | billing_job   | SELECT REVEAL(p.national_id), m.diagnosis, m.recorded_at     FROM medical_records AS m     JOIN patients AS p ON p.national_id = m.patient_national_id     WHERE date_trunc('month', CAST(m.recorded_at AS TIMESTAMP)) = date_trunc('month', CAST(report_month AS TIMESTAMP))
+(4 rows)</code></pre>
+<h2 id="show-roles">SHOW ROLES</h2>
+<p>Columns: <code>role</code>, <code>superuser</code>, <code>login</code>, <code>endpoints</code> (those it may connect through), <code>match_limit</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW ROLES;
+       role       | superuser | login |       endpoints        | match_limit
+------------------+-----------+-------+------------------------+-------------
+ admin            | yes       | yes   | analytics, operational |
+ app_developer    |           | yes   | operational            |
+ bi_dashboard     |           | yes   | analytics              |
+ billing_job      |           | yes   | operational            |
+ doctors_app      |           | yes   | operational            |
+ privacy_admin    |           | yes   | operational            |
+ reception_app    |           | yes   | operational            |
+ reminder_job     |           | yes   | operational            |
+ scheduling_agent |           | yes   | analytics              |
+(9 rows)</code></pre>
+<h2 id="show-grants">SHOW GRANTS</h2>
+<p>Columns: <code>grantee</code>, <code>privilege</code>. The privilege reads like the statement that granted it: <code>SELECT (national_id, full_name) ON patients</code>, <code>EXECUTE ON FUNCTION monthly_fund_report</code>, <code>DISCLOSE ON MATCH DOMAIN person_id</code>, <code>CONNECT ON ENDPOINT operational</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW GRANTS;
+     grantee      |                                      privilege
+------------------+--------------------------------------------------------------------------------------
+ bi_dashboard     | SELECT ON appointments
+ bi_dashboard     | SELECT (health_fund, patient_id) ON patients
+ doctors_app      | SELECT ON appointments
+ doctors_app      | SELECT, INSERT ON medical_records
+ doctors_app      | SELECT (full_name, health_fund, national_id, patient_id) ON patients
+ privacy_admin    | SELECT ON appointments
+ privacy_admin    | SELECT ON medical_records
+ privacy_admin    | SELECT ON patients
+ reception_app    | SELECT ON appointments
+ reception_app    | SELECT (full_name, health_fund, national_id, patient_id), INSERT, UPDATE ON patients
+ scheduling_agent | SELECT ON appointments
+ scheduling_agent | SELECT (health_fund, patient_id) ON patients
+ privacy_admin    | DISCLOSE, LINK ON MATCH DOMAIN person_id
+ privacy_admin    | DISCLOSE ON MATCH DOMAIN phone_number
+ reminder_job     | EXECUTE ON FUNCTION appointment_reminders
+ bi_dashboard     | EXECUTE ON FUNCTION diagnoses_per_fund
+ billing_job      | EXECUTE ON FUNCTION fund_claims_report
+ billing_job      | EXECUTE ON FUNCTION monthly_fund_report
+ bi_dashboard     | CONNECT ON ENDPOINT analytics
+ scheduling_agent | CONNECT ON ENDPOINT analytics
+ app_developer    | CONNECT ON ENDPOINT operational
+ billing_job      | CONNECT ON ENDPOINT operational
+ doctors_app      | CONNECT ON ENDPOINT operational
+ privacy_admin    | CONNECT ON ENDPOINT operational
+ reception_app    | CONNECT ON ENDPOINT operational
+ reminder_job     | CONNECT ON ENDPOINT operational
+(26 rows)</code></pre>
+<h2 id="show-endpoints">SHOW ENDPOINTS</h2>
+<p>Columns: <code>endpoint</code>, <code>path</code>.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW ENDPOINTS;
+  endpoint   |    path
+-------------+-------------
+ analytics   | MASKED_READ
+ operational | OPERATIONAL
+(2 rows)</code></pre>
+<h2 id="show-privacy-matrix">SHOW PRIVACY MATRIX</h2>
+<p>One row for each protected column and each role. Columns: <code>match_domain</code>, <code>column</code>, <code>role</code>, <code>paths</code> (the endpoints it may use, with their paths), <code>may_match</code> (whether it may match on the column), <code>discloses_via</code> and <code>links_via</code> (the declared functions it may execute for that domain). It is computed from the grants and the declared functions, so it always agrees with what the engine enforces. The full matrix of the clinic has 27 rows; this is one table with one protected column:</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" alt="The privacy matrix in Hoopeo Studio" width="1440" height="900"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" alt="" width="1440" height="900"></a></p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE accounts (id BIGINT PRIMARY KEY, email TEXT PROTECTED MATCH DOMAIN email, name TEXT);
+CREATE TABLE
+
+admin@operational=&gt; CREATE ROLE support LOGIN PASSWORD 'x';
+CREATE ROLE
+
+admin@operational=&gt; CREATE ROLE marketing LOGIN PASSWORD 'x';
+CREATE ROLE
+
+admin@operational=&gt; GRANT CONNECT ON ENDPOINT operational TO support;
+GRANT
+
+admin@operational=&gt; GRANT CONNECT ON ENDPOINT analytics TO marketing;
+GRANT
+
+admin@operational=&gt; GRANT SELECT (id, email, name) ON accounts TO support;
+GRANT
+
+admin@operational=&gt; GRANT SELECT (id, name) ON accounts TO marketing;
+GRANT
+
+admin@operational=&gt; SHOW PRIVACY MATRIX;
+ match_domain |     column     |   role    |                       paths                        | may_match | discloses_via | links_via
+--------------+----------------+-----------+----------------------------------------------------+-----------+---------------+-----------
+ email        | accounts.email | admin     | analytics (MASKED_READ), operational (OPERATIONAL) | yes       |               |
+ email        | accounts.email | marketing | analytics (MASKED_READ)                            | no        |               |
+ email        | accounts.email | support   | operational (OPERATIONAL)                          | yes       |               |
+(3 rows)</code></pre>
+<h2 id="show-storage-t-n">SHOW STORAGE t [n]</h2>
+<p>The rows of <code>t</code> as the server stores them (a superuser only). A protected column appears as two columns: the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">blind index</a> entry (<code>ie1:...</code>) and the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#ciphertext" data-term="Ciphertext" data-def="The encrypted copy of a protected value, stored next to its index entry.">ciphertext</a> (<code>col__ct</code>, <code>ct1:...</code>). No plaintext is shown.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE secrets (id BIGINT PRIMARY KEY, token TEXT PROTECTED MATCH DOMAIN token_domain);
+CREATE TABLE
+
+admin@operational=&gt; INSERT INTO secrets VALUES (1, 'my-secret-token'), (2, 'another-token');
+DEP:  PROTECTED column secrets.token (MATCH DOMAIN token_domain) is stored as a blind index and ciphertext.
+INSERT 0 2
+
+admin@operational=&gt; SHOW STORAGE secrets 1;
+ id |                token                 |                                    token__ct
+----+--------------------------------------+----------------------------------------------------------------------------------
+ 1  | ie1:a3f8833a9b1d6c1c8abc7d53381d77cf | ct1:DlCrLM2SQ4X64ppl+shah5u5t4W3WRJ7QaZf6I8i4Va9WkQ6HnJltaulcCC67snctn2/F8MXSw==
+(1 row)</code></pre>
+<h2 id="show-audit-n">SHOW AUDIT [n]</h2>
+<p>Columns: <code>seq</code>, <code>at</code> (UTC), <code>session_user</code>, <code>role</code>, <code>endpoint</code>, <code>path</code>, <code>kind</code>, <code>object</code>, <code>domain</code>, <code>count</code>, <code>detail</code>. Newest first. See the <a href="/project-hoopeo.github.io/docs/server/#the-audit-log">administration guide</a> for the kinds.</p>
+<pre class="highlight"><code class="language-text">reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+(1 row)
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id LIKE '1%';
+ERROR:  LIKE is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+reception_app@operational=&gt; \c operational admin
+You are now connected as "admin" through endpoint "operational" (OPERATIONAL).
+
+admin@operational=&gt; SHOW AUDIT 2;
+ seq |            at            | session_user  |     role      |  endpoint   |    path     |  kind  |        object        |  domain   | count |         detail
+-----+--------------------------+---------------+---------------+-------------+-------------+--------+----------------------+-----------+-------+-------------------------
+ 2   | 2026-10-23T12:27:14.476Z | reception_app | reception_app | operational | OPERATIONAL | denied | SELECT               | NULL      | NULL  | DEP_PROTECTED_OPERATION
+ 1   | 2026-10-23T12:27:14.476Z | reception_app | reception_app | operational | OPERATIONAL | match  | patients.national_id | person_id | 1     | NULL
+(2 rows)</code></pre>
+<h2 id="other-settings">Other settings</h2>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SHOW dep.path;
+  dep.path
+-------------
+ OPERATIONAL
+(1 row)
+
+admin@operational=&gt; SHOW ROLE;
+ role
+-------
+ admin
+(1 row)
+
+admin@operational=&gt; SET ROLE reception_app;
+SET
+
+reception_app@operational=&gt; SHOW ROLE;
+     role
+---------------
+ reception_app
+(1 row)
+
+reception_app@operational=&gt; SHOW SESSION AUTHORIZATION;
+ session authorization
+-----------------------
+ admin
+(1 row)
+
+reception_app@operational=&gt; RESET ROLE;
+SET
+
+admin@operational=&gt; SHOW TRANSACTION ISOLATION LEVEL;
+ transaction_isolation
+-----------------------
+ repeatable read
+(1 row)</code></pre>
+<p><code>SET dep.path</code> is always refused (<code>ZD106</code>): the access path is fixed at login. Any other <code>SET</code> that is not a <code>dep.</code> setting is accepted and ignored, so that drivers can send their usual settings. <code>SET ROLE</code> is the exception, and works as described in the <a href="/project-hoopeo.github.io/docs/sql/#set-role">DEP SQL guide</a>.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/reference/errors/"><small>Previous</small>Errors &amp; notes</a><a class="next" href="/project-hoopeo.github.io/docs/reference/server-options/"><small>Next</small>Server options</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#show-tables">SHOW TABLES</a></li><li><a href="#show-columns-from-t">SHOW COLUMNS FROM t</a></li><li><a href="#show-indexes-from-t">SHOW INDEXES [FROM t]</a></li><li><a href="#show-functions">SHOW FUNCTIONS</a></li><li><a href="#show-roles">SHOW ROLES</a></li><li><a href="#show-grants">SHOW GRANTS</a></li><li><a href="#show-endpoints">SHOW ENDPOINTS</a></li><li><a href="#show-privacy-matrix">SHOW PRIVACY MATRIX</a></li><li><a href="#show-storage-t-n">SHOW STORAGE t [n]</a></li><li><a href="#show-audit-n">SHOW AUDIT [n]</a></li><li><a href="#other-settings">Other settings</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

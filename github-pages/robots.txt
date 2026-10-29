@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mandelreouven2002.github.io/project-hoopeo.github.io/sitemap.xml

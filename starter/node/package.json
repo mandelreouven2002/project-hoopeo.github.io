@@ -1,0 +1,15 @@
+{
+  "name": "hoopeo-first-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node --env-file=.env app.js",
+    "verify": "node --env-file=.env verify.js"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

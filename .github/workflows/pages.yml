@@ -26,13 +26,17 @@ jobs:
         with: { python-version: "3.12" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - run: pip install markdown==3.8
+      - run: pip install -r requirements-site.txt
+      - run: npm ci --prefix playground
+      - run: npm test --prefix playground
+      - run: node playground/test-docs.js
+      - run: node site/tools/test-highlighting.cjs
       - name: Build, and check every internal link
         env:
           BASE_URL: ${{ vars.BASE_URL }}
         run: python3 site/build.py --check
       - uses: actions/upload-pages-artifact@v3
-        with: { path: site/_site }
+        with: { path: dist }
 
   deploy:
     needs: build

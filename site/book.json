@@ -1,0 +1,413 @@
+{
+  "chapters": [
+    {
+      "source": "docs/book/01-understand.md",
+      "title": "Understand DEP",
+      "url": "docs/"
+    },
+    {
+      "source": "docs/book/02-sql.md",
+      "title": "Write DEP SQL",
+      "url": "docs/sql/"
+    },
+    {
+      "source": "docs/book/03-functions.md",
+      "title": "Declared functions",
+      "url": "docs/functions/"
+    },
+    {
+      "source": "docs/book/04-design.md",
+      "title": "Design with DEP",
+      "url": "docs/designing/"
+    },
+    {
+      "source": "docs/book/05-application.md",
+      "title": "Build an application",
+      "url": "docs/application/"
+    },
+    {
+      "source": "docs/book/06-server.md",
+      "title": "Run the server",
+      "url": "docs/server/"
+    },
+    {
+      "source": "docs/book/07-privacy.md",
+      "title": "Privacy as Code & GDPR",
+      "url": "docs/privacy/"
+    },
+    {
+      "source": "docs/book/08-internals.md",
+      "title": "Inside the engine",
+      "url": "docs/internals/"
+    }
+  ],
+  "redirects": {
+    "docs/guides/overview.md": {
+      "target": "docs/#1-the-problem",
+      "fragments": {
+        "dep-sql-in-five-minutes": "docs/#1-the-problem",
+        "the-names": "docs/#project-components",
+        "the-problem": "docs/#1-the-problem",
+        "the-idea": "docs/#2-the-idea",
+        "what-dep-sql-adds": "docs/#22-the-change-in-the-schema",
+        "what-each-user-sees": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "words-you-will-meet": "docs/#4-core-concepts",
+        "where-next": "docs/sql/"
+      }
+    },
+    "docs/guides/read-examples.md": {
+      "target": "docs/#25-ordinary-sql-and-dep-side-by-side",
+      "fragments": {
+        "understand-the-examples": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "what-is-already-set-up": "docs/application/#run-the-full-clinic",
+        "1-find-one-patient-use-the-id-keep-it-out-of-the-result": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "2-read-all-ids-a-lookup-privilege-is-not-an-export-privilege": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "3-join-one-patients-records-match-with-an-anchor": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "4-join-everyone-hiding-the-id-is-not-enough": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "when-an-exception-is-justified": "docs/functions/",
+        "the-access-path-is-another-boundary": "docs/sql/#6-two-access-paths",
+        "comparison-with-conventional-sql-controls": "docs/#read-the-comparison-correctly"
+      }
+    },
+    "docs/guides/concepts.md": {
+      "target": "docs/#4-core-concepts",
+      "fragments": {
+        "concepts": "docs/#4-core-concepts",
+        "protected-columns": "docs/#4-core-concepts",
+        "match-domains": "docs/#4-core-concepts",
+        "blind-indexes-and-ciphertexts": "docs/internals/#16-storage-and-matching",
+        "endpoints-and-access-paths": "docs/sql/#6-two-access-paths",
+        "matching-anchoring-and-linking": "docs/sql/#76-joining-on-protected-columns",
+        "declared-functions": "docs/functions/",
+        "disclosed-values-and-the-terminal-rule": "docs/functions/#89-disclosed-values-and-the-terminal-rule",
+        "dep-notes": "docs/#4-core-concepts",
+        "audit": "docs/server/#the-audit-log",
+        "what-dep-does-not-do": "docs/internals/#18-guarantees-and-limits"
+      }
+    },
+    "docs/guides/dep-sql.md": {
+      "target": "docs/sql/#7-writing-dep-sql",
+      "fragments": {
+        "dep-sql": "docs/sql/#7-writing-dep-sql",
+        "contents": "docs/sql/#7-writing-dep-sql",
+        "protected-columns": "docs/sql/#71-declaring-a-protected-column",
+        "inserting-and-updating-protected-values": "docs/sql/#72-inserting-and-updating-protected-values",
+        "matching": "docs/sql/#73-finding-a-record-by-a-protected-value",
+        "joins-and-anchors": "docs/sql/#76-joining-on-protected-columns",
+        "what-is-refused": "docs/sql/#78-operations-that-are-not-allowed",
+        "declared-functions": "docs/functions/",
+        "the-rules": "docs/functions/#88-the-rules-for-declared-functions",
+        "calling-a-declared-function": "docs/functions/#87-grant-execute-on-declared-functions",
+        "disclosed-values-the-terminal-rule": "docs/functions/#89-disclosed-values-and-the-terminal-rule",
+        "roles-grants-and-endpoints": "docs/sql/#roles-grants-and-endpoints",
+        "set-role": "docs/sql/#set-role",
+        "match-limits": "docs/sql/#match-limits",
+        "not-supported": "docs/server/#support-at-a-glance"
+      }
+    },
+    "docs/guides/getting-started.md": {
+      "target": "docs/application/#run-the-full-clinic",
+      "fragments": {
+        "getting-started": "docs/application/#run-the-full-clinic",
+        "1-choose-a-local-environment": "docs/application/#1-choose-a-local-environment",
+        "2-start-the-clinic-or-use-your-running-service": "docs/application/#2-start-the-clinic-or-use-your-running-service",
+        "option-a-isolated-manual-server-recommended-for-this-tour": "docs/application/#option-a-isolated-manual-server-recommended-for-this-tour",
+        "option-b-the-installed-background-service": "docs/application/#option-b-the-installed-background-service",
+        "3-connect": "docs/application/#3-connect",
+        "dep-cli": "docs/application/#dep-cli",
+        "psql-or-any-postgresql-driver": "docs/application/#psql-or-any-postgresql-driver",
+        "the-http-api": "docs/application/#the-http-api",
+        "4-a-first-lookup": "docs/application/#run-the-full-clinic",
+        "5-the-tour": "docs/application/#run-the-full-clinic",
+        "where-next": "docs/application/#run-the-full-clinic"
+      }
+    },
+    "docs/guides/first-app.md": {
+      "target": "docs/application/",
+      "fragments": {
+        "build-your-first-dep-application": "docs/application/",
+        "1-prepare-the-tools": "docs/application/#1-prepare-the-tools",
+        "2-start-an-isolated-server": "docs/application/#2-start-an-isolated-server",
+        "3-inspect-the-schema-and-grants": "docs/application/#3-inspect-the-schema-and-grants",
+        "4-find-a-patient-without-receiving-their-id": "docs/application/#4-find-a-patient-without-receiving-their-id",
+        "5-connect-from-your-application": "docs/application/#5-connect-from-your-application",
+        "python--psycopg": "docs/application/#python--psycopg",
+        "nodejs--node-postgres": "docs/application/#nodejs--node-postgres",
+        "6-connect-related-records": "docs/application/#6-connect-related-records",
+        "7-declare-a-narrow-disclosure": "docs/application/#7-declare-a-narrow-disclosure",
+        "8-verify-the-boundaries-and-inspect-the-audit": "docs/application/#8-verify-the-boundaries-and-inspect-the-audit",
+        "restarting-and-changing-your-schema": "docs/application/#restarting-and-changing-your-schema",
+        "if-something-does-not-work": "docs/application/#if-something-does-not-work"
+      }
+    },
+    "docs/guides/applications.md": {
+      "target": "docs/application/#connection-settings",
+      "fragments": {
+        "connecting-from-applications": "docs/application/#connection-settings",
+        "connection-settings": "docs/application/#connection-settings",
+        "parameters": "docs/application/#parameters",
+        "notes-and-errors": "docs/application/#notes-and-errors",
+        "python-psycopg": "docs/application/#connection-settings",
+        "javascript-node-postgres": "docs/application/#connection-settings",
+        "pools-roles-and-sessions": "docs/application/#pools-roles-and-sessions",
+        "the-http-api": "docs/application/#the-http-api"
+      }
+    },
+    "docs/guides/administration.md": {
+      "target": "docs/server/#server-administration",
+      "fragments": {
+        "administration": "docs/server/#server-administration",
+        "running-the-server": "docs/server/#running-the-server",
+        "the-admin-password": "docs/server/#the-admin-password",
+        "tls": "docs/server/#tls",
+        "the-data-directory-and-the-master-key": "docs/server/#the-data-directory-and-the-master-key",
+        "resources-and-limits": "docs/server/#resources-and-limits",
+        "match-limits": "docs/server/#match-limits",
+        "the-audit-log": "docs/server/#the-audit-log",
+        "key-rotation": "docs/server/#key-rotation",
+        "upgrading-and-migrating": "docs/server/#upgrading-and-migrating",
+        "metrics": "docs/server/#metrics",
+        "a-checklist-for-an-evaluation-server": "docs/server/#a-checklist-for-an-evaluation-server"
+      }
+    },
+    "docs/guides/transactions-and-constraints.md": {
+      "target": "docs/server/#transactions",
+      "fragments": {
+        "transactions-constraints-and-indexes": "docs/server/#transactions",
+        "transactions": "docs/server/#transactions",
+        "after-an-error": "docs/server/#after-an-error",
+        "savepoints": "docs/server/#savepoints",
+        "schema-changes-are-transactional": "docs/server/#schema-changes-are-transactional",
+        "concurrent-transactions": "docs/server/#concurrent-transactions",
+        "constraints": "docs/server/#constraints",
+        "indexes": "docs/server/#indexes",
+        "explain": "docs/server/#explain"
+      }
+    },
+    "docs/guides/compatibility.md": {
+      "target": "docs/server/#compatibility",
+      "fragments": {
+        "compatibility--limitations": "docs/server/#compatibility",
+        "what-you-are-running": "docs/server/#what-you-are-running",
+        "support-at-a-glance": "docs/server/#support-at-a-glance",
+        "clients-tested-by-the-project": "docs/server/#clients-tested-by-the-project",
+        "the-simulator-and-the-server": "docs/server/#the-simulator-and-the-server",
+        "known-difference-sorting-disclosed-values": "docs/server/#known-difference-sorting-disclosed-values",
+        "version-licensing-and-readiness": "docs/server/#version-licensing-and-readiness"
+      }
+    },
+    "docs/reference/notes.md": {
+      "target": "docs/reference/errors/#dep-notes",
+      "fragments": {
+        "dep-notes-reference": "docs/reference/errors/#dep-notes",
+        "reads": "docs/reference/errors/#notes-reads",
+        "writes-and-schema": "docs/reference/errors/#notes-writes-and-schema",
+        "transactions": "docs/reference/errors/#notes-transactions",
+        "examples": "docs/reference/errors/#notes-examples"
+      }
+    },
+    "site/content/gdpr.md": {
+      "target": "docs/privacy/",
+      "fragments": {
+        "dep-and-gdpr": "docs/privacy/",
+        "from-a-privacy-decision-to-a-database-control": "docs/privacy/",
+        "example-reception-analytics-and-billing": "docs/privacy/",
+        "a-practical-implementation-workflow": "docs/privacy/#a-practical-implementation-workflow",
+        "what-remains-outside-dep": "docs/privacy/#what-remains-outside-dep",
+        "go-deeper": "docs/privacy/"
+      }
+    },
+    "site/content/start.md": {
+      "target": "docs/application/",
+      "fragments": {
+        "start-with-what-you-want-to-do": "docs/application/",
+        "explore-the-idea": "docs/application/",
+        "build-a-small-application": "docs/application/",
+        "run-a-shared-server": "docs/application/",
+        "which-component-do-i-need": "docs/application/",
+        "before-you-build": "docs/application/"
+      }
+    },
+    "site/content/docs.md": {
+      "target": "docs/",
+      "fragments": {
+        "developer-documentation": "docs/",
+        "start-here": "docs/",
+        "learn-the-model": "docs/",
+        "write-and-integrate-sql": "docs/",
+        "reference": "docs/",
+        "design-and-future-work": "docs/"
+      }
+    },
+    "docs/design/01-dep-concept.md": {
+      "target": "docs/",
+      "fragments": {
+        "dep-database-enforced-privacy": "docs/",
+        "a-database-that-can-use-sensitive-data-without-handing-it-over": "docs/",
+        "contents": "docs/#reading-order",
+        "summary": "docs/#summary",
+        "part-i-what-dep-is-and-how-you-use-it": "docs/",
+        "1-the-problem": "docs/#1-the-problem",
+        "11-the-clinic": "docs/#11-the-clinic",
+        "12-using-a-value-and-reading-it": "docs/#12-using-a-value-and-reading-it",
+        "13-what-goes-wrong-in-an-ordinary-database": "docs/#13-what-goes-wrong-in-an-ordinary-database",
+        "14-why-existing-controls-are-not-enough": "docs/#14-why-existing-controls-are-not-enough",
+        "2-the-idea": "docs/#2-the-idea",
+        "21-the-principle": "docs/#21-the-principle",
+        "22-the-change-in-the-schema": "docs/#22-the-change-in-the-schema",
+        "23-four-decisions-instead-of-one": "docs/#23-four-decisions-instead-of-one",
+        "24-what-this-protects-and-what-it-does-not": "docs/#24-what-this-protects-and-what-it-does-not",
+        "25-ordinary-sql-and-dep-side-by-side": "docs/#25-ordinary-sql-and-dep-side-by-side",
+        "situation-1-dana-arrives-at-reception": "docs/#situation-1-dana-arrives-at-reception",
+        "situation-2-the-ai-agent-tries-to-take-everything": "docs/#situation-2-the-ai-agent-tries-to-take-everything",
+        "situation-3-linking-patients-to-diagnoses": "docs/#situation-3-linking-patients-to-diagnoses",
+        "situation-4-where-id-numbers-can-leave-the-database": "docs/#situation-4-where-id-numbers-can-leave-the-database",
+        "summary-of-the-four-situations": "docs/#summary-of-the-four-situations",
+        "26-why-it-is-a-language-feature": "docs/#26-why-it-is-a-language-feature",
+        "27-why-it-is-a-server": "docs/#27-why-it-is-a-server",
+        "3-privacy-as-code-privacy-by-design-and-the-gdpr": "docs/privacy/#3-privacy-as-code-privacy-by-design-and-the-gdpr",
+        "31-what-is-privacy-as-code": "docs/privacy/#31-what-is-privacy-as-code",
+        "32-what-is-privacy-by-design": "docs/privacy/#32-what-is-privacy-by-design",
+        "33-what-does-the-gdpr-require": "docs/privacy/#33-what-does-the-gdpr-require",
+        "34-what-does-privacy-engineering-add": "docs/privacy/#34-what-does-privacy-engineering-add",
+        "35-what-dep-does-not-cover": "docs/privacy/#35-what-dep-does-not-cover",
+        "4-core-concepts": "docs/#4-core-concepts",
+        "41-values": "docs/#41-values",
+        "42-operations": "docs/#42-operations",
+        "43-connections": "docs/#43-connections",
+        "44-declared-code": "docs/#44-declared-code",
+        "45-enforcement": "docs/#45-enforcement",
+        "46-what-a-match-domain-decides": "docs/#46-what-a-match-domain-decides",
+        "5-design-principles": "docs/designing/#5-design-principles",
+        "6-two-access-paths": "docs/sql/#6-two-access-paths",
+        "61-what-an-access-path-is": "docs/sql/#61-what-an-access-path-is",
+        "62-create-endpoint": "docs/sql/#62-create-endpoint",
+        "63-the-operational-path": "docs/sql/#63-the-operational-path",
+        "64-the-masked-read-path": "docs/sql/#64-the-masked-read-path",
+        "65-capabilities-of-each-path": "docs/sql/#65-capabilities-of-each-path",
+        "66-who-may-match-on-what": "docs/sql/#66-who-may-match-on-what",
+        "67-the-path-cannot-change": "docs/sql/#67-the-path-cannot-change",
+        "68-choosing-a-path-for-a-consumer": "docs/sql/#68-choosing-a-path-for-a-consumer",
+        "7-writing-dep-sql": "docs/sql/#7-writing-dep-sql",
+        "71-declaring-a-protected-column": "docs/sql/#71-declaring-a-protected-column",
+        "72-inserting-and-updating-protected-values": "docs/sql/#72-inserting-and-updating-protected-values",
+        "73-finding-a-record-by-a-protected-value": "docs/sql/#73-finding-a-record-by-a-protected-value",
+        "74-selecting-a-protected-column": "docs/sql/#74-selecting-a-protected-column",
+        "75-queries-on-the-masked-path": "docs/sql/#75-queries-on-the-masked-path",
+        "76-joining-on-protected-columns": "docs/sql/#76-joining-on-protected-columns",
+        "77-comparing-protected-columns-match-domains": "docs/sql/#77-comparing-protected-columns-match-domains",
+        "78-operations-that-are-not-allowed": "docs/sql/#78-operations-that-are-not-allowed",
+        "79-parameters-and-literals": "docs/sql/#79-parameters-and-literals",
+        "710-protected-foreign-keys": "docs/sql/#710-protected-foreign-keys",
+        "711-requiring-qualified-access": "docs/sql/#711-requiring-qualified-access",
+        "8-declared-functions": "docs/functions/#8-declared-functions",
+        "81-why-declared-functions-are-needed": "docs/functions/#81-why-declared-functions-are-needed",
+        "82-reveal": "docs/functions/#82-reveal",
+        "83-create-function--discloses": "docs/functions/#83-create-function--discloses",
+        "84-create-function--links": "docs/functions/#84-create-function--links",
+        "85-declaring-both": "docs/functions/#85-declaring-both",
+        "86-grant-disclose-and-grant-link": "docs/functions/#86-grant-disclose-and-grant-link",
+        "87-grant-execute-on-declared-functions": "docs/functions/#87-grant-execute-on-declared-functions",
+        "88-the-rules-for-declared-functions": "docs/functions/#88-the-rules-for-declared-functions",
+        "89-disclosed-values-and-the-terminal-rule": "docs/functions/#89-disclosed-values-and-the-terminal-rule",
+        "810-documenting-purpose-comment-on-function": "docs/functions/#810-documenting-purpose-comment-on-function",
+        "811-the-catalog-depdeclared_functions": "docs/functions/#811-inspect-declared-functions",
+        "812-the-mapping-to-rust": "docs/functions/#812-the-mapping-to-rust",
+        "813-future-extension-partial-disclosure": "docs/functions/#813-future-extension-partial-disclosure",
+        "9-dep-and-privacy-as-code": "docs/designing/#9-dep-and-privacy-as-code",
+        "91-what-changes-in-practice": "docs/designing/#91-what-changes-in-practice",
+        "92-a-complete-inventory-by-construction": "docs/designing/#92-a-complete-inventory-by-construction",
+        "93-everyday-work-is-attributed": "docs/designing/#93-everyday-work-is-attributed",
+        "94-review-happens-in-code": "docs/designing/#94-review-happens-in-code",
+        "95-the-engine-enforces-people-decide": "docs/designing/#95-the-engine-enforces-people-decide",
+        "10-designing-with-dep": "docs/designing/#10-designing-with-dep",
+        "100-why-the-order-of-design-changes": "docs/designing/#100-why-the-order-of-design-changes",
+        "101-step-1-start-from-the-workflows": "docs/designing/#101-step-1-start-from-the-workflows",
+        "102-step-2-classify-the-fields": "docs/designing/#102-step-2-classify-the-fields",
+        "choosing-how-tables-are-connected": "docs/designing/#choosing-how-tables-are-connected",
+        "103-step-3-build-the-privacy-matrix": "docs/designing/#103-step-3-build-the-privacy-matrix",
+        "104-step-4-assign-consumers-to-paths": "docs/designing/#104-step-4-assign-consumers-to-paths",
+        "105-step-5-translate-the-decisions-into-schema": "docs/designing/#105-step-5-translate-the-decisions-into-schema",
+        "106-step-6-write-the-tests-before-the-implementation": "docs/designing/#106-step-6-write-the-tests-before-the-implementation",
+        "107-step-7-keep-the-matrix-and-the-database-in-sync": "docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync",
+        "108-step-8-change-the-matrix-first": "docs/designing/#108-step-8-change-the-matrix-first",
+        "109-summary-of-the-method": "docs/designing/#109-summary-of-the-method",
+        "11-use-cases": "docs/designing/#11-use-cases",
+        "111-in-the-clinic": "docs/designing/#111-in-the-clinic",
+        "112-beyond-the-clinic": "docs/designing/#112-beyond-the-clinic",
+        "part-ii-how-dep-is-supposed-to-work": "docs/",
+        "12-architecture": "docs/internals/#12-architecture",
+        "121-the-trust-boundary": "docs/internals/#121-the-trust-boundary",
+        "122-overview": "docs/internals/#122-overview",
+        "123-components": "docs/internals/#123-components",
+        "124-how-the-components-fit-together": "docs/internals/#124-how-the-components-fit-together",
+        "13-the-life-of-a-query": "docs/internals/#13-the-life-of-a-query",
+        "131-the-query": "docs/internals/#131-the-query",
+        "132-in-an-ordinary-engine": "docs/internals/#132-in-an-ordinary-engine",
+        "133-in-dep": "docs/internals/#133-in-dep",
+        "134-step-by-step": "docs/internals/#134-step-by-step",
+        "14-how-declared-functions-and-anchoring-are-enforced": "docs/internals/#14-how-declared-functions-and-anchoring-are-enforced",
+        "141-validation-at-creation": "docs/internals/#141-validation-at-creation",
+        "142-tracking-disclosed-values-and-linking-regions": "docs/internals/#142-tracking-disclosed-values-and-linking-regions",
+        "143-deciding-whether-matching-is-anchored": "docs/internals/#143-deciding-whether-matching-is-anchored",
+        "144-recording-and-auditing": "docs/internals/#144-recording-and-auditing",
+        "145-foreign-keys": "docs/internals/#145-foreign-keys",
+        "15-layers-of-enforcement": "docs/internals/#15-layers-of-enforcement",
+        "151-why-rewriting-the-query-is-not-enough": "docs/internals/#151-why-rewriting-the-query-is-not-enough",
+        "16-storage-and-matching": "docs/internals/#16-storage-and-matching",
+        "161-internal-columns": "docs/internals/#161-internal-columns",
+        "162-encrypted-storage": "docs/internals/#162-encrypted-storage",
+        "163-matching-with-a-keyed-index": "docs/internals/#163-matching-with-a-keyed-index",
+        "164-foreign-key-columns": "docs/internals/#164-foreign-key-columns",
+        "165-rotation-is-three-different-things": "docs/internals/#165-rotation-is-three-different-things",
+        "166-a-possible-later-extension-match-only-storage": "docs/internals/#166-a-possible-later-extension-match-only-storage",
+        "17-leakage-channels": "docs/internals/#17-leakage-channels",
+        "18-guarantees-and-limits": "docs/internals/#18-guarantees-and-limits",
+        "181-who-is-trusted": "docs/internals/#181-who-is-trusted",
+        "182-what-dep-guarantees": "docs/internals/#182-what-dep-guarantees",
+        "183-matching-reveals-information": "docs/internals/#183-matching-reveals-information",
+        "184-declared-functions-are-trusted-code": "docs/internals/#184-declared-functions-are-trusted-code",
+        "185-released-values-are-beyond-deps-reach": "docs/internals/#185-released-values-are-beyond-deps-reach",
+        "186-linkage-through-ordinary-keys": "docs/internals/#186-linkage-through-ordinary-keys",
+        "187-ordinary-data-is-not-anonymous-data": "docs/internals/#187-ordinary-data-is-not-anonymous-data",
+        "188-known-limitations-of-the-first-version": "docs/internals/#188-known-limitations-of-the-first-version",
+        "189-the-precise-promise": "docs/internals/#189-the-precise-promise",
+        "reference": "docs/",
+        "19-error-code-reference": "docs/reference/errors/#dep-errors",
+        "191-principles-for-all-dep-errors": "docs/reference/errors/#dep-errors",
+        "192-definition-time-errors": "docs/reference/errors/#dep-errors",
+        "dep_reveal_outside_disclosure--zd001": "docs/reference/errors/#dep-errors",
+        "dep_declaration_privilege--zd002": "docs/reference/errors/#dep-errors",
+        "dep_declared_language--zd003": "docs/reference/errors/#dep-errors",
+        "dep_declared_call--zd004": "docs/reference/errors/#dep-errors",
+        "dep_public_execute--zd005": "docs/reference/errors/#dep-errors",
+        "dep_reference_mismatch--zd006": "docs/reference/errors/#dep-errors",
+        "193-query-time-errors": "docs/reference/errors/#dep-errors",
+        "dep_protected_operation--zd101": "docs/reference/errors/#dep-errors",
+        "dep_endpoint_operation--zd102": "docs/reference/errors/#dep-errors",
+        "dep_match_domain_mismatch--zd103": "docs/reference/errors/#dep-errors",
+        "dep_disclosed_value_use--zd104": "docs/reference/errors/#dep-errors",
+        "dep_unqualified_access--zd105": "docs/reference/errors/#dep-errors",
+        "dep_path_immutable--zd106": "docs/reference/errors/#dep-errors",
+        "dep_unanchored_match--zd107": "docs/reference/errors/#dep-errors",
+        "194-coverage-errors": "docs/reference/errors/#dep-errors",
+        "dep_unsupported_form--zd201": "docs/reference/errors/#dep-errors",
+        "195-execution-time-errors": "docs/reference/errors/#dep-errors",
+        "dep_match_rate_limited--zd301": "docs/reference/errors/#dep-errors",
+        "dep_error_withheld--zd901": "docs/reference/errors/#dep-errors",
+        "constraint-violations-on-protected-columns": "docs/reference/errors/#dep-errors",
+        "196-quick-reference": "docs/reference/errors/#dep-errors",
+        "appendix": "docs/sql/#clinic-schema",
+        "appendix-a-the-clinic": "docs/sql/#clinic-schema",
+        "a1-consumers-and-paths": "docs/sql/#clinic-schema",
+        "a2-tables": "docs/sql/#clinic-schema",
+        "a3-sample-data": "docs/sql/#clinic-schema",
+        "a4-declared-functions": "docs/sql/#clinic-schema",
+        "a5-privileges": "docs/sql/#clinic-schema",
+        "a6-the-privacy-matrix": "docs/sql/#clinic-schema",
+        "how-to-cite": "docs/internals/#reading-and-sources",
+        "references": "docs/internals/#reading-and-sources"
+      }
+    }
+  }
+}

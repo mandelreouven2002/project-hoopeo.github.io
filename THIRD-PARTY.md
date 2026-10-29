@@ -54,6 +54,8 @@ The license text of sql.js is in [`playground/THIRD_PARTY_LICENSES.md`](playgrou
 |---|---|---|
 | [IBM Plex Sans, IBM Plex Sans Condensed, IBM Plex Mono](https://github.com/IBM/plex) | The fonts of the website and of the playground, served from this repository | SIL Open Font License 1.1 (the license is in `site/assets/fonts/`) |
 | [Python-Markdown](https://python-markdown.github.io/) | Builds the pages from Markdown (`site/build.py`); not part of the published site | BSD-3-Clause |
+| [highlight.js](https://highlightjs.org/) 11.12.0 | Local syntax highlighting in examples and the SQL editor; [license](site/assets/vendor/highlight/LICENSE) | BSD-3-Clause |
+| [PyMdown Extensions](https://facelessuser.github.io/pymdown-extensions/) 10.16.1 | Nested code fences when building documentation | MIT |
 | [Pillow](https://python-pillow.org/) | Makes the web copies of the logos (`site/tools/brand_assets.py`); not part of the published site | HPND |
 | [Poppins](https://github.com/itfoundry/poppins) | The typeface in which the wordmark image was drawn; the image is a picture, not a font | SIL Open Font License 1.1 |
 
@@ -62,3 +64,8 @@ The website sends no request to any third party: it has no analytics, no embedde
 ## Crates under the Mozilla Public License 2.0
 
 A few crates in the binaries are under MPL 2.0, a license with file-level copyleft: `option-ext` (through `dirs`, in all three products), and `cssparser`, `cssparser-macros`, `dtoa-short`, `selectors` and `x509-certificate` (through Tauri, in Hoopeo Studio). They are used unmodified, as libraries. The MPL requires that the source of the MPL-covered files be available to recipients; it is, at the repositories named in [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES), and a recipient who wants it may also ask through <https://lp.reuven.click>. Nothing in the MPL reaches the rest of the binary.
+
+
+## Mermaid Tiny
+
+The website vendors @mermaid-js/tiny 12.2.0 under the MIT License. See site/assets/vendor/mermaid/LICENSE and README.md. It renders the existing diagrams locally in the browser.

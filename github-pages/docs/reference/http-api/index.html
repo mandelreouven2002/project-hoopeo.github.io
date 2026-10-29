@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP API | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="DEP Engine can serve a small HTTP API next to the PostgreSQL protocol, for clients that cannot speak the protocol. It applies the same DEP rules, privileges, match limits and audit log as a wire...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/http-api/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="HTTP API | Project Hoopeo">
+<meta property="og:description" content="DEP Engine can serve a small HTTP API next to the PostgreSQL protocol, for clients that cannot speak the protocol. It applies the same DEP rules, privileges, match limits and audit log as a wire...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/http-api/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HTTP API | Project Hoopeo">
+<meta name="twitter:description" content="DEP Engine can serve a small HTTP API next to the PostgreSQL protocol, for clients that cannot speak the protocol. It applies the same DEP rules, privileges, match limits and audit log as a wire...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/" aria-current="page"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/" aria-current="page"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Reference</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#post-v1query">POST /v1/query</a><ul><li><a href="#examples">Examples</a></li></ul></li><li><a href="#get-v1health">GET /v1/health</a></li><li><a href="#get-metrics">GET /metrics</a></li><li><a href="#over-https">Over HTTPS</a></li></ul></details><div class="prose"><h1 id="http-api">HTTP API</h1>
+<p>DEP Engine can serve a small HTTP API next to the PostgreSQL protocol, for clients that cannot speak the protocol. It applies the same DEP rules, privileges, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limits</a> and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> as a wire connection. Start it with <code>--http-listen</code>; it uses HTTPS when the server has a TLS certificate.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Method and path</th>
+<th>Authentication</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /v1/query</code></td>
+<td>Basic, as a role</td>
+<td>Run one or more statements</td>
+</tr>
+<tr>
+<td><code>GET /v1/health</code> (also <code>GET /health</code>)</td>
+<td>none</td>
+<td>Status and version</td>
+</tr>
+<tr>
+<td><code>GET /metrics</code></td>
+<td>none</td>
+<td>Counters in the Prometheus text format; no data</td>
+</tr>
+</tbody>
+</table></div>
+<p>The request body is limited to 4 MB.</p>
+<h2 id="post-v1query">POST /v1/query</h2>
+<p><strong>Authentication.</strong> HTTP Basic, with a role and its password. The role name is lower-cased. Without credentials, or with a wrong password, the answer is <code>401</code> with a <code>WWW-Authenticate</code> header.</p>
+<p><strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">Endpoint</a>.</strong> The endpoint, which fixes the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a>, is the <code>endpoint</code> query parameter or the <code>DEP-Endpoint</code> header (the header wins). The default is <code>operational</code>. A role that may not use the endpoint gets <code>403</code>.</p>
+<p><strong>Body.</strong> Either JSON, with <code>Content-Type: application/json</code>:</p>
+<pre class="highlight"><code class="language-json">{"sql": "SELECT full_name FROM patients WHERE national_id = $1", "params": ["123456782"]}</code></pre>
+<p>or plain text SQL with any other content type. <code>params</code> is optional; <code>$1</code>, <code>$2</code> in the SQL take its values: JSON strings, numbers, booleans and <code>null</code>. The SQL may hold several statements separated by semicolons.</p>
+<p><strong>Execution.</strong> The statements run in order on one connection, so <code>BEGIN; ...; COMMIT;</code> works in one request. They stop at the first error. A transaction left open at the end is rolled back, and the response says so.</p>
+<p><strong>Response.</strong> A JSON object:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>role</code>, <code>endpoint</code>, <code>path</code></td>
+<td>Who ran the statements, through which endpoint, on which access path</td>
+</tr>
+<tr>
+<td><code>results</code></td>
+<td>One object per statement that ran</td>
+</tr>
+<tr>
+<td><code>open_transaction_rolled_back</code></td>
+<td><code>true</code> if the request left a transaction open and it was rolled back</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each result has:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>statement</code></td>
+<td>The statement as it was sent, with <code>$1</code> and never the values</td>
+</tr>
+<tr>
+<td><code>elapsed_ms</code></td>
+<td>Time taken</td>
+</tr>
+<tr>
+<td><code>notes</code></td>
+<td>The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP notes</a> of the statement</td>
+</tr>
+<tr>
+<td><code>columns</code>, <code>rows</code>, <code>row_count</code></td>
+<td>For a statement that returns rows. <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">Protected columns</a> are <code>null</code></td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td>For other statements, the command tag, such as <code>UPDATE 1</code></td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>If the statement failed: <code>code</code> (the DEP code, or <code>null</code>), <code>sqlstate</code>, <code>message</code>, <code>hint</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Status codes.</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>Every statement succeeded</td>
+</tr>
+<tr>
+<td><code>422</code></td>
+<td>A statement failed; <code>results</code> ends with it and carries its <code>error</code></td>
+</tr>
+<tr>
+<td><code>400</code></td>
+<td>The body is not valid JSON, or the SQL cannot be split</td>
+</tr>
+<tr>
+<td><code>401</code></td>
+<td>Missing, malformed or wrong credentials</td>
+</tr>
+<tr>
+<td><code>403</code></td>
+<td>The role may not connect through the endpoint, or does not exist</td>
+</tr>
+</tbody>
+</table></div>
+<p>Values of bound parameters are removed from every error message.</p>
+<h3 id="examples">Examples</h3>
+<p>A lookup. The protected column is <code>null</code>, and the notes say why:</p>
+<pre class="highlight"><code class="language-sh">curl -s -u reception_app:demo "http://127.0.0.1:8433/v1/query?endpoint=operational" \
+     -H 'Content-Type: application/json' \
+     -d '{"sql": "SELECT full_name, national_id FROM patients WHERE national_id = $1", "params": ["123456782"]}' | jq -c '.results[] | {statement, rows, notes}'</code></pre>
+<pre class="highlight"><code class="language-text">{"statement":"SELECT full_name, national_id FROM patients WHERE national_id = $1","rows":[["Dana Cohen",null]],"notes":["PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.","Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL."]}</code></pre>
+<p>A refused statement, with the <code>422</code> status and the error:</p>
+<pre class="highlight"><code class="language-sh">curl -s -w '\nHTTP %{http_code}\n' -u reception_app:demo "http://127.0.0.1:8433/v1/query" \
+     -H 'Content-Type: application/json' \
+     -d '{"sql": "SELECT full_name FROM patients WHERE national_id LIKE $1", "params": ["1%"]}'</code></pre>
+<pre class="highlight"><code class="language-text">{"endpoint":"operational","open_transaction_rolled_back":false,"path":"OPERATIONAL","results":[{"elapsed_ms":0.68,"error":{"code":"DEP_PROTECTED_OPERATION","hint":"PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.","message":"LIKE is not supported for PROTECTED values (patients.national_id).","sqlstate":"ZD101"},"notes":[],"statement":"SELECT full_name FROM patients WHERE national_id LIKE $1"}],"role":"reception_app"}
+HTTP 422</code></pre>
+<p>A transaction in one request, as plain text, on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a>:</p>
+<pre class="highlight"><code class="language-sh">curl -s -u bi_dashboard:demo "http://127.0.0.1:8433/v1/query" -H 'DEP-Endpoint: analytics' \
+     --data 'BEGIN; SELECT health_fund, count(*) AS patients FROM patients GROUP BY health_fund ORDER BY health_fund; COMMIT;' | jq -c '.path, (.results[] | {command, rows})'</code></pre>
+<pre class="highlight"><code class="language-text">"MASKED_READ"
+{"command":"BEGIN","rows":null}
+{"command":null,"rows":[["Clalit",2],["Leumit",1],["Maccabi",2],["Meuhedet",1]]}
+{"command":"COMMIT","rows":null}</code></pre>
+<p>Wrong password, then a role that may not use the endpoint:</p>
+<pre class="highlight"><code class="language-sh">curl -s -w ' HTTP %{http_code}\n' -u reception_app:wrong "http://127.0.0.1:8433/v1/query" --data 'SELECT 1'
+curl -s -w ' HTTP %{http_code}\n' -u reception_app:demo "http://127.0.0.1:8433/v1/query?endpoint=analytics" --data 'SELECT 1'</code></pre>
+<pre class="highlight"><code class="language-text">{"error":{"code":null,"hint":null,"message":"password authentication failed for role \"reception_app\"","sqlstate":"28P01"}} HTTP 401
+{"error":{"code":null,"hint":"A superuser can allow it: GRANT CONNECT ON ENDPOINT analytics TO reception_app.","message":"role \"reception_app\" is not allowed to connect through endpoint \"analytics\"","sqlstate":"28000"}} HTTP 403</code></pre>
+<h2 id="get-v1health">GET /v1/health</h2>
+<pre class="highlight"><code class="language-sh">curl -s http://127.0.0.1:8433/v1/health</code></pre>
+<pre class="highlight"><code class="language-text">{"persistent":false,"product":"DEP Engine","status":"ok","tables":3,"version":"0.5.2"}</code></pre>
+<p><code>persistent</code> is <code>true</code> when the server keeps its data in a data directory. The health check is meant for a monitor on a trusted network.</p>
+<h2 id="get-metrics">GET /metrics</h2>
+<p>The counters are listed in the <a href="/project-hoopeo.github.io/docs/server/#metrics">administration guide</a>. They contain no data.</p>
+<h2 id="over-https">Over HTTPS</h2>
+<p>With TLS on, use <code>https://</code>. A self-signed certificate needs <code>curl --cacert DATA_DIR/tls/server.crt</code>, or <code>-k</code> for a local test only.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/reference/server-options/"><small>Previous</small>Server options</a><a class="next" href="/project-hoopeo.github.io/docs/reference/cli/"><small>Next</small>DEP CLI</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#post-v1query">POST /v1/query</a><ul><li><a href="#examples">Examples</a></li></ul></li><li><a href="#get-v1health">GET /v1/health</a></li><li><a href="#get-metrics">GET /metrics</a></li><li><a href="#over-https">Over HTTPS</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEP Server Architecture</title>
+  <!-- Self-contained rendering: system monospace stack, no web-font fetch.
+       The two scripts below are OPTIONAL and power only the PNG/PDF export
+       buttons; the diagram renders fully offline without them. -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js" integrity="sha384-en/ztfPSRkGfME4KIm05joYXynqzUgbsG5nMrj/xEFAHXkeZfO3yMK8QQ+mP7p1/" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem;
+      color: white;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      margin-bottom: 2rem;
+    }
+    
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .pulse-dot {
+      width: 12px;
+      height: 12px;
+      background: #22d3ee;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+    
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-left: 1.75rem;
+    }
+    
+    .diagram-container {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 1rem;
+      border: 1px solid #1e293b;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    
+    svg {
+      width: 100%;
+      min-width: 900px;
+      display: block;
+    }
+    
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .card {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.violet { background: #a78bfa; }
+    .card-dot.amber { background: #fbbf24; }
+    .card-dot.rose { background: #fb7185; }
+    
+    .card h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .card ul {
+      list-style: none;
+      color: #94a3b8;
+      font-size: 0.75rem;
+    }
+    
+    .card li {
+      margin-bottom: 0.375rem;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #475569;
+      font-size: 0.75rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+      flex-shrink: 0;
+      align-items: center;
+    }
+    .toolbar-toggle {
+      background: transparent;
+      border: none;
+      color: #475569;
+      cursor: pointer;
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      transition: color 0.2s, background 0.2s;
+    }
+    .toolbar-toggle:hover { color: #94a3b8; background: rgba(30, 41, 59, 0.5); }
+    .toolbar-actions {
+      display: none;
+      gap: 0.5rem;
+    }
+    .toolbar.expanded .toolbar-actions { display: flex; }
+    .toolbar-actions button {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .toolbar-actions button:hover {
+      background: rgba(51, 65, 85, 0.8);
+      color: white;
+      border-color: #475569;
+    }
+
+    @media print {
+      body { background: #020617; padding: 1rem; }
+      .toolbar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="report-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>DEP Server Architecture</h1>
+        <div class="toolbar">
+          <div class="toolbar-actions">
+            <button onclick="copyAsImage(this)">📋 Copy</button>
+            <button onclick="downloadPNG(this)">🖼️ PNG</button>
+            <button onclick="downloadPDF(this)">📄 PDF</button>
+          </div>
+          <button class="toolbar-toggle" onclick="this.parentElement.classList.toggle('expanded')" title="Export options" aria-label="Export options">⋯</button>
+        </div>
+      </div>
+      <p class="subtitle">How a statement travels from an untrusted client through the trusted DEP server, using the clinic's six consumers</p>
+    </div>
+
+    <!-- Main Diagram -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 1100 700">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+          </marker>
+          <marker id="arrow-rose" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+          </marker>
+          <marker id="arrow-violet" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa" />
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+
+        <rect width="100%" height="100%" fill="url(#grid)" />
+
+        <!-- ============ BOUNDARIES ============ -->
+        <rect x="25" y="80" width="190" height="500" rx="12" fill="rgba(148, 163, 184, 0.04)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="37" y="98" fill="#94a3b8" font-size="10" font-weight="600">Clients (untrusted)</text>
+        <text x="37" y="112" fill="#64748b" font-size="8">operational consumers</text>
+        <text x="37" y="372" fill="#64748b" font-size="8">masked read consumers</text>
+
+        <rect x="240" y="60" width="830" height="545" rx="12" fill="rgba(251, 113, 133, 0.03)" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="252" y="78" fill="#fb7185" font-size="10" font-weight="600">DEP server process (trusted)</text>
+        <text x="252" y="92" fill="#94a3b8" font-size="8">enforcement, keys, and data never cross this boundary</text>
+
+        <!-- ============ ARROWS (drawn first, behind boxes) ============ -->
+        <!-- 1. Clients to endpoints -->
+        <line x1="200" y1="144" x2="268" y2="172" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <line x1="200" y1="210" x2="268" y2="195" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <line x1="200" y1="276" x2="268" y2="218" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <line x1="200" y1="404" x2="268" y2="432" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <line x1="200" y1="470" x2="268" y2="458" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="233" y="130" fill="#22d3ee" font-size="9" text-anchor="middle">①</text>
+        <text x="233" y="392" fill="#22d3ee" font-size="9" text-anchor="middle">①</text>
+
+        <!-- 2. Endpoints to parser -->
+        <path d="M 390 195 L 410 195 L 410 295 L 428 295" fill="none" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+        <path d="M 390 445 L 410 445 L 410 315 L 428 315" fill="none" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+        <text x="420" y="262" fill="#fb7185" font-size="9" text-anchor="middle">②</text>
+
+        <!-- DDL path: parser to declaration checker -->
+        <path d="M 485 268 L 485 170 L 573 170" fill="none" stroke="#34d399" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrowhead)"/>
+        <text x="491" y="160" fill="#94a3b8" font-size="7">DDL only</text>
+
+        <!-- Declaration checker records into catalog -->
+        <path d="M 695 170 L 712 170 L 712 418" fill="none" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow-violet)"/>
+
+        <!-- 3. Parser to analyzer -->
+        <line x1="540" y1="305" x2="573" y2="305" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="557" y="298" fill="#34d399" font-size="9" text-anchor="middle">③</text>
+
+        <!-- 4. Analyzer to catalog -->
+        <line x1="650" y1="340" x2="650" y2="418" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+        <text x="640" y="384" fill="#a78bfa" font-size="9" text-anchor="end">④</text>
+
+        <!-- 5. Analyzer to planner -->
+        <line x1="695" y1="305" x2="728" y2="305" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="703" y="298" fill="#34d399" font-size="9" text-anchor="middle">⑤</text>
+
+        <!-- 6. Planner to executor -->
+        <line x1="850" y1="305" x2="883" y2="305" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="867" y="298" fill="#34d399" font-size="9" text-anchor="middle">⑥</text>
+
+        <!-- 7. Executor to storage, keys, audit -->
+        <line x1="960" y1="340" x2="960" y2="418" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow-violet)"/>
+        <text x="954" y="400" fill="#a78bfa" font-size="9" text-anchor="end">⑦ index match</text>
+        <line x1="898" y1="342" x2="852" y2="418" stroke="#fb7185" stroke-width="1.2" marker-end="url(#arrow-rose)"/>
+        <line x1="960" y1="268" x2="960" y2="204" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="968" y="240" fill="#fb923c" font-size="9">⑦ audit</text>
+
+        <!-- 8. Executor to output boundary -->
+        <path d="M 1035 305 L 1055 305 L 1055 557 L 632 557" fill="none" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+        <text x="850" y="549" fill="#fb7185" font-size="9" text-anchor="middle">⑧ results</text>
+
+        <!-- Rejection path: analyzer to output boundary -->
+        <path d="M 575 330 L 558 330 L 558 528" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5,5" marker-end="url(#arrow-rose)"/>
+        <text x="548" y="452" fill="#fb7185" font-size="8" text-anchor="end">✕ policy rejection</text>
+        <text x="548" y="464" fill="#94a3b8" font-size="7" text-anchor="end">explicit DEP error,</text>
+        <text x="548" y="475" fill="#94a3b8" font-size="7" text-anchor="end">before any row is read</text>
+
+        <!-- 9. Output boundary back to clients -->
+        <line x1="430" y1="557" x2="219" y2="557" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-rose)"/>
+        <text x="324" y="548" fill="#fb7185" font-size="9" text-anchor="middle">⑨ results and errors</text>
+
+        <!-- ============ CLIENTS ============ -->
+        <rect x="40" y="120" width="160" height="48" rx="6" fill="#0f172a"/>
+        <rect x="40" y="120" width="160" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="120" y="140" fill="white" font-size="11" font-weight="600" text-anchor="middle">Reception app</text>
+        <text x="120" y="156" fill="#94a3b8" font-size="9" text-anchor="middle">reception_app</text>
+
+        <rect x="40" y="186" width="160" height="48" rx="6" fill="#0f172a"/>
+        <rect x="40" y="186" width="160" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="120" y="206" fill="white" font-size="11" font-weight="600" text-anchor="middle">Doctors' app</text>
+        <text x="120" y="222" fill="#94a3b8" font-size="9" text-anchor="middle">doctors_app</text>
+
+        <rect x="40" y="252" width="160" height="48" rx="6" fill="#0f172a"/>
+        <rect x="40" y="252" width="160" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="120" y="272" fill="white" font-size="11" font-weight="600" text-anchor="middle">Reminder, billing</text>
+        <text x="120" y="288" fill="#94a3b8" font-size="9" text-anchor="middle">nightly and monthly jobs</text>
+
+        <rect x="40" y="380" width="160" height="48" rx="6" fill="#0f172a"/>
+        <rect x="40" y="380" width="160" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="120" y="400" fill="white" font-size="11" font-weight="600" text-anchor="middle">BI dashboard</text>
+        <text x="120" y="416" fill="#94a3b8" font-size="9" text-anchor="middle">bi_dashboard</text>
+
+        <rect x="40" y="446" width="160" height="48" rx="6" fill="#0f172a"/>
+        <rect x="40" y="446" width="160" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="120" y="466" fill="white" font-size="11" font-weight="600" text-anchor="middle">AI assistant</text>
+        <text x="120" y="482" fill="#94a3b8" font-size="9" text-anchor="middle">scheduling_agent</text>
+
+        <text x="120" y="526" fill="#64748b" font-size="8" text-anchor="middle">SQL over the</text>
+        <text x="120" y="538" fill="#64748b" font-size="8" text-anchor="middle">PostgreSQL protocol</text>
+
+        <!-- ============ ENDPOINTS ============ -->
+        <rect x="270" y="150" width="120" height="90" rx="6" fill="#0f172a"/>
+        <rect x="270" y="150" width="120" height="90" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="330" y="172" fill="white" font-size="11" font-weight="600" text-anchor="middle">operational</text>
+        <text x="330" y="188" fill="#94a3b8" font-size="9" text-anchor="middle">MODE OPERATIONAL</text>
+        <text x="330" y="208" fill="#94a3b8" font-size="8" text-anchor="middle">authenticate,</text>
+        <text x="330" y="220" fill="#94a3b8" font-size="8" text-anchor="middle">fix the path</text>
+
+        <rect x="270" y="400" width="120" height="90" rx="6" fill="#0f172a"/>
+        <rect x="270" y="400" width="120" height="90" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="330" y="422" fill="white" font-size="11" font-weight="600" text-anchor="middle">analytics</text>
+        <text x="330" y="438" fill="#94a3b8" font-size="9" text-anchor="middle">MODE MASKED_READ</text>
+        <text x="330" y="458" fill="#94a3b8" font-size="8" text-anchor="middle">no protected</text>
+        <text x="330" y="470" fill="#94a3b8" font-size="8" text-anchor="middle">matching at all</text>
+
+        <!-- ============ PIPELINE ============ -->
+        <rect x="430" y="270" width="110" height="70" rx="6" fill="#0f172a"/>
+        <rect x="430" y="270" width="110" height="70" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="485" y="296" fill="white" font-size="11" font-weight="600" text-anchor="middle">Parser</text>
+        <text x="485" y="312" fill="#94a3b8" font-size="9" text-anchor="middle">DEP SQL dialect</text>
+        <text x="485" y="326" fill="#94a3b8" font-size="8" text-anchor="middle">protected literals</text>
+
+        <rect x="575" y="270" width="120" height="70" rx="6" fill="#0f172a"/>
+        <rect x="575" y="270" width="120" height="70" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="635" y="296" fill="white" font-size="11" font-weight="600" text-anchor="middle">DEP analyzer</text>
+        <text x="635" y="312" fill="#94a3b8" font-size="9" text-anchor="middle">typing, anchoring,</text>
+        <text x="635" y="326" fill="#94a3b8" font-size="9" text-anchor="middle">path rules</text>
+
+        <rect x="730" y="270" width="120" height="70" rx="6" fill="#0f172a"/>
+        <rect x="730" y="270" width="120" height="70" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="790" y="296" fill="white" font-size="11" font-weight="600" text-anchor="middle">Planner</text>
+        <text x="790" y="312" fill="#94a3b8" font-size="9" text-anchor="middle">optimize, then</text>
+        <text x="790" y="326" fill="#94a3b8" font-size="9" text-anchor="middle">re-check the plan</text>
+
+        <rect x="885" y="270" width="150" height="70" rx="6" fill="#0f172a"/>
+        <rect x="885" y="270" width="150" height="70" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="960" y="296" fill="white" font-size="11" font-weight="600" text-anchor="middle">Executor</text>
+        <text x="960" y="312" fill="#94a3b8" font-size="9" text-anchor="middle">matching component</text>
+        <text x="960" y="326" fill="#94a3b8" font-size="8" text-anchor="middle">REVEAL only in DISCLOSES</text>
+
+        <!-- ============ ABOVE THE PIPELINE ============ -->
+        <rect x="575" y="140" width="120" height="60" rx="6" fill="#0f172a"/>
+        <rect x="575" y="140" width="120" height="60" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="635" y="162" fill="white" font-size="11" font-weight="600" text-anchor="middle">Declaration</text>
+        <text x="635" y="176" fill="white" font-size="11" font-weight="600" text-anchor="middle">checker</text>
+        <text x="635" y="191" fill="#94a3b8" font-size="8" text-anchor="middle">DISCLOSES, LINKS bodies</text>
+
+        <rect x="885" y="140" width="150" height="62" rx="6" fill="#0f172a"/>
+        <rect x="885" y="140" width="150" height="62" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+        <text x="960" y="162" fill="white" font-size="11" font-weight="600" text-anchor="middle">Audit and rate limit</text>
+        <text x="960" y="178" fill="#94a3b8" font-size="9" text-anchor="middle">identity, time, columns</text>
+        <text x="960" y="192" fill="#fb923c" font-size="8" text-anchor="middle">never the values</text>
+
+        <!-- ============ STORES ============ -->
+        <rect x="600" y="420" width="115" height="70" rx="6" fill="#0f172a"/>
+        <rect x="600" y="420" width="115" height="70" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="657" y="442" fill="white" font-size="11" font-weight="600" text-anchor="middle">DEP catalog</text>
+        <text x="657" y="458" fill="#94a3b8" font-size="8" text-anchor="middle">protected columns,</text>
+        <text x="657" y="470" fill="#94a3b8" font-size="8" text-anchor="middle">domains, declared</text>
+        <text x="657" y="482" fill="#94a3b8" font-size="8" text-anchor="middle">functions</text>
+
+        <rect x="740" y="420" width="120" height="70" rx="6" fill="#0f172a"/>
+        <rect x="740" y="420" width="120" height="70" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="800" y="442" fill="white" font-size="11" font-weight="600" text-anchor="middle">Key management</text>
+        <text x="800" y="458" fill="#94a3b8" font-size="8" text-anchor="middle">one key per</text>
+        <text x="800" y="470" fill="#94a3b8" font-size="8" text-anchor="middle">match domain,</text>
+        <text x="800" y="482" fill="#94a3b8" font-size="8" text-anchor="middle">versioned</text>
+
+        <rect x="885" y="420" width="150" height="80" rx="6" fill="#0f172a"/>
+        <rect x="885" y="420" width="150" height="80" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="960" y="442" fill="white" font-size="11" font-weight="600" text-anchor="middle">Protected storage</text>
+        <text x="960" y="458" fill="#94a3b8" font-size="8" text-anchor="middle">index entry: keyed hash</text>
+        <text x="960" y="471" fill="#94a3b8" font-size="8" text-anchor="middle">ciphertext: authenticated</text>
+        <text x="960" y="484" fill="#94a3b8" font-size="8" text-anchor="middle">encryption</text>
+        <text x="960" y="495" fill="#a78bfa" font-size="7" text-anchor="middle">not addressable by SQL</text>
+
+        <!-- ============ OUTPUT BOUNDARY ============ -->
+        <rect x="430" y="530" width="200" height="55" rx="6" fill="#0f172a"/>
+        <rect x="430" y="530" width="200" height="55" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="530" y="550" fill="white" font-size="11" font-weight="600" text-anchor="middle">Output boundary</text>
+        <text x="530" y="565" fill="#94a3b8" font-size="8" text-anchor="middle">protected value becomes NULL</text>
+        <text x="530" y="577" fill="#94a3b8" font-size="8" text-anchor="middle">disclosed values pass, errors scrubbed</text>
+
+        <!-- ============ LEGEND (outside all boundaries) ============ -->
+        <text x="40" y="636" fill="white" font-size="10" font-weight="600">Legend</text>
+
+        <rect x="40" y="648" width="16" height="10" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="62" y="656" fill="#94a3b8" font-size="8">Client</text>
+
+        <rect x="120" y="648" width="16" height="10" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1"/>
+        <text x="142" y="656" fill="#94a3b8" font-size="8">Engine component</text>
+
+        <rect x="250" y="648" width="16" height="10" rx="2" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="272" y="656" fill="#94a3b8" font-size="8">Store</text>
+
+        <rect x="320" y="648" width="16" height="10" rx="2" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1"/>
+        <text x="342" y="656" fill="#94a3b8" font-size="8">Security control</text>
+
+        <rect x="440" y="648" width="16" height="10" rx="2" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1"/>
+        <text x="462" y="656" fill="#94a3b8" font-size="8">Audit</text>
+
+        <line x1="510" y1="653" x2="526" y2="653" stroke="#34d399" stroke-width="1.5"/>
+        <text x="532" y="656" fill="#94a3b8" font-size="8">Statement flow, in order</text>
+
+        <line x1="680" y1="653" x2="696" y2="653" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="702" y="656" fill="#94a3b8" font-size="8">Rejection path</text>
+
+        <line x1="790" y1="653" x2="806" y2="653" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <text x="812" y="656" fill="#94a3b8" font-size="8">DDL records a declaration</text>
+
+        <rect x="960" y="648" width="16" height="10" rx="2" fill="transparent" stroke="#fb7185" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="982" y="656" fill="#94a3b8" font-size="8">Trust boundary</text>
+      </svg>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot rose"></div>
+          <h3>Trust boundary</h3>
+        </div>
+        <ul>
+          <li>• Clients hold only a SQL connection over the PostgreSQL protocol</li>
+          <li>• Keys, data, and enforcement live in the server process</li>
+          <li>• The path is fixed at authentication; no statement can change it</li>
+          <li>• An embedded build of the same rules would protect nothing</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot emerald"></div>
+          <h3>Enforcement in the pipeline</h3>
+        </div>
+        <ul>
+          <li>• The analyzer checks resolved meaning, not SQL spelling</li>
+          <li>• Anchoring, typing, and path rules are decided before any row is read</li>
+          <li>• The final plan is re-checked after optimization</li>
+          <li>• Matching compares keyed index entries, never plaintext</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot violet"></div>
+          <h3>What leaves the server</h3>
+        </div>
+        <ul>
+          <li>• Ordinary values, as ordinary permissions allow</li>
+          <li>• Protected values only as SQL NULL</li>
+          <li>• Disclosed values only from declared DISCLOSES functions</li>
+          <li>• Errors that name rules and objects, never values</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <p class="footer">
+      DEP: Database-Enforced Privacy • a design proposal, not an implementation • Reuven Mandelovich • CC BY 4.0
+    </p>
+  </div>
+
+
+  <script>
+    async function copyAsImage(btn) {
+      const orig = btn.textContent;
+      try {
+        const el = document.getElementById('report-container');
+        const r = el.getBoundingClientRect();
+        const pad = 32;
+        const canvas = await html2canvas(document.body, { backgroundColor: '#020617', scale: 2, useCORS: true, ignoreElements: (e) => e.classList && e.classList.contains('toolbar'), x: r.left + window.scrollX - pad, y: r.top + window.scrollY - pad, width: r.width + pad * 2, height: r.height + pad * 2 });
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        btn.textContent = '✓ Copied!';
+      } catch (e) {
+        btn.textContent = '✗ Failed';
+      }
+      setTimeout(() => btn.textContent = orig, 2000);
+    }
+
+    async function downloadPNG(btn) {
+      const orig = btn.textContent;
+      btn.textContent = '⏳ ...';
+      try {
+        const el = document.getElementById('report-container');
+        const r = el.getBoundingClientRect();
+        const pad = 32;
+        const canvas = await html2canvas(document.body, { backgroundColor: '#020617', scale: 2, useCORS: true, ignoreElements: (e) => e.classList && e.classList.contains('toolbar'), x: r.left + window.scrollX - pad, y: r.top + window.scrollY - pad, width: r.width + pad * 2, height: r.height + pad * 2 });
+        const link = document.createElement('a');
+        link.download = 'dep-architecture.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        btn.textContent = '✓ Done!';
+      } catch (e) {
+        btn.textContent = '✗ Failed';
+      }
+      setTimeout(() => btn.textContent = orig, 2000);
+    }
+
+    async function downloadPDF(btn) {
+      const orig = btn.textContent;
+      btn.textContent = '⏳ ...';
+      try {
+        const el = document.getElementById('report-container');
+        const r = el.getBoundingClientRect();
+        const pad = 32;
+        const canvas = await html2canvas(document.body, { backgroundColor: '#020617', scale: 2, useCORS: true, ignoreElements: (e) => e.classList && e.classList.contains('toolbar'), x: r.left + window.scrollX - pad, y: r.top + window.scrollY - pad, width: r.width + pad * 2, height: r.height + pad * 2 });
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const orientation = canvas.width > canvas.height ? 'landscape' : 'portrait';
+        const pdf = new jsPDF({ orientation, unit: 'px', format: [canvas.width, canvas.height], hotfixes: ['px_scaling'] });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save('dep-architecture.pdf');
+        btn.textContent = '✓ Done!';
+      } catch (e) {
+        btn.textContent = '✗ Failed';
+      }
+      setTimeout(() => btn.textContent = orig, 2000);
+    }
+  </script>
+</body>
+</html>

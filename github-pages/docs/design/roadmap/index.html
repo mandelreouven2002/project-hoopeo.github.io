@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEP: Database-Enforced Privacy | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="1. Strategy: one engine end to end, then a second 2. Project components 3. Milestones 4. Distribution 5. Before publishing: ownership, licensing, and naming 6. Publishing plan 7. Open questions 8....">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/design/roadmap/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="DEP: Database-Enforced Privacy | Project Hoopeo">
+<meta property="og:description" content="1. Strategy: one engine end to end, then a second 2. Project components 3. Milestones 4. Distribution 5. Before publishing: ownership, licensing, and naming 6. Publishing plan 7. Open questions 8....">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/design/roadmap/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DEP: Database-Enforced Privacy | Project Hoopeo">
+<meta name="twitter:description" content="1. Strategy: one engine end to end, then a second 2. Project components 3. Milestones 4. Distribution 5. Before publishing: ownership, licensing, and naming 6. Publishing plan 7. Open questions 8....">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Reference</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#roadmap-and-release">Roadmap and Release</a><ul><li><a href="#one-possible-path-from-idea-to-implementation">One possible path from idea to implementation</a></li></ul></li><li><a href="#contents">Contents</a></li><li><a href="#1-strategy-one-engine-end-to-end-then-a-second">1. Strategy: one engine end to end, then a second</a><ul><li><a href="#why-datafusion-first">Why DataFusion first</a></li><li><a href="#what-the-reference-server-proves-and-what-it-does-not">What the reference server proves, and what it does not</a></li><li><a href="#the-postgresql-question">The PostgreSQL question</a></li></ul></li><li><a href="#2-project-components">2. Project components</a></li><li><a href="#3-milestones">3. Milestones</a><ul><li><a href="#milestone-0-write-the-normative-contract">Milestone 0: Write the normative contract</a></li><li><a href="#milestone-1-feasibility-spike-on-datafusion">Milestone 1: Feasibility spike on DataFusion</a></li><li><a href="#milestone-2-the-reference-server">Milestone 2: The reference server</a></li><li><a href="#milestone-3-first-public-release-reference-server-v01">Milestone 3: First public release (reference server v0.1)</a></li><li><a href="#milestone-4-attack-the-reference-server">Milestone 4: Attack the reference server</a></li><li><a href="#milestone-5-postgresql-gap-analysis-track-b-begins">Milestone 5: PostgreSQL gap analysis (Track B begins)</a></li><li><a href="#milestone-6-the-contract-on-postgresql">Milestone 6: The contract on PostgreSQL</a></li><li><a href="#milestone-7-attack-the-boundary-on-postgresql">Milestone 7: Attack the boundary on PostgreSQL</a></li><li><a href="#decision-point-extension-or-fork">Decision point: Extension or fork</a></li><li><a href="#milestone-8-package-dep-server">Milestone 8: Package DEP Server</a></li><li><a href="#milestone-9-measure-usefulness-and-cost">Milestone 9: Measure usefulness and cost</a></li><li><a href="#milestone-10-native-syntax-on-postgresql">Milestone 10: Native syntax on PostgreSQL</a></li><li><a href="#beyond-the-first-release">Beyond the first release</a></li><li><a href="#immediate-next-actions">Immediate next actions</a></li></ul></li><li><a href="#4-distribution">4. Distribution</a><ul><li><a href="#41-the-contract-explorer">4.1 The contract explorer</a></li></ul></li><li><a href="#5-before-publishing-ownership-licensing-and-naming">5. Before publishing: ownership, licensing, and naming</a><ul><li><a href="#51-decide-ownership-first">5.1 Decide ownership first</a></li><li><a href="#52-licensing">5.2 Licensing</a></li><li><a href="#53-naming">5.3 Naming</a></li></ul></li><li><a href="#6-publishing-plan">6. Publishing plan</a><ul><li><a href="#61-when">6.1 When</a></li><li><a href="#62-repository-structure">6.2 Repository structure</a></li><li><a href="#63-the-readme">6.3 The README</a></li><li><a href="#64-automation-and-versions">6.4 Automation and versions</a></li><li><a href="#65-launch">6.5 Launch</a></li><li><a href="#66-research-and-industry-routes">6.6 Research and industry routes</a></li></ul></li><li><a href="#7-open-questions">7. Open questions</a></li><li><a href="#8-publication-text">8. Publication text</a><ul><li><a href="#one-sentence-definition">One-sentence definition</a></li><li><a href="#short-description">Short description</a></li><li><a href="#announcement">Announcement</a></li></ul></li><li><a href="#9-after-the-release-what-shipped">9. After the release: what shipped</a></li><li><a href="#appendix-a-mapping-the-design-to-real-engines">Appendix A: Mapping the design to real engines</a><ul><li><a href="#a1-the-reference-server-on-apache-datafusion">A.1 The reference server on Apache DataFusion</a></li><li><a href="#a2-postgresql">A.2 PostgreSQL</a></li></ul></li><li><a href="#appendix-b-how-dep-relates-to-existing-approaches">Appendix B: How DEP relates to existing approaches</a><ul><li><a href="#b1-privacy-as-code-around-the-database">B.1 Privacy as Code around the database</a></li><li><a href="#b2-output-controls-inside-the-database">B.2 Output controls inside the database</a></li><li><a href="#b3-collaboration-controls-in-data-clean-rooms">B.3 Collaboration controls in data clean rooms</a></li><li><a href="#b4-cryptographic-approaches">B.4 Cryptographic approaches</a></li><li><a href="#b5-research-on-policy-enforcement-in-databases">B.5 Research on policy enforcement in databases</a></li><li><a href="#b6-side-by-side">B.6 Side by side</a></li><li><a href="#b7-what-dep-adds">B.7 What DEP adds</a></li><li><a href="#b8-what-dep-can-borrow">B.8 What DEP can borrow</a></li></ul></li><li><a href="#references">References</a></li></ul></details><div class="prose"><h1 id="dep-database-enforced-privacy">DEP: Database-Enforced Privacy</h1>
+<blockquote>
+<p><strong>Design and future work.</strong> This document contains proposals and historical planning assumptions. For available software and current limitations, use <a href="/project-hoopeo.github.io/docs/server/#compatibility">Run the server</a>. It is further reading for <a href="/project-hoopeo.github.io/docs/internals/">Inside the engine</a>.</p>
+</blockquote>
+<h2 id="roadmap-and-release">Roadmap and Release</h2>
+<blockquote>
+<p><strong>Design document — future and historical planning.</strong> This is not the feature list of the current binary. See <a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility &amp; limitations</a> for DEP Engine 0.5.2 and <a href="/project-hoopeo.github.io/changelog/">the changelog</a> for shipped releases.</p>
+</blockquote>
+<h3 id="one-possible-path-from-idea-to-implementation">One possible path from idea to implementation</h3>
+<p><strong>Reuven Mandelovich</strong></p>
+<blockquote>
+<p><strong>Status:</strong> v1.0 · October 2026 · Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+<strong>DEP is presented as an idea, and this document is not a commitment to build it.</strong> It records one way DEP could be built and released, for anyone, including the author, who decides to. Where it says "will", read "would".</p>
+</blockquote>
+<p><strong>About this document.</strong> The companion document, <a href="/project-hoopeo.github.io/docs/">the DEP design proposal</a>, defines what DEP is, how it is written, and how it works. This document sketches how DEP could be built and released. Two appendices complete the picture: how the design maps onto Apache DataFusion and PostgreSQL (<a href="#appendix-a-mapping-the-design-to-real-engines">Appendix A</a>), and how DEP relates to existing products and research (<a href="#appendix-b-how-dep-relates-to-existing-approaches">Appendix B</a>). What actually ships will be recorded in a separate, living document (<a href="#9-after-the-release-what-shipped">chapter 9</a>).</p>
+<hr />
+<h2 id="contents">Contents</h2>
+<ol>
+<li><a href="#1-strategy-one-engine-end-to-end-then-a-second">Strategy: one engine end to end, then a second</a></li>
+<li><a href="#2-project-components">Project components</a></li>
+<li><a href="#3-milestones">Milestones</a></li>
+<li><a href="#4-distribution">Distribution</a></li>
+<li><a href="#5-before-publishing-ownership-licensing-and-naming">Before publishing: ownership, licensing, and naming</a></li>
+<li><a href="#6-publishing-plan">Publishing plan</a></li>
+<li><a href="#7-open-questions">Open questions</a></li>
+<li><a href="#8-publication-text">Publication text</a></li>
+<li><a href="#9-after-the-release-what-shipped">After the release: what shipped</a></li>
+</ol>
+<p><strong>Appendices</strong></p>
+<ul>
+<li><a href="#appendix-a-mapping-the-design-to-real-engines">Appendix A: Mapping the design to real engines</a></li>
+<li><a href="#appendix-b-how-dep-relates-to-existing-approaches">Appendix B: How DEP relates to existing approaches</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<hr />
+<h2 id="1-strategy-one-engine-end-to-end-then-a-second">1. Strategy: one engine end to end, then a second</h2>
+<p>Two full implementations of a database privacy model are two large projects. DEP therefore commits to <strong>one engine first, end to end</strong>, and treats the second as a later, conditional track.</p>
+<p><strong>Track A: The reference server on Apache DataFusion.</strong> A DEP server built on DataFusion, wrapped in a server process that speaks the PostgreSQL wire protocol and listens on one <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> per <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a>. It accepts the <strong>full syntax of the design proposal from day one</strong>, because in DataFusion the parser and the logical plan are under the project's control. Its job is to prove one complete path: declaring protected fields, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#anchor" data-term="Anchor" data-def="The one value that a join on protected columns is tied to.">anchored</a> <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>, matching rejected on the masked path, linkage and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosure</a> through <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared functions</a>, and no leakage through output or errors.</p>
+<p><strong>Track B: PostgreSQL, later and conditional.</strong> PostgreSQL is reliable, familiar, and already trusted, and it remains the intended foundation for a production DEP Server. Track B begins only after Track A is complete and published, and it begins with a short gap analysis, not an implementation. Whether it proceeds, and how far, depends on what that analysis finds.</p>
+<h3 id="why-datafusion-first">Why DataFusion first</h3>
+<ul>
+<li><strong>Control.</strong> In PostgreSQL, DEP's rules are inserted into an engine through hooks, and most of the effort goes into making sure no path was missed. In DataFusion, the rules for <code>PROTECTED</code>, <code>REVEAL</code>, anchoring, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#linking" data-term="Linking" data-def="Connecting protected values across whole tables, without an anchor. Only in a `LINKS` function.">linking</a> regions, and disclosed values are part of the logical plan from the first line of code.</li>
+<li><strong>Syntax.</strong> A PostgreSQL extension cannot add grammar. DataFusion's parser can be extended, so the reference server is the only place where the planned syntax can exist from the start.</li>
+<li><strong>Speed to a convincing demonstration.</strong> A working server that rejects attacks in front of the audience is more persuasive than any document.</li>
+</ul>
+<h3 id="what-the-reference-server-proves-and-what-it-does-not">What the reference server proves, and what it does not</h3>
+<p>It proves that the <strong>model</strong> is coherent and usable (the rules can be stated precisely, the syntax is natural, the errors make sense), and that the <strong>trust boundary</strong> holds: a client connected on the masked path cannot reach identifiers, because it holds nothing but a SQL connection.</p>
+<p>It does <strong>not</strong> prove that the rules can be enforced inside a production database without bypasses. Several leakage channels of a real database (server logs, persistent statistics, bulk export, backup and restore) simply do not exist in it. That claim requires PostgreSQL. Every public statement about the reference server says so plainly:</p>
+<blockquote>
+<p><strong>A reference implementation that proves the model and the trust boundary, not a production database.</strong></p>
+</blockquote>
+<h3 id="the-postgresql-question">The PostgreSQL question</h3>
+<p>Anyone evaluating DEP seriously (a database vendor, a cloud provider running managed PostgreSQL, a security team) will ask whether it fits an engine they already run. The answer at first release is honest and specific: the design maps onto PostgreSQL's extension mechanisms as described in <a href="#a2-postgresql">Appendix A.2</a>, and the gap analysis (Milestone 5) will establish where engine patches are required. Promising more than that before Track A is complete would split the project in two.</p>
+<hr />
+<h2 id="2-project-components">2. Project components</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Category</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Design proposal</strong></td>
+<td>Document</td>
+<td><a href="/project-hoopeo.github.io/docs/">The DEP design proposal</a>: what DEP is, why, and how it works. Explanatory, not normative.</td>
+</tr>
+<tr>
+<td><strong>Normative contract</strong></td>
+<td>Specification</td>
+<td>A separate, short document derived from the design proposal: exactly what is accepted, what is returned, and which error is raised. Versioned independently (contract 0.1).</td>
+</tr>
+<tr>
+<td><strong><code>dep-conformance</code></strong></td>
+<td>Engine-independent test suite</td>
+<td>Statements, roles, paths, and expected results or errors, derived from the normative contract. Any implementation can run it.</td>
+</tr>
+<tr>
+<td><strong><code>dep-core</code></strong></td>
+<td>Rust library</td>
+<td>The rules, the matching index, anchoring analysis, declared-function tracking, the output boundary, and the errors. Knows nothing about networking.</td>
+</tr>
+<tr>
+<td><strong><code>dep-engine</code></strong></td>
+<td>Server process on DataFusion</td>
+<td>Endpoints over the PostgreSQL protocol, authentication, roles, column and function privileges, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a>, rate limits, and the catalog. The reference server.</td>
+</tr>
+<tr>
+<td><strong>Contract explorer</strong></td>
+<td>Optional interactive web page</td>
+<td>A small in-browser simulator for showing the rules side by side. <strong>Offers no protection</strong> (<a href="#41-the-contract-explorer">4.1</a>).</td>
+</tr>
+<tr>
+<td><strong><code>dep</code> extension</strong></td>
+<td>PostgreSQL extension (pgrx)</td>
+<td>Track B: implements the contract inside PostgreSQL.</td>
+</tr>
+<tr>
+<td><strong>DEP Server</strong></td>
+<td>Server distribution</td>
+<td>Track B: PostgreSQL, the extension, configuration, and any required patches, packaged for deployment.</td>
+</tr>
+<tr>
+<td><strong>Client drivers</strong></td>
+<td>Standard PostgreSQL drivers</td>
+<td>No custom SDK is required. A driver is never the enforcement boundary.</td>
+</tr>
+</tbody>
+</table></div>
+<p>DEP is not a new storage engine and not a new procedural language.</p>
+<hr />
+<h2 id="3-milestones">3. Milestones</h2>
+<h3 id="milestone-0-write-the-normative-contract">Milestone 0: Write the normative contract</h3>
+<p>Derive a short, normative contract from the design proposal. It fixes the two access paths, the semantics of protected text, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domains</a>, the rules for anchored and unanchored matching, the rules for <code>DISCLOSES</code> and <code>LINKS</code>, protected foreign keys, how column privileges govern matching, and the error codes. It must specify projection behavior, input normalization, <code>NULL</code> semantics, duplicate values, protected literals, and which predicates count as anchored. It must publish a <strong>supported-forms list</strong>: every SQL form the first version accepts on protected values. Everything else fails closed.</p>
+<p>Not every sentence of the design proposal becomes a rule. The contract contains only what an implementation must do and what a test can check.</p>
+<p><strong>Deliverables:</strong> the normative contract, the supported-forms list, and the first version of <code>dep-conformance</code>, written in the final syntax.
+<strong>Exit criterion:</strong> every example in the design proposal that the contract covers has an expected result or a specific expected error, before any implementation begins.</p>
+<h3 id="milestone-1-feasibility-spike-on-datafusion">Milestone 1: Feasibility spike on DataFusion</h3>
+<p>A short, time-boxed spike on the things most likely to go wrong:</p>
+<ol>
+<li><strong>The parser.</strong> A DEP dialect of <code>sqlparser-rs</code> that accepts the new constructs (<code>PROTECTED MATCH DOMAIN</code>, the <code>DISCLOSES</code> and <code>LINKS</code> function attributes, <code>GRANT DISCLOSE</code>, <code>GRANT LINK</code>, and <code>CREATE ENDPOINT</code>) while every other statement parses exactly as before.</li>
+<li><strong>A declared function.</strong> A <code>LANGUAGE sql</code> function returning a table, expanded into the calling plan, with the <code>REVEAL</code> marker and the linking region surviving expansion and optimization.</li>
+<li><strong>Anchoring analysis.</strong> Distinguishing an anchored join from an unanchored one on the resolved plan, including <code>IN</code> lists and subqueries.</li>
+<li><strong>An update by protected value.</strong> <code>UPDATE ... WHERE national_id = $1</code> through a custom table provider with hidden internal columns.</li>
+</ol>
+<p><strong>Deliverables:</strong> minimal working prototypes and a short written report.
+<strong>Exit criterion:</strong> each item works, or has a documented workaround (a parser patch, a pre-parsing step, a different expansion strategy). If one cannot be solved, the plan is revised before Milestone 2.</p>
+<h3 id="milestone-2-the-reference-server">Milestone 2: The reference server</h3>
+<p>Build <code>dep-core</code> and <code>dep-engine</code>: <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a> and match domains, keyed-index matching, protected literals, two endpoints over <code>pgwire</code>, authentication with a fixed path per session, roles with column privileges, <code>GRANT EXECUTE</code>, <code>GRANT DISCLOSE</code>, and <code>GRANT LINK</code>, declared functions created without public execution, uniqueness and foreign keys on protected columns, anchoring analysis, disclosure and linkage tracking, the audit log for every protected match, per-identity rate limits, the output boundary, every error in the design proposal, and scrubbing of the engine's own errors. Data lives in memory, loaded at startup or through <code>INSERT</code>. Keys are loaded from a server-side location the client cannot reach.</p>
+<p>Out of scope: durable storage, transactions, full at-rest encryption, partial disclosure, deferred constraints, and every SQL form not on the supported-forms list.</p>
+<p><strong>Deliverables:</strong> the reference server, the clinic demonstration from the design proposal, and a passing conformance suite.
+<strong>Exit criterion:</strong>
+- the same anchored lookup succeeds on the operational endpoint and fails with <code>DEP_ENDPOINT_OPERATION</code> on the masked endpoint;
+- an anchored join on protected columns succeeds on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a>, and the same join without the anchor fails with <code>DEP_UNANCHORED_MATCH</code>;
+- <code>diagnoses_per_fund</code> returns counts on the masked path;
+- <code>monthly_fund_report</code> works, while joining its output to another table on the disclosed column fails with <code>DEP_DISCLOSED_VALUE_USE</code>;
+- a role without privilege on <code>phone</code> cannot match on it;
+- a table whose foreign key references a protected column without being <code>PROTECTED</code> is rejected with <code>DEP_REFERENCE_MISMATCH</code>, and an insert referencing a missing ID number fails without revealing the value and is counted as a protected lookup;
+- every error in the design proposal is reproduced by at least one test;
+- <strong>canary tests pass</strong>: synthetic protected values are planted in the data and also sent in queries, both as parameters and as literals, and an automated check confirms they never appear in any result, error, notice, audit record, query statistic, or server log, except through declared disclosures.</p>
+<h3 id="milestone-3-first-public-release-reference-server-v01">Milestone 3: First public release (reference server v0.1)</h3>
+<p>Release only after the ownership and licensing decisions in <a href="#5-before-publishing-ownership-licensing-and-naming">chapter 5</a> are made.</p>
+<p><strong>Deliverables:</strong> the public repository, a container image, the documentation site, the demonstration script and a short screen recording, and the release notes with the list of known limitations.
+<strong>Exit criterion:</strong> a newcomer can run the demonstration in a few minutes with only a container runtime and <code>psql</code>, and see both the successful operational workflow and the rejected attacks.</p>
+<h3 id="milestone-4-attack-the-reference-server">Milestone 4: Attack the reference server</h3>
+<p>Test casts, aliases, function wrappers, views, CTEs, function inlining, subqueries that try to smuggle unanchored matching, prepared statements, role changes, connection reuse, nested results, binary output, error messages, <code>EXPLAIN</code>, and engine error paths. Add adversarial tests and fuzzing. Invite outside review through <code>SECURITY.md</code>.</p>
+<p><strong>Deliverables:</strong> an adversarial test suite and an updated limitations document.
+<strong>Exit criterion:</strong> no known bypass remains within the supported-forms list, and unsupported cases reliably fail closed. Passing the suite is evidence, not proof of complete security.</p>
+<p>This completes Track A.</p>
+<h3 id="milestone-5-postgresql-gap-analysis-track-b-begins">Milestone 5: PostgreSQL gap analysis (Track B begins)</h3>
+<p>A short, written analysis, with a minimal spike only where a question cannot be answered on paper, of how each rule in the normative contract maps onto one supported PostgreSQL major version, using the integration points in <a href="#a2-postgresql">Appendix A.2</a>. The hardest rules to check are the output boundary in both result formats, anchoring analysis on the analyzed query tree, the immutable path, and rejection of <code>REVEAL</code> outside declared functions.</p>
+<p><strong>Exit criterion:</strong> for every rule, the analysis states whether an extension can enforce it or an engine patch is required. A decision follows: proceed with Track B, narrow it, or stop at the reference server.</p>
+<h3 id="milestone-6-the-contract-on-postgresql">Milestone 6: The contract on PostgreSQL</h3>
+<p>Implement the contract in a PostgreSQL extension, using an interim syntax (a protected type such as <code>dep.protected_text</code> and administrative functions), because an extension cannot add grammar. Add a thin translation layer so that <code>dep-conformance</code> can run against the extension.</p>
+<p><strong>Exit criterion:</strong> the conformance results on PostgreSQL match those of the reference server, including the canary tests.</p>
+<h3 id="milestone-7-attack-the-boundary-on-postgresql">Milestone 7: Attack the boundary on PostgreSQL</h3>
+<p>Everything in Milestone 4, plus the channels a production database adds: <code>RETURNING</code>, <code>COPY</code>, server logs, optimizer statistics, query statistics, restores with function-body validation disabled, encrypted storage, backup recovery, restarts, and key-version transitions.</p>
+<p><strong>Exit criterion:</strong> no known bypass remains within the supported-forms list.</p>
+<h3 id="decision-point-extension-or-fork">Decision point: Extension or fork</h3>
+<p>If the missing checks require a small set of engine changes, maintain them as a documented patch set. If protection depends on pervasive changes, reassess the supported SQL subset and the implementation strategy before expanding the product. This decision determines the long-term maintenance cost of DEP Server.</p>
+<h3 id="milestone-8-package-dep-server">Milestone 8: Package DEP Server</h3>
+<p>Package PostgreSQL, the mandatory extension, configuration, and any required patches as a reproducible server image. A missing or disabled DEP component must cause a startup failure.</p>
+<p><strong>Exit criterion:</strong> a new developer can start the server and reproduce the documented behavior with a standard PostgreSQL driver and no custom SDK.</p>
+<h3 id="milestone-9-measure-usefulness-and-cost">Milestone 9: Measure usefulness and cost</h3>
+<p>Benchmark lookup latency, join latency, throughput, storage, and index size against an equivalent plain PostgreSQL workload, on the same hardware, data, permissions, and query shapes. Performance targets are chosen before the evaluation, not after seeing the results.</p>
+<p><strong>Exit criterion:</strong> reproducible results with stated limitations, an independent technical review, and one bounded pilot that genuinely benefits from the contract.</p>
+<h3 id="milestone-10-native-syntax-on-postgresql">Milestone 10: Native syntax on PostgreSQL</h3>
+<p>Introduce DEP's syntax natively in PostgreSQL through engine patches, along with schema migration, introspection, backup behavior, and upgrade procedures.</p>
+<p><strong>Exit criterion:</strong> native syntax and interim declarations produce equivalent behavior, and the conformance suite runs without its translation layer.</p>
+<h3 id="beyond-the-first-release">Beyond the first release</h3>
+<ul>
+<li><strong>Partial disclosure forms</strong> such as <code>DISCLOSES person_id AS SUFFIX(4)</code>.</li>
+<li><strong>More protected types and operations</strong>, with a careful study of whether any comparison beyond equality can be offered without revealing too much.</li>
+<li><strong>Explicit linkage tokens</strong>, a separately designed capability for correlating results across queries.</li>
+<li><strong>A formal model of the rules</strong>, precise enough to reason about protection, not only test it.</li>
+<li><strong>A safe gateway for AI agents</strong>, exposing the database to agents exclusively through the masked path and approved linking functions.</li>
+<li><strong>Aggregation thresholds and differential privacy for linking functions</strong> called from the masked path, borrowing from data clean rooms (<a href="#b8-what-dep-can-borrow">Appendix B.8</a>).</li>
+<li><strong>A schema check for open paths</strong>: a tool that reads the foreign-key map and reports any path made only of ordinary keys between identities and sensitive data.</li>
+<li><strong><code>dep-core</code> compiled to WebAssembly</strong>, so the contract explorer runs the real rules instead of a simulation.</li>
+<li><strong>Other engines</strong> implementing the contract and measured by <code>dep-conformance</code>.</li>
+</ul>
+<h3 id="immediate-next-actions">Immediate next actions</h3>
+<ol>
+<li>Decide on ownership and licensing (<a href="#5-before-publishing-ownership-licensing-and-naming">chapter 5</a>).</li>
+<li>Write the normative contract, the supported-forms list, and the first conformance tests.</li>
+<li>Run the DataFusion feasibility spike.</li>
+<li>Build the reference server until the conformance and canary tests pass.</li>
+<li>Publish the first release with the clinic demonstration.</li>
+</ol>
+<hr />
+<h2 id="4-distribution">4. Distribution</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Form</th>
+<th>Audience</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reference server</strong></td>
+<td>Container image</td>
+<td>Anyone who wants to try DEP and see it hold</td>
+<td>The first public artifact. Clients connect with <code>psql</code> or any PostgreSQL driver.</td>
+</tr>
+<tr>
+<td><strong><code>dep-conformance</code></strong></td>
+<td>Separate repository and Rust crate</td>
+<td>Implementers</td>
+<td>Lets any implementation prove it meets the contract.</td>
+</tr>
+<tr>
+<td><strong>Contract explorer</strong></td>
+<td>Web page</td>
+<td>Anyone, in thirty seconds</td>
+<td>Optional; labeled as a simulation.</td>
+</tr>
+<tr>
+<td><strong><code>dep</code> extension</strong></td>
+<td>Built per PostgreSQL major version and platform; distributed through PGXN</td>
+<td>Teams running their own PostgreSQL</td>
+<td>Track B. Requires <code>shared_preload_libraries</code>, not only <code>CREATE EXTENSION</code>.</td>
+</tr>
+<tr>
+<td><strong>DEP Server</strong></td>
+<td>Container image</td>
+<td>Teams that want a ready configuration</td>
+<td>Track B. The convenient path for real use, and the only path if engine patches are required.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>A constraint to state openly:</strong> managed PostgreSQL services allow only the extensions their provider has approved. A compiled extension loaded at server start cannot be installed there unless a provider adopts it. In practice, DEP on PostgreSQL would first run only where teams operate PostgreSQL themselves.</p>
+<h3 id="41-the-contract-explorer">4.1 The contract explorer</h3>
+<blockquote>
+<p><strong>A first prototype exists:</strong> the <a href="/project-hoopeo.github.io/playground/">DEP SQL Playground</a>, a simulator built on sql.js that accepts DEP SQL, applies the rules of the design proposal, and shows the result an ordinary database would return for comparison. Unlike the explorer described below, it lets visitors create tables and declared functions. Like it, it is a simulation and protects nothing.</p>
+</blockquote>
+<p>A single web page in which a visitor writes a query and sees, side by side, what an ordinary database returns, what the DEP operational path returns, and what the DEP masked path returns, with a list of ready-made attempts: a lookup by ID, a <code>CAST</code>, an unanchored join, a join on a disclosed value. It is the fastest way to show the idea, and fits a launch post or a link sent to a reviewer.</p>
+<p>It can be built quickly with sql.js, SQLite compiled to WebAssembly, with a DEP rule layer written in JavaScript. That choice comes with constraints, which the explorer must respect:</p>
+<ul>
+<li><strong>It is a simulation, not a protection.</strong> Everything runs in the visitor's browser, so there is no trust boundary. Every page says so: <em>a simulator. Everything runs in your browser; it illustrates the rules and protects nothing.</em></li>
+<li><strong>It is a third implementation of the rules,</strong> and could drift from the reference server. To keep it honest, the schema is fixed (the clinic), the visitor runs queries but does not create tables, declared functions are pre-defined, and the explorer passes the subset of <code>dep-conformance</code> it supports.</li>
+<li><strong>SQLite is not PostgreSQL.</strong> It lacks SQL-defined table functions, roles, and several types and functions used in the examples, so the explorer translates a curated set of queries rather than accepting arbitrary SQL.</li>
+</ul>
+<p>The long-term replacement is <code>dep-core</code> itself compiled to WebAssembly, so the explorer runs the same code as the server, still without a trust boundary, but no longer a separate implementation. DataFusion supports compiling to WebAssembly; bundle size needs to be evaluated.</p>
+<hr />
+<h2 id="5-before-publishing-ownership-licensing-and-naming">5. Before publishing: ownership, licensing, and naming</h2>
+<h3 id="51-decide-ownership-first">5.1 Decide ownership first</h3>
+<p>Publishing the design or the code under an open-source license gives the idea to the world. That is excellent for reputation and adoption, but afterwards there is little left to sell. If a patent or a company might ever be wanted, that decision must be made <strong>before the first public disclosure</strong>: in many jurisdictions, a public disclosure before filing harms the ability to obtain a patent, and publishing the design proposal counts as disclosure.</p>
+<p>If the project is carried out within the Technion (as a course, a final project, or with a faculty advisor) the institution's intellectual-property policy may give it rights in the work. This should be checked in advance, for example with the Technion's technology-transfer office. These are legal questions and should be confirmed with a qualified advisor.</p>
+<h3 id="52-licensing">5.2 Licensing</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>License</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>PostgreSQL License (permissive, BSD/MIT-style)</td>
+</tr>
+<tr>
+<td>Apache DataFusion</td>
+<td>Apache License 2.0</td>
+</tr>
+<tr>
+<td>pgrx</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>sql.js</td>
+<td>MIT</td>
+</tr>
+</tbody>
+</table></div>
+<p>All of them permit building on, modifying, and redistributing them, commercially as well. For DEP itself, <strong>Apache License 2.0</strong> is recommended: it is compatible with all of them, and includes an explicit patent grant, which matters for a project that touches security and cryptography. "PostgreSQL" is a trademark; "based on PostgreSQL" is appropriate, but the product should not carry a name that sounds official.</p>
+<h3 id="53-naming">5.3 Naming</h3>
+<p>"DEP" is already a well-known security term: Data Execution Prevention in Windows. Searches for "DEP database security" will mostly find it, and some readers will misread the title. The concept can keep its name, but the repository, crates, and images need a distinctive identifier (the project is now named Project Hoopeo, with the identifier <code>project-hoopeo</code>), checked for availability on GitHub, crates.io, and container registries before the first release. Names are hard to change after publication.</p>
+<hr />
+<h2 id="6-publishing-plan">6. Publishing plan</h2>
+<h3 id="61-when">6.1 When</h3>
+<p>DEP is published first as an idea: the design proposal, a short paper, and a post, in a public repository with a citable DOI. Publishing the idea does not depend on any implementation. A demonstration (the contract explorer, and later a reference server, if one is ever built) can follow and be added to the same repository.</p>
+<h3 id="62-repository-structure">6.2 Repository structure</h3>
+<pre class="highlight"><code class="language-text">project-hoopeo/
+├── README.md
+├── LICENSE                  # Apache-2.0
+├── NOTICE
+├── SECURITY.md              # how to report a privacy bypass
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+├── docs/
+│   ├── 01-dep-concept.md        # design proposal
+│   ├── 02-roadmap-and-release.md
+│   └── contract.md              # normative contract
+├── crates/
+│   ├── dep-core/
+│   ├── dep-engine/
+│   └── dep-conformance/
+├── explorer/                # optional contract explorer
+├── examples/
+│   └── clinic/              # schema, data, and the demonstration script
+└── Dockerfile</code></pre>
+<p><code>SECURITY.md</code> matters especially for a project whose central claim is protection. It gives anyone who finds a bypass a private way to report it, instead of a public issue. The people who find bypasses are exactly the audience the project wants.</p>
+<h3 id="63-the-readme">6.3 The README</h3>
+<p>Most visitors read only the README, so it must work in thirty seconds:</p>
+<ol>
+<li><strong>One sentence</strong> stating the promise: <em>Protected values remain inside the database unless released through an explicitly declared disclosure.</em></li>
+<li><strong>A recording</strong>: the same query succeeding on one endpoint and failing on the other, and an unanchored join being refused.</li>
+<li><strong>Quick start</strong>: one container command and two <code>psql</code> commands.</li>
+<li><strong>What it proves and what it does not</strong>, honestly and briefly, with a clear label: reference implementation, not for production. Including: permitted matching can still reveal that a record exists.</li>
+<li><strong>Links</strong> to the design proposal, the contract, the explorer, and the conformance results.</li>
+</ol>
+<h3 id="64-automation-and-versions">6.4 Automation and versions</h3>
+<ul>
+<li><strong>Continuous integration</strong> runs the unit tests, <code>dep-conformance</code>, and the canary tests on every change, and shows the result as a badge in the README.</li>
+<li><strong>Two version numbers:</strong> the contract version (contract 0.1) and the implementation version (<code>dep-engine</code> 0.1.0). The contract changes slowly, implementations quickly, and the separation allows other implementations of the same contract.</li>
+<li><strong>Crate names</strong> are reserved early, but crates are published only when their interfaces stabilize.</li>
+<li><strong>The documentation site</strong> is built from <code>docs/</code> with mdBook and served from GitHub Pages.</li>
+</ul>
+<h3 id="65-launch">6.5 Launch</h3>
+<p>One concentrated launch day works better than a trickle: a post that explains the idea and links to the repository and the explorer, shared on Hacker News (Show HN), r/PostgreSQL, r/rust, the DataFusion community channels, LinkedIn, and a local PostgreSQL meetup if one is near. Be available that day to answer questions and criticism; the first hours shape much of the impression.</p>
+<p>After launch, label a few issues as good first issues and answer every report quickly. A responsive project attracts contributors; a silent one is forgotten.</p>
+<h3 id="66-research-and-industry-routes">6.6 Research and industry routes</h3>
+<p>Large companies rarely accept unsolicited ideas, and many have explicit policies against it for legal reasons. The routes that work are public:</p>
+<ul>
+<li><strong>Open publication</strong>: the repository, a post, a talk at a PostgreSQL conference. Companies come to the project, not the other way round.</li>
+<li><strong>A demonstration paper</strong>: the main database conferences, SIGMOD and VLDB, have demonstration tracks that fit a project like this. A faculty advisor adds both guidance and credibility.</li>
+<li><strong>A portfolio</strong>: a project like this opens doors at database and privacy companies even if they never adopt it as is.</li>
+</ul>
+<p>In every route, what an organization is most likely to take is not the code but the <strong>contract</strong>: the rules, the error model, and the conformance suite, which it would then implement in its own engine. The documents deserve as much care as the code.</p>
+<hr />
+<h2 id="7-open-questions">7. Open questions</h2>
+<p>These decisions are left open for the normative contract, and are good topics for review.</p>
+<ol>
+<li><strong>Anchoring through another protected column.</strong> Does a join on <code>national_id</code> restricted by <code>WHERE phone = $1</code> count as anchored? The proposal is yes.</li>
+<li><strong>Anchoring through an ordinary key.</strong> Does <code>WHERE patient_id = 42</code> anchor a join on protected columns? The proposal is no, or at least that it counts against the rate limit.</li>
+<li><strong>Qualified access.</strong> Which tables should require every operational read or write to be anchored, and should that be the default for tables with protected columns?</li>
+<li><strong>Is <code>NULL</code>-ness protected?</strong> Knowing whether a person has an identifier on record is itself information. Should <code>IS NULL</code> and <code>COUNT(national_id)</code> be allowed, and on which path?</li>
+<li><strong>How is suppression signaled?</strong> Standard PostgreSQL result metadata has no field for "this value was hidden". Options include a catalog view, a companion function, or a protocol-level extension.</li>
+<li><strong>Normalization per match domain.</strong> Who defines normalization rules, and how are they versioned without breaking existing indexes?</li>
+<li><strong>Foreign-key checks and rate limits.</strong> Should a failed reference check count the same as a lookup, or more, given that it is a cheaper way to test identifiers?</li>
+<li><strong>Uniqueness and conflicts.</strong> How do <code>UNIQUE</code> constraints and <code>ON CONFLICT</code> behave on protected columns, and should the inference they allow be reduced?</li>
+<li><strong>Purpose as a clause.</strong> Is <code>COMMENT ON FUNCTION</code> enough, or should purpose become a first-class, machine-checked part of a declaration?</li>
+<li><strong>Nested declared functions.</strong> May one declared function call another, and how do disclosed columns and linking regions compose?</li>
+<li><strong>Rate-limit semantics.</strong> Per identity, per column, or per match domain, and how are anchored joins counted?</li>
+<li><strong>Naming of match domains.</strong> PostgreSQL already uses the word <em>domain</em> for <code>CREATE DOMAIN</code>. Should <code>MATCH DOMAIN</code> be renamed, for example to <code>MATCH CLASS</code>?</li>
+<li><strong>Interim syntax on PostgreSQL.</strong> How should a match domain be expressed in an extension that cannot add grammar?</li>
+<li><strong>Error-code class.</strong> The design proposal suggests the SQLSTATE class <code>ZD</code>. It must be confirmed against the classes PostgreSQL already uses.</li>
+<li><strong>Timing.</strong> Should a later version require constant-time matching, and at what cost?</li>
+<li><strong>Governance</strong> of the contract once other implementations exist.</li>
+</ol>
+<hr />
+<h2 id="8-publication-text">8. Publication text</h2>
+<h3 id="one-sentence-definition">One-sentence definition</h3>
+<p>DEP is a database server in which <code>PROTECTED</code> is a built-in property of data: ordinary queries can match on protected values one at a time but never return them, whole datasets are linked through them only in declared <code>LINKS</code> functions, and they leave the database only through declared <code>DISCLOSES</code> functions.</p>
+<h3 id="short-description">Short description</h3>
+<p>DEP, Database-Enforced Privacy, is a proposed database server that separates four things ordinary databases fold into one privilege: matching a sensitive value, linking datasets through it, returning it, and disclosing it. A <code>PROTECTED</code> field supports lookups and joins anchored to a single value on an operational connection, while a masked read connection cannot match on it at all. Linking whole datasets and releasing values are allowed only in functions declared <code>LINKS</code> and <code>DISCLOSES</code>, the database's equivalent of Rust's <code>unsafe</code>, so every such place is explicit, reviewable, and listed in the catalog.</p>
+<h3 id="announcement">Announcement</h3>
+<p>We are introducing DEP, Database-Enforced Privacy: a database server that makes the permitted use of sensitive fields part of query execution.</p>
+<p>The idea starts with a practical distinction. A clinic's reception desk needs a patient's ID number to find her; her doctor needs it to see her diagnoses. That need does not mean either application must ever receive ID numbers back from the database, and it certainly does not mean either should be able to join every patient to every diagnosis in a single query.</p>
+<p>DEP proposes a <code>PROTECTED</code> declaration and two access paths. On the operational path, applications find, update, and connect records one protected value at a time, and every such match is recorded. On the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a> (the natural home for analysts, BI tools, and AI agents) protected values cannot be matched at all. Ordinary queries on either path never return protected values. Linking whole datasets and releasing values are possible only in declared <code>LINKS</code> and <code>DISCLOSES</code> functions, the single places where those operations are legal.</p>
+<p>DEP is precise about its limits: permitted matching can still reveal that a record exists and associate it with the data returned. What it removes is the single query that exports a register or links two sensitive datasets wholesale.</p>
+<p>The first release is a reference server built on Apache DataFusion. It speaks the PostgreSQL protocol, so you can connect with <code>psql</code>, run the same query on both paths, and watch one succeed and the other refuse. It proves the model and the trust boundary; it is not a production database. We welcome technical discussion, criticism, and attempts to break it.</p>
+<hr />
+<h2 id="9-after-the-release-what-shipped">9. After the release: what shipped</h2>
+<p>This document describes plans. What actually ships is recorded separately, in a living document maintained with each release, so that plans are never mistaken for results. It will contain:</p>
+<ul>
+<li><strong>Release notes</strong> for each version of each implementation.</li>
+<li><strong>Conformance results</strong> per engine and per contract version, including the canary tests.</li>
+<li><strong>The supported-forms list</strong> for each release.</li>
+<li><strong>Known limitations</strong> and open bypass reports, with their status.</li>
+<li><strong>Measurements</strong>, once they exist, with the scripts to reproduce them.</li>
+<li><strong>Security advisories</strong>, published through the process in <code>SECURITY.md</code>.</li>
+</ul>
+<hr />
+<h2 id="appendix-a-mapping-the-design-to-real-engines">Appendix A: Mapping the design to real engines</h2>
+<p>The architecture in <a href="/project-hoopeo.github.io/docs/internals/#12-architecture">chapter 12 of the design proposal</a> is engine-independent. This appendix considers the two engines on which it could be realized (<a href="#1-strategy-one-engine-end-to-end-then-a-second">chapter 1</a>): how the design maps onto each, and what each lacks.</p>
+<h3 id="a1-the-reference-server-on-apache-datafusion">A.1 The reference server on Apache DataFusion</h3>
+<p>Apache DataFusion is an extensible query engine written in Rust: it parses SQL, plans, optimizes, and executes queries, and lets the embedding application control the logical plan. It is a library, not a database. A DEP reference server would wrap it in a server process that speaks the PostgreSQL wire protocol, using the Rust <code>pgwire</code> library, so that clients connect with <code>psql</code> or any standard PostgreSQL driver and the trust boundary of the design (<a href="/project-hoopeo.github.io/docs/internals/#121-the-trust-boundary">12.1</a>) is real.</p>
+<p><strong>What maps naturally</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>DEP component</th>
+<th>DataFusion mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoints and paths</td>
+<td>One <code>pgwire</code> listener per endpoint; the session's path is fixed when the connection is accepted</td>
+</tr>
+<tr>
+<td>DEP analyzer and plan re-check</td>
+<td>Custom analyzer rules over the logical plan, and a final check after optimization</td>
+</tr>
+<tr>
+<td>Matching</td>
+<td>Predicates on protected columns rewritten to comparisons on internal index columns; joins become equi-joins on <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#blind-index" data-term="Blind index" data-def="What the database stores instead of the value: a keyed fingerprint, the same for equal values.">index entries</a></td>
+</tr>
+<tr>
+<td>Output boundary</td>
+<td>A final projection and a wrapper on the result stream, before encoding</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>DataFusion's prepared statements with <code>$1</code>-style placeholders</td>
+</tr>
+<tr>
+<td>Errors with <code>DETAIL</code>, <code>HINT</code>, and SQLSTATE</td>
+<td><code>pgwire</code>'s PostgreSQL-format error responses</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What the reference server must build itself</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEP's syntax</td>
+<td>A DEP dialect of the SQL parser DataFusion uses (<code>sqlparser-rs</code>), extending the PostgreSQL dialect with a small, fixed set of constructs: the <code>PROTECTED MATCH DOMAIN</code> column option, the <code>DISCLOSES</code> and <code>LINKS</code> function attributes, <code>GRANT DISCLOSE</code> and <code>GRANT LINK</code>, and <code>CREATE ENDPOINT</code>. <code>REVEAL(x)</code> and all queries parse unchanged. If the dialect mechanism cannot express a construct, a small parser patch or a pre-parsing step handles it.</td>
+</tr>
+<tr>
+<td>Users, roles, and privileges</td>
+<td>DataFusion has none. The server implements authentication, the mapping from identity to path and roles, column privileges (which decide who may match on which protected column), <code>GRANT EXECUTE</code> on declared functions without public execution, and <code>GRANT DISCLOSE</code> and <code>GRANT LINK</code>.</td>
+</tr>
+<tr>
+<td>Table-returning SQL functions</td>
+<td>Declared functions are stored and expanded into the calling plan, like parameterized views, with <code>REVEAL</code> markers and linking regions preserved (<a href="/project-hoopeo.github.io/docs/internals/#142-tracking-disclosed-values-and-linking-regions">14.2</a>).</td>
+</tr>
+<tr>
+<td>Hidden internal columns</td>
+<td>A custom table provider that exposes only the logical protected column.</td>
+</tr>
+<tr>
+<td><code>UPDATE</code> and <code>DELETE</code></td>
+<td>Implemented by the server's table provider where DataFusion's support is insufficient.</td>
+</tr>
+<tr>
+<td>Unique and foreign-key constraints</td>
+<td>DataFusion does not enforce them. The server's table provider enforces both on index entries, with each protected foreign-key check counted as a protected lookup.</td>
+</tr>
+<tr>
+<td><code>COMMENT ON</code> and <code>dep.declared_functions</code></td>
+<td>A virtual catalog table served by the DEP catalog.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What does not exist, by design</strong></p>
+<p>Transactions, durable storage, and crash recovery. The reference server loads data at startup or accepts it through <code>INSERT</code>, and loses it on restart. It also lacks several leakage channels of a real database (server logs, persistent statistics, bulk export) which is precisely why it proves the <strong>model</strong> and the <strong>trust boundary</strong>, but not resistance to every channel of a production engine.</p>
+<p><strong>Engine-specific risks</strong></p>
+<ul>
+<li><code>EXPLAIN</code> exists and can display constants and statistics, so it is rejected for statements involving protected values.</li>
+<li>DataFusion's own error messages may quote literals or values, so every non-<a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a> passes through the output boundary and is scrubbed or withheld.</li>
+<li>Statistics such as column minimum and maximum must never be collected on internal protected columns.</li>
+</ul>
+<h3 id="a2-postgresql">A.2 PostgreSQL</h3>
+<p>PostgreSQL would be the natural foundation for a production DEP Server. The design maps onto its extension mechanisms as follows; whether they are sufficient is exactly what a gap analysis would have to establish (<a href="#3-milestones">chapter 3</a>).</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>DEP component</th>
+<th>Candidate PostgreSQL mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoints and paths</td>
+<td><code>ClientAuthentication_hook</code>, storing an immutable per-backend path</td>
+</tr>
+<tr>
+<td>DEP analyzer</td>
+<td><code>post_parse_analyze_hook</code> on the analyzed query tree</td>
+</tr>
+<tr>
+<td>Plan re-check</td>
+<td><code>planner_hook</code></td>
+</tr>
+<tr>
+<td>Output boundary</td>
+<td><code>ExecutorRun_hook</code>, wrapping the destination receiver so values are replaced before text or binary encoding</td>
+</tr>
+<tr>
+<td>Declaration checker, <code>COPY</code>, <code>SET</code>, and other utility commands</td>
+<td><code>ProcessUtility_hook</code></td>
+</tr>
+<tr>
+<td>Log scrubbing</td>
+<td><code>emit_log_hook</code></td>
+</tr>
+<tr>
+<td>Protected representation and matching</td>
+<td>A user-defined type with input and output functions that never produce plaintext, plus an operator class for equality</td>
+</tr>
+<tr>
+<td>Protected foreign keys</td>
+<td>PostgreSQL's referential-integrity checks, running through the protected type's equality operator, with violation messages reduced to the constraint name</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two constraints shape the PostgreSQL track:</p>
+<ul>
+<li><strong>An extension that uses these hooks must be loaded at server start</strong>, through <code>shared_preload_libraries</code>, not only with <code>CREATE EXTENSION</code>. Installing it requires control of the server's configuration.</li>
+<li><strong>An extension cannot add grammar.</strong> PostgreSQL's SQL grammar is compiled into the server. Until engine patches add native syntax, the PostgreSQL extension uses an interim form (a protected type such as <code>dep.protected_text</code> and administrative functions), while the reference server already accepts the full syntax of the design proposal.</li>
+</ul>
+<hr />
+<h2 id="appendix-b-how-dep-relates-to-existing-approaches">Appendix B: How DEP relates to existing approaches</h2>
+<p>DEP is not built from new techniques. Using a column in a predicate without returning it, masking output, restricting joins, approving queries in advance, keyed equality indexes, and declaring privacy policy as code all exist today, in products and in research. This appendix describes what exists, what DEP borrows, and what it adds. It is written through one lens: <strong>Privacy as Code</strong>: where the privacy policy is written, where it is enforced, and what it actually controls.</p>
+<p>The descriptions of products below are based on their public documentation as of October 2026.</p>
+<h3 id="b1-privacy-as-code-around-the-database">B.1 Privacy as Code around the database</h3>
+<p>The tools that use the name <em>Privacy as Code</em> work mostly <strong>around</strong> the database.</p>
+<ul>
+<li><strong>Fides</strong> (Ethyca) defines privacy policies in YAML over a shared taxonomy of data categories, data uses, and data subjects. Systems and datasets are annotated with the same taxonomy, and policies are evaluated in CI, so that a change that, for example, uses contact information for advertising is rejected before it ships.</li>
+<li><strong>Privado</strong> scans application code to discover which personal data is collected and where it flows (to third parties, APIs, and logs) and lets teams write policy guardrails over the results.</li>
+<li><strong>General policy-as-code engines</strong>, such as Open Policy Agent and Cedar, evaluate authorization rules written as code, and are called by applications or gateways.</li>
+</ul>
+<p>These tools make privacy policy reviewable and testable, and they are the direct inspiration for DEP's development method (<a href="/project-hoopeo.github.io/docs/designing/#10-designing-with-dep">chapter 10 of the design proposal</a>). What they do not do is enforce anything at the moment a query runs. A query the scanner never saw, written by a new AI agent at three in the morning, is not covered. DEP takes the same idea (policy as reviewed, tested code) and moves its enforcement into the engine that executes the query.</p>
+<h3 id="b2-output-controls-inside-the-database">B.2 Output controls inside the database</h3>
+<p>Several databases already separate <strong>using</strong> a column from <strong>returning</strong> it, at least for output:</p>
+<ul>
+<li><strong>Snowflake projection policies</strong> are schema-level objects that decide whether a column may appear in a query's final output. A constrained column can still be used in <code>WHERE</code> clauses and inner queries; projecting it either fails or, with <code>ENFORCEMENT =&gt; 'NULLIFY'</code>, returns <code>NULL</code>. The constrained column also cannot be inserted into another table or passed to external functions. This is the closest existing mechanism to DEP's <em>return</em> decision.</li>
+<li><strong>Dynamic data masking</strong> in SQL Server, <strong>Oracle Data Redaction</strong>, and <strong>PostgreSQL Anonymizer</strong> replace values in the output while predicates run against the real values. Oracle's documentation states that the <code>WHERE</code> clause is never redacted. PostgreSQL Anonymizer declares its masking rules inside the database schema, with security labels, explicitly as an implementation of privacy by design.</li>
+<li><strong>Databricks Unity Catalog</strong> applies column masks and row filters, including policies driven by governed tags, so that classification drives enforcement.</li>
+</ul>
+<p>DEP adopts the core idea, and the suppression to <code>NULL</code> matches Snowflake's <code>NULLIFY</code> behavior. But these mechanisms are output controls, and their own documentation is candid about what that leaves open. Snowflake's documentation notes that a constrained column can still be used to target a specific individual with <code>WHERE</code>, that joins can expose values when the matching column in another table is unconstrained, and that error messages can contain a value. Masking leaves the real value available to predicates, which permits inference. None of them distinguishes looking up one record from linking two datasets, and none makes the places where values <em>may</em> leave into a reviewable inventory of code.</p>
+<h3 id="b3-collaboration-controls-in-data-clean-rooms">B.3 Collaboration controls in data clean rooms</h3>
+<p>Data clean rooms solve a neighboring problem: letting two organizations analyze their combined data without either seeing the other's rows.</p>
+<ul>
+<li><strong>Snowflake</strong> adds <strong>join policies</strong>, which can require that a table is always joined and restrict joins to allowed keys, and <strong>aggregation policies</strong>, which require every query to aggregate and drop groups below a minimum size.</li>
+<li><strong>BigQuery analysis rules</strong>, applied to views, enforce aggregation thresholds, differential-privacy budgets, join restrictions that limit which columns can be used in a join, and list-overlap queries.</li>
+<li><strong>AWS Clean Rooms</strong> attaches one analysis rule (aggregation, list, or custom) to each configured table, specifying join columns, columns that may not appear in output, minimum aggregation thresholds, and, for custom rules, <strong>analysis templates</strong>: pre-approved queries that are the only ones allowed to run.</li>
+</ul>
+<p>These systems are the strongest evidence that the problem DEP addresses is real and commercially important. They also contain ideas DEP shares: restricting how a sensitive column may be joined, preferring aggregates, and, in AWS's analysis templates, the principle that sensitive processing happens only in <strong>pre-approved queries</strong>, which is what DEP's declared functions are.</p>
+<p>The differences are in scope and in mechanism. Clean rooms are built for multi-party analytics in a data warehouse, not for the operational database that an application reads and writes every second. Their rules constrain <em>which columns</em> may be joined or <em>how results</em> must be aggregated; they do not distinguish an application finding one patient from the same application linking every patient. And their approved queries are governed as collaboration configuration, not type-checked against the provenance of each value.</p>
+<h3 id="b4-cryptographic-approaches">B.4 Cryptographic approaches</h3>
+<ul>
+<li><strong>Client-side encryption</strong> (SQL Server Always Encrypted, MongoDB Queryable Encryption) protects data from an untrusted server or administrator. A client holding the keys receives plaintext. This is the opposite trust model to DEP, which protects data from clients and trusts the server; the two are complementary.</li>
+<li><strong>Encrypted query processing research</strong>, such as CryptDB, also protects data from the server.</li>
+<li><strong>Application-side blind indexes</strong>, as in the CipherSweet library, store a keyed hash next to each encrypted value so that applications can search by equality. DEP uses the same technique internally. The difference is where the key lives: with an application-side index, the application holds the key, can hash every possible value, and can enumerate them; in DEP, the key and the enforcement stay in the server.</li>
+</ul>
+<h3 id="b5-research-on-policy-enforcement-in-databases">B.5 Research on policy enforcement in databases</h3>
+<ul>
+<li><strong>Hippocratic databases</strong> (IBM Research, VLDB 2002, followed by <em>Limiting Disclosure in Hippocratic Databases</em>, VLDB 2004) proposed that databases take responsibility for privacy principles (purpose specification, consent, limited disclosure, limited retention) and enforce purpose-based disclosure inside the database. DEP's <code>DISCLOSES</code> functions, documented with a purpose, are a much narrower descendant of that vision.</li>
+<li><strong>Qapla</strong> (USENIX Security 2017) stores policies written in SQL in the database itself, and enforces them in a database adapter, so that policy compliance does not depend on application correctness.</li>
+<li><strong>Blockaid</strong> (OSDI 2022) sits between a web application and its database, verifies with an SMT solver that each query complies with the data-access policy, and blocks queries it cannot verify.</li>
+<li><strong>IFDB</strong> (EuroSys 2013) added decentralized information-flow labels to PostgreSQL, tracking how information moves between principals.</li>
+</ul>
+<p>This line of work established that policy can and should be enforced by the database rather than the application, and it is essential prior work to study. DEP applies a narrower, type-based idea to a specific practical problem, rather than general policy languages or information-flow labels.</p>
+<h3 id="b6-side-by-side">B.6 Side by side</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Use without returning</th>
+<th>One value vs. whole datasets</th>
+<th>Controls linkage</th>
+<th>Exits declared as code</th>
+<th>Enforced at query time, in the engine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fides, Privado, OPA, Cedar</td>
+<td>None</td>
+<td>No</td>
+<td>No</td>
+<td>Policies as code, outside the database</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Snowflake projection policies</td>
+<td>Yes</td>
+<td>No</td>
+<td>No; joins can expose values</td>
+<td>No; role conditions</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dynamic masking, Oracle Data Redaction, PostgreSQL Anonymizer</td>
+<td>Partly; predicates see real values</td>
+<td>No</td>
+<td>No</td>
+<td>Rules declared in schema (Anonymizer)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Snowflake join and aggregation policies</td>
+<td>None</td>
+<td>No</td>
+<td>Partly: required joins, allowed keys, minimum groups</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>BigQuery analysis rules</td>
+<td>None</td>
+<td>No</td>
+<td>Partly: join restrictions, thresholds, differential privacy</td>
+<td>No</td>
+<td>Yes, on views</td>
+</tr>
+<tr>
+<td>AWS Clean Rooms</td>
+<td>Partly: columns excluded from output</td>
+<td>No</td>
+<td>Yes, for collaborations</td>
+<td>Partly: analysis templates</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Client-side encryption</td>
+<td>No; clients with keys see plaintext</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Different trust model</td>
+</tr>
+<tr>
+<td>Hippocratic databases, Qapla, Blockaid, IFDB</td>
+<td>Varies</td>
+<td>No</td>
+<td>Varies</td>
+<td>Policies in the database or a proxy</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>DEP</strong></td>
+<td><strong>Yes</strong></td>
+<td><strong>Yes: anchoring</strong></td>
+<td><strong>Yes: <code>LINKS</code></strong></td>
+<td><strong>Yes: <code>DISCLOSES</code>, <code>LINKS</code>, cataloged</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>The table simplifies. Each system does things DEP does not (differential privacy, multi-party collaboration, general policy languages) and its strengths should not be read as gaps.</p>
+<h3 id="b7-what-dep-adds">B.7 What DEP adds</h3>
+<p>DEP's contribution is a combination, applied to the operational database that applications and AI agents query directly:</p>
+<ol>
+<li><strong>Protection as a property of the value, not of the output.</strong> A protected value cannot be cast, sliced, or passed to arbitrary functions anywhere in a query, not only in the final projection; protected literals in the query text are recognized and redacted; and protection is checked on referencing columns.</li>
+<li><strong>The distinction between one value and whole datasets.</strong> Anchored matching lets an application find, update, and connect the records of the value it was given, and nothing more. No existing mechanism we have found draws this line; projection policies explicitly permit targeted filtering and unrestricted joins.</li>
+<li><strong>Linkage and disclosure as declared, type-checked code.</strong> <code>LINKS</code> and <code>DISCLOSES</code> are function attributes whose bodies are analyzed when they are created, whose revealed values are tracked as terminal, and which cannot be executed by <code>PUBLIC</code>. This is closest to AWS's analysis templates, but expressed in the SQL of the database itself and checked by its type rules.</li>
+<li><strong>A complete inventory by construction.</strong> Because nothing else can reveal protected values or link datasets through them, <code>dep.declared_functions</code> lists every such place: an answer to "where can our ID numbers leave?" that no output-masking policy can give.</li>
+<li><strong>A development method in which the policy, the schema, and the tests are the same artifact.</strong> The <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a> becomes grants and declared functions, and its cells become conformance tests. This is the Privacy as Code idea of B.1, with the enforcement moved inside the engine.</li>
+</ol>
+<h3 id="b8-what-dep-can-borrow">B.8 What DEP can borrow</h3>
+<p>The existing systems also suggest improvements that are not yet part of DEP:</p>
+<ul>
+<li><strong>Aggregation thresholds</strong> from clean rooms and Snowflake aggregation policies could become a property of <code>LINKS</code> functions called from the masked path, so that statistics never report groups smaller than a minimum size.</li>
+<li><strong>Differential privacy</strong>, as offered in BigQuery and AWS Clean Rooms, could protect aggregate outputs of linking functions against repeated-query attacks.</li>
+<li><strong>Tag-driven policies</strong>, as in Databricks and Snowflake, suggest letting classification metadata drive which columns are declared <code>PROTECTED</code>, connecting Step 2 of the method to the schema automatically.</li>
+</ul>
+<p>The novelty of DEP's combination should still be confirmed by independent expert review. This appendix reflects a search of public documentation and well-known research, not an exhaustive survey.</p>
+<hr />
+<h2 id="references">References</h2>
+<ol>
+<li>Apache DataFusion. https://datafusion.apache.org/</li>
+<li>sqlparser-rs. https://github.com/apache/datafusion-sqlparser-rs</li>
+<li>pgwire. https://github.com/sunng87/pgwire</li>
+<li>sql.js: SQLite compiled to WebAssembly. https://github.com/sql-js/sql.js</li>
+<li>pgrx: PostgreSQL extension development in Rust. https://github.com/pgcentralfoundation/pgrx</li>
+<li>PGXN: the PostgreSQL Extension Network. https://pgxn.org/</li>
+<li>PostgreSQL License. https://www.postgresql.org/about/licence/</li>
+<li>Apache License 2.0. https://www.apache.org/licenses/LICENSE-2.0</li>
+<li>mdBook. https://rust-lang.github.io/mdBook/</li>
+<li>PostgreSQL documentation. <em>CREATE TYPE</em>: type input, output, and binary-transfer functions. https://www.postgresql.org/docs/current/sql-createtype.html</li>
+<li>PostgreSQL documentation. <em>Extending SQL</em>. https://www.postgresql.org/docs/current/extend.html</li>
+<li>PostgreSQL documentation. <em>Shared library preloading</em> (<code>shared_preload_libraries</code>). https://www.postgresql.org/docs/current/runtime-config-client.html</li>
+<li>Snowflake. <em>Projection policies</em>. https://docs.snowflake.com/en/user-guide/projection-policies</li>
+<li>Snowflake. <em>Join policies</em>. https://docs.snowflake.com/en/user-guide/join-policies</li>
+<li>Snowflake. <em>Aggregation policies</em>. https://docs.snowflake.com/en/user-guide/aggregation-policies</li>
+<li>Google Cloud. <em>Restrict data access using analysis rules</em> (BigQuery). https://docs.cloud.google.com/bigquery/docs/analysis-rules</li>
+<li>AWS. <em>Adding an analysis rule to a configured table</em> (AWS Clean Rooms). https://docs.aws.amazon.com/clean-rooms/latest/userguide/add-analysis-rule.html</li>
+<li>Microsoft. <em>Dynamic Data Masking</em> (SQL Server). https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking</li>
+<li>Oracle. <em>Oracle Data Redaction and nested functions, inline views, and the WHERE clause</em>. https://docs.oracle.com/en/database/oracle/oracle-database/26/dbred/oracle-data-redaction-and-nested-functions-inline-views-and-where-clause.html</li>
+<li>PostgreSQL Anonymizer. <em>Dynamic Masking</em>. https://postgresql-anonymizer.readthedocs.io/en/stable/dynamic_masking/</li>
+<li>PostgreSQL Anonymizer. <em>Declare masking rules</em>. https://postgresql-anonymizer.readthedocs.io/en/latest/declare_masking_rules/</li>
+<li>Databricks. <em>Row filter and column mask policies</em> (Unity Catalog ABAC). https://docs.databricks.com/aws/data-governance/unity-catalog/abac/policies</li>
+<li>Microsoft. <em>Always Encrypted</em> (SQL Server). https://learn.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine</li>
+<li>MongoDB. <em>Queryable Encryption</em>. https://www.mongodb.com/docs/manual/core/queryable-encryption/</li>
+<li>Paragon Initiative. <em>CipherSweet: blind indexes</em>. https://ciphersweet.paragonie.com/internals/blind-index</li>
+<li>Ethyca. <em>Creating privacy policies as code with Fides</em>. https://content.ethyca.com/?p=96024</li>
+<li>Privado. <em>Open source</em>. https://privado.ai/open-source</li>
+<li>R. Agrawal, J. Kiernan, R. Srikant, Y. Xu. <em>Hippocratic Databases</em>, VLDB 2002.</li>
+<li>K. LeFevre, R. Agrawal, V. Ercegovac, R. Ramakrishnan, Y. Xu, D. DeWitt. <em>Limiting Disclosure in Hippocratic Databases</em>, VLDB 2004.</li>
+<li>A. Mehta et al. <em>Qapla: Policy compliance for database-backed systems</em>, USENIX Security 2017. https://www.usenix.org/conference/usenixsecurity17/technical-sessions/presentation/mehta</li>
+<li>W. Zhang et al. <em>Blockaid: Data Access Policy Enforcement for Web Applications</em>, OSDI 2022. https://www.usenix.org/conference/osdi22/presentation/zhang</li>
+<li>D. Schultz, B. Liskov. <em>IFDB: Decentralized Information Flow Control for Databases</em>, EuroSys 2013.</li>
+<li>R. A. Popa, C. M. S. Redfield, N. Zeldovich, H. Balakrishnan. <em>CryptDB: Protecting Confidentiality with Encrypted Query Processing</em>, SOSP 2011.</li>
+</ol></div><div class="prevnext"></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#roadmap-and-release">Roadmap and Release</a><ul><li><a href="#one-possible-path-from-idea-to-implementation">One possible path from idea to implementation</a></li></ul></li><li><a href="#contents">Contents</a></li><li><a href="#1-strategy-one-engine-end-to-end-then-a-second">1. Strategy: one engine end to end, then a second</a><ul><li><a href="#why-datafusion-first">Why DataFusion first</a></li><li><a href="#what-the-reference-server-proves-and-what-it-does-not">What the reference server proves, and what it does not</a></li><li><a href="#the-postgresql-question">The PostgreSQL question</a></li></ul></li><li><a href="#2-project-components">2. Project components</a></li><li><a href="#3-milestones">3. Milestones</a><ul><li><a href="#milestone-0-write-the-normative-contract">Milestone 0: Write the normative contract</a></li><li><a href="#milestone-1-feasibility-spike-on-datafusion">Milestone 1: Feasibility spike on DataFusion</a></li><li><a href="#milestone-2-the-reference-server">Milestone 2: The reference server</a></li><li><a href="#milestone-3-first-public-release-reference-server-v01">Milestone 3: First public release (reference server v0.1)</a></li><li><a href="#milestone-4-attack-the-reference-server">Milestone 4: Attack the reference server</a></li><li><a href="#milestone-5-postgresql-gap-analysis-track-b-begins">Milestone 5: PostgreSQL gap analysis (Track B begins)</a></li><li><a href="#milestone-6-the-contract-on-postgresql">Milestone 6: The contract on PostgreSQL</a></li><li><a href="#milestone-7-attack-the-boundary-on-postgresql">Milestone 7: Attack the boundary on PostgreSQL</a></li><li><a href="#decision-point-extension-or-fork">Decision point: Extension or fork</a></li><li><a href="#milestone-8-package-dep-server">Milestone 8: Package DEP Server</a></li><li><a href="#milestone-9-measure-usefulness-and-cost">Milestone 9: Measure usefulness and cost</a></li><li><a href="#milestone-10-native-syntax-on-postgresql">Milestone 10: Native syntax on PostgreSQL</a></li><li><a href="#beyond-the-first-release">Beyond the first release</a></li><li><a href="#immediate-next-actions">Immediate next actions</a></li></ul></li><li><a href="#4-distribution">4. Distribution</a><ul><li><a href="#41-the-contract-explorer">4.1 The contract explorer</a></li></ul></li><li><a href="#5-before-publishing-ownership-licensing-and-naming">5. Before publishing: ownership, licensing, and naming</a><ul><li><a href="#51-decide-ownership-first">5.1 Decide ownership first</a></li><li><a href="#52-licensing">5.2 Licensing</a></li><li><a href="#53-naming">5.3 Naming</a></li></ul></li><li><a href="#6-publishing-plan">6. Publishing plan</a><ul><li><a href="#61-when">6.1 When</a></li><li><a href="#62-repository-structure">6.2 Repository structure</a></li><li><a href="#63-the-readme">6.3 The README</a></li><li><a href="#64-automation-and-versions">6.4 Automation and versions</a></li><li><a href="#65-launch">6.5 Launch</a></li><li><a href="#66-research-and-industry-routes">6.6 Research and industry routes</a></li></ul></li><li><a href="#7-open-questions">7. Open questions</a></li><li><a href="#8-publication-text">8. Publication text</a><ul><li><a href="#one-sentence-definition">One-sentence definition</a></li><li><a href="#short-description">Short description</a></li><li><a href="#announcement">Announcement</a></li></ul></li><li><a href="#9-after-the-release-what-shipped">9. After the release: what shipped</a></li><li><a href="#appendix-a-mapping-the-design-to-real-engines">Appendix A: Mapping the design to real engines</a><ul><li><a href="#a1-the-reference-server-on-apache-datafusion">A.1 The reference server on Apache DataFusion</a></li><li><a href="#a2-postgresql">A.2 PostgreSQL</a></li></ul></li><li><a href="#appendix-b-how-dep-relates-to-existing-approaches">Appendix B: How DEP relates to existing approaches</a><ul><li><a href="#b1-privacy-as-code-around-the-database">B.1 Privacy as Code around the database</a></li><li><a href="#b2-output-controls-inside-the-database">B.2 Output controls inside the database</a></li><li><a href="#b3-collaboration-controls-in-data-clean-rooms">B.3 Collaboration controls in data clean rooms</a></li><li><a href="#b4-cryptographic-approaches">B.4 Cryptographic approaches</a></li><li><a href="#b5-research-on-policy-enforcement-in-databases">B.5 Research on policy enforcement in databases</a></li><li><a href="#b6-side-by-side">B.6 Side by side</a></li><li><a href="#b7-what-dep-adds">B.7 What DEP adds</a></li><li><a href="#b8-what-dep-can-borrow">B.8 What DEP can borrow</a></li></ul></li><li><a href="#references">References</a></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

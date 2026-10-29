@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Errors &amp; notes | Project Hoopeo</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="A DEP error is an ordinary PostgreSQL error with a SQLSTATE in class ZD, a message, and a hint. DEP CLI and Hoopeo Studio print the DEP code beside the SQLSTATE, as in SQLSTATE: ZD107...">
+<meta name="theme-color" content="#011A3E">
+<link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/errors/">
+<link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/project-hoopeo.github.io/assets/brand/icon-192.png">
+<link rel="apple-touch-icon" href="/project-hoopeo.github.io/assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="/project-hoopeo.github.io/assets/brand/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Hoopeo">
+<meta property="og:title" content="Errors &amp; notes | Project Hoopeo">
+<meta property="og:description" content="A DEP error is an ordinary PostgreSQL error with a SQLSTATE in class ZD, a message, and a hint. DEP CLI and Hoopeo Studio print the DEP code beside the SQLSTATE, as in SQLSTATE: ZD107...">
+<meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/docs/reference/errors/">
+<meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Errors &amp; notes | Project Hoopeo">
+<meta name="twitter:description" content="A DEP error is an ordinary PostgreSQL error with a SQLSTATE in class ZD, a message, and a hint. DEP CLI and Hoopeo Studio print the DEP code beside the SQLSTATE, as in SQLSTATE: ZD107...">
+<meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-docs.png">
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/fonts.css?v=5188c7f996">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/tokens.css?v=3fbc593bb9">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/site.css?v=4dd81eeb91">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/redesign.css?v=f1a4656417">
+<link rel="stylesheet" href="/project-hoopeo.github.io/assets/css/code.css?v=18c5dc6062">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/project-hoopeo.github.io/"><img src="/project-hoopeo.github.io/assets/brand/mascot-40.webp" srcset="/project-hoopeo.github.io/assets/brand/mascot-40.webp 1x, /project-hoopeo.github.io/assets/brand/mascot-80.webp 2x" width="34" height="41" alt=""><span>Project Hoopeo</span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+  <nav class="nav" id="main-nav" aria-label="Main"><a href="/project-hoopeo.github.io/">Home</a><a href="/project-hoopeo.github.io/docs/" aria-current="page">Learn DEP</a><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a><a href="/project-hoopeo.github.io/playground/">Playground</a><a href="/project-hoopeo.github.io/install/">Install</a><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a><button class="search-open" type="button" aria-label="Search documentation">Search <kbd>/</kbd></button><button class="theme-btn" id="theme-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.7.7 0 0 0-.9-.9A10 10 0 1 0 21.4 15.5a.7.7 0 0 0-.9-.9z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></g></svg></button></nav>
+</div></header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/" aria-current="page"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
+  <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu" open><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/" aria-current="page"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Reference</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#dep-errors">DEP errors</a><ul><li><a href="#examples">Examples</a></li></ul></li><li><a href="#postgresql-sqlstates">PostgreSQL SQLSTATEs</a></li><li><a href="#dep-notes">DEP notes</a><ul><li><a href="#notes-reads">Reads</a></li><li><a href="#notes-writes-and-schema">Writes and schema</a></li><li><a href="#notes-transactions">Transactions</a></li><li><a href="#notes-examples">Examples</a></li></ul></li></ul></details><div class="prose"><h1 id="errors--notes">Errors &amp; notes</h1>
+<p>A <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-error" data-term="DEP error" data-def="A refusal, with a `ZD` code and a hint that says what would be allowed.">DEP error</a> is an ordinary PostgreSQL error with a SQLSTATE in class <code>ZD</code>, a message, and a hint. DEP CLI and Hoopeo Studio print the DEP code beside the SQLSTATE, as in <code>SQLSTATE: ZD107 (DEP_UNANCHORED_MATCH)</code>. Over the PostgreSQL protocol only the SQLSTATE travels, so a program branches on <code>ZD107</code>; the HTTP API also returns the code. Errors that DataFusion or PostgreSQL would also raise keep their usual SQLSTATEs, listed in the second table.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-refused.png" title="Open at full size"><img loading="lazy" alt="A DEP error in Hoopeo Studio: the message, the code and the hint" src="/project-hoopeo.github.io/docs/images/studio/studio-refused.png" / width="1440" height="900"></a></p>
+<p>A <strong>policy rejection</strong> depends only on the statement, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access path</a>, the role and the schema, and happens before any row is read. An <strong>execution failure</strong> happens while an allowed statement runs and may depend on the data (a constraint, for example). An error message never contains a protected value or the value of a bound parameter.</p>
+<h2 id="dep-errors">DEP errors</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>SQLSTATE</th>
+<th>Code</th>
+<th>Raised when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZD001</code></td>
+<td><code>DEP_REVEAL_OUTSIDE_DISCLOSURE</code></td>
+<td><a href="/project-hoopeo.github.io/docs/reference/glossary/#reveal"><code>REVEAL</code></a> is used outside a function that declares <code>DISCLOSES</code> for the column's <a href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain">match domain</a></td>
+</tr>
+<tr>
+<td><code>ZD002</code></td>
+<td><code>DEP_DECLARATION_PRIVILEGE</code></td>
+<td>A role declares a <a href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function"><code>DISCLOSES</code> or <code>LINKS</code> function</a> for a domain without <code>GRANT DISCLOSE</code> or <code>GRANT LINK</code>, or <code>DISCLOSE</code> or <code>LINK</code> is granted to <code>PUBLIC</code></td>
+</tr>
+<tr>
+<td><code>ZD003</code></td>
+<td><code>DEP_DECLARED_LANGUAGE</code></td>
+<td>A <a href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function">declared function</a> is not <code>LANGUAGE sql</code></td>
+</tr>
+<tr>
+<td><code>ZD004</code></td>
+<td><code>DEP_DECLARED_CALL</code></td>
+<td>A <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a> calls another declared function that is not declared for the same purpose and domain</td>
+</tr>
+<tr>
+<td><code>ZD005</code></td>
+<td><code>DEP_PUBLIC_EXECUTE</code></td>
+<td><code>EXECUTE</code> on a function declared <code>DISCLOSES</code> or <code>LINKS</code> is granted to <code>PUBLIC</code></td>
+</tr>
+<tr>
+<td><code>ZD006</code></td>
+<td><code>DEP_REFERENCE_MISMATCH</code></td>
+<td>A reference joins a <a href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column">protected column</a> and an ordinary one</td>
+</tr>
+<tr>
+<td><code>ZD101</code></td>
+<td><code>DEP_PROTECTED_OPERATION</code></td>
+<td>An operation other than full-value equality is applied to a <a href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column">protected value</a></td>
+</tr>
+<tr>
+<td><code>ZD102</code></td>
+<td><code>DEP_ENDPOINT_OPERATION</code></td>
+<td>The operation is not allowed on the connection's <a href="/project-hoopeo.github.io/docs/reference/glossary/#access-path">access path</a>: <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>, testing whether a protected value is present, writing, schema changes, or <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosing</a> on the <a href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path"><code>MASKED_READ</code></a> path</td>
+</tr>
+<tr>
+<td><code>ZD103</code></td>
+<td><code>DEP_MATCH_DOMAIN_MISMATCH</code></td>
+<td>Two <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a> of different <a href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain">match domains</a> are compared or referenced</td>
+</tr>
+<tr>
+<td><code>ZD104</code></td>
+<td><code>DEP_DISCLOSED_VALUE_USE</code></td>
+<td>A disclosed value is used for anything but being returned: the <a href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule">terminal rule</a></td>
+</tr>
+<tr>
+<td><code>ZD105</code></td>
+<td><code>DEP_UNQUALIFIED_ACCESS</code></td>
+<td>Reserved. Defined by the design, and not raised by DEP Engine 0.5</td>
+</tr>
+<tr>
+<td><code>ZD106</code></td>
+<td><code>DEP_PATH_IMMUTABLE</code></td>
+<td>A connection tries to change its <a href="/project-hoopeo.github.io/docs/reference/glossary/#access-path">access path</a></td>
+</tr>
+<tr>
+<td><code>ZD107</code></td>
+<td><code>DEP_UNANCHORED_MATCH</code></td>
+<td>A match of protected values is not <a href="/project-hoopeo.github.io/docs/reference/glossary/#anchor">anchored</a> to a single value, outside a function declared for <a href="/project-hoopeo.github.io/docs/reference/glossary/#linking">linking</a> (<code>LINKS</code>)</td>
+</tr>
+<tr>
+<td><code>ZD108</code></td>
+<td><code>DEP_UNSUPPORTED_FORM</code></td>
+<td>A form DEP cannot analyze, rejected rather than run with uncertain protection</td>
+</tr>
+<tr>
+<td><code>ZD109</code></td>
+<td><code>DEP_MATCH_RATE_LIMITED</code></td>
+<td>A role went over its <a href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit">match limit</a></td>
+</tr>
+<tr>
+<td><code>ZD901</code></td>
+<td></td>
+<td>An internal code with no SQLSTATE of its own. DEP Engine does not raise it</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="examples">Examples</h3>
+<p>Each was run against the demo clinic. The role is in the prompt.</p>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SET ROLE privacy_admin;
+SET
+
+privacy_admin@operational=&gt; SELECT full_name, REVEAL(national_id) FROM patients;
+ERROR:  REVEAL() of patients.national_id (match domain person_id) appears outside a disclosing function.
+HINT:  Move the disclosure into a function declared DISCLOSES person_id.
+SQLSTATE:  ZD001 (DEP_REVEAL_OUTSIDE_DISCLOSURE)
+
+privacy_admin@operational=&gt; CREATE FUNCTION no_sql(id TEXT) RETURNS TABLE (x TEXT) LANGUAGE plpgsql DISCLOSES person_id AS $$ SELECT 1 $$;
+ERROR:  Function no_sql is written in LANGUAGE plpgsql.
+HINT:  Declared functions must be LANGUAGE sql, so the engine can analyze their bodies.
+SQLSTATE:  ZD003 (DEP_DECLARED_LANGUAGE)
+
+privacy_admin@operational=&gt; CREATE FUNCTION wrap(d DATE) RETURNS TABLE (national_id TEXT) LANGUAGE sql LINKS person_id AS $$ SELECT r.national_id FROM monthly_fund_report(d) AS r $$;
+ERROR:  Function wrap calls monthly_fund_report(), which is not declared for the same purpose and match domain.
+HINT:  Inline the logic, or declare both functions for the same purpose.
+SQLSTATE:  ZD004 (DEP_DECLARED_CALL)
+
+privacy_admin@operational=&gt; GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO PUBLIC;
+ERROR:  Function monthly_fund_report is declared DISCLOSES or LINKS, and cannot be executable by PUBLIC.
+HINT:  Grant EXECUTE to the specific roles that need it.
+SQLSTATE:  ZD005 (DEP_PUBLIC_EXECUTE)
+
+privacy_admin@operational=&gt; RESET ROLE;
+SET
+
+admin@operational=&gt; GRANT DISCLOSE ON MATCH DOMAIN person_id TO PUBLIC;
+ERROR:  DISCLOSE and LINK cannot be granted to PUBLIC.
+HINT:  Grant them to the roles that declare functions.
+SQLSTATE:  ZD002 (DEP_DECLARATION_PRIVILEGE)
+
+admin@operational=&gt; \c operational app_developer
+You are now connected as "app_developer" through endpoint "operational" (OPERATIONAL).
+
+app_developer@operational=&gt; CREATE FUNCTION all_ids() RETURNS TABLE (national_id TEXT) LANGUAGE sql DISCLOSES person_id AS $$ SELECT REVEAL(national_id) FROM patients $$;
+ERROR:  Role app_developer may not declare functions that DISCLOSES match domain person_id.
+HINT:  A superuser can allow it: GRANT DISCLOSE ON MATCH DOMAIN person_id TO app_developer.
+SQLSTATE:  ZD002 (DEP_DECLARATION_PRIVILEGE)
+
+app_developer@operational=&gt; \c operational admin
+You are now connected as "admin" through endpoint "operational" (OPERATIONAL).
+
+admin@operational=&gt; CREATE TABLE bad (id BIGINT PRIMARY KEY, nid TEXT REFERENCES patients (national_id));
+ERROR:  Column bad.nid references PROTECTED column patients.national_id (match domain person_id) but is not PROTECTED.
+HINT:  Declare it TEXT PROTECTED REFERENCES patients (national_id), so the reference is kept as an index entry.
+SQLSTATE:  ZD006 (DEP_REFERENCE_MISMATCH)
+
+admin@operational=&gt; SELECT full_name FROM patients WHERE national_id LIKE '1%';
+ERROR:  LIKE is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)</code></pre>
+<pre class="highlight"><code class="language-text">bi_dashboard@analytics=&gt; SELECT health_fund FROM patients WHERE national_id = '123456782';
+ERROR:  Matching PROTECTED values is unavailable on a MASKED_READ connection.
+HINT:  This operation requires an OPERATIONAL connection.
+SQLSTATE:  ZD102 (DEP_ENDPOINT_OPERATION)
+
+bi_dashboard@analytics=&gt; SET dep.path = 'OPERATIONAL';
+ERROR:  The access path of this connection is MASKED_READ and cannot be changed.
+HINT:  The path is fixed at authentication. Connect through another endpoint instead.
+SQLSTATE:  ZD106 (DEP_PATH_IMMUTABLE)</code></pre>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TABLE a (id BIGINT PRIMARY KEY, x TEXT PROTECTED MATCH DOMAIN d1);
+CREATE TABLE
+
+admin@operational=&gt; CREATE TABLE b (id BIGINT PRIMARY KEY, y TEXT PROTECTED MATCH DOMAIN d2);
+CREATE TABLE
+
+admin@operational=&gt; SELECT 1 FROM a, b WHERE a.x = b.y;
+ERROR:  a.x (match domain d1) cannot be compared with b.y (match domain d2).
+HINT:  Values from different match domains are different kinds of value.
+SQLSTATE:  ZD103 (DEP_MATCH_DOMAIN_MISMATCH)</code></pre>
+<pre class="highlight"><code class="language-text">doctors_app@operational=&gt; SELECT p.full_name FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id;
+ERROR:  Join on PROTECTED columns patients.national_id and medical_records.patient_national_id is not anchored to a single protected value.
+HINT:  Anchor the join with a lookup such as WHERE patients.national_id = $1, or perform it inside a function declared LINKS person_id.
+SQLSTATE:  ZD107 (DEP_UNANCHORED_MATCH)</code></pre>
+<pre class="highlight"><code class="language-text">billing_job@operational=&gt; SELECT * FROM monthly_fund_report(DATE '2026-10-01') AS r WHERE r.national_id = '123456782';
+ERROR:  Column national_id of monthly_fund_report() is a disclosed value and cannot be used in a filter.
+HINT:  Disclosed values can only be returned. Perform the match on PROTECTED fields inside a declared function, before REVEAL.
+SQLSTATE:  ZD104 (DEP_DISCLOSED_VALUE_USE)</code></pre>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; SELECT full_name FROM patients ORDER BY national_id;
+ERROR:  ORDER BY is not supported for PROTECTED values (patients.national_id).
+HINT:  PROTECTED values support only full-value equality matching. To release a value, use a disclosing function.
+SQLSTATE:  ZD101 (DEP_PROTECTED_OPERATION)
+
+admin@operational=&gt; MERGE INTO patients USING patients p2 ON patients.patient_id = p2.patient_id WHEN MATCHED THEN DELETE;
+ERROR:  Statement not supported: MERGE INTO patients
+HINT:  DEP rejects forms it cannot analyze rather than run them with uncertain protection.
+SQLSTATE:  ZD108 (DEP_UNSUPPORTED_FORM)
+
+admin@operational=&gt; ALTER ROLE reception_app MATCH LIMIT 1 PER MINUTE;
+ALTER ROLE
+
+admin@operational=&gt; \c operational reception_app
+You are now connected as "reception_app" through endpoint "operational" (OPERATIONAL).
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+ full_name
+------------
+ Dana Cohen
+(1 row)
+
+reception_app@operational=&gt; SELECT full_name FROM patients WHERE national_id = '234567893';
+ERROR:  Role reception_app has made 1 protected matches of the 1 PER MINUTE it is allowed; this statement would make 1 more.
+HINT:  Wait for the period to pass, or ask a superuser to change the limit (ALTER ROLE ... MATCH LIMIT n PER MINUTE).
+SQLSTATE:  ZD109 (DEP_MATCH_RATE_LIMITED)</code></pre>
+<h2 id="postgresql-sqlstates">PostgreSQL SQLSTATEs</h2>
+<p>These are the SQLSTATEs DEP Engine itself raises, besides <code>ZD</code>. DataFusion may raise others for ordinary SQL, such as a type error.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>SQLSTATE</th>
+<th>Meaning</th>
+<th>In DEP Engine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>08000</code>, <code>08001</code>, <code>08006</code></td>
+<td>Connection exception</td>
+<td>A TLS setup or handshake failure; an unknown <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">endpoint</a> at login; a client that could not connect</td>
+</tr>
+<tr>
+<td><code>0LP01</code></td>
+<td>Invalid grant operation</td>
+<td>A privilege that does not apply to the object (for example <code>EXECUTE</code> on a table)</td>
+</tr>
+<tr>
+<td><code>22023</code></td>
+<td>Invalid parameter value</td>
+<td>An unknown endpoint mode, role, <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limit</a> or period</td>
+</tr>
+<tr>
+<td><code>22P02</code></td>
+<td>Invalid text representation</td>
+<td>A malformed JSON body in the HTTP API</td>
+</tr>
+<tr>
+<td><code>23502</code></td>
+<td>Not-null violation</td>
+<td>NULL in a <code>NOT NULL</code> column</td>
+</tr>
+<tr>
+<td><code>23503</code></td>
+<td>Foreign-key violation</td>
+<td>A reference to nothing, or a referenced row changed or deleted</td>
+</tr>
+<tr>
+<td><code>23505</code></td>
+<td>Unique violation</td>
+<td>A primary or unique key already exists. For a protected column the message never shows the value</td>
+</tr>
+<tr>
+<td><code>25000</code>, <code>25001</code></td>
+<td>Invalid transaction state</td>
+<td>The transaction has ended; <code>ALTER SYSTEM ROTATE MASTER KEY</code> inside a transaction block</td>
+</tr>
+<tr>
+<td><code>25P01</code></td>
+<td>No active transaction</td>
+<td><code>SAVEPOINT</code>, <code>ROLLBACK TO</code> or <code>RELEASE</code> outside a transaction block</td>
+</tr>
+<tr>
+<td><code>25P02</code></td>
+<td>In failed transaction</td>
+<td>A statement after an error, until <code>ROLLBACK</code> or <code>ROLLBACK TO</code></td>
+</tr>
+<tr>
+<td><code>25P03</code></td>
+<td>Idle-in-transaction timeout</td>
+<td>The transaction was idle longer than <code>--idle-in-transaction-timeout</code> and was rolled back</td>
+</tr>
+<tr>
+<td><code>28000</code></td>
+<td>Invalid authorization</td>
+<td>A role that does not exist, cannot log in, or may not use the endpoint; a plain connection to a server that requires TLS</td>
+</tr>
+<tr>
+<td><code>28P01</code></td>
+<td>Invalid password</td>
+<td>Wrong password (also <code>401</code> over HTTP)</td>
+</tr>
+<tr>
+<td><code>2BP01</code></td>
+<td>Dependent objects exist</td>
+<td>Dropping a table that others reference, or an index the engine keeps</td>
+</tr>
+<tr>
+<td><code>3B001</code></td>
+<td>Invalid savepoint</td>
+<td><code>ROLLBACK TO</code> or <code>RELEASE</code> of a savepoint that does not exist</td>
+</tr>
+<tr>
+<td><code>40001</code></td>
+<td>Serialization failure</td>
+<td>A transaction wrote a table that another transaction changed after it began</td>
+</tr>
+<tr>
+<td><code>42501</code></td>
+<td>Insufficient privilege</td>
+<td>A missing privilege, for a table, column, function, or the right to create objects. For a protected column the hint names the grant that would allow matching</td>
+</tr>
+<tr>
+<td><code>42601</code></td>
+<td>Syntax error</td>
+<td>A malformed statement, and a <code>PROTECTED</code> column with no <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a></td>
+</tr>
+<tr>
+<td><code>42703</code>, <code>42P01</code></td>
+<td>Undefined column, undefined table</td>
+<td>A name that does not exist</td>
+</tr>
+<tr>
+<td><code>42704</code></td>
+<td>Undefined object</td>
+<td>A role, index, endpoint, match domain or type that does not exist, or an unknown <code>dep.</code> setting</td>
+</tr>
+<tr>
+<td><code>42710</code>, <code>42723</code>, <code>42P07</code></td>
+<td>Duplicate object</td>
+<td>A role, endpoint, function, table or index that already exists</td>
+</tr>
+<tr>
+<td><code>42804</code></td>
+<td>Datatype mismatch</td>
+<td><code>REVEAL</code> of a column that is not protected; a protected column that is not <code>TEXT</code></td>
+</tr>
+<tr>
+<td><code>42883</code></td>
+<td>Undefined function</td>
+<td>A function that does not exist, or <code>REVEAL</code> with the wrong number of arguments</td>
+</tr>
+<tr>
+<td><code>42P02</code></td>
+<td>Undefined parameter</td>
+<td>A <code>$n</code> with no value</td>
+</tr>
+<tr>
+<td><code>42P13</code></td>
+<td>Invalid function definition</td>
+<td>A missing body, or a body whose columns do not match <code>RETURNS TABLE</code></td>
+</tr>
+<tr>
+<td><code>42P16</code></td>
+<td>Invalid table definition</td>
+<td>A permanent table that references a temporary one</td>
+</tr>
+<tr>
+<td><code>53200</code></td>
+<td>Out of memory</td>
+<td>A query needs more than <code>--memory-limit</code> and cannot spill (a hash join)</td>
+</tr>
+<tr>
+<td><code>53300</code></td>
+<td>Too many connections</td>
+<td>More than <code>--max-connections</code></td>
+</tr>
+<tr>
+<td><code>55000</code></td>
+<td>Object not in prerequisite state</td>
+<td>A function that uses a table dropped and created again</td>
+</tr>
+<tr>
+<td><code>55006</code></td>
+<td>Object in use</td>
+<td>The data directory is used by another DEP Engine; a role that cannot be dropped; the <code>admin</code> role must stay a superuser</td>
+</tr>
+<tr>
+<td><code>55P03</code></td>
+<td>Lock not available</td>
+<td>The write lock was not free within <code>--lock-timeout</code></td>
+</tr>
+<tr>
+<td><code>58030</code></td>
+<td>I/O error</td>
+<td>A data file, key file or commit failure; a missing or invalid key file</td>
+</tr>
+<tr>
+<td><code>XX000</code></td>
+<td>Internal error</td>
+<td>An error from DataFusion that DEP does not classify, or an internal inconsistency</td>
+</tr>
+<tr>
+<td><code>XX001</code></td>
+<td>Data corrupted</td>
+<td>A stored row cannot be decoded, or a protected value cannot be decrypted with the current key</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="dep-notes">DEP notes</h2>
+<p>A <strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#dep-note" data-term="DEP note" data-def="A line with a result that says how protected columns were handled.">DEP note</a></strong> is a sentence that says which DEP rule applied to a statement. Plain SQL produces none, so a note is a signal that DEP did something. Notes never contain a protected value.</p>
+<p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-lookup.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/studio/studio-lookup.png" alt="DEP notes in the Output pane of Hoopeo Studio" width="1440" height="900"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-lookup-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/studio/studio-lookup-dark.png" alt="" width="1440" height="900"></a></p>
+<p>How a client receives them:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Client</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEP CLI, Hoopeo Studio</td>
+<td>Printed as <code>DEP:  ...</code> lines before the result (DEP CLI: <code>\notes off</code> hides them)</td>
+</tr>
+<tr>
+<td>PostgreSQL drivers, <code>psql</code></td>
+<td><code>NOTICE</code> messages whose text starts with <code>DEP:</code></td>
+</tr>
+<tr>
+<td>HTTP API</td>
+<td>The <code>notes</code> array of each result</td>
+</tr>
+<tr>
+<td>Any client</td>
+<td><code>SHOW DEP NOTES</code> returns the notes of the last statement</td>
+</tr>
+</tbody>
+</table></div>
+<p>In the texts below, <code>{x}</code> stands for a name filled in by the engine: <code>{col}</code> is <code>table.column</code>, <code>{domain}</code> a match domain, <code>{fn}</code> a function.</p>
+<h3 id="notes-reads">Reads</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Note</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROTECTED column {col} is matched by equality through the blind index of MATCH DOMAIN {domain}.</code></td>
+<td>A <a href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column">protected column</a> is compared with a value (<a href="/project-hoopeo.github.io/docs/reference/glossary/#matching">matching</a>): <code>=</code>, <code>OR</code>, <code>CASE</code>, <code>NOT (col = v)</code>; also in <code>UPDATE</code> and <code>DELETE</code></td>
+</tr>
+<tr>
+<td><code>PROTECTED column {col} is matched against a list of values through the blind index of MATCH DOMAIN {domain}.</code></td>
+<td><code>IN</code> or <code>NOT IN</code> with a list</td>
+</tr>
+<tr>
+<td><code>Join of PROTECTED columns {col} and {col} (MATCH DOMAIN {domain}) is anchored to a single protected value.</code></td>
+<td>A join between two protected columns that the query <a href="/project-hoopeo.github.io/docs/reference/glossary/#anchor">anchors</a> to one value</td>
+</tr>
+<tr>
+<td><code>Output column {name} is PROTECTED column {col} (MATCH DOMAIN {domain}) and is returned as NULL.</code></td>
+<td>A protected column is selected</td>
+</tr>
+<tr>
+<td><code>Output column {name} is disclosed: {description} (DISCLOSES {domain}).</code></td>
+<td>A column produced by <a href="/project-hoopeo.github.io/docs/reference/glossary/#reveal"><code>REVEAL</code></a> in a <a href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure">disclosing function</a> is returned</td>
+</tr>
+<tr>
+<td><code>{fn}() is declared DISCLOSES {domains}: the columns it declares are returned in plaintext.</code></td>
+<td>A function declared <code>DISCLOSES</code> is called</td>
+</tr>
+<tr>
+<td><code>{fn}() is declared LINKS {domains}: it may join protected values without an anchor.</code></td>
+<td>A function declared for <a href="/project-hoopeo.github.io/docs/reference/glossary/#linking">linking</a> (<code>LINKS</code>) is called</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="notes-writes-and-schema">Writes and schema</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Note</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROTECTED column {table}.{column} (MATCH DOMAIN {domain}) is stored as a blind index and ciphertext.</code></td>
+<td><code>INSERT</code> writes a protected column</td>
+</tr>
+<tr>
+<td><code>Index {name} keys PROTECTED column(s) {columns} by their blind index entries: it answers equality only, and holds no plaintext.</code></td>
+<td><code>CREATE INDEX</code> on a protected column</td>
+</tr>
+<tr>
+<td><code>Index {name} already exists; nothing was done.</code></td>
+<td><code>CREATE INDEX IF NOT EXISTS</code> finds the name taken</td>
+</tr>
+<tr>
+<td><code>{table} is a TEMPORARY table: it is kept in memory only, and is gone when the server stops.</code></td>
+<td><code>CREATE TEMPORARY TABLE</code></td>
+</tr>
+<tr>
+<td><code>{index}: {n} duplicate key(s); uniqueness is still not enforced.</code></td>
+<td><code>REINDEX</code> of a unique key that still has duplicates</td>
+</tr>
+<tr>
+<td><code>{index}: no duplicate keys; uniqueness is enforced again.</code></td>
+<td><code>REINDEX</code> after the duplicates were removed</td>
+</tr>
+<tr>
+<td><code>The master key was replaced: {n} protected values were indexed and encrypted again with the new key, and the indexes were rebuilt. The old key no longer opens this data.</code></td>
+<td><code>ALTER SYSTEM ROTATE MASTER KEY</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="notes-transactions">Transactions</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Note</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>There is already a transaction in progress.</code></td>
+<td><code>BEGIN</code> inside a transaction</td>
+</tr>
+<tr>
+<td><code>There is no transaction in progress.</code></td>
+<td><code>COMMIT</code> or <code>ROLLBACK</code> outside one</td>
+</tr>
+<tr>
+<td><code>The transaction had failed, so it was rolled back.</code></td>
+<td><code>COMMIT</code> of an aborted transaction</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="notes-examples">Examples</h3>
+<pre class="highlight"><code class="language-text">reception_app@operational=&gt; SELECT full_name, national_id FROM patients WHERE national_id IN ('123456782', '234567893');
+DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+DEP:  Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL.
+ full_name  | national_id
+------------+-------------
+ Dana Cohen | NULL
+ Yossi Levi | NULL
+(2 rows)
+
+reception_app@operational=&gt; SHOW DEP NOTES;
+DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+DEP:  Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL.
+                                                             note
+------------------------------------------------------------------------------------------------------------------------------
+ PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.
+ Output column national_id is PROTECTED column patients.national_id (MATCH DOMAIN person_id) and is returned as NULL.
+(2 rows)</code></pre>
+<pre class="highlight"><code class="language-text">doctors_app@operational=&gt; SELECT p.full_name, m.diagnosis FROM patients AS p JOIN medical_records AS m ON m.patient_national_id = p.national_id WHERE p.national_id = '123456782';
+DEP:  PROTECTED column patients.national_id is matched by equality through the blind index of MATCH DOMAIN person_id.
+DEP:  Join of PROTECTED columns medical_records.patient_national_id and patients.national_id (MATCH DOMAIN person_id) is anchored to a single protected value.
+ full_name  |    diagnosis
+------------+------------------
+ Dana Cohen | Asthma
+ Dana Cohen | Seasonal allergy
+(2 rows)</code></pre>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; CREATE TEMPORARY TABLE scratch (id BIGINT PRIMARY KEY, token TEXT PROTECTED MATCH DOMAIN scratch_token);
+DEP:  scratch is a TEMPORARY table: it is kept in memory only, and is gone when the server stops.
+CREATE TABLE
+
+admin@operational=&gt; CREATE INDEX IF NOT EXISTS scratch_token_idx ON scratch (token);
+DEP:  Index scratch_token_idx already exists; nothing was done.
+CREATE INDEX
+
+admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; BEGIN;
+DEP:  There is already a transaction in progress.
+BEGIN
+
+admin@operational=*&gt; COMMIT;
+COMMIT
+
+admin@operational=&gt; COMMIT;
+DEP:  There is no transaction in progress.
+COMMIT</code></pre>
+<pre class="highlight"><code class="language-text">admin@operational=&gt; BEGIN;
+BEGIN
+
+admin@operational=*&gt; INSERT INTO patients (patient_id, national_id) VALUES (1, '999999990');
+ERROR:  duplicate key value violates unique constraint "patients_pkey": Key (patient_id)=(1) already exists.
+SQLSTATE:  23505
+
+admin@operational=!&gt; COMMIT;
+DEP:  The transaction had failed, so it was rolled back.
+ROLLBACK</code></pre></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/reference/glossary/"><small>Previous</small>Glossary</a><a class="next" href="/project-hoopeo.github.io/docs/reference/show/"><small>Next</small>SHOW commands</a></div></article>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#dep-errors">DEP errors</a><ul><li><a href="#examples">Examples</a></li></ul></li><li><a href="#postgresql-sqlstates">PostgreSQL SQLSTATEs</a></li><li><a href="#dep-notes">DEP notes</a><ul><li><a href="#notes-reads">Reads</a></li><li><a href="#notes-writes-and-schema">Writes and schema</a></li><li><a href="#notes-transactions">Transactions</a></li><li><a href="#notes-examples">Examples</a></li></ul></li></ul></aside>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><h2>Project Hoopeo</h2><ul>
+      <li><a href="/project-hoopeo.github.io/about/">About</a></li>
+      <li><a href="/project-hoopeo.github.io/changelog/">Changelog</a></li>
+      <li><a href="/project-hoopeo.github.io/security/">Security</a></li>
+      <li><a href="https://github.com/mandelreouven2002/project-hoopeo.github.io" rel="noopener">GitHub</a></li></ul></div>
+    <div><h2>Use it</h2><ul>
+      <li><a href="/project-hoopeo.github.io/playground/">Playground</a></li>
+      <li><a href="/project-hoopeo.github.io/install/">Install</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/">Learn DEP</a></li>
+      <li><a href="/project-hoopeo.github.io/docs/reference/glossary/">Glossary</a></li>
+      <li><a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code</a></li><li><a href="/project-hoopeo.github.io/docs/privacy/">DEP & GDPR</a></li><li><a href="/project-hoopeo.github.io/docs/server/#compatibility">Compatibility & limits</a></li></ul></div>
+    <div><h2>Legal</h2><ul>
+      <li><a href="/project-hoopeo.github.io/legal/privacy/">Privacy</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/terms/">Terms</a></li>
+      <li><a href="/project-hoopeo.github.io/legal/licensing/">Licensing</a></li>
+      <li><a href="/project-hoopeo.github.io/brand/">Names and logos</a></li></ul></div>
+    <div><h2>Author</h2><ul>
+      <li><a href="https://lp.reuven.click" rel="noopener">lp.reuven.click</a></li></ul></div>
+  </div>
+  <p class="footer-note"><span class="badge">Experimental</span> Project Hoopeo is an experimental, conceptual project. See the <a href="/project-hoopeo.github.io/legal/terms/">terms of use</a>. &copy; 2026 Reuven Mandelovich.</p>
+</div></footer>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/highlight.min.js?v=8ab71eb09c" defer></script>
+<script src="/project-hoopeo.github.io/assets/vendor/highlight/sql.min.js?v=bae9e44743" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/code-highlighting.js?v=1ae086de0d" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/site.js?v=76705d9c9c" defer></script>
+<script src="/project-hoopeo.github.io/assets/js/home-demo.js?v=5b6c0bf297" defer></script>
+</body>
+</html>

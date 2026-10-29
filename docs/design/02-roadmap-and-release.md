@@ -1,6 +1,11 @@
 # DEP: Database-Enforced Privacy
 
+> **Design and future work.** This document contains proposals and historical planning assumptions. For available software and current limitations, use [Run the server](../book/06-server.md#compatibility). It is further reading for [Inside the engine](../book/08-internals.md).
+
+
 ## Roadmap and Release
+
+> **Design document — future and historical planning.** This is not the feature list of the current binary. See [Compatibility & limitations](../guides/compatibility.md) for DEP Engine 0.5.2 and [the changelog](../../CHANGELOG.md) for shipped releases.
 
 ### One possible path from idea to implementation
 

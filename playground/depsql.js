@@ -1257,6 +1257,12 @@ class Engine {
       case 'isnull': {
         const r = this.ex(e.e, b, ctx, sub);
         if (r.kind === 'disc' && pos.place !== 'project') throw disclosedUse(r.desc, PLACE[pos.place]);
+        // Whether a protected value is present is information: hidden on the masked path, and on the operational
+        // path testable in a condition but never returned as a value.
+        if (r.kind === 'prot' && !ctx.region) {
+          if (ctx.path === 'MASKED_READ') throw masked('Testing PROTECTED values for NULL is');
+          if (pos.place === 'project' || pos.place === 'aggregate' || pos.place === 'window') throw dep('DEP_PROTECTED_OPERATION', `IS NULL is not supported for PROTECTED values outside a condition (${r.desc}).`, 'Test whether a PROTECTED value is present in a WHERE or JOIN condition; its presence cannot be returned.');
+        }
         return { kind: 'ord', sql: `(${r.sql} IS ${e.neg ? 'NOT ' : ''}NULL)`, constant: r.kind === 'ord' && r.constant, dtype: 'bool', fromParam: r.fromParam };
       }
       case 'like': {
@@ -1278,7 +1284,7 @@ class Engine {
         const sql = `(SELECT ${qi(oc.name)} FROM (${q.sql}))`;
         if (oc.kind === 'prot') return { kind: 'prot', sql, physCt: null, hasCt: false, domain: oc.domain, desc: oc.desc, vkey: null, anchored: oc.anchored, dtype: 'text' };
         if (oc.kind === 'disc') {
-          if (pos.place !== 'project' && pos.place !== 'sort') throw disclosedUse(oc.desc, PLACE[pos.place]);
+          if (pos.place !== 'project') throw disclosedUse(oc.desc, PLACE[pos.place]);
           return { kind: 'disc', sql, domain: oc.domain, desc: oc.desc, dtype: oc.dtype };
         }
         return { kind: 'ord', sql, constant: false, dtype: oc.dtype };
@@ -1317,19 +1323,19 @@ class Engine {
     if (c.base) ctx.uses.columns.add(c.base.table + KEYSEP + c.base.col);
     if (c.kind === 'prot') return { kind: 'prot', sql: c.phys, physCt: c.physCt, hasCt: !!c.physCt, domain: c.domain, desc: c.desc, vkey: r.depth ? null : r.rel.alias + '.' + c.name, dtype: 'text', isCol: true, rel: r.rel, colName: c.name, depth: r.depth };
     if (c.kind === 'disc') {
-      if (pos.place !== 'project' && pos.place !== 'sort') throw disclosedUse(c.desc, PLACE[pos.place]);
+      if (pos.place !== 'project') throw disclosedUse(c.desc, PLACE[pos.place]);
       return { kind: 'disc', sql: c.phys, domain: c.domain, desc: c.desc, dtype: c.dtype, isCol: true };
     }
     return { kind: 'ord', sql: c.phys, constant: false, dtype: c.dtype, isCol: true, rel: r.rel, colName: c.name, depth: r.depth };
   }
 
-  /* An operation that is not equality: a PROTECTED operand is refused; a disclosed one makes the result disclosed. */
+  /* An operation that is not equality: a PROTECTED or disclosed operand is refused. */
   generic(opName, vals, sql, o) {
     o = o || {};
     for (const v of vals) if (v.kind === 'prot') throw protectedOp(opName, v.desc);
     const d = vals.find((v) => v.kind === 'disc');
-    if (d && o.agg) throw disclosedUse(d.desc, 'an aggregate');
-    if (d) return { kind: 'disc', sql, domain: d.domain, desc: d.desc, dtype: o.dtype };
+    // The terminal rule: a disclosed value may be returned (renamed or cast), and is the argument of no function or operator.
+    if (d) throw disclosedUse(d.desc, o.agg ? 'an aggregate' : 'a function or operator');
     return { kind: 'ord', sql, constant: !o.agg && !o.volatile && vals.every((v) => v.constant), dtype: o.dtype, agg: !!o.agg || vals.some((v) => v.agg), fromParam: vals.some((v) => v.fromParam) };
   }
 
@@ -1476,6 +1482,11 @@ class Engine {
     // COUNT(x) counts rows; it matches nothing.
     if (name === 'count' && !e.distinct && !isWin) {
       for (const a of args) if (a.kind === 'disc') throw disclosedUse(a.desc, 'an aggregate');
+      // COUNT(col) counts the values that are present: the same presence test as IS NOT NULL.
+      for (const a of args) if (a.kind === 'prot' && !ctx.region) {
+        if (ctx.path === 'MASKED_READ') throw masked('Counting PROTECTED values is');
+        throw dep('DEP_PROTECTED_OPERATION', `COUNT of PROTECTED values is not supported (${a.desc}).`, 'Use COUNT(*) with the condition in WHERE.');
+      }
       return { kind: 'ord', sql: e.star ? 'count(*)' : `count(${args.map((a) => a.sql).join(', ')})`, constant: false, dtype: 'int', agg: true };
     }
     if (e.star && name !== 'count') throw sqlerr('42601', `${name}(*) is not valid`);
@@ -1826,6 +1837,7 @@ class Engine {
       sel.push(`${sql} AS ${qi(name)}`);
       outCols.push({ name, kind: v.kind, domain: v.domain, desc: v.desc, dtype: rk || v.dtype });
     });
+    if (q.distinct) for (const oc of outCols) if (oc.kind === 'disc') throw disclosedUse(oc.desc, 'DISTINCT');
     if (q.distinct) for (const oc of outCols) if (oc.kind === 'prot' && !this.links(ctx, oc.domain)) throw dep('DEP_UNANCHORED_MATCH', `DISTINCT on PROTECTED column ${oc.desc} links every row that shares a value.`, `Perform it inside a function declared LINKS ${oc.domain}.`);
     // ORDER BY: output names and ordinals first, then expressions over the input
     const orderSql = q.orderBy.map((ob) => {
@@ -1833,7 +1845,7 @@ class Engine {
       let oc = null;
       if (g.type === 'lit' && g.ltype === 'num') { oc = outCols[g.v - 1]; if (!oc) throw sqlerr('42P10', `ORDER BY position ${g.v} is not in select list`); }
       else if (g.type === 'col' && !g.table) { const k = items.findIndex((x) => x.alias === g.name); if (k >= 0) oc = outCols[k]; }
-      if (oc) { if (oc.kind === 'prot') throw protectedOp('ORDER BY', oc.desc); return `${qi(oc.name)} ${suffix}`; }
+      if (oc) { if (oc.kind === 'disc') throw disclosedUse(oc.desc, 'ORDER BY'); if (oc.kind === 'prot') throw protectedOp('ORDER BY', oc.desc); return `${qi(oc.name)} ${suffix}`; }
       const v = this.ex(g, b, ctx, { place: 'sort', conj: false });
       if (v.kind === 'prot') throw protectedOp('ORDER BY', v.desc);
       return `${v.sql} ${suffix}`;

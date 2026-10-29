@@ -7,3 +7,6 @@ dist/
 /playground/site/
 /playground/dep-sql-playground.html
 __pycache__/
+
+dist/
+.openai/hosting.local.json
