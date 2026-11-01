@@ -1,0 +1,16 @@
+#!/bin/bash
+# Started by launchd (click.reuven.hoopeo.dep-engine) for the user who is logged in.
+# Keeps the database, and its master key, in ~/Library/Application Support/Project Hoopeo/data.
+# On the first start it generates the admin password and keeps it, readable only by the user.
+set -euo pipefail
+SUPPORT="$HOME/Library/Application Support/Project Hoopeo"
+mkdir -p "$SUPPORT"
+chmod 700 "$SUPPORT"
+ARGS=(--listen 127.0.0.1:5433 --data-dir "$SUPPORT/data")
+if [ ! -f "$SUPPORT/data/catalog.json" ]; then
+  umask 077
+  PASSWORD="$(/usr/bin/openssl rand -hex 12)"
+  printf '%s' "$PASSWORD" > "$SUPPORT/admin-password"
+  ARGS+=(--admin-password "$PASSWORD")
+fi
+exec /usr/local/bin/dep-engine "${ARGS[@]}"

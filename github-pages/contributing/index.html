@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contributing | Project Hoopeo</title>
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds the open layers: the specification, the...">
+<meta name="description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds all of it: the specification, the documentation,...">
 <meta name="theme-color" content="#011A3E">
 <link rel="canonical" href="https://mandelreouven2002.github.io/project-hoopeo.github.io/contributing/">
 <link rel="icon" href="/project-hoopeo.github.io/assets/brand/favicon.ico" sizes="48x48">
@@ -15,12 +15,12 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Project Hoopeo">
 <meta property="og:title" content="Contributing | Project Hoopeo">
-<meta property="og:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds the open layers: the specification, the...">
+<meta property="og:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds all of it: the specification, the documentation,...">
 <meta property="og:url" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/contributing/">
 <meta property="og:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contributing | Project Hoopeo">
-<meta name="twitter:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds the open layers: the specification, the...">
+<meta name="twitter:description" content="Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds all of it: the specification, the documentation,...">
 <meta name="twitter:image" content="https://mandelreouven2002.github.io/project-hoopeo.github.io/assets/brand/og-default.png">
 <link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/project-hoopeo.github.io/assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -39,17 +39,17 @@
 </div></header>
 <main id="main">
 <div class="wrap section"><div class="prose"><h1 id="contributing">Contributing</h1>
-<p>Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds the open layers: the specification, the documentation, DEP.js and the playground, the examples, and the website. Critical reading and hard questions are as welcome as code.</p>
+<p>Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds all of it: the specification, the documentation, DEP.js and the playground, the examples, the website, and the source of DEP Engine, DEP CLI and Hoopeo Studio. Critical reading and hard questions are as welcome as code.</p>
 <h2 id="what-accepts-contributions">What accepts contributions</h2>
-<p>Contributions are accepted to the public layers only:</p>
+<p>Pull requests are accepted for:</p>
 <ul>
 <li>the specification and the design proposal (<code>docs/design/</code>);</li>
-<li>the guides and the reference (<code>docs/guides/</code>, <code>docs/reference/</code>);</li>
+<li>the guides and the reference (<code>docs/guides/</code>, <code>docs/reference/</code>, <code>docs/book/</code>);</li>
 <li>DEP.js and the DEP SQL Playground (<code>playground/</code>);</li>
 <li>the examples (<code>examples/</code>);</li>
 <li>the website (<code>site/</code>).</li>
 </ul>
-<p>DEP Engine, DEP CLI and Hoopeo Studio are developed in a private repository and do not accept contributions. Bug reports and questions about them are welcome as issues here.</p>
+<p>The source of DEP Engine, DEP CLI and Hoopeo Studio (<code>engine/</code>, <code>packages/</code>, <code>studio/</code>, <code>packaging/</code>) is public, under the Business Source License 1.1, but pull requests to it are not accepted yet: the maintainer needs a contributor agreement before taking code that he may later license under the Change License or a commercial license. Bug reports, questions, and proposals for these products are welcome as issues, and a proposed change described in an issue is welcome too.</p>
 <h2 id="ways-to-help">Ways to help</h2>
 <ul>
 <li><strong>Challenge the design.</strong> Open an issue explaining where a rule is unclear, inconsistent, or too strict to be practical.</li>
@@ -63,7 +63,7 @@
 <h2 id="credit">Credit</h2>
 <p>Contributors whose feedback changes the design are acknowledged in the document's acknowledgments and in the release notes.</p>
 <h2 id="licensing-of-contributions">Licensing of contributions</h2>
-<p>Each directory keeps its license (see <a href="/project-hoopeo.github.io/legal/licensing/"><code>LICENSING.md</code></a>). A contribution is made under the license of the directory it goes to, and there is no contributor license agreement:</p>
+<p>Each directory keeps its license (see <a href="/project-hoopeo.github.io/legal/licensing/"><code>LICENSING.md</code></a>). A contribution is made under the license of the directory it goes to, and there is no contributor license agreement for these directories:</p>
 <ul>
 <li>text in <code>docs/</code> is contributed under CC BY 4.0;</li>
 <li>code in <code>playground/</code>, <code>examples/</code> and <code>site/</code> is contributed under the Apache License 2.0.</li>
@@ -74,7 +74,7 @@
 npm ci
 npm test            # the playground's own tests
 npm run build       # writes site/ and dep-sql-playground.html</code></pre>
-<p><code>npm run compat</code> compares DEP.js with a running DEP Engine; it needs an engine binary, which is distributed under the Evaluation License (see <a href="/project-hoopeo.github.io/playground/#help"><code>playground/README.md</code></a>).</p></div></div>
+<p><code>npm run compat</code> compares DEP.js with a running DEP Engine; build the engine from this repository (see <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/DEVELOPING.md"><code>DEVELOPING.md</code></a>) or use a released binary (see <a href="/project-hoopeo.github.io/playground/#help"><code>playground/README.md</code></a>).</p></div></div>
 </main>
 <footer class="site-footer"><div class="wrap">
   <div class="footer-grid">

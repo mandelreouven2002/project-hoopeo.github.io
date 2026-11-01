@@ -1,5 +1,14 @@
 # Changelog
 
+## Source published under the Business Source License (2026-11-01)
+
+The source of DEP Engine, DEP CLI and Hoopeo Studio is now in this repository, with its history, together with the installers' packaging and the release workflows. It was in a private repository, and the repository `project-hoopeo` is no longer needed for development.
+
+- **License.** The source and the binaries built from it are under the Business Source License 1.1 (`LICENSES/BUSL-1.1.txt`): free for individuals and for non-profit, educational and research organizations, and free for non-production use by anyone, including companies. A company that wants to use it in production, or commercially, needs a commercial license from the copyright holder. Each version becomes available under the Apache License 2.0 four years after it is first published here. The parameters of the license are a draft that a lawyer will review.
+- **Unchanged.** The specification and the documentation stay under CC BY 4.0, and DEP.js, the playground, the examples and the starter stay under Apache 2.0. Binaries of releases up to 0.5.2 keep the Project Hoopeo Evaluation License they were published under.
+- **Repository.** `DEVELOPING.md` describes how to build, test and release. The release workflow publishes to this repository with its own token, and `PUBLIC_REPO_TOKEN` is no longer needed.
+- **Contributions.** Pull requests to the source of the products are not accepted yet: a contributor agreement is needed first.
+
 ## Clear presence-test examples (2026-10-29)
 
 - Distinguished a missing stored value from a protected value displayed as NULL.

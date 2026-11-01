@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+if [ "$1" = configure ]; then
+  id dep-engine >/dev/null 2>&1 || adduser --system --group --home /var/lib/dep-engine --no-create-home --shell /usr/sbin/nologin dep-engine >/dev/null
+  chown root:dep-engine /etc/dep-engine /etc/dep-engine/dep-engine.env
+  chmod 0750 /etc/dep-engine
+  chmod 0640 /etc/dep-engine/dep-engine.env
+  if [ ! -f /etc/dep-engine/admin-password ]; then
+    umask 077
+    head -c 12 /dev/urandom | od -An -tx1 | tr -d ' \n' > /etc/dep-engine/admin-password
+    chown root:dep-engine /etc/dep-engine/admin-password
+    chmod 0640 /etc/dep-engine/admin-password
+  fi
+  if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || true
+    systemctl enable dep-engine >/dev/null 2>&1 || true
+    systemctl restart dep-engine >/dev/null 2>&1 || true
+  fi
+  echo "DEP Engine listens on 127.0.0.1:5433. The admin password is in /etc/dep-engine/admin-password."
+fi
+exit 0

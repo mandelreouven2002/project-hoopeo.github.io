@@ -33,7 +33,7 @@ Project Hoopeo is made by **Reuven Mandelovich**: [lp.reuven.click](https://lp.r
 
 ## Licenses and a commercial license
 
-The layers have different licenses: CC BY 4.0 for the specification and documentation, Apache 2.0 for DEP.js and the examples, and the Project Hoopeo Evaluation License for the binaries of DEP Engine, DEP CLI and Hoopeo Studio. See [Licensing](../../LICENSING.md). Production use and commercial use need a commercial license. To ask for one, contact the author through [lp.reuven.click](https://lp.reuven.click).
+The layers have different licenses: CC BY 4.0 for the specification and documentation, Apache 2.0 for DEP.js and the examples, and the Business Source License 1.1 for the source and binaries of DEP Engine, DEP CLI and Hoopeo Studio. The code is public and free for individuals and for non-profit, educational and research organizations, and free for non-production use by anyone. A company that wants to use it in production, or commercially, needs a license: to ask for one, contact the author through [lp.reuven.click](https://lp.reuven.click). See [Licensing](../../LICENSING.md).
 
 ## Contributing and security
 

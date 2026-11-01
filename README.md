@@ -22,15 +22,15 @@ This repository holds the open layers of the project: the specification, the doc
 
 | Product | What it is | License |
 |---|---|---|
-| <img src="site/assets/brand/dep-engine-64.png" alt="" width="28"> **DEP Engine** | The database server: Rust, Apache DataFusion, disk-based storage with indexes (redb), constraints, transactions with savepoints and transactional schema changes, roles and privileges, an audit log and match limits, the PostgreSQL wire protocol (simple and extended), an HTTP API, TLS | Binaries under the Evaluation License; source private |
-| <img src="site/assets/brand/dep-cli-64.png" alt="" width="28"> **DEP CLI** | `dep-cli`, the command-line tool, with DEP Engine built in | Binaries under the Evaluation License; source private |
-| <img src="site/assets/brand/hoopeo-studio-64.png" alt="" width="28"> **Hoopeo Studio** | The developer application, in the spirit of PL/SQL Developer, with DEP Engine built in | Binaries under the Evaluation License; source private |
+| <img src="site/assets/brand/dep-engine-64.png" alt="" width="28"> **DEP Engine** | The database server: Rust, Apache DataFusion, disk-based storage with indexes (redb), constraints, transactions with savepoints and transactional schema changes, roles and privileges, an audit log and match limits, the PostgreSQL wire protocol (simple and extended), an HTTP API, TLS | Source and binaries under the Business Source License 1.1 |
+| <img src="site/assets/brand/dep-cli-64.png" alt="" width="28"> **DEP CLI** | `dep-cli`, the command-line tool, with DEP Engine built in | Source and binaries under the Business Source License 1.1 |
+| <img src="site/assets/brand/hoopeo-studio-64.png" alt="" width="28"> **Hoopeo Studio** | The developer application, in the spirit of PL/SQL Developer, with DEP Engine built in | Source and binaries under the Business Source License 1.1 |
 | <img src="site/assets/brand/dep-js-64.png" alt="" width="28"> **DEP.js** | The DEP SQL Playground: a browser simulator of DEP Engine 0.5, on sql.js | Apache 2.0 |
 | **Specification** | The design proposal and the roadmap | CC BY 4.0 |
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/diagrams/products-dark.png"><img src="docs/images/diagrams/products.png" alt="How the products connect: clients reach DEP Engine through its two endpoints; DEP CLI and Hoopeo Studio include the engine; DEP.js runs in the browser" width="760"></picture></p>
 
-The binaries are free for evaluation, research, teaching and non-production testing. Production and commercial use needs a commercial license. See [Licensing](#licensing).
+The code is public and free to use for individuals, non-profit, educational and research organizations, and for non-production use by anyone. A company that wants to use it in production, or commercially, needs a license from the author. See [Licensing](#licensing).
 
 ## Install
 
@@ -64,6 +64,11 @@ docs/
   reference/    errors, notes, SHOW commands, server options, HTTP API, DEP CLI
 examples/       the demo clinic (clinic.sql) and the guided tour
 playground/     DEP.js: the DEP SQL Playground, its tests and the compatibility test
+engine/         DEP Engine: the server and the library, with its tests
+packages/       DEP CLI (packages/dep-cli)
+studio/         Hoopeo Studio
+packaging/      installers for macOS and Linux, the Docker image, icons, third-party notices
+tools/          scripts that make the documentation images
 site/           the source of the website
 branding/       logos and icons (see BRAND.md)
 LICENSES/       the license texts
@@ -71,7 +76,7 @@ LICENSES/       the license texts
 
 See [WEBSITE.md](WEBSITE.md) for website development, local preview, GitHub Pages builds and verification.
 
-The source of DEP Engine, DEP CLI and Hoopeo Studio is in a private repository. Their installers are in the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).
+The source of DEP Engine, DEP CLI and Hoopeo Studio is in `engine/`, `packages/`, `studio/`, `packaging/` and `tools/`; see [DEVELOPING.md](DEVELOPING.md) to build and test it. Their installers are in the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).
 
 ## Licensing
 
@@ -81,8 +86,8 @@ Each layer has its own license; see [LICENSING.md](LICENSING.md) and [NOTICE](NO
 |---|---|
 | Specification, documentation | CC BY 4.0 |
 | DEP.js and the playground, the examples | Apache License 2.0 |
-| DEP Engine, DEP CLI, Hoopeo Studio (binaries) | Project Hoopeo Evaluation License: evaluation, research, teaching and non-production testing |
-| Production and commercial use | A commercial license, on request |
+| DEP Engine, DEP CLI, Hoopeo Studio (source and binaries) | Business Source License 1.1: free for individuals, non-profit, educational and research use, and for non-production use by anyone; each version becomes Apache 2.0 four years after publication |
+| Production or commercial use by a company | A commercial license, on request |
 
 The names and logos are covered by [BRAND.md](BRAND.md). Third-party libraries keep their own licenses: see [THIRD-PARTY.md](THIRD-PARTY.md).
 

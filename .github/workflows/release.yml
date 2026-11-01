@@ -1,0 +1,201 @@
+# On a tag v* (v0.5.2): builds every installer and publishes them as a GitHub Release of this repository.
+# The workflow's own token is enough; no secret is needed (macOS signing secrets are optional, see DEVELOPING.md).
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "An existing tag to build and publish again, for example v0.5.2"
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  CARGO_TERM_COLOR: always
+  PUBLIC_REPO: ${{ github.repository }}
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  prepare:
+    needs: ci
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.ref }}" }
+      - id: v
+        run: |
+          TAG="${{ inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          CARGO="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+          [ "$VERSION" = "$CARGO" ] || { echo "tag $TAG does not match Cargo.toml $CARGO"; exit 1; }
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Third-party notices (cargo-about); the committed file must be current, because Hoopeo Studio embeds it
+        run: |
+          cargo install cargo-about --locked --version 0.9.2 --features cli
+          cargo about generate packaging/about.hbs -c packaging/about.toml > THIRD-PARTY-NOTICES.new
+          diff -q THIRD-PARTY-NOTICES THIRD-PARTY-NOTICES.new || { echo "THIRD-PARTY-NOTICES is out of date: regenerate it (see README.md)"; exit 1; }
+      - name: The changelog section of this version
+        run: |
+          awk -v v="## ${{ steps.v.outputs.version }}" '$0==v {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "CHANGELOG.md has no section for ${{ steps.v.outputs.version }}"; exit 1; }
+      - uses: actions/upload-artifact@v4
+        with: { name: notes, path: notes.md }
+
+  linux:
+    needs: prepare
+    strategy:
+      matrix:
+        runner: [ubuntu-22.04, ubuntu-22.04-arm]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.ref }}" }
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev
+      - run: packaging/linux/build.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: "linux-${{ matrix.runner }}", path: dist/linux/* }
+
+  macos:
+    needs: prepare
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.ref }}" }
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: "aarch64-apple-darwin,x86_64-apple-darwin" }
+      - uses: Swatinem/rust-cache@v2
+      - name: Build the packages (signed and notarized only if the secrets exist)
+        env:
+          ARCH: universal
+          SIGN_APP: ${{ secrets.MACOS_SIGN_APP }}
+          SIGN_PKG: ${{ secrets.MACOS_SIGN_PKG }}
+          NOTARY_PROFILE: ${{ secrets.MACOS_NOTARY_PROFILE }}
+        run: |
+          if [ -z "$SIGN_APP" ] || [ -z "$SIGN_PKG" ]; then echo "unsigned" > dist-unsigned.txt; else echo "signed" > dist-unsigned.txt; fi
+          packaging/macos/build-pkg.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: macos, path: "dist/macos/*.pkg" }
+      - uses: actions/upload-artifact@v4
+        with: { name: macos-signing, path: dist-unsigned.txt }
+
+  docker:
+    needs: [prepare, linux]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.ref }}" }
+      - uses: actions/download-artifact@v4
+        with: { pattern: "linux-*", path: tarballs, merge-multiple: true }
+      - name: A build context from the Linux tarballs (no source)
+        run: |
+          V="${{ needs.prepare.outputs.version }}"
+          C=ctx; mkdir -p $C/bin/amd64 $C/bin/arm64 $C/LICENSES
+          for pair in "x86_64 amd64" "aarch64 arm64"; do set -- $pair
+            tar -xzf "tarballs/dep-engine-$V-linux-$1.tar.gz" -C tarballs
+            cp tarballs/dep-engine-$V-linux-$1/bin/dep-engine tarballs/dep-engine-$V-linux-$1/bin/dep-cli $C/bin/$2/
+          done
+          cp packaging/docker/Dockerfile.binary $C/Dockerfile
+          cp -R examples $C/examples
+          cp NOTICE LICENSING.md BRAND.md THIRD-PARTY-NOTICES $C/
+          cp LICENSES/BUSL-1.1.txt LICENSES/LicenseRef-Hoopeo-Commercial.txt $C/LICENSES/
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Build for this runner and start it with the demo clinic
+        uses: docker/build-push-action@v6
+        with: { context: ctx, platforms: linux/amd64, load: true, tags: dep-engine:test }
+      - name: Smoke test
+        run: |
+          docker run -d --name smoke -p 8433:8433 -e DEP_ADMIN_PASSWORD=admin -e DEP_HTTP_LISTEN=0.0.0.0:8433 \
+            -e DEP_TLS_SELF_SIGNED=0 -e DEP_INIT=/usr/share/project-hoopeo/examples/clinic.sql dep-engine:test
+          for i in $(seq 1 50); do curl -sf http://127.0.0.1:8433/v1/health && break; sleep 0.3; done
+          curl -sf -u reception_app:demo "http://127.0.0.1:8433/v1/query" \
+            --data "SELECT full_name FROM patients WHERE national_id = '123456782'" | grep -q "Dana Cohen"
+          docker rm -f smoke
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
+      - name: Push the multi-architecture image (public package, linked to the public repository)
+        uses: docker/build-push-action@v6
+        with:
+          context: ctx
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/mandelreouven2002/dep-engine:${{ needs.prepare.outputs.version }}
+            ghcr.io/mandelreouven2002/dep-engine:latest
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ env.PUBLIC_REPO }}
+            org.opencontainers.image.version=${{ needs.prepare.outputs.version }}
+
+  playground:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ inputs.tag || github.ref }}" }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: The single-file playground
+        working-directory: playground
+        run: |
+          npm ci
+          python3 build.py
+          cp dep-sql-playground.html "../../dep-sql-playground-${{ needs.prepare.outputs.version }}.html"
+          cp depsql.js ../../depsql.js
+      - uses: actions/upload-artifact@v4
+        with: { name: playground, path: "dep-sql-playground-*.html\ndepsql.js" }
+
+  publish:
+    needs: [prepare, linux, macos, docker, playground]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: in
+          # not the *.dockerbuild artifact that buildx leaves, which is not a zip
+          pattern: "{linux-*,macos,macos-signing,playground,notes}"
+      - name: Collect the assets under stable names, and write SHA256SUMS
+        run: |
+          V="${{ needs.prepare.outputs.version }}"
+          mkdir out
+          find in/linux-* in/macos in/playground -type f -exec cp {} out/ \;
+          # no version in the file names, so that releases/latest/download/<file> always works (the version stays in the tag,
+          # the release title, the package metadata and the folder inside each archive)
+          for f in out/*; do
+            n="$(basename "$f" | sed "s/[-_]${V//./\\.}//")"
+            [ "$n" = "$(basename "$f")" ] || mv "$f" "out/$n"
+          done
+          (cd out && sha256sum * > SHA256SUMS && cat SHA256SUMS)
+      - name: Release notes
+        run: |
+          cp in/notes/notes.md notes.md
+          {
+            echo
+            echo "DEP Engine, DEP CLI and Hoopeo Studio are licensed under the Business Source License 1.1 (see LICENSE and LICENSING.md): free to use, except that commercial use by a company needs a license from the copyright holder. Check the files with SHA256SUMS. Project Hoopeo is an experimental concept: see the terms of use on the website."
+            if [ "$(cat in/macos-signing/dist-unsigned.txt)" = "unsigned" ]; then
+              echo
+              echo "The macOS packages in this release are not signed or notarized. macOS asks for confirmation: Control-click the package, choose Open."
+            fi
+          } >> notes.md
+      - name: Keep the assets, for a release created by hand
+        uses: actions/upload-artifact@v4
+        with: { name: release-assets, path: "out/*\nnotes.md" }
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ needs.prepare.outputs.version }}" out/* \
+            --repo "$PUBLIC_REPO" --title "Project Hoopeo ${{ needs.prepare.outputs.version }}" --notes-file notes.md

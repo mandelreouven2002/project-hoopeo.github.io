@@ -12,7 +12,7 @@ Project Hoopeo is an experimental and conceptual project. It demonstrates Databa
 
 ## The software
 
-- **The binaries** of DEP Engine, DEP CLI and Hoopeo Studio are licensed under the [Project Hoopeo Evaluation License](../../../LICENSES/LicenseRef-Hoopeo-Evaluation.txt): evaluation, research, teaching and non-production testing. Production and commercial use is available under a commercial license. See [Licensing](../../../LICENSING.md).
+- **The source and binaries** of DEP Engine, DEP CLI and Hoopeo Studio are licensed under the [Business Source License 1.1](../../../LICENSES/BUSL-1.1.txt): free for individuals and for non-profit, educational and research organizations, and free for non-production use by anyone. Production or commercial use by a company is available under a commercial license. See [Licensing](../../../LICENSING.md).
 - **The open layers**, DEP.js, the playground and the examples under the Apache License 2.0, and the specification and documentation under CC BY 4.0, are under their own licenses, which give you more rights.
 - **The names and logos** are not licensed. See [Names and logos](../../../BRAND.md).
 - **Third-party libraries** keep their own licenses, listed in [Licensing](../../../LICENSING.md#third-party-libraries).

@@ -17,6 +17,7 @@ date-released: "2026-10-23"
 license:
   - CC-BY-4.0
   - Apache-2.0
+  - BUSL-1.1
 repository-code: "https://github.com/mandelreouven2002/project-hoopeo.github.io"
 url: "https://lp.reuven.click"
 # doi: "10.5281/zenodo.XXXXXXX"   # add after the first Zenodo release
