@@ -1,0 +1,8 @@
+The source code in this directory is licensed under the Business Source License 1.1
+(../LICENSES/BUSL-1.1.txt): free for individuals and for non-profit, educational and
+research organizations, and for non-production use by anyone. Production or commercial use
+by a company needs a commercial license (../LICENSES/LicenseRef-Hoopeo-Commercial.txt).
+Each version becomes available under the Apache License 2.0 four years after it is published.
+
+SPDX-License-Identifier: BUSL-1.1
+Copyright (c) 2026 Reuven Mandelovich

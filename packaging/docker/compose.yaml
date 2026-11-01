@@ -1,0 +1,25 @@
+# DEP Engine with Docker Compose:  docker compose -f packaging/docker/compose.yaml up -d
+# Set the password first:          echo 'DEP_ADMIN_PASSWORD=change-me' > packaging/docker/.env
+services:
+  dep-engine:
+    build:
+      context: ../..
+      dockerfile: packaging/docker/Dockerfile
+    image: dep-engine:0.5.2
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5433:5433"   # remove 127.0.0.1: to accept connections from the network
+      # - "127.0.0.1:8433:8433" # the HTTP API, with DEP_HTTP_LISTEN below
+    environment:
+      DEP_ADMIN_PASSWORD: ${DEP_ADMIN_PASSWORD:?set DEP_ADMIN_PASSWORD in packaging/docker/.env}
+      DEP_TLS_SELF_SIGNED: "1"
+      # DEP_TLS_HOSTS: db.example.com
+      # DEP_HTTP_LISTEN: 0.0.0.0:8433
+      # DEP_MATCH_LIMIT: 1000/minute
+      # DEP_MEMORY_LIMIT: 1GB          # default: a quarter of the container's memory limit
+      # DEP_CACHE_SIZE: 512MB          # default: an eighth of it
+      # DEP_INIT: /usr/share/project-hoopeo/examples/clinic.sql
+    volumes:
+      - dep-data:/var/lib/dep-engine
+volumes:
+  dep-data:

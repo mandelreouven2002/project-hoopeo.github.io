@@ -1,0 +1,26 @@
+# DEP Engine from a prebuilt Linux binary: for distributing the image without the source.
+# packaging/docker/make-context.sh puts this file, the binaries and the notices in one folder
+# (dist/docker/dep-engine-<v>-docker-<arch>/, with the binaries in bin/amd64 or bin/arm64); in that folder:
+#
+#   docker build -t dep-engine:<v> .
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/* \
+ && useradd --system --uid 10001 --home-dir /var/lib/dep-engine --shell /usr/sbin/nologin dep-engine \
+ && mkdir -p /var/lib/dep-engine && chown dep-engine:dep-engine /var/lib/dep-engine && chmod 0700 /var/lib/dep-engine
+ARG TARGETARCH
+COPY bin/${TARGETARCH}/dep-engine bin/${TARGETARCH}/dep-cli /usr/local/bin/
+COPY examples /usr/share/project-hoopeo/examples
+COPY NOTICE LICENSING.md BRAND.md THIRD-PARTY-NOTICES /usr/share/doc/project-hoopeo/
+COPY LICENSES /usr/share/doc/project-hoopeo/LICENSES
+USER dep-engine
+WORKDIR /var/lib/dep-engine
+ENV DEP_LISTEN=0.0.0.0:5433 DEP_DATA_DIR=/var/lib/dep-engine/data DEP_TLS_SELF_SIGNED=1
+VOLUME ["/var/lib/dep-engine"]
+EXPOSE 5433 8433
+LABEL org.opencontainers.image.title="DEP Engine" \
+      org.opencontainers.image.description="The Database-Enforced Privacy server (Project Hoopeo). Free for individuals, non-profit use and non-production use; companies need a license for production." \
+      org.opencontainers.image.vendor="Reuven Mandelovich" \
+      org.opencontainers.image.url="https://lp.reuven.click" \
+      org.opencontainers.image.source="https://github.com/mandelreouven2002/project-hoopeo.github.io" \
+      org.opencontainers.image.licenses="BUSL-1.1"
+ENTRYPOINT ["/usr/local/bin/dep-engine"]

@@ -1,0 +1,5 @@
+#!/bin/bash
+# Makes the examples readable by everyone and registers DEP CLI.app with Launch Services.
+chmod -R a+rX /usr/local/share/project-hoopeo 2>/dev/null || true
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "/Applications/DEP CLI.app" 2>/dev/null || true
+exit 0

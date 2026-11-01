@@ -1,15 +1,17 @@
 Project Hoopeo Commercial License
 
-DEP Engine, DEP CLI and Hoopeo Studio are distributed as binaries under the Project Hoopeo
-Evaluation License (LICENSES/LicenseRef-Hoopeo-Evaluation.txt), which allows evaluation,
-research, teaching and non-production testing.
+DEP Engine, DEP CLI and Hoopeo Studio are licensed under the Business Source License 1.1
+(LICENSES/BUSL-1.1.txt). It allows production use by individuals and by non-profit,
+educational and research organizations, and non-production use (evaluation, development,
+testing, teaching and research) by anyone.
 
-A commercial license is available from the copyright holder for production use, commercial
-use, embedding in a product, and offering the software as a service. Its terms are agreed in writing with:
+A commercial license is available from the copyright holder for production use by or for a
+company, commercial use, embedding in a product, and offering the software as a service. Its
+terms are agreed in writing with:
 
     Reuven Mandelovich
     https://lp.reuven.click
 
 This file describes the availability of the commercial license. It is not itself a
 license, and grants no rights. Until a written commercial agreement is signed, the
-binaries are licensed to you under the Project Hoopeo Evaluation License.
+Business Source License 1.1 governs.

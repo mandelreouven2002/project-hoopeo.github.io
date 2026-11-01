@@ -1,0 +1,30 @@
+# Project Hoopeo: DEP Engine, DEP CLI, and Hoopeo Studio.
+[workspace]
+resolver = "2"
+members = ["engine", "packages/dep-cli", "studio"]
+
+[workspace.package]
+version = "0.5.2"
+edition = "2021"
+authors = ["Reuven Mandelovich"]
+homepage = "https://lp.reuven.click"
+rust-version = "1.94"
+
+[profile.dev]
+debug = 0
+
+# Release builds are what the installers ship: no debug information, symbols stripped,
+# and whole-program optimization.
+[profile.release]
+debug = 0
+strip = true
+lto = "thin"
+codegen-units = 4
+panic = "abort"
+
+# For measuring performance while developing: optimized, without whole-program optimization.
+[profile.fast]
+inherits = "release"
+lto = false
+codegen-units = 16
+incremental = true

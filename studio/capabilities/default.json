@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The windows may use the core APIs (events) and the app's own commands. File dialogs are opened from Rust.",
+  "windows": ["main", "splash"],
+  "permissions": ["core:default"]
+}

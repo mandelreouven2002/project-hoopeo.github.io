@@ -1,0 +1,17 @@
+THIRD-PARTY NOTICES for Project Hoopeo (DEP Engine, DEP CLI, Hoopeo Studio)
+
+The binaries of Project Hoopeo include the following open-source components.
+Each is listed with its license; the license texts follow.
+
+{{#each licenses}}
+--------------------------------------------------------------------------------
+{{{name}}} ({{id}})
+Used by:
+{{#each used_by}}  - {{crate.name}} {{crate.version}}{{#if crate.repository}} ({{crate.repository}}){{/if}}
+{{/each}}
+{{{text}}}
+{{/each}}
+
+--------------------------------------------------------------------------------
+CodeMirror 5 (MIT), in Hoopeo Studio: see studio/ui/vendor/codemirror/LICENSE.
+Poppins (SIL Open Font License 1.1), used to draw the Project Hoopeo wordmark image.

@@ -1,0 +1,8 @@
+#!/bin/bash
+# Starts DEP Engine for the user who is logged in now. launchd starts it at every later login.
+USER_NAME="$(stat -f%Su /dev/console)"
+{ [ -z "$USER_NAME" ] || [ "$USER_NAME" = root ]; } && exit 0
+USER_ID="$(id -u "$USER_NAME")"
+launchctl bootout "gui/$USER_ID/click.reuven.hoopeo.dep-engine" 2>/dev/null || true
+launchctl bootstrap "gui/$USER_ID" /Library/LaunchAgents/click.reuven.hoopeo.dep-engine.plist 2>/dev/null || true
+exit 0

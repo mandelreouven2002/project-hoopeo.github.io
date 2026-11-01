@@ -2,7 +2,7 @@
 
 Project Hoopeo is built on open-source libraries. Each keeps its own license, and nothing in the licenses of Project Hoopeo (see [`LICENSING.md`](LICENSING.md)) limits the rights those licenses give. This page lists the main libraries of each product, what each is used for, and its license. The complete list of every crate in the binaries, with the full license texts, is in [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES), generated with `cargo about` and shipped with every installer.
 
-The Rust libraries named here are the direct dependencies of each product. DEP Engine, DEP CLI and Hoopeo Studio are distributed as binaries only, and the binaries contain these libraries and their own dependencies, about 590 crate versions across the three products, all under permissive licenses (MIT, Apache 2.0, BSD, ISC, Zlib, CC0, Unicode, CDLA-Permissive 2.0, BSL 1.0), with the exception of a few crates under MPL 2.0, described at the end.
+The Rust libraries named here are the direct dependencies of each product. The binaries of DEP Engine, DEP CLI and Hoopeo Studio contain these libraries and their own dependencies, about 590 crate versions across the three products, all under permissive licenses (MIT, Apache 2.0, BSD, ISC, Zlib, CC0, Unicode, CDLA-Permissive 2.0, BSL 1.0), with the exception of a few crates under MPL 2.0, described at the end.
 
 ## DEP Engine (and the engine inside DEP CLI and Hoopeo Studio)
 

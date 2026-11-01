@@ -1,0 +1,5 @@
+#!/bin/bash
+# Stops a running DEP Engine service before it is replaced.
+USER_NAME="$(stat -f%Su /dev/console)"
+[ -n "$USER_NAME" ] && [ "$USER_NAME" != root ] && launchctl bootout "gui/$(id -u "$USER_NAME")/click.reuven.hoopeo.dep-engine" 2>/dev/null || true
+exit 0

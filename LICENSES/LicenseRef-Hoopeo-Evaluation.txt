@@ -1,3 +1,7 @@
+NOTE. This license applies only to the binaries of releases up to and including 0.5.2, which
+were distributed under it. The source code in this repository, and the binaries built from it
+in later releases, are licensed under the Business Source License 1.1 (BUSL-1.1.txt).
+
 DRAFT. To be reviewed by a lawyer before the first public release.
 
 Project Hoopeo Evaluation License

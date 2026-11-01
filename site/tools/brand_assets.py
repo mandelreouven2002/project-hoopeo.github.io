@@ -8,7 +8,7 @@ Reads the masters in branding/ and never changes them. Writes:
   * the logos and product icons as WebP with a PNG fallback, at the sizes the pages use (1x, 2x);
   * favicon.ico, icon-192.png, icon-512.png, apple-touch-icon.png and site.webmanifest, from the
     application icon of Project Hoopeo (the mascot centered on a square, the same picture as
-    packaging/icons/project-hoopeo in the private repository);
+    packaging/icons/project-hoopeo in this repository);
   * social images: og-default.png (1200 x 630) and one per main section.
 """
 import json

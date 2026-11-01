@@ -13,10 +13,13 @@ the overview and LICENSES/ for the texts.
     playground/   (DEP.js and the DEP SQL Playground)
     examples/
 
-  DEP Engine, DEP CLI and Hoopeo Studio    Binaries only, under the Project Hoopeo
-                                           Evaluation License. The source code is not
-                                           public. A commercial license is available on
-                                           request.
+  DEP Engine, DEP CLI and Hoopeo Studio    Business Source License 1.1. The source code is
+    engine/, packages/, studio/,           public. Free for individuals, non-profit,
+    packaging/, tools/                     educational and research use, and for non-production
+                                           use by anyone. Production or commercial use by a
+                                           company needs a commercial license, available on
+                                           request. Each version becomes Apache License 2.0
+                                           four years after it is published.
 
 Names and logos. "Project Hoopeo", "Hoopeo Studio", "DEP Engine", "DEP CLI", "DEP.js",
 the hoopoe mascot and the product icons are names and marks of Reuven Mandelovich. The

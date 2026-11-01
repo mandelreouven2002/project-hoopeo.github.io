@@ -1,6 +1,6 @@
 # First DEP application
 
-Synthetic local tutorial for DEP Engine 0.5.2. Requires Engine and CLI installed separately, plus Python 3.10+ or Node.js 22+. Engine binaries have their own evaluation license; this starter is Apache-2.0, with the original Project Hoopeo examples credited to Reuven Mandelovich.
+Synthetic local tutorial for DEP Engine 0.5.2. Requires Engine and CLI installed separately, plus Python 3.10+ or Node.js 22+. The engine is licensed under the Business Source License 1.1; this starter is Apache-2.0, with the original Project Hoopeo examples credited to Reuven Mandelovich.
 
 1. From this folder, run `dep-engine --listen 127.0.0.1:5543 --data-dir ./data --admin-password local-dev-only --init ./schema.sql`. Keep this terminal running. Initialization runs only on a new database. Port 5543 is intentionally separate from the default background service.
 2. In a second terminal, run the Python or Node.js example below. All credentials and patient data are synthetic demonstration values, for loopback use only.

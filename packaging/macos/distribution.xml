@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <title>Project Hoopeo</title>
+    <organization>click.reuven.hoopeo</organization>
+    <background file="background.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>
+    <background-darkAqua file="background-dark.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>
+    <welcome file="welcome.html" mime-type="text/html"/>
+    <license file="LICENSE.txt" mime-type="text/plain"/>
+    <conclusion file="conclusion.html" mime-type="text/html"/>
+    <options customize="always" require-scripts="false" hostArchitectures="__ARCHS__"/>
+    <domains enable_localSystem="true"/>
+    <volume-check>
+        <allowed-os-versions><os-version min="11.0"/></allowed-os-versions>
+    </volume-check>
+
+    <choices-outline>
+        <line choice="studio"/>
+        <line choice="cli"/>
+        <line choice="engine">
+            <line choice="engine_service"/>
+        </line>
+    </choices-outline>
+
+    <choice id="studio" title="Hoopeo Studio"
+            description="The developer application for DEP SQL. It includes DEP Engine, so it can create and open local databases by itself, and it connects to DEP Engine servers on this Mac, on other computers or in the cloud."
+            start_selected="true">
+        <pkg-ref id="click.reuven.hoopeo.studio"/>
+    </choice>
+    <choice id="cli" title="DEP CLI"
+            description="The command-line tool (dep-cli), with DEP Engine built in, the DEP CLI app that opens it in Terminal, the demo clinic and the guided tour."
+            start_selected="true">
+        <pkg-ref id="click.reuven.hoopeo.dep-cli"/>
+    </choice>
+    <choice id="engine" title="DEP Engine server"
+            description="The server (dep-engine), for applications and tools that connect over the PostgreSQL wire protocol."
+            start_selected="false">
+        <pkg-ref id="click.reuven.hoopeo.dep-engine"/>
+    </choice>
+    <choice id="engine_service" title="Run DEP Engine in the background"
+            description="Starts dep-engine when you log in, on 127.0.0.1:5433, with its data in ~/Library/Application Support/Project Hoopeo. DEP CLI and Hoopeo Studio then connect to it."
+            start_selected="false" enabled="choices['engine'].selected" selected="choices['engine'].selected &amp;&amp; my.choice.selected">
+        <pkg-ref id="click.reuven.hoopeo.dep-engine-service"/>
+    </choice>
+
+    <pkg-ref id="click.reuven.hoopeo.studio" version="__VERSION__">hoopeo-studio.pkg</pkg-ref>
+    <pkg-ref id="click.reuven.hoopeo.dep-cli" version="__VERSION__">dep-cli.pkg</pkg-ref>
+    <pkg-ref id="click.reuven.hoopeo.dep-engine" version="__VERSION__">dep-engine.pkg</pkg-ref>
+    <pkg-ref id="click.reuven.hoopeo.dep-engine-service" version="__VERSION__">dep-engine-service.pkg</pkg-ref>
+</installer-gui-script>

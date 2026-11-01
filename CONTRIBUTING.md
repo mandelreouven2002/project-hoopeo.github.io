@@ -1,18 +1,18 @@
 # Contributing
 
-Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds the open layers: the specification, the documentation, DEP.js and the playground, the examples, and the website. Critical reading and hard questions are as welcome as code.
+Project Hoopeo implements Database-Enforced Privacy (DEP): a specification, DEP Engine, DEP CLI, DEP.js and Hoopeo Studio. This repository holds all of it: the specification, the documentation, DEP.js and the playground, the examples, the website, and the source of DEP Engine, DEP CLI and Hoopeo Studio. Critical reading and hard questions are as welcome as code.
 
 ## What accepts contributions
 
-Contributions are accepted to the public layers only:
+Pull requests are accepted for:
 
 - the specification and the design proposal (`docs/design/`);
-- the guides and the reference (`docs/guides/`, `docs/reference/`);
+- the guides and the reference (`docs/guides/`, `docs/reference/`, `docs/book/`);
 - DEP.js and the DEP SQL Playground (`playground/`);
 - the examples (`examples/`);
 - the website (`site/`).
 
-DEP Engine, DEP CLI and Hoopeo Studio are developed in a private repository and do not accept contributions. Bug reports and questions about them are welcome as issues here.
+The source of DEP Engine, DEP CLI and Hoopeo Studio (`engine/`, `packages/`, `studio/`, `packaging/`) is public, under the Business Source License 1.1, but pull requests to it are not accepted yet: the maintainer needs a contributor agreement before taking code that he may later license under the Change License or a commercial license. Bug reports, questions, and proposals for these products are welcome as issues, and a proposed change described in an issue is welcome too.
 
 ## Ways to help
 
@@ -32,7 +32,7 @@ Contributors whose feedback changes the design are acknowledged in the document'
 
 ## Licensing of contributions
 
-Each directory keeps its license (see [`LICENSING.md`](LICENSING.md)). A contribution is made under the license of the directory it goes to, and there is no contributor license agreement:
+Each directory keeps its license (see [`LICENSING.md`](LICENSING.md)). A contribution is made under the license of the directory it goes to, and there is no contributor license agreement for these directories:
 
 - text in `docs/` is contributed under CC BY 4.0;
 - code in `playground/`, `examples/` and `site/` is contributed under the Apache License 2.0.
@@ -48,4 +48,4 @@ npm test            # the playground's own tests
 npm run build       # writes site/ and dep-sql-playground.html
 ```
 
-`npm run compat` compares DEP.js with a running DEP Engine; it needs an engine binary, which is distributed under the Evaluation License (see [`playground/README.md`](playground/README.md)).
+`npm run compat` compares DEP.js with a running DEP Engine; build the engine from this repository (see [`DEVELOPING.md`](DEVELOPING.md)) or use a released binary (see [`playground/README.md`](playground/README.md)).

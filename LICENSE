@@ -3,10 +3,12 @@ Project Hoopeo is distributed under several licenses, one per layer.
   docs/                          CC BY 4.0                    LICENSES/CC-BY-4.0.txt
   playground/ (DEP.js)           Apache License 2.0           LICENSES/Apache-2.0.txt
   examples/                      Apache License 2.0
-  DEP Engine, DEP CLI,           Binaries only, under the     LICENSES/LicenseRef-Hoopeo-Evaluation.txt
-  Hoopeo Studio                  Project Hoopeo Evaluation License
-  Production and commercial use  Commercial license on        LICENSES/LicenseRef-Hoopeo-Commercial.txt
-                                 request
+  DEP Engine, DEP CLI,           Business Source License 1.1  LICENSES/BUSL-1.1.txt
+  Hoopeo Studio                  Free for individuals, non-profit, educational and research use,
+  (engine/, packages/,           and for non-production use by anyone. Production or commercial
+  studio/, packaging/, tools/)   use by a company needs a license. After four years, each
+                                 version becomes Apache License 2.0.
+  Commercial license             Available on request         LICENSES/LicenseRef-Hoopeo-Commercial.txt
 
 See LICENSING.md for what this means in practice, NOTICE for the copyright notice, and
 BRAND.md for the names and logos.

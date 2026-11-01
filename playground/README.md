@@ -91,7 +91,7 @@ npm run build          # writes site/ and dep-sql-playground.html from depsql.js
 npm start              # serves site/ at http://localhost:8000
 ```
 
-The compatibility test needs a DEP Engine server with the clinic and its HTTP API. The `dep-engine` binary comes from the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases), under the Evaluation License; it is run here for testing only:
+The compatibility test needs a DEP Engine server with the clinic and its HTTP API. The `dep-engine` binary comes from the [Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases), or from `cargo build --release -p dep-engine` in this repository; it is run here for testing, which the Business Source License allows:
 
 ```bash
 dep-engine --http-listen 127.0.0.1:8433 --init ../examples/clinic.sql --admin-password admin
