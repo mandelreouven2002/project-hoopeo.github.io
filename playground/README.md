@@ -100,7 +100,7 @@ DEP_ENGINE_URL=http://127.0.0.1:8433 DEP_ADMIN_PASSWORD=admin npm run compat
 
 Start the server afresh for each run: the cases change its data, and expect the clinic as it was loaded.
 
-**Known difference:** DEP.js rejects sorting disclosed values by name, alias or ordinal with ZD104, following specification section 8.9. A project review reports that DEP Engine 0.5.1 accepts all three; native 0.5.2 has not been retested here. These cases remain in `compat.js` and must report differences against an affected server. See [compatibility and limitations](../docs/guides/compatibility.md#known-difference-sorting-disclosed-values). An earlier 280/280 result does not establish parity for the updated simulator or these regressions.
+**Known difference:** DEP.js rejects sorting disclosed values by name, alias or ordinal with ZD104, following specification section 8.9. A project review reports that DEP Engine 0.5.1 accepts all three; native 0.5.2 has not been retested here. These cases remain in `compat.js`, listed in `KNOWN_DIFFERENCES` with their reason. Against an affected server they are reported as known and do not fail the test; any other difference fails it, and so does a listed case that stops differing, so that the list stays accurate. Native 0.5.2, built from this repository, shows 8 known differences (presence tests and sorting by a disclosed value) and 275 identical results. See [compatibility and limitations](../docs/guides/compatibility.md#known-difference-sorting-disclosed-values). An earlier 280/280 result does not establish parity for the updated simulator or these regressions.
 
 ## License
 
