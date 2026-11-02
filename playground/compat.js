@@ -10,7 +10,12 @@
    Each case is one HTTP request and one DEP.js connection: the statements run in order, stop at
    the first error, and a transaction left open is rolled back (as the HTTP API does). Rows are
    compared as a set unless the statement has ORDER BY. EXPLAIN is compared on its Read: lines,
-   and SHOW AUDIT without its sequence numbers and times. */
+   and SHOW AUDIT without its sequence numbers and times.
+
+   DEP.js follows the rules as they are written in the documentation. Where DEP Engine 0.5.2 differs,
+   the case is listed in KNOWN_DIFFERENCES with the reason: it is reported, and it does not fail the
+   test. A listed case that stops differing, and any other difference, does fail it. The list is
+   described in the guide, chapter 6 (known differences of DEP Engine 0.5.2). */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -25,6 +30,19 @@ const CLINIC = fs.readFileSync(path.join(__dirname, '..', 'examples', 'clinic.sq
 const P = (role, ep, sql, params) => ({ role, ep, sql, params: params || [] });
 const A = (sql, params) => P('admin', 'operational', sql, params);
 const M = (sql) => P('admin', 'analytics', sql);
+
+const PRESENCE = 'Presence of a protected value: DEP Engine 0.5.2 counts it or returns a flag; DEP.js refuses it (ZD101)';
+const DISCLOSED_SORT = 'A disclosed value as a sort key: DEP Engine 0.5.2 accepts it; DEP.js refuses it (ZD104)';
+const KNOWN_DIFFERENCES = new Map([
+  ['admin@operational: SELECT count(national_id) FROM patients', PRESENCE],
+  ['admin@operational: SELECT national_id IS NULL AS missing FROM patients ORDER BY patient_id', PRESENCE],
+  ["admin@operational: SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY national_id LIMIT 2", DISCLOSED_SORT],
+  ["admin@operational: SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY national_id", DISCLOSED_SORT],
+  ["admin@operational: SELECT national_id AS exposed_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY exposed_id", DISCLOSED_SORT],
+  ["admin@operational: SELECT national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY 1", DISCLOSED_SORT],
+  ["admin@operational: SELECT upper(visit_type), national_id FROM monthly_fund_report(DATE '2026-10-01') ORDER BY national_id, 1", DISCLOSED_SORT],
+  ["reminder_job@operational: SELECT phone FROM appointment_reminders(DATE '2026-10-21') ORDER BY phone", DISCLOSED_SORT],
+]);
 
 const CASES = [
   // reading, matching and anchoring
@@ -321,7 +339,8 @@ function depjs(server, c) {
   const bad = server.setupResults.filter((r) => !r.ok);
   if (bad.length) { console.error('DEP.js could not run clinic.sql:', bad.map((b) => b.error.message)); process.exit(2); }
   try { await fetch(`${URL_BASE}/v1/health`); } catch (e) { console.error(`No DEP Engine at ${URL_BASE}: ${e.message}`); process.exit(2); }
-  let same = 0, diff = 0;
+  let same = 0, diff = 0, known = 0;
+  const seen = new Set();
   for (const c of CASES) {
     const a = await engine(c), b = depjs(server, c);
     const n = Math.max(a.length, b.length);
@@ -329,12 +348,23 @@ function depjs(server, c) {
       const x = a[i], y = b[i];
       const sx = JSON.stringify(x && { ...x, statement: undefined }), sy = JSON.stringify(y && { ...y, statement: undefined });
       if (sx === sy) { same++; continue; }
+      const key = `${c.role}@${c.ep}: ${(x || y).statement.replace(/\s+/g, ' ')}`;
+      if (KNOWN_DIFFERENCES.has(key)) {
+        known++; seen.add(key);
+        console.log(`\nKNOWN  ${key.slice(0, 160)}\n  ${KNOWN_DIFFERENCES.get(key)}`);
+        continue;
+      }
       diff++;
       console.log(`\nDIFF  ${c.role}@${c.ep}: ${(x || y).statement.replace(/\s+/g, ' ').slice(0, 140)}`);
       console.log('  engine:', sx);
       console.log('  dep.js:', sy);
     }
   }
-  console.log(`\n${same} results the same, ${diff} different`);
+  for (const key of KNOWN_DIFFERENCES.keys()) {
+    if (seen.has(key)) continue;
+    diff++;
+    console.log(`\nNOT DIFFERENT ANY MORE  ${key.slice(0, 160)}\n  Remove it from KNOWN_DIFFERENCES.`);
+  }
+  console.log(`\n${same} results the same, ${known} known differences, ${diff} unexpected`);
   process.exit(diff ? 1 : 0);
 })();
