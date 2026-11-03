@@ -92,10 +92,10 @@ Fixes for all four differences, with regression tests, exist in the development 
 
 ## Version, licensing and readiness
 
-- **Current documented engine:** 0.5.2. The release is available as binary packages.
+- **Current documented engine:** 0.5.2. The source is in this repository, and the release is available as binary packages.
 - **Readiness:** experimental evaluation software, not a production-readiness assurance.
 - **Open material:** specification and documentation under CC BY 4.0; DEP.js, the playground and examples under Apache 2.0.
-- **Binary licensing:** evaluation terms apply to Engine, CLI and Studio. A commercial license is a licensing arrangement, not evidence of production readiness.
+- **Licensing:** the source and the binaries of Engine, CLI and Studio are under the Business Source License 1.1: free for individuals and for non-profit, educational and research organizations, and for non-production use by anyone; a company needs a commercial license for production or commercial use. A license is not evidence of production readiness.
 - **Future plans:** the [design roadmap](../design/02-roadmap-and-release.md) discusses possible future work, including PostgreSQL. It is not the current feature list.
 
 See [licensing](../../LICENSING.md) and [the current releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).
@@ -231,6 +231,8 @@ The audit log is `audit.redb`, written with group commit: a statement returns on
 | `key_rotated` | A master key rotation |
 
 Each record has a sequence number, a time, the session user and the current role, the endpoint and path, the object and match domain, and the count. It never holds a protected value, a disclosed value, or the text of a statement. Superusers read it with `SHOW AUDIT [n]` (the latest `n` records, default 100; DEP CLI's `\audit` shows 50). The log is not rotated or truncated by the server.
+
+**Limits.** The count is the number of values matched, for a match; a call of a declared function is recorded once, without the number of rows it returned. Reading ordinary columns is not audited. A record describes what a statement was admitted to do, not the rows it sent. If the audit store cannot be written, the statement still runs and the server reports the error on its standard error. The log is an ordinary file in the data directory and is not tamper-evident: protect the data directory, and copy the log elsewhere if it must stand as evidence.
 
 ```text
 reception_app@operational=> SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893');

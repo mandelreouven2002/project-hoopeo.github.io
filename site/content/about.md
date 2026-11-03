@@ -39,25 +39,6 @@ The layers have different licenses: CC BY 4.0 for the specification and document
 
 Contributions are welcome to the open layers: the documents, DEP.js and the examples. See [Contributing](../../CONTRIBUTING.md). A way around DEP's rules, in the design or in an implementation, should be reported privately: see [Security](../../SECURITY.md).
 
-## How to cite
+## Credit
 
-If you use, discuss or build on DEP, please cite the design proposal:
-
-> R. Mandelovich. *DEP: Database-Enforced Privacy. A Design Proposal.* Version 1.0, October 2026.
-
-To cite the software:
-
-> R. Mandelovich. *Project Hoopeo: Database-Enforced Privacy (DEP).* Version 0.5.2, 2026. Source and releases: <https://github.com/mandelreouven2002/project-hoopeo.github.io>
-
-```bibtex
-@techreport{mandelovich2026dep,
-  author      = {Mandelovich, Reuven},
-  title       = {{DEP}: Database-Enforced Privacy. A Design Proposal},
-  year        = {2026},
-  month       = oct,
-  note        = {Version 1.0},
-  url         = {https://github.com/mandelreouven2002/project-hoopeo.github.io}
-}
-```
-
-The repository also has a [`CITATION.cff`](../../CITATION.cff), which GitHub reads to offer a citation. A DOI will be added after the first Zenodo release.
+If you use or build on DEP, a mention such as "based on DEP by Reuven Mandelovich, Project Hoopeo" with a link to the [repository](https://github.com/mandelreouven2002/project-hoopeo.github.io) is appreciated.

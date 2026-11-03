@@ -152,7 +152,7 @@ admin@operational=> SHOW ENDPOINTS;
 
 ## SHOW PRIVACY MATRIX
 
-One row for each protected column and each role. Columns: `match_domain`, `column`, `role`, `paths` (the endpoints it may use, with their paths), `may_match` (whether it may match on the column), `discloses_via` and `links_via` (the declared functions it may execute for that domain). It is computed from the grants and the declared functions, so it always agrees with what the engine enforces. The full matrix of the clinic has 27 rows; this is one table with one protected column:
+One row for each protected column and each role. Columns: `match_domain`, `column`, `role`, `paths` (the endpoints it may use, with their paths), `may_match` (whether it may match on the column), `discloses_via` and `links_via` (the declared functions it may execute for that domain). It is computed from the grants and the declared functions. In DEP Engine 0.5.2 it does not show a role that can match a column through a function without a declaration, because such a function runs with its owner's privileges ([Functions without a declaration](../book/03-functions.md#87a-functions-without-a-declaration)); a `matches_via` column for this is planned. The full matrix of the clinic has 27 rows; this is one table with one protected column:
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="../images/studio/studio-matrix-dark.png"><img src="../images/studio/studio-matrix.png" alt="The privacy matrix in Hoopeo Studio"></picture>
 

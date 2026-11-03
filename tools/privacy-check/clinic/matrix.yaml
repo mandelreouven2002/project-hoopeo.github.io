@@ -1,0 +1,50 @@
+# The clinic's privacy matrix (chapter 4 of the DEP guide, step 3), in machine-readable form.
+# One row per protected column, one column per workflow. A cell is MATCH, LINK, DISCLOSE, or a list of them;
+# a missing cell is NONE. Every decision other than NONE carries a reason. DISCLOSE and LINK name the declared
+# function that implements them.
+
+database: clinic
+administrators: [admin, privacy_admin]        # superusers and the owner of the declared functions
+declarers:                                    # who may hold DISCLOSE or LINK on a match domain
+  person_id: [privacy_admin]
+  phone_number: [privacy_admin]
+
+workflows:
+  check_in:     {role: reception_app,    path: operational}
+  consultation: {role: doctors_app,      path: operational}
+  reminders:    {role: reminder_job,     path: operational}
+  visit_report: {role: billing_job,      path: operational}
+  claims:       {role: billing_job,      path: operational}
+  statistics:   {role: bi_dashboard,     path: analytics}
+  scheduling:   {role: scheduling_agent, path: analytics}
+  development:  {role: app_developer,    path: operational}
+
+functions:                                    # how a test calls each declared function
+  appointment_reminders: "appointment_reminders(DATE '2026-10-22')"
+  monthly_fund_report:   "monthly_fund_report(DATE '2026-10-01')"
+  fund_claims_report:    "fund_claims_report(DATE '2026-10-01')"
+  diagnoses_per_fund:    "diagnoses_per_fund()"
+
+fields:
+  patients.national_id:
+    domain: person_id
+    sample: "123456782"
+    cells:
+      check_in:     {decision: MATCH, reason: "Reception finds the patient by the ID card she presents."}
+      consultation: {decision: MATCH, reason: "The doctor opens the record of the patient in the room."}
+      visit_report: {decision: DISCLOSE, via: monthly_fund_report, reason: "Health funds require ID numbers in the monthly visit report."}
+      claims:       {decision: [DISCLOSE, LINK], via: fund_claims_report, reason: "Claims list each patient's diagnoses with her ID number."}
+      statistics:   {decision: LINK, via: diagnoses_per_fund, reason: "Management needs diagnosis counts per health fund."}
+  patients.phone:
+    domain: phone_number
+    sample: "+972-50-0000001"
+    cells:
+      reminders:    {decision: DISCLOSE, via: appointment_reminders, reason: "The SMS gateway needs the number to send a reminder."}
+  medical_records.patient_national_id:
+    domain: person_id
+    sample: "123456782"
+    references: patients.national_id
+    cells:
+      consultation: {decision: MATCH, reason: "The doctor reads the diagnoses of the patient in the room."}
+      claims:       {decision: LINK, via: fund_claims_report, reason: "Claims join diagnoses to patients."}
+      statistics:   {decision: LINK, via: diagnoses_per_fund, reason: "Statistics join diagnoses to health funds."}

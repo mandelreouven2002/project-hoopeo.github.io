@@ -163,6 +163,11 @@ DEP prevents direct <a class="term" href="/project-hoopeo.github.io/docs/referen
 </tbody>
 </table></div>
 <p><strong>Explanation:</strong> these four rows are the clinic's complete answer to "where can identifiers leave, and where are datasets linked through them?" The answer is complete because of how the system is built, not because someone remembered to document every export.</p>
+<p><strong>What the inventory does not say.</strong> Two things are easy to read into it and are not there:</p>
+<ul>
+<li><strong>Matching through a function.</strong> Any SQL function runs with its owner's privileges, not only a declared one. A role granted <code>EXECUTE</code> on an undeclared function whose body looks a patient up by ID number can find patients by ID number, without a privilege of its own on the column (<a href="/project-hoopeo.github.io/docs/functions/#87a-functions-without-a-declaration">Functions without a declaration</a>). Nothing leaves and nothing is linked, so the function is not an exit, but it is a MATCH decision. <code>SHOW PRIVACY MATRIX</code> does not show it in DEP Engine 0.5.2 (a <code>matches_via</code> column is planned), so treat <code>GRANT EXECUTE</code> on any function that reads a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected column</a> as a MATCH and review it as one.</li>
+<li><strong>How wide an exit is.</strong> The inventory says where values can leave, not how much each exit releases. A disclosed value cannot be filtered or joined on, but the other columns of the same result can. A disclosing function that returns an ordinary key next to the disclosed value, such as <code>(patient_id, national_id)</code> for every patient, can be joined through that key to anything the caller may read: it becomes a table for re-identifying every record. Write each disclosing function for one recipient and one purpose, and return only what that recipient needs (<a href="/project-hoopeo.github.io/docs/functions/#89-disclosed-values-and-the-terminal-rule">What the rule does not prevent</a>, <a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7</a>).</li>
+</ul>
 <h3 id="93-everyday-work-is-attributed">Everyday work is attributed</h3>
 <p><strong>What is it?</strong> Anchored matching is allowed without any declaration, but every protected match on the operational path is recorded in the audit log with the identity that made it, and without the value itself.</p>
 <p><strong>Example.</strong> An administrator reviewing yesterday's activity might see entries like these:</p>
@@ -172,49 +177,50 @@ DEP prevents direct <a class="term" href="/project-hoopeo.github.io/docs/referen
 <th>time</th>
 <th>identity</th>
 <th>operation</th>
-<th><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#protected-column" data-term="Protected column" data-def="A column whose values the database uses, but never returns.">protected columns</a></th>
-<th>rows</th>
+<th>object</th>
+<th>values matched</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>2026-10-19 09:12</td>
 <td><code>reception_app</code></td>
-<td>lookup</td>
+<td>match</td>
 <td><code>patients.national_id</code></td>
 <td>1</td>
 </tr>
 <tr>
 <td>2026-10-19 09:31</td>
 <td><code>doctors_app</code></td>
-<td>anchored join</td>
-<td><code>patients.national_id</code>, <code>medical_records.patient_national_id</code></td>
-<td>2</td>
+<td>match</td>
+<td><code>patients.national_id</code></td>
+<td>1</td>
 </tr>
 <tr>
 <td>2026-10-19 23:00</td>
 <td><code>reminder_job</code></td>
-<td>call <code>appointment_reminders()</code></td>
-<td><code>patients.phone</code></td>
-<td>64</td>
+<td>disclose</td>
+<td><code>appointment_reminders()</code></td>
+<td></td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>Explanation:</strong> the clinic can show who looked up what, and when, without the log itself containing a single ID number. An audit log that held every identifier ever searched for would become the most sensitive table in the system. This table summarizes operations rather than reproducing the native audit format; use <a href="/project-hoopeo.github.io/docs/reference/show/#show-audit-n">SHOW AUDIT</a> for the implemented columns.</p>
+<p><strong>What the audit does not record.</strong> A call of a declared function is recorded once, with its name and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a>, but not the number of rows it returned. Reading ordinary columns is not audited, so the log does not show what a caller combined with a disclosing function's result. The log is read by superusers, and it is not tamper-evident: someone with access to the server's files can change it. Treat it as a record of who used protected values and through which objects, not as a record of everything that left.</p>
 <h3 id="94-review-happens-in-code">Review happens in code</h3>
 <p><strong>What is it?</strong> Declared functions live in migration files like any other schema change. Because <code>DISCLOSES</code> and <code>LINKS</code> are syntax, a CI pipeline can find every addition or change and require approval from the organization's privacy officer before it merges.</p>
 <p><strong>Example.</strong> A developer adds a new disclosing function in a migration. The pipeline reports:</p>
-<pre class="highlight"><code class="language-text">privacy check: 1 change requires approval
-  + CREATE FUNCTION marketing_contacts() ... DISCLOSES phone_number
-    no matching cell in privacy/matrix.md (phone x Marketing)
-    approval required: privacy-officer</code></pre>
-<p><strong>Explanation:</strong> the engine adds the guarantee that makes this review meaningful. Code that is not declared cannot reveal values or link datasets, so the review cannot be bypassed by writing the same logic somewhere else. The checks themselves are described in <a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>.</p>
+<pre class="highlight"><code class="language-text">$ python3 tools/privacy-check/privacy_check.py privacy/matrix.yaml --url http://127.0.0.1:8433
+drift:  DISCLOSE phone_number for app_developer through marketing_contacts(): in the database, not in the matrix
+drift:  marketing_contacts() is declared DISCLOSES phone_number but no matrix cell uses it
+10 decisions in 9 cells; lint 0, drift 2, tests 58/58 passed</code></pre>
+<p><strong>Explanation:</strong> every test still passes, because no workflow in the matrix changed; only the comparison with the catalog sees the new exit. The engine adds the guarantee that makes this review meaningful. Code that is not declared cannot reveal values or link datasets, so the review cannot be bypassed by writing the same logic somewhere else. (It can still give its callers the ability to match; see <a href="/project-hoopeo.github.io/docs/designing/#92-a-complete-inventory-by-construction">What the inventory does not say</a>.) The checks themselves are described in <a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>.</p>
 <h3 id="95-the-engine-enforces-people-decide">The engine enforces, people decide</h3>
 <p><strong>What is the division of work?</strong> DEP does not run approval workflows, judge lawful bases, or decide what is legitimate. Those decisions belong to the privacy officer, legal counsel, and management. DEP ensures that their decisions are implemented exactly as approved, and that the organization can demonstrate it.</p>
 <p><strong>Key points</strong></p>
 <ul>
-<li>The catalog is a complete list of exits and linkages.</li>
-<li>The audit log attributes every lookup, without holding values.</li>
+<li>The catalog is a complete list of exits and linkages; how much each exit releases is decided in its function, and reviewed there.</li>
+<li>The audit log attributes every lookup and every call of a declared function, without holding values.</li>
 <li>Privacy-relevant changes are syntax, so CI can require their review.</li>
 <li>People decide; DEP enforces and produces the evidence.</li>
 </ul>
@@ -222,7 +228,7 @@ DEP prevents direct <a class="term" href="/project-hoopeo.github.io/docs/referen
 <h2 id="10-designing-with-dep">Designing with DEP</h2>
 <p><strong>In one sentence:</strong> with DEP, privacy decisions are schema decisions, so they are made first, recorded as reviewed artifacts, and turned into grants, declared functions, and tests.</p>
 <h3 id="100-why-the-order-of-design-changes">Why the order of design changes</h3>
-<p><strong>What changes?</strong> In a conventional project the schema comes first, the application is built on it, and privacy is reviewed afterwards, usually by asking which columns should be hidden from whom. With DEP that order no longer works, because privacy decisions <em>are</em> schema decisions: whether a field is <code>PROTECTED</code>, which <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-domain" data-term="Match domain" data-def="A family of values that may be compared with each other, with its own keys.">match domain</a> it belongs to, which consumer connects on which path, which roles may use which protected column, and which declared functions exist at all.</p>
+<p><strong>What changes?</strong> In a conventional project the schema comes first, the application is built on it, and privacy is reviewed afterwards, usually by asking which columns should be hidden from whom. With DEP that order no longer works, because privacy decisions <em>are</em> schema decisions: whether a field is <code>PROTECTED</code>, which match domain it belongs to, which consumer connects on which path, which roles may use which protected column, and which declared functions exist at all.</p>
 <p><strong>How does the method work?</strong> It has eight steps. Each produces an <strong>artifact</strong> that lives in the repository next to the code, is reviewed like code, and is checked automatically. That is what makes it Privacy as Code rather than a checklist.</p>
 <figure class="book-diagram"><div class="mermaid">flowchart LR
     W[1. Workflows] --&gt; C[2. Classification]
@@ -498,7 +504,7 @@ FROM patients AS p JOIN visits AS v USING (patient_id);</code></pre>
 <p><strong>Explanation: reading by column</strong> tells you what each consumer may do. Reception finds patients by ID number, but cannot look anyone up by phone and never reaches diagnoses. Doctors reach diagnoses one patient at a time: MATCH, not LINK. The reminder job releases phone numbers and touches no ID number. The dashboard links without matching anything itself, by calling a declared function. The scheduling assistant touches no protected value at all.</p>
 <p><strong>Explanation: reading by row</strong> tells you where each value goes. The ID number is used in two workflows, leaves the database in two, and links datasets in two. The phone number is never used for search and leaves only for reminders. The copy of the ID number in <code>medical_records</code> is used only by doctors, one patient at a time, and otherwise only in declared linkage; it never leaves.</p>
 <p>The matrix covers only protected columns. Ordinary fields are governed by ordinary permissions.</p>
-<p><strong>Artifact:</strong> <code>privacy/matrix.md</code>, or an equivalent machine-readable file, with a reason next to every MATCH, LINK, and DISCLOSE.</p>
+<p><strong>Artifact:</strong> <code>privacy/matrix.yaml</code>, a machine-readable file with a reason next to every MATCH, LINK, and DISCLOSE (<a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/tools/privacy-check/clinic/matrix.yaml"><code>tools/privacy-check/clinic/matrix.yaml</code></a> is the clinic's).</p>
 <h3 id="104-step-4-assign-consumers-to-paths">Step 4: Assign consumers to paths</h3>
 <p><strong>Question.</strong> Which consumer connects on which path?</p>
 <p><strong>How?</strong> Apply the rules of <a href="/project-hoopeo.github.io/docs/sql/#68-choosing-a-path-for-a-consumer">Choosing a path for a consumer</a> to the matrix:</p>
@@ -635,19 +641,19 @@ JOIN medical_records AS m ON m.patient_national_id = r.national_id;</code></pre>
 <p><strong>How?</strong> The matrix and the schema live in the same repository and are reviewed together. A CI pipeline can enforce that:</p>
 <ol>
 <li>every declared function in the migrations corresponds to a DISCLOSE or LINK cell, and every such cell has a function;</li>
-<li>every privilege on a protected column corresponds to a MATCH cell for that role;</li>
+<li>every privilege on a protected column, and every <code>EXECUTE</code> grant on an undeclared function that reads one, corresponds to a MATCH cell for that role;</li>
 <li>every new declared function, every <code>GRANT EXECUTE</code> on one, and every new privilege on a protected column is approved by the clinic's privacy officer;</li>
 <li>every MATCH, LINK, and DISCLOSE cell carries a written reason;</li>
 <li>the map of foreign keys contains no path made only of ordinary keys between a table that holds identities and a table that holds sensitive data;</li>
+<li>no disclosing function returns an ordinary key that its recipient does not need next to the disclosed value;</li>
 <li>the matrix-derived tests pass.</li>
 </ol>
-<p><strong>After deployment.</strong> The same comparison runs against the live database: <code>SHOW FUNCTIONS</code> and the privileges on protected columns are checked against the matrix.</p>
+<p><strong>After deployment.</strong> The same comparison runs against the live database: <code>SHOW PRIVACY MATRIX</code>, <code>SHOW FUNCTIONS</code> and <code>SHOW GRANTS</code> are checked against the matrix. Items 1, 2, 4 and 7 are what <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/tools/privacy-check/README.md"><code>tools/privacy-check</code></a> checks; items 3, 5 and 6 need review or a check of your own.</p>
 <p><strong>Example: a drift report</strong></p>
-<pre class="highlight"><code class="language-text">drift: 1 object in the database is not in the matrix
-  GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO bi_dashboard
-  matrix: national_id x Statistics = LINK (not DISCLOSE)</code></pre>
-<p><strong>Explanation:</strong> someone granted the dashboard access to a disclosing function by hand. The grant would be useless on the masked path, but it contradicts what was decided, so it is reported.</p>
-<p><strong>Artifact:</strong> CI checks and a drift report.</p>
+<pre class="highlight"><code class="language-text">drift:  DISCLOSE person_id for bi_dashboard through monthly_fund_report(): in the database, not in the matrix
+10 decisions in 9 cells; lint 0, drift 1, tests 58/58 passed</code></pre>
+<p><strong>Explanation:</strong> someone granted the dashboard access to a disclosing function by hand. The grant is useless on the masked path today, so no test fails, but it contradicts what was decided, and it would take effect the day the dashboard is given the operational path. Such latent grants are why tests are not enough: in an experiment on the clinic, 16 changes were made to the database without changing its matrix (new privileges, functions, grants, paths, declaration privileges and a protected column). The drift check reported all 16; the tests compiled from the matrix caught 7, the ones that changed what an existing workflow could do. Five changes that touched no protected value raised no alarm.</p>
+<p><strong>Artifact:</strong> <code>privacy/matrix.yaml</code>, CI checks and a drift report.</p>
 <h3 id="108-step-8-change-the-matrix-first">Step 8: Change the matrix first</h3>
 <p><strong>What is the rule?</strong> When a new need arrives, the first change is to the matrix, not to the code.</p>
 <p><strong>Example.</strong> The marketing team asks to send patients a promotional SMS. That is a new column in the matrix, and a new question in one cell: <code>phone x Marketing = DISCLOSE?</code></p>
@@ -675,7 +681,7 @@ JOIN medical_records AS m ON m.patient_national_id = r.national_id;</code></pre>
 <tr>
 <td>3. Privacy matrix</td>
 <td>For each field and workflow: match, link, disclose, or nothing?</td>
-<td><code>privacy/matrix.md</code></td>
+<td><code>privacy/matrix.yaml</code></td>
 </tr>
 <tr>
 <td>4. Paths</td>
@@ -785,7 +791,7 @@ JOIN medical_records AS m ON m.patient_national_id = r.national_id;</code></pre>
 </table></div>
 <hr />
 <h2 id="automating-the-review">Automating the review</h2>
-<p>The matrix-to-schema checks and drift report above describe a review workflow to implement in your own project. DEP Engine exposes SHOW FUNCTIONS, SHOW GRANTS and SHOW PRIVACY MATRIX; it does not ship the illustrated CI policy or an automatic privacy-officer approval service.</p>
+<p>The repository includes a checker, <a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/tools/privacy-check/README.md"><code>tools/privacy-check</code></a>, that implements steps 6 and 7 for a matrix written in YAML: it lints the matrix, compiles it into tests, runs them as each workflow's role, and reports drift between the matrix and <code>SHOW PRIVACY MATRIX</code>, <code>SHOW FUNCTIONS</code> and <code>SHOW GRANTS</code>. Its exit status can gate a build. It does not run an approval workflow: who approves a new cell, and how, is up to your organization.</p>
 <figure>
 <p><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" title="Open at full size"><img loading="lazy" class="for-light" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix.png" alt="Compare the computed privacy matrix with the workflows and permissions you approved." width="1000" height="625"></a><a class="zoom" href="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" title="Open at full size"><img loading="lazy" class="for-dark" src="/project-hoopeo.github.io/docs/images/studio/studio-matrix-dark.png" alt="" width="1000" height="625"></a></p>
 <figcaption>Compare the computed privacy matrix with the workflows and permissions you approved.</figcaption>

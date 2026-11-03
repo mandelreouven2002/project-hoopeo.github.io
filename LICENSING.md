@@ -1,6 +1,6 @@
 # Licensing
 
-Project Hoopeo is distributed in layers. The ideas, the specification and the browser tooling are open: anyone may read, cite, implement and build on them. The source code of DEP Engine, DEP CLI and Hoopeo Studio is public too, under the Business Source License 1.1: free for individuals and for non-profit, educational and research organizations, and free for non-production use by anyone, including companies. A company that wants to use it in production, or commercially, needs a license from the copyright holder.
+Project Hoopeo is distributed in layers. The ideas, the specification and the browser tooling are open: anyone may read, implement and build on them. The source code of DEP Engine, DEP CLI and Hoopeo Studio is public too, under the Business Source License 1.1: free for individuals and for non-profit, educational and research organizations, and free for non-production use by anyone, including companies. A company that wants to use it in production, or commercially, needs a license from the copyright holder.
 
 | Layer | License | SPDX |
 |---|---|---|
