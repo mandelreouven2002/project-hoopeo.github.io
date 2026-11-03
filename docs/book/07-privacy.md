@@ -60,9 +60,9 @@ SHOW FUNCTIONS;
 | When it is checked | Before deployment, on code that was submitted | On every statement, at run time |
 | What it can see | Code that passes through the pipeline | Every query, from every client |
 | A new AI agent or ad-hoc query | Depends on whether its access passes through the policy enforcement point | The implemented DEP rules apply to its queries |
-| Evidence it produces | Scan and CI reports | Metadata and audit records; a project can implement drift reporting |
+| Evidence it produces | Scan and CI reports | Metadata and audit records, and a drift report that compares the catalog with the approved matrix ([`tools/privacy-check`](../../tools/privacy-check/README.md)) |
 
-**How the two fit together.** DEP does not replace these tools; it gives them a point of enforcement. A Fides-style taxonomy can decide which columns should be `PROTECTED`, and a CI pipeline can check that every declared function matches an approved decision ([Step 7: Keep the matrix and the database in sync](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync)). The development method in [Designing with DEP](04-design.md#10-designing-with-dep) is built on exactly that idea.
+**How the two fit together.** DEP does not replace these tools; it gives them a point of enforcement. A Fides-style taxonomy can decide which columns should be `PROTECTED`, and a CI pipeline can check that every declared function and every privilege matches an approved decision ([Step 7: Keep the matrix and the database in sync](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync)). The repository's checker does this for a matrix written in YAML. The development method in [Designing with DEP](04-design.md#10-designing-with-dep) is built on exactly that idea.
 
 ### What is privacy by design? {#32-what-is-privacy-by-design}
 
@@ -113,7 +113,7 @@ SHOW FUNCTIONS;
 | Purpose limitation, Art. 5(1)(b) | Each linkage and disclosure is a named, described function with explicit `EXECUTE` grants; each matrix cell records its reason ([Declared functions](03-functions.md#8-declared-functions), [Step 3: Build the privacy matrix](04-design.md#103-step-3-build-the-privacy-matrix)). |
 | Data protection by design and by default, Art. 25 | Protection is the default for a `PROTECTED` column; every exception must be declared; internal keys are ordinary by default. |
 | Security of processing, Art. 32 | Engine-enforced typing, per-domain keyed matching, encrypted storage of protected values, audited and rate-limited lookups ([Storage and matching](08-internals.md#16-storage-and-matching)). |
-| Accountability, Art. 5(2) | The catalog lists every disclosure and linkage; the audit log attributes every lookup to an identity ([DEP and Privacy as Code](04-design.md#9-dep-and-privacy-as-code)). |
+| Accountability, Art. 5(2) | The catalog lists every disclosure and linkage; the drift check shows that the database still matches the approved matrix; the audit log attributes every lookup and every call of a declared function to an identity. The audit does not record how many rows a call returned, and it is not tamper-evident ([What the audit does not record](04-design.md#93-everyday-work-is-attributed)). |
 | Records of processing, Art. 30 | The catalog supplies the technical part of the record: where identifiers leave, and for which described purpose. |
 | Access and erasure, Arts. 15 and 17 | A subject-access export as a `DISCLOSES` function anchored to the requester's identifier; erasure as an anchored, audited `DELETE`. |
 
@@ -129,6 +129,29 @@ SHOW FUNCTIONS;
 | **Disassociability** | Enabling the processing of personal information or events without association to individuals or devices beyond the operational requirements of the system | The core of DEP: values are used for matching without being returned, and records are associated one value at a time unless linkage is declared |
 
 **Explanation:** *disassociability* is the closest existing term for DEP's principle. The NIST Privacy Framework (version 1.0) makes it concrete in its *Disassociated Processing* category, whose first subcategory (CT.DP-P1) is that data are processed to limit observability and linkability. Anchored matching is a direct way to limit linkability: a query can associate records only for the value it names.
+
+### Protection goals and the harms DEP addresses {#34a-protection-goals}
+
+**What are protection goals?** Privacy engineering also describes its aims as *protection goals*. Hansen, Jensen and Rost (IEEE Security and Privacy Workshops, 2015) add three privacy goals to the security triad of confidentiality, integrity and availability: **unlinkability** (personal data cannot be linked across purposes or domains beyond what is intended), **transparency** (processing can be understood and checked), and **intervenability** (people and supervisors can intervene in it).
+
+**The clinic's objectives.** The matrix serves four objectives, each tied to a goal:
+
+| Objective | What it means in the clinic | Goal | How DEP applies it |
+| --- | --- | --- | --- |
+| **P1. Use without exposure** | Reception finds Dana by her ID number without the database sending ID numbers to every program that only needs to find a record | Confidentiality | Protected values are matched, never returned by ordinary queries |
+| **P2. No population linkage by default** | No ordinary workflow can join every patient to every diagnosis through the ID number | Unlinkability | Anchored matching; whole-dataset linkage only in a declared `LINKS` function |
+| **P3. Explicit exceptions** | Every release and every linkage is a named function with a purpose and named callers | Transparency | `DISCLOSES` and `LINKS` functions, listed by `SHOW FUNCTIONS` |
+| **P4. No silent expansion** | A new grant or function that extends what a role does with identifiers is detected before it is used | Transparency | The drift check compares the catalog with the matrix |
+
+**The harms behind them.** The objectives answer three ways in which processing that every permission allows can still harm people. **Exposure**: identifiers reach programs and people who only needed to find a record, and from there logs, exports and screenshots. **Linkage**: tables that are harmless on their own are joined into a profile of each person. **Function creep**: a new query, grant or job quietly extends what is done with identifiers, without anyone deciding it. DEP addresses the first by not returning protected values, the second by anchoring and declared linkage, and the third by making every exception an object that can be compared with the approved matrix.
+
+**Data protection by default, in one rule.** Article 25(2) requires that personal data not be made accessible, by default, to an indefinite number of people. A protected value is returned as `NULL` to every role, the administrator included, until a declared function that a named role may call discloses it. Intervenability is the goal DEP serves least: it gives the organization control over processing, not the individual.
+
+### What is new in DEP, and what is not {#34b-what-is-new}
+
+**Is enforcing privacy inside a database new?** No. Hippocratic databases made purpose specification and limited disclosure database responsibilities (2002); purpose-based access control checks the purpose of each access against purposes attached to data; IFDB enforced information-flow labels inside PostgreSQL (2013); Qapla and Blockaid enforce policies on the queries of an application; Snowflake's projection and join policies are native policy objects that keep a column out of results or restrict which columns may be joined. [Appendix B of the roadmap](../design/02-roadmap-and-release.md#appendix-b-how-dep-relates-to-existing-approaches) compares them in detail.
+
+**What DEP adds** is a particular combination: a distinction between *ways of using one protected value* (matching it, linking through it, returning it, disclosing it) as part of how the database interprets ordinary SQL; a single supplied anchor as the line between finding one person and linking a population; named, granted functions as the only exceptions; and, because of that, a catalog that can be read back as the matrix of decisions the database enforces and checked against the one that was approved. The names MATCH, LINK and DISCLOSE label operations of this design; they are not claimed to be new kinds of operation. A controlled comparison of DEP with those systems has not been done.
 
 ### What DEP does not cover {#35-what-dep-does-not-cover}
 
@@ -148,7 +171,8 @@ The mappings in this chapter describe technical contributions, not compliance. A
 - Privacy as Code checks policy around the database; DEP enforces it inside the database, on every query.
 - DEP applies most privacy-by-design principles directly, and the lifecycle and user-centric principles only in part.
 - For the GDPR, DEP's strongest contribution is to Article 25(2): it limits the **extent of processing** and the **accessibility** of protected values by default.
-- In privacy-engineering terms, DEP is a mechanism for **disassociability**: using values without associating them beyond what each operation needs.
+- In privacy-engineering terms, DEP is a mechanism for **disassociability** and **unlinkability**: using values without associating them beyond what each operation needs.
+- The matrix, the catalog and the drift check make the decisions transparent and keep them from expanding silently; deciding whether they are right remains the organization's work.
 
 ---
 
@@ -160,7 +184,7 @@ The mappings in this chapter describe technical contributions, not compliance. A
 4. **Grant:** separate application roles and access paths. Set match limits for lookup roles.
 5. **Review exceptions:** inspect each DISCLOSES or LINKS function, its owner, purpose and callers.
 6. **Test:** check both permitted operations and attempts that must be refused.
-7. **Observe:** inspect SHOW PRIVACY MATRIX and SHOW AUDIT; review access and function changes.
+7. **Observe:** run the drift check against the approved matrix, inspect SHOW PRIVACY MATRIX and SHOW AUDIT, and review access and function changes.
 8. **Operate:** configure TLS, separate key custody, backups, retention and incident procedures.
 
 [Build a small application with these controls →](../guides/first-app.md)

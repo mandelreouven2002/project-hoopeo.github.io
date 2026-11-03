@@ -1,5 +1,13 @@
 # Changelog
 
+## Privacy engineering in the guide, and the privacy matrix checker (2026-11-03)
+
+- **Privacy matrix checker.** `tools/privacy-check` lints a privacy matrix written in YAML, compiles it into tests run as each workflow's role, and reports drift between the matrix and `SHOW PRIVACY MATRIX`, `SHOW FUNCTIONS` and `SHOW GRANTS`. Chapter 4 now shows its real output instead of an illustration, and explains with an experiment why the drift check finds changes that tests compiled from the matrix cannot.
+- **The inventory, stated precisely.** Chapter 4 says what the catalog does not show: matching through a function without a declaration (new section in chapter 3; reported by `SHOW PRIVACY MATRIX` from DEP Engine 0.5.3), and how much a disclosing function releases when it returns an ordinary key next to a disclosed value.
+- **The audit, stated precisely.** Chapters 4 and 6 and the GDPR mapping say what the audit does not record (rows returned by a declared function, reads of ordinary columns), that a failure to write it does not stop a statement, and that it is not tamper-evident. The example in chapter 4 no longer shows row counts the audit does not keep.
+- **Privacy engineering.** Chapter 7 relates the clinic's matrix to protection goals (confidentiality, unlinkability, transparency), names the harms DEP addresses (exposure, linkage, function creep), and says what is new in DEP and what is not, with a link to the comparison with Hippocratic databases, purpose-based access control, IFDB, Qapla, Blockaid and Snowflake's policies.
+- **Chapter 1** opens with an ordinary application, not an AI agent: an assistant is one of the consumers the same failure applies to.
+
 ## Source published under the Business Source License (2026-11-01)
 
 The source of DEP Engine, DEP CLI and Hoopeo Studio is now in this repository, with its history, together with the installers' packaging and the release workflows. It was in a private repository, and the repository `project-hoopeo` is no longer needed for development.

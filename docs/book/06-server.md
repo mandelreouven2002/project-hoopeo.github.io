@@ -232,6 +232,8 @@ The audit log is `audit.redb`, written with group commit: a statement returns on
 
 Each record has a sequence number, a time, the session user and the current role, the endpoint and path, the object and match domain, and the count. It never holds a protected value, a disclosed value, or the text of a statement. Superusers read it with `SHOW AUDIT [n]` (the latest `n` records, default 100; DEP CLI's `\audit` shows 50). The log is not rotated or truncated by the server.
 
+**Limits.** The count is the number of values matched, for a match; a call of a declared function is recorded once, without the number of rows it returned. Reading ordinary columns is not audited. A record describes what a statement was admitted to do, not the rows it sent. If the audit store cannot be written, the statement still runs and the server reports the error on its standard error. The log is an ordinary file in the data directory and is not tamper-evident: protect the data directory, and copy the log elsewhere if it must stand as evidence.
+
 ```text
 reception_app@operational=> SELECT full_name FROM patients WHERE national_id IN ('123456782', '234567893');
 DEP:  PROTECTED column patients.national_id is matched against a list of values through the blind index of MATCH DOMAIN person_id.

@@ -405,6 +405,25 @@ HINT:   Grant EXECUTE to the specific roles that need it.
 
 **Errors.** [`DEP_PUBLIC_EXECUTE`](../reference/errors.md#dep-errors).
 
+### Functions without a declaration {#87a-functions-without-a-declaration}
+
+**What is it?** A SQL function without `DISCLOSES` or `LINKS` is an ordinary function. Its body follows the rules of an ordinary query: it cannot reveal a protected value, and it cannot link datasets without an anchor. Like a declared function, it runs with its owner's privileges, so a caller needs only `EXECUTE`.
+
+**Example**
+
+```sql
+CREATE FUNCTION find_patient(id TEXT)
+RETURNS TABLE (full_name TEXT, health_fund TEXT)
+LANGUAGE sql
+AS $$ SELECT full_name, health_fund FROM patients WHERE national_id = id $$;
+
+GRANT EXECUTE ON FUNCTION find_patient(TEXT) TO app_developer;
+```
+
+**Explanation:** `app_developer` has no privilege on `patients.national_id`, yet it can now find patients by ID number, through the function. Nothing leaves and nothing is linked, so the function is not in the inventory of exits; but the grant is a MATCH decision for `app_developer`, and it should be in the privacy matrix. Unlike a declared function, an ordinary function can be granted to `PUBLIC`.
+
+**How to see it.** From DEP Engine 0.5.3, `SHOW PRIVACY MATRIX` lists such functions for each role and protected column in a `matches_via` column, and the [drift check](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync) reports them. With 0.5.2, find them with `SHOW FUNCTIONS` (the body is shown) and review their grants as MATCH decisions.
+
 ## The rules for declared functions {#88-the-rules-for-declared-functions}
 
 | # | Rule | What it means |

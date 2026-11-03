@@ -94,19 +94,26 @@ SHOW FUNCTIONS;
 
 **Explanation:** these four rows are the clinic's complete answer to "where can identifiers leave, and where are datasets linked through them?" The answer is complete because of how the system is built, not because someone remembered to document every export.
 
+**What the inventory does not say.** Two things are easy to read into it and are not there:
+
+- **Matching through a function.** Any SQL function runs with its owner's privileges, not only a declared one. A role granted `EXECUTE` on an undeclared function whose body looks a patient up by ID number can find patients by ID number, without a privilege of its own on the column ([Functions without a declaration](03-functions.md#87a-functions-without-a-declaration)). Nothing leaves and nothing is linked, so the function is not an exit, but it is a MATCH decision. From DEP Engine 0.5.3, `SHOW PRIVACY MATRIX` shows it in a `matches_via` column; with 0.5.2, treat `GRANT EXECUTE` on any function that reads a protected column as a MATCH and review it as one.
+- **How wide an exit is.** The inventory says where values can leave, not how much each exit releases. A disclosed value cannot be filtered or joined on, but the other columns of the same result can. A disclosing function that returns an ordinary key next to the disclosed value, such as `(patient_id, national_id)` for every patient, can be joined through that key to anything the caller may read: it becomes a table for re-identifying every record. Write each disclosing function for one recipient and one purpose, and return only what that recipient needs ([What the rule does not prevent](03-functions.md#89-disclosed-values-and-the-terminal-rule), [Step 7](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync)).
+
 ### Everyday work is attributed {#93-everyday-work-is-attributed}
 
 **What is it?** Anchored matching is allowed without any declaration, but every protected match on the operational path is recorded in the audit log with the identity that made it, and without the value itself.
 
 **Example.** An administrator reviewing yesterday's activity might see entries like these:
 
-| time | identity | operation | protected columns | rows |
+| time | identity | operation | object | values matched |
 | --- | --- | --- | --- | --- |
-| 2026-10-19 09:12 | `reception_app` | lookup | `patients.national_id` | 1 |
-| 2026-10-19 09:31 | `doctors_app` | anchored join | `patients.national_id`, `medical_records.patient_national_id` | 2 |
-| 2026-10-19 23:00 | `reminder_job` | call `appointment_reminders()` | `patients.phone` | 64 |
+| 2026-10-19 09:12 | `reception_app` | match | `patients.national_id` | 1 |
+| 2026-10-19 09:31 | `doctors_app` | match | `patients.national_id` | 1 |
+| 2026-10-19 23:00 | `reminder_job` | disclose | `appointment_reminders()` | |
 
 **Explanation:** the clinic can show who looked up what, and when, without the log itself containing a single ID number. An audit log that held every identifier ever searched for would become the most sensitive table in the system. This table summarizes operations rather than reproducing the native audit format; use [SHOW AUDIT](../reference/show.md#show-audit-n) for the implemented columns.
+
+**What the audit does not record.** A call of a declared function is recorded once, with its name and match domain, but not the number of rows it returned. Reading ordinary columns is not audited, so the log does not show what a caller combined with a disclosing function's result. The log is read by superusers, and it is not tamper-evident: someone with access to the server's files can change it. Treat it as a record of who used protected values and through which objects, not as a record of everything that left.
 
 ### Review happens in code {#94-review-happens-in-code}
 
@@ -115,13 +122,13 @@ SHOW FUNCTIONS;
 **Example.** A developer adds a new disclosing function in a migration. The pipeline reports:
 
 ```text
-privacy check: 1 change requires approval
-  + CREATE FUNCTION marketing_contacts() ... DISCLOSES phone_number
-    no matching cell in privacy/matrix.md (phone x Marketing)
-    approval required: privacy-officer
+$ python3 tools/privacy-check/privacy_check.py privacy/matrix.yaml --url http://127.0.0.1:8433
+drift:  DISCLOSE phone_number for app_developer through marketing_contacts(): in the database, not in the matrix
+drift:  marketing_contacts() is declared DISCLOSES phone_number but no matrix cell uses it
+10 decisions in 9 cells; lint 0, drift 2, tests 58/58 passed
 ```
 
-**Explanation:** the engine adds the guarantee that makes this review meaningful. Code that is not declared cannot reveal values or link datasets, so the review cannot be bypassed by writing the same logic somewhere else. The checks themselves are described in [Step 7: Keep the matrix and the database in sync](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync).
+**Explanation:** every test still passes, because no workflow in the matrix changed; only the comparison with the catalog sees the new exit. The engine adds the guarantee that makes this review meaningful. Code that is not declared cannot reveal values or link datasets, so the review cannot be bypassed by writing the same logic somewhere else. (It can still give its callers the ability to match; see [What the inventory does not say](04-design.md#92-a-complete-inventory-by-construction).) The checks themselves are described in [Step 7: Keep the matrix and the database in sync](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync).
 
 ### The engine enforces, people decide {#95-the-engine-enforces-people-decide}
 
@@ -129,8 +136,8 @@ privacy check: 1 change requires approval
 
 **Key points**
 
-- The catalog is a complete list of exits and linkages.
-- The audit log attributes every lookup, without holding values.
+- The catalog is a complete list of exits and linkages; how much each exit releases is decided in its function, and reviewed there.
+- The audit log attributes every lookup and every call of a declared function, without holding values.
 - Privacy-relevant changes are syntax, so CI can require their review.
 - People decide; DEP enforces and produces the evidence.
 
@@ -301,7 +308,7 @@ The first question is a business decision. The other two can be checked from the
 
 The matrix covers only protected columns. Ordinary fields are governed by ordinary permissions.
 
-**Artifact:** `privacy/matrix.md`, or an equivalent machine-readable file, with a reason next to every MATCH, LINK, and DISCLOSE.
+**Artifact:** `privacy/matrix.yaml`, a machine-readable file with a reason next to every MATCH, LINK, and DISCLOSE ([`tools/privacy-check/clinic/matrix.yaml`](../../tools/privacy-check/clinic/matrix.yaml) is the clinic's).
 
 ### Step 4: Assign consumers to paths {#104-step-4-assign-consumers-to-paths}
 
@@ -401,25 +408,25 @@ JOIN medical_records AS m ON m.patient_national_id = r.national_id;
 **How?** The matrix and the schema live in the same repository and are reviewed together. A CI pipeline can enforce that:
 
 1. every declared function in the migrations corresponds to a DISCLOSE or LINK cell, and every such cell has a function;
-2. every privilege on a protected column corresponds to a MATCH cell for that role;
+2. every privilege on a protected column, and every `EXECUTE` grant on an undeclared function that reads one, corresponds to a MATCH cell for that role;
 3. every new declared function, every `GRANT EXECUTE` on one, and every new privilege on a protected column is approved by the clinic's privacy officer;
 4. every MATCH, LINK, and DISCLOSE cell carries a written reason;
 5. the map of foreign keys contains no path made only of ordinary keys between a table that holds identities and a table that holds sensitive data;
-6. the matrix-derived tests pass.
+6. no disclosing function returns an ordinary key that its recipient does not need next to the disclosed value;
+7. the matrix-derived tests pass.
 
-**After deployment.** The same comparison runs against the live database: `SHOW FUNCTIONS` and the privileges on protected columns are checked against the matrix.
+**After deployment.** The same comparison runs against the live database: `SHOW PRIVACY MATRIX`, `SHOW FUNCTIONS` and `SHOW GRANTS` are checked against the matrix. Items 1, 2, 4 and 7 are what [`tools/privacy-check`](../../tools/privacy-check/README.md) checks; items 3, 5 and 6 need review or a check of your own.
 
 **Example: a drift report**
 
 ```text
-drift: 1 object in the database is not in the matrix
-  GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO bi_dashboard
-  matrix: national_id x Statistics = LINK (not DISCLOSE)
+drift:  DISCLOSE person_id for bi_dashboard through monthly_fund_report(): in the database, not in the matrix
+10 decisions in 9 cells; lint 0, drift 1, tests 58/58 passed
 ```
 
-**Explanation:** someone granted the dashboard access to a disclosing function by hand. The grant would be useless on the masked path, but it contradicts what was decided, so it is reported.
+**Explanation:** someone granted the dashboard access to a disclosing function by hand. The grant is useless on the masked path today, so no test fails, but it contradicts what was decided, and it would take effect the day the dashboard is given the operational path. Such latent grants are why tests are not enough: in an experiment on the clinic, 16 changes were made to the database without changing its matrix (new privileges, functions, grants, paths, declaration privileges and a protected column). The drift check reported all 16; the tests compiled from the matrix caught 7, the ones that changed what an existing workflow could do. Five changes that touched no protected value raised no alarm.
 
-**Artifact:** CI checks and a drift report.
+**Artifact:** `privacy/matrix.yaml`, CI checks and a drift report.
 
 ### Step 8: Change the matrix first {#108-step-8-change-the-matrix-first}
 
@@ -435,7 +442,7 @@ drift: 1 object in the database is not in the matrix
 | --- | --- | --- |
 | 1. Workflows | What must the system do, and who does it? | `privacy/workflows.md` |
 | 2. Classification | Which fields are protected, in which match domain, and which keys link sensitive data? | `privacy/classification.md` |
-| 3. Privacy matrix | For each field and workflow: match, link, disclose, or nothing? | `privacy/matrix.md` |
+| 3. Privacy matrix | For each field and workflow: match, link, disclose, or nothing? | `privacy/matrix.yaml` |
 | 4. Paths | Which consumer connects on which path? | Endpoint and role configuration |
 | 5. Schema | How do the decisions become code? | Migrations: tables, declared functions, grants |
 | 6. Tests | How do we prove each decision holds? | Matrix-derived test suite |
@@ -480,7 +487,7 @@ drift: 1 object in the database is not in the matrix
 
 ## Automating the review
 
-The matrix-to-schema checks and drift report above describe a review workflow to implement in your own project. DEP Engine exposes SHOW FUNCTIONS, SHOW GRANTS and SHOW PRIVACY MATRIX; it does not ship the illustrated CI policy or an automatic privacy-officer approval service.
+The repository includes a checker, [`tools/privacy-check`](../../tools/privacy-check/README.md), that implements steps 6 and 7 for a matrix written in YAML: it lints the matrix, compiles it into tests, runs them as each workflow's role, and reports drift between the matrix and `SHOW PRIVACY MATRIX`, `SHOW FUNCTIONS` and `SHOW GRANTS`. Its exit status can gate a build. It does not run an approval workflow: who approves a new cell, and how, is up to your organization.
 
 
 <figure markdown="1">

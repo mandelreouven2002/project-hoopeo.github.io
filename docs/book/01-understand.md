@@ -121,7 +121,7 @@ Dana Cohen, the first patient, appears throughout: she arrives at reception, see
 
 **Why is this a problem?** In PostgreSQL, referencing a column in a `WHERE` clause requires `SELECT` privilege on that column, and the same privilege lets the column be returned in a result. Column privilege works as a single switch: a role may touch the value for any purpose, or not at all. Three failures follow from that.
 
-**Failure 1: wholesale extraction.** The clinic has just connected an AI agent directly to the database. The agent writes its own SQL, and it knows nothing about the privacy policy encoded in other applications. Asked for help, it runs:
+**Failure 1: wholesale extraction.** The reception application needs to find a patient by the ID number she presents, so its role has `SELECT` on `national_id`. Anyone or anything running with those credentials (a bug, a compromised dependency, a developer debugging production, a report someone added later) can run:
 
 ```sql
 SELECT full_name, national_id, phone FROM patients;
@@ -137,7 +137,7 @@ SELECT full_name, national_id, phone FROM patients;
  ... 49,998 more rows
 ```
 
-**Explanation:** no one broke in, and every permission worked exactly as configured. Because the agent may search by ID number, it may also read every ID number. The entire register left the database in one query.
+**Explanation:** no one broke in, and every permission worked exactly as configured. Because reception may search by ID number, it may also read every ID number. The entire register left the database in one query. The same holds for every consumer that is given search access: a nightly job, a dashboard, or an AI agent that writes its own SQL and knows nothing about the policy encoded in the other applications.
 
 **Failure 2: invisible linking.** A query can produce the most sensitive dataset without returning any identifier:
 
