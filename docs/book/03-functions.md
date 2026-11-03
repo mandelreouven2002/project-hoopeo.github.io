@@ -422,7 +422,7 @@ GRANT EXECUTE ON FUNCTION find_patient(TEXT) TO app_developer;
 
 **Explanation:** `app_developer` has no privilege on `patients.national_id`, yet it can now find patients by ID number, through the function. Nothing leaves and nothing is linked, so the function is not in the inventory of exits; but the grant is a MATCH decision for `app_developer`, and it should be in the privacy matrix. Unlike a declared function, an ordinary function can be granted to `PUBLIC`.
 
-**How to see it.** From DEP Engine 0.5.3, `SHOW PRIVACY MATRIX` lists such functions for each role and protected column in a `matches_via` column, and the [drift check](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync) reports them. With 0.5.2, find them with `SHOW FUNCTIONS` (the body is shown) and review their grants as MATCH decisions.
+**How to see it.** `SHOW PRIVACY MATRIX` does not list such functions in DEP Engine 0.5.2. A `matches_via` column for them is planned, and the [drift check](04-design.md#107-step-7-keep-the-matrix-and-the-database-in-sync) will report them once it exists. For now, find them with `SHOW FUNCTIONS` (the body is shown) and review their grants as MATCH decisions.
 
 ## The rules for declared functions {#88-the-rules-for-declared-functions}
 

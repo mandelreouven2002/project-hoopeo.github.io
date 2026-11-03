@@ -55,7 +55,7 @@ Every test still passes, because no workflow in the matrix changed. Adding the c
 ## Scope
 
 - The checker compares disclosure and linkage per match domain, as the engine reports them, not per column.
-- Matching through an undeclared function: such a function runs with its owner's privileges, so `EXECUTE` on one that reads a protected column lets a role match it. `SHOW PRIVACY MATRIX` reports this in a `matches_via` column from DEP Engine 0.5.3, and the checker reports it as an undeclared MATCH. With DEP Engine 0.5.2, which has no such column, review `EXECUTE` grants on undeclared functions by hand.
+- Matching through an undeclared function: such a function runs with its owner's privileges, so `EXECUTE` on one that reads a protected column lets a role match it. `SHOW PRIVACY MATRIX` in DEP Engine 0.5.2 has no `matches_via` column for this (one is planned). The checker reads it when it exists and reports it as an undeclared MATCH. Until then, review `EXECUTE` grants on undeclared functions by hand.
 - It does not check paths of ordinary keys between identities and sensitive data, what a declared function's body returns beyond its declarations, or anything about administrators.
 - It checks a test database built from your migrations, or a live one; it does not run an approval workflow.
 

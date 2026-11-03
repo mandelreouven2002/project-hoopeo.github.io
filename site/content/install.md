@@ -8,7 +8,7 @@ Choose the environment that fits your task. For a complete local application, fo
 
 **Installing a service?** Engine packages can start a background server on port **5433**. The application tutorial uses **5543** for an isolated manual instance, so the two do not conflict. Studio and CLI also have embedded modes that need no server.
 
-**Current documented release: 0.5.2.** Download buttons follow the latest upstream release. For repeatable evaluation, choose an exact release from [GitHub Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/tag/v0.5.2) and verify its SHA256SUMS. Binary licenses and readiness are separate: read [Compatibility & limitations](../../docs/guides/compatibility.md).
+**Current documented release: 0.5.2.** Download buttons follow the latest upstream release. For repeatable evaluation, choose an exact release from [GitHub Releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases/tag/v0.5.2) and verify its SHA256SUMS. Licensing and readiness are separate: read [Compatibility & limitations](../../docs/guides/compatibility.md).
 
 </div>
 

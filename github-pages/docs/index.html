@@ -238,7 +238,7 @@ CREATE TABLE medical_records (
 <p><strong>Key point:</strong> most of what applications do with sensitive identifiers is <em>using</em> them. Very little of it requires <em>reading</em> them.</p>
 <h3 id="13-what-goes-wrong-in-an-ordinary-database">What goes wrong in an ordinary database</h3>
 <p><strong>Why is this a problem?</strong> In PostgreSQL, referencing a column in a <code>WHERE</code> clause requires <code>SELECT</code> privilege on that column, and the same privilege lets the column be returned in a result. Column privilege works as a single switch: a role may touch the value for any purpose, or not at all. Three failures follow from that.</p>
-<p><strong>Failure 1: wholesale extraction.</strong> The clinic has just connected an AI agent directly to the database. The agent writes its own SQL, and it knows nothing about the privacy policy encoded in other applications. Asked for help, it runs:</p>
+<p><strong>Failure 1: wholesale extraction.</strong> The reception application needs to find a patient by the ID number she presents, so its role has <code>SELECT</code> on <code>national_id</code>. Anyone or anything running with those credentials (a bug, a compromised dependency, a developer debugging production, a report someone added later) can run:</p>
 <pre class="highlight"><code class="language-sql">SELECT full_name, national_id, phone FROM patients;</code></pre>
 <p><strong>Output</strong></p>
 <pre class="highlight"><code class="language-text"> full_name   | national_id | phone
@@ -246,7 +246,7 @@ CREATE TABLE medical_records (
  Dana Cohen  | 123456782   | +972-50-0000001
  Yossi Levi  | 234567893   | +972-50-0000002
  ... 49,998 more rows</code></pre>
-<p><strong>Explanation:</strong> no one broke in, and every permission worked exactly as configured. Because the agent may search by ID number, it may also read every ID number. The entire register left the database in one query.</p>
+<p><strong>Explanation:</strong> no one broke in, and every permission worked exactly as configured. Because reception may search by ID number, it may also read every ID number. The entire register left the database in one query. The same holds for every consumer that is given search access: a nightly job, a dashboard, or an AI agent that writes its own SQL and knows nothing about the policy encoded in the other applications.</p>
 <p><strong>Failure 2: invisible linking.</strong> A query can produce the most sensitive dataset without returning any identifier:</p>
 <pre class="highlight"><code class="language-sql">SELECT p.full_name, m.diagnosis
 FROM patients AS p

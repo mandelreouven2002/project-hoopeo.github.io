@@ -39,6 +39,14 @@
 </div></header>
 <main id="main">
 <div class="wrap section"><div class="prose"><h1 id="changelog">Changelog</h1>
+<h2 id="privacy-engineering-in-the-guide-and-the-privacy-matrix-checker-2026-11-03">Privacy engineering in the guide, and the privacy matrix checker (2026-11-03)</h2>
+<ul>
+<li><strong><a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">Privacy matrix</a> checker.</strong> <code>tools/privacy-check</code> lints a privacy matrix written in YAML, compiles it into tests run as each workflow's role, and reports drift between the matrix and <code>SHOW PRIVACY MATRIX</code>, <code>SHOW FUNCTIONS</code> and <code>SHOW GRANTS</code>. Chapter 4 now shows its real output instead of an illustration, and explains with an experiment why the drift check finds changes that tests compiled from the matrix cannot.</li>
+<li><strong>The inventory, stated precisely.</strong> Chapter 4 says what the catalog does not show: <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a> through a function without a declaration (new section in chapter 3; not shown by <code>SHOW PRIVACY MATRIX</code> in DEP Engine 0.5.2; a column for it is planned), and how much a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosing</a> function releases when it returns an ordinary key next to a disclosed value.</li>
+<li><strong>The audit, stated precisely.</strong> Chapters 4 and 6 and the GDPR mapping say what the audit does not record (rows returned by a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a>, reads of ordinary columns), that a failure to write it does not stop a statement, and that it is not tamper-evident. The example in chapter 4 no longer shows row counts the audit does not keep.</li>
+<li><strong>Privacy engineering.</strong> Chapter 7 relates the clinic's matrix to protection goals (confidentiality, unlinkability, transparency), names the harms DEP addresses (exposure, linkage, function creep), and says what is new in DEP and what is not, with a link to the comparison with Hippocratic databases, purpose-based access control, IFDB, Qapla, Blockaid and Snowflake's policies.</li>
+<li><strong>Chapter 1</strong> opens with an ordinary application, not an AI agent: an assistant is one of the consumers the same failure applies to.</li>
+</ul>
 <h2 id="source-published-under-the-business-source-license-2026-11-01">Source published under the Business Source License (2026-11-01)</h2>
 <p>The source of DEP Engine, DEP CLI and Hoopeo Studio is now in this repository, with its history, together with the installers' packaging and the release workflows. It was in a private repository, and the repository <code>project-hoopeo</code> is no longer needed for development.</p>
 <ul>
@@ -56,7 +64,7 @@
 <h2 id="rule-precision-and-known-differences-2026-10-29">Rule precision and known differences (2026-10-29)</h2>
 <ul>
 <li>Stated the presence rule everywhere it appears: on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#masked-read-path" data-term="Masked read path" data-def="For dashboards, reports and analysis: read what is ordinary, match nothing.">masked read path</a> a protected value cannot be tested for presence (<code>IS NULL</code>, <code>COUNT(col)</code>, ZD102); on the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#operational-path" data-term="Operational path" data-def="For applications that serve one person at a time.">operational path</a> presence may be tested in a condition and never returned (ZD101). This resolves a conflict between the SQL chapter and the guarantees in chapter 8.</li>
-<li>Stated the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a> precisely: a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#disclosure" data-term="Disclosure" data-def="Returning a protected value in plain text. Only in a `DISCLOSES` function, with `REVEAL`.">disclosed</a> value may be returned, renamed or cast, and is not a <code>DISTINCT</code> key or the argument of a function or operator.</li>
+<li>Stated the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#terminal-rule" data-term="Terminal rule" data-def="A disclosed value can be returned, and used for nothing else.">terminal rule</a> precisely: a disclosed value may be returned, renamed or cast, and is not a <code>DISTINCT</code> key or the argument of a function or operator.</li>
 <li>DEP.js follows both rules, and no longer accepts a scalar subquery over a disclosed value as a sort key. The 38 simulator checks and the tutorial and book checks pass.</li>
 <li>Chapter 6: the native disclosed-sort gap is now confirmed by native testing of DEP Engine 0.5.1, and three further differences of DEP Engine 0.5.2 are documented (presence tests, computing on disclosed values, unchecked <code>VALUES</code> rows). Fixes exist in the Engine's development source and are not yet released.</li>
 <li>Corrected chapter numbers carried over from the design proposal, and the main navigation now reads Learn DEP, since the book covers more than the language.</li>
@@ -113,14 +121,14 @@ behavior of DEP Engine or DEP CLI.</p>
 <p>DEP Engine
 - Fixed: <code>current_date</code>, <code>now()</code> and the other functions of the current time failed in every statement
   ("invoke should not be called on a simplified current_date() function"). Each statement now has its start
-  time, and the arguments of a <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#declared-function" data-term="Declared function" data-def="A named function that may do what ordinary queries may not: disclose, or link.">declared function</a> are folded to values before its body runs, so
+  time, and the arguments of a declared function are folded to values before its body runs, so
   <code>monthly_fund_report(current_date)</code> works.
 - Fixed: an ORDER BY could be ignored when the query also had a filter on a cast column, such as
   <code>WHERE CAST(starts_at AS DATE) = d ORDER BY starts_at</code> (DataFusion 55 inferred that the column was
   constant). The cast's input in a filter now goes through an internal function that stops the inference.</p>
 <p>DEP.js
 - Follows DEP Engine 0.5: the same rules, errors (with the engine's SQLSTATEs and messages), DEP notes and
-  audit records. <code>compat.js</code> originally compared 280 statements on DEP Engine and DEP.js with <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#matching" data-term="Matching" data-def="Finding rows by a protected value, by equality only.">matching</a>
+  audit records. <code>compat.js</code> originally compared 280 statements on DEP Engine and DEP.js with matching
   results. The updated simulator follows the specification for disclosed sorting, and added regression cases
   expose a reported native 0.5.1 gap. See the compatibility guide; current full parity is not claimed.
 - Transactions: BEGIN, COMMIT, ROLLBACK, savepoints and transactional schema changes; other connections
@@ -129,7 +137,7 @@ behavior of DEP Engine or DEP CLI.</p>
   messages; indexes (CREATE [UNIQUE] INDEX, DROP INDEX, REINDEX); EXPLAIN with the engine's Read: lines.
 - IN lists, NOT IN and OR on protected columns are lookups, as in the engine; IS NULL is allowed.
 - Roles with LOGIN and PASSWORD, GRANT CONNECT ON <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#endpoint" data-term="Endpoint" data-def="The door a connection comes in by. It fixes the connection&#x27;s access path.">ENDPOINT</a> (instead of the <code>\hba</code> command), SET ROLE,
-  <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limits</a> per role, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> (SHOW AUDIT), the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#privacy-matrix" data-term="Privacy matrix" data-def="Who may match, and who may disclose, each protected column, through which path.">privacy matrix</a>, key rotation, and the other SHOW
+  <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limits</a> per role, the <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#audit-log" data-term="Audit log" data-def="The record of every protected match, disclosure, linking and refusal, without values.">audit log</a> (SHOW AUDIT), the privacy matrix, key rotation, and the other SHOW
   commands.
 - The playground's clinic is examples/clinic.sql (with its dates moved to today). New example tabs
   (list of IDs, transaction, constraints, indexes, roles, match limit, audit, who can match); each result

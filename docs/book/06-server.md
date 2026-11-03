@@ -92,10 +92,10 @@ Fixes for all four differences, with regression tests, exist in the development 
 
 ## Version, licensing and readiness
 
-- **Current documented engine:** 0.5.2. The release is available as binary packages.
+- **Current documented engine:** 0.5.2. The source is in this repository, and the release is available as binary packages.
 - **Readiness:** experimental evaluation software, not a production-readiness assurance.
 - **Open material:** specification and documentation under CC BY 4.0; DEP.js, the playground and examples under Apache 2.0.
-- **Binary licensing:** evaluation terms apply to Engine, CLI and Studio. A commercial license is a licensing arrangement, not evidence of production readiness.
+- **Licensing:** the source and the binaries of Engine, CLI and Studio are under the Business Source License 1.1: free for individuals and for non-profit, educational and research organizations, and for non-production use by anyone; a company needs a commercial license for production or commercial use. A license is not evidence of production readiness.
 - **Future plans:** the [design roadmap](../design/02-roadmap-and-release.md) discusses possible future work, including PostgreSQL. It is not the current feature list.
 
 See [licensing](../../LICENSING.md) and [the current releases](https://github.com/mandelreouven2002/project-hoopeo.github.io/releases).

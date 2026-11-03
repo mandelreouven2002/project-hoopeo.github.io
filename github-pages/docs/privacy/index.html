@@ -41,7 +41,7 @@
 <div class="wrap docs">
   <nav class="docs-nav" aria-label="Docs"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/" aria-current="page"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav>
   <details class="docs-menu"><summary>Chapters & reference</summary><nav aria-label="Chapters & reference"><a class="book-start" href="/project-hoopeo.github.io/docs/">DEP guide</a><ol class="chapter-list"><li><a href="/project-hoopeo.github.io/docs/"><span class="chapter-number" aria-hidden="true">1</span><span>Understand DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/sql/"><span class="chapter-number" aria-hidden="true">2</span><span>Write DEP SQL</span></a></li><li><a href="/project-hoopeo.github.io/docs/functions/"><span class="chapter-number" aria-hidden="true">3</span><span>Declared functions</span></a></li><li><a href="/project-hoopeo.github.io/docs/designing/"><span class="chapter-number" aria-hidden="true">4</span><span>Design with DEP</span></a></li><li><a href="/project-hoopeo.github.io/docs/application/"><span class="chapter-number" aria-hidden="true">5</span><span>Build an application</span></a></li><li><a href="/project-hoopeo.github.io/docs/server/"><span class="chapter-number" aria-hidden="true">6</span><span>Run the server</span></a></li><li><a href="/project-hoopeo.github.io/docs/privacy/" aria-current="page"><span class="chapter-number" aria-hidden="true">7</span><span>Privacy as Code &amp; GDPR</span></a></li><li><a href="/project-hoopeo.github.io/docs/internals/"><span class="chapter-number" aria-hidden="true">8</span><span>Inside the engine</span></a></li></ol><details class="reference-menu"><summary>Reference</summary><ul><li><a href="/project-hoopeo.github.io/docs/reference/glossary/"><span>Glossary</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/errors/"><span>Errors &amp; notes</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/show/"><span>SHOW commands</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/server-options/"><span>Server options</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/http-api/"><span>HTTP API</span></a></li><li><a href="/project-hoopeo.github.io/docs/reference/cli/"><span>DEP CLI</span></a></li></ul></details></nav></details>
-  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 7 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#3-privacy-as-code-privacy-by-design-and-the-gdpr">Privacy as Code, privacy by design, and the GDPR</a><ul><li><a href="#31-what-is-privacy-as-code">What is Privacy as Code?</a></li><li><a href="#32-what-is-privacy-by-design">What is privacy by design?</a></li><li><a href="#33-what-does-the-gdpr-require">What does the GDPR require?</a></li><li><a href="#34-what-does-privacy-engineering-add">What does privacy engineering add?</a></li><li><a href="#35-what-dep-does-not-cover">What DEP does not cover</a></li></ul></li><li><a href="#a-practical-implementation-workflow">A practical implementation workflow</a></li><li><a href="#what-remains-outside-dep">What remains outside DEP</a></li><li><a href="#from-concept-to-implementation">From concept to implementation</a></li></ul></details><div class="prose"><h1 id="privacy-as-code--gdpr">Privacy as Code &amp; GDPR</h1>
+  <article class="docs-article"><div class="doc-version"><span class="version-dot"></span> DEP Engine 0.5.2 <span>Chapter 7 of 8</span></div><details class="page-contents"><summary>On this page</summary><ul><li><a href="#3-privacy-as-code-privacy-by-design-and-the-gdpr">Privacy as Code, privacy by design, and the GDPR</a><ul><li><a href="#31-what-is-privacy-as-code">What is Privacy as Code?</a></li><li><a href="#32-what-is-privacy-by-design">What is privacy by design?</a></li><li><a href="#33-what-does-the-gdpr-require">What does the GDPR require?</a></li><li><a href="#34-what-does-privacy-engineering-add">What does privacy engineering add?</a></li><li><a href="#34a-protection-goals">Protection goals and the harms DEP addresses</a></li><li><a href="#34b-what-is-new">What is new in DEP, and what is not</a></li><li><a href="#35-what-dep-does-not-cover">What DEP does not cover</a></li></ul></li><li><a href="#a-practical-implementation-workflow">A practical implementation workflow</a></li><li><a href="#what-remains-outside-dep">What remains outside DEP</a></li><li><a href="#from-concept-to-implementation">From concept to implementation</a></li></ul></details><div class="prose"><h1 id="privacy-as-code--gdpr">Privacy as Code &amp; GDPR</h1>
 <h2 id="3-privacy-as-code-privacy-by-design-and-the-gdpr">Privacy as Code, privacy by design, and the GDPR</h2>
 <p><strong>In one sentence:</strong> DEP takes three established ways of thinking about privacy (Privacy as Code, privacy by design, and the GDPR's data protection by design and by default) and turns each of them into something the database enforces on every query.</p>
 <p>This chapter explains each framework in plain terms, shows what it asks for, and shows how DEP applies it, and where it does not. It uses DEP's constructs before they are defined in detail; each is linked to the chapter that explains it.</p>
@@ -141,11 +141,11 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 <tr>
 <td>Evidence it produces</td>
 <td>Scan and CI reports</td>
-<td>Metadata and audit records; a project can implement drift reporting</td>
+<td>Metadata and audit records, and a drift report that compares the catalog with the approved matrix (<a href="https://github.com/mandelreouven2002/project-hoopeo.github.io/blob/main/tools/privacy-check/README.md"><code>tools/privacy-check</code></a>)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>How the two fit together.</strong> DEP does not replace these tools; it gives them a point of enforcement. A Fides-style taxonomy can decide which columns should be <code>PROTECTED</code>, and a CI pipeline can check that every declared function matches an approved decision (<a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>). The development method in <a href="/project-hoopeo.github.io/docs/designing/#10-designing-with-dep">Designing with DEP</a> is built on exactly that idea.</p>
+<p><strong>How the two fit together.</strong> DEP does not replace these tools; it gives them a point of enforcement. A Fides-style taxonomy can decide which columns should be <code>PROTECTED</code>, and a CI pipeline can check that every declared function and every privilege matches an approved decision (<a href="/project-hoopeo.github.io/docs/designing/#107-step-7-keep-the-matrix-and-the-database-in-sync">Step 7: Keep the matrix and the database in sync</a>). The repository's checker does this for a matrix written in YAML. The development method in <a href="/project-hoopeo.github.io/docs/designing/#10-designing-with-dep">Designing with DEP</a> is built on exactly that idea.</p>
 <h3 id="32-what-is-privacy-by-design">What is privacy by design?</h3>
 <p><strong>What is it?</strong> <em>Privacy by design</em> is a framework developed by Ann Cavoukian, then Information and Privacy Commissioner of Ontario, which holds that privacy should be built into systems from the start rather than added afterwards. It was recognized by the International Conference of Data Protection and Privacy Commissioners in a 2010 resolution adopted in Jerusalem, and its idea is now part of the GDPR as <em>data protection by design</em> (<a href="/project-hoopeo.github.io/docs/privacy/#33-what-does-the-gdpr-require">What does the GDPR require?</a>).</p>
 <p><strong>Its seven foundational principles, and how DEP applies them</strong></p>
@@ -270,7 +270,7 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 </tr>
 <tr>
 <td>Accountability, Art. 5(2)</td>
-<td>The catalog lists every disclosure and linkage; the audit log attributes every lookup to an identity (<a href="/project-hoopeo.github.io/docs/designing/#9-dep-and-privacy-as-code">DEP and Privacy as Code</a>).</td>
+<td>The catalog lists every disclosure and linkage; the drift check shows that the database still matches the approved matrix; the audit log attributes every lookup and every call of a declared function to an identity. The audit does not record how many rows a call returned, and it is not tamper-evident (<a href="/project-hoopeo.github.io/docs/designing/#93-everyday-work-is-attributed">What the audit does not record</a>).</td>
 </tr>
 <tr>
 <td>Records of processing, Art. 30</td>
@@ -311,6 +311,50 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 </tbody>
 </table></div>
 <p><strong>Explanation:</strong> <em>disassociability</em> is the closest existing term for DEP's principle. The NIST Privacy Framework (version 1.0) makes it concrete in its <em>Disassociated Processing</em> category, whose first subcategory (CT.DP-P1) is that data are processed to limit observability and linkability. Anchored matching is a direct way to limit linkability: a query can associate records only for the value it names.</p>
+<h3 id="34a-protection-goals">Protection goals and the harms DEP addresses</h3>
+<p><strong>What are protection goals?</strong> Privacy engineering also describes its aims as <em>protection goals</em>. Hansen, Jensen and Rost (IEEE Security and Privacy Workshops, 2015) add three privacy goals to the security triad of confidentiality, integrity and availability: <strong>unlinkability</strong> (personal data cannot be linked across purposes or domains beyond what is intended), <strong>transparency</strong> (processing can be understood and checked), and <strong>intervenability</strong> (people and supervisors can intervene in it).</p>
+<p><strong>The clinic's objectives.</strong> The matrix serves four objectives, each tied to a goal:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>What it means in the clinic</th>
+<th>Goal</th>
+<th>How DEP applies it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P1. Use without exposure</strong></td>
+<td>Reception finds Dana by her ID number without the database sending ID numbers to every program that only needs to find a record</td>
+<td>Confidentiality</td>
+<td>Protected values are matched, never returned by ordinary queries</td>
+</tr>
+<tr>
+<td><strong>P2. No population linkage by default</strong></td>
+<td>No ordinary workflow can join every patient to every diagnosis through the ID number</td>
+<td>Unlinkability</td>
+<td>Anchored matching; whole-dataset linkage only in a declared <code>LINKS</code> function</td>
+</tr>
+<tr>
+<td><strong>P3. Explicit exceptions</strong></td>
+<td>Every release and every linkage is a named function with a purpose and named callers</td>
+<td>Transparency</td>
+<td><code>DISCLOSES</code> and <code>LINKS</code> functions, listed by <code>SHOW FUNCTIONS</code></td>
+</tr>
+<tr>
+<td><strong>P4. No silent expansion</strong></td>
+<td>A new grant or function that extends what a role does with identifiers is detected before it is used</td>
+<td>Transparency</td>
+<td>The drift check compares the catalog with the matrix</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The harms behind them.</strong> The objectives answer three ways in which processing that every permission allows can still harm people. <strong>Exposure</strong>: identifiers reach programs and people who only needed to find a record, and from there logs, exports and screenshots. <strong>Linkage</strong>: tables that are harmless on their own are joined into a profile of each person. <strong>Function creep</strong>: a new query, grant or job quietly extends what is done with identifiers, without anyone deciding it. DEP addresses the first by not returning protected values, the second by anchoring and declared linkage, and the third by making every exception an object that can be compared with the approved matrix.</p>
+<p><strong>Data protection by default, in one rule.</strong> Article 25(2) requires that personal data not be made accessible, by default, to an indefinite number of people. A protected value is returned as <code>NULL</code> to every role, the administrator included, until a declared function that a named role may call discloses it. Intervenability is the goal DEP serves least: it gives the organization control over processing, not the individual.</p>
+<h3 id="34b-what-is-new">What is new in DEP, and what is not</h3>
+<p><strong>Is enforcing privacy inside a database new?</strong> No. Hippocratic databases made purpose specification and limited disclosure database responsibilities (2002); purpose-based access control checks the purpose of each access against purposes attached to data; IFDB enforced information-flow labels inside PostgreSQL (2013); Qapla and Blockaid enforce policies on the queries of an application; Snowflake's projection and join policies are native policy objects that keep a column out of results or restrict which columns may be joined. <a href="/project-hoopeo.github.io/docs/design/roadmap/#appendix-b-how-dep-relates-to-existing-approaches">Appendix B of the roadmap</a> compares them in detail.</p>
+<p><strong>What DEP adds</strong> is a particular combination: a distinction between <em>ways of using one protected value</em> (matching it, linking through it, returning it, disclosing it) as part of how the database interprets ordinary SQL; a single supplied anchor as the line between finding one person and linking a population; named, granted functions as the only exceptions; and, because of that, a catalog that can be read back as the matrix of decisions the database enforces and checked against the one that was approved. The names MATCH, LINK and DISCLOSE label operations of this design; they are not claimed to be new kinds of operation. A controlled comparison of DEP with those systems has not been done.</p>
 <h3 id="35-what-dep-does-not-cover">What DEP does not cover</h3>
 <p><strong>Where are the limits?</strong> DEP is a technical measure inside the database. It does not address:</p>
 <ul>
@@ -327,7 +371,8 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 <li>Privacy as Code checks policy around the database; DEP enforces it inside the database, on every query.</li>
 <li>DEP applies most privacy-by-design principles directly, and the lifecycle and user-centric principles only in part.</li>
 <li>For the GDPR, DEP's strongest contribution is to Article 25(2): it limits the <strong>extent of processing</strong> and the <strong>accessibility</strong> of protected values by default.</li>
-<li>In privacy-engineering terms, DEP is a mechanism for <strong>disassociability</strong>: using values without associating them beyond what each operation needs.</li>
+<li>In privacy-engineering terms, DEP is a mechanism for <strong>disassociability</strong> and <strong>unlinkability</strong>: using values without associating them beyond what each operation needs.</li>
+<li>The matrix, the catalog and the drift check make the decisions transparent and keep them from expanding silently; deciding whether they are right remains the organization's work.</li>
 </ul>
 <hr />
 <h2 id="a-practical-implementation-workflow">A practical implementation workflow</h2>
@@ -338,7 +383,7 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 <li><strong>Grant:</strong> separate application roles and <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#access-path" data-term="Access path" data-def="What a connection may do with protected values: `OPERATIONAL` or `MASKED_READ`.">access paths</a>. Set <a class="term" href="/project-hoopeo.github.io/docs/reference/glossary/#match-limit" data-term="Match limit" data-def="How many protected matches a role may make per minute.">match limits</a> for lookup roles.</li>
 <li><strong>Review exceptions:</strong> inspect each DISCLOSES or LINKS function, its owner, purpose and callers.</li>
 <li><strong>Test:</strong> check both permitted operations and attempts that must be refused.</li>
-<li><strong>Observe:</strong> inspect SHOW PRIVACY MATRIX and SHOW AUDIT; review access and function changes.</li>
+<li><strong>Observe:</strong> run the drift check against the approved matrix, inspect SHOW PRIVACY MATRIX and SHOW AUDIT, and review access and function changes.</li>
 <li><strong>Operate:</strong> configure TLS, separate key custody, backups, retention and incident procedures.</li>
 </ol>
 <p><a href="/project-hoopeo.github.io/docs/application/">Build a small application with these controls →</a></p>
@@ -348,7 +393,7 @@ GRANT EXECUTE ON FUNCTION monthly_fund_report(DATE) TO billing_job;</code></pre>
 <p><strong>The server is trusted.</strong> DEP does not protect against an administrator who can read server memory or a compromised operating system. The simulator provides no server-side protection. The model's <a href="/project-hoopeo.github.io/docs/internals/#18-guarantees-and-limits">guarantees and limits</a> should be part of any evaluation.</p>
 <h2 id="from-concept-to-implementation">From concept to implementation</h2>
 <p>The <a href="/project-hoopeo.github.io/privacy-as-code/">Privacy as Code introduction</a> is the short entry point for readers who do not need the whole book. Continue to <a href="/project-hoopeo.github.io/docs/designing/">Design with DEP</a> for classification and the matrix, or <a href="/project-hoopeo.github.io/docs/application/">Build an application</a> to run the controls.</p></div><div class="prevnext"><a class="prev" href="/project-hoopeo.github.io/docs/server/"><small>Previous</small>Run the server</a><a class="next" href="/project-hoopeo.github.io/docs/internals/"><small>Next</small>Inside the engine</a></div></article>
-  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#3-privacy-as-code-privacy-by-design-and-the-gdpr">Privacy as Code, privacy by design, and the GDPR</a><ul><li><a href="#31-what-is-privacy-as-code">What is Privacy as Code?</a></li><li><a href="#32-what-is-privacy-by-design">What is privacy by design?</a></li><li><a href="#33-what-does-the-gdpr-require">What does the GDPR require?</a></li><li><a href="#34-what-does-privacy-engineering-add">What does privacy engineering add?</a></li><li><a href="#35-what-dep-does-not-cover">What DEP does not cover</a></li></ul></li><li><a href="#a-practical-implementation-workflow">A practical implementation workflow</a></li><li><a href="#what-remains-outside-dep">What remains outside DEP</a></li><li><a href="#from-concept-to-implementation">From concept to implementation</a></li></ul></aside>
+  <aside class="docs-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#3-privacy-as-code-privacy-by-design-and-the-gdpr">Privacy as Code, privacy by design, and the GDPR</a><ul><li><a href="#31-what-is-privacy-as-code">What is Privacy as Code?</a></li><li><a href="#32-what-is-privacy-by-design">What is privacy by design?</a></li><li><a href="#33-what-does-the-gdpr-require">What does the GDPR require?</a></li><li><a href="#34-what-does-privacy-engineering-add">What does privacy engineering add?</a></li><li><a href="#34a-protection-goals">Protection goals and the harms DEP addresses</a></li><li><a href="#34b-what-is-new">What is new in DEP, and what is not</a></li><li><a href="#35-what-dep-does-not-cover">What DEP does not cover</a></li></ul></li><li><a href="#a-practical-implementation-workflow">A practical implementation workflow</a></li><li><a href="#what-remains-outside-dep">What remains outside DEP</a></li><li><a href="#from-concept-to-implementation">From concept to implementation</a></li></ul></aside>
 </div>
 </main>
 <footer class="site-footer"><div class="wrap">

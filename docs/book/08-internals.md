@@ -444,24 +444,9 @@ The masked path can run aggregate queries over ordinary fields and call linking 
 
 The book develops the original DEP design by Reuven Mandelovich. Proposed extensions and comparisons are collected in [Roadmap and release](../design/02-roadmap-and-release.md).
 
-## How to cite
+## Credit and license
 
-This document is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You may share and adapt it for any purpose, including commercially, with appropriate credit.
-
-> Reuven Mandelovich. *DEP: Database-Enforced Privacy. A Design Proposal.* Version 1.0, October 2026. https://doi.org/<DOI>
-
-```bibtex
-@techreport{mandelovich2026dep,
-  author      = {Reuven Mandelovich},
-  title       = {{DEP}: Database-Enforced Privacy. A Design Proposal},
-  year        = {2026},
-  month       = oct,
-  institution = {Self-published},
-  version     = {1.0},
-  doi         = {<DOI>},
-  url         = {https://github.com/<GITHUB-USER>/project-hoopeo}
-}
-```
+This document is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You may share and adapt it for any purpose, including commercially, with appropriate credit: Reuven Mandelovich, Project Hoopeo, <https://github.com/mandelreouven2002/project-hoopeo.github.io>.
 
 If you implement DEP's ideas in your own system, a mention in your documentation, "based on DEP by Reuven Mandelovich", is appreciated.
 
@@ -469,7 +454,7 @@ If you implement DEP's ideas in your own system, a mention in your documentation
 
 ## References
 
-These sources describe existing capabilities, frameworks, and regulation that inform the design. They do not validate DEP, establish its novelty, or demonstrate its security. Sources on related products and research are listed in [Roadmap and Release](../design/02-roadmap-and-release.md#references).
+These sources describe existing capabilities, frameworks, and regulation that inform the design. They do not validate DEP, establish its novelty, or demonstrate its security. Sources on related products and systems are listed in [Roadmap and Release](../design/02-roadmap-and-release.md#references).
 
 1. PostgreSQL documentation. *Privileges*: column-level privileges. https://www.postgresql.org/docs/current/ddl-priv.html
 2. PostgreSQL documentation. *CREATE FUNCTION*. https://www.postgresql.org/docs/current/sql-createfunction.html

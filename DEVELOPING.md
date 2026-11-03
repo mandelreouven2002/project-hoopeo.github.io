@@ -55,7 +55,7 @@ Start the server afresh for each run: the cases change its data.
 
 Releases are built by `.github/workflows/release.yml` when a tag `v*` is pushed, and published as a GitHub Release of this repository. The workflow's own token is enough: no secret is needed.
 
-1. Bump the version in `Cargo.toml` (`[workspace.package]`), `studio/tauri.conf.json`, `playground/package.json`, `playground/depsql.js` (`VERSION`) and `CITATION.cff`. Add the entry to `CHANGELOG.md`.
+1. Bump the version in `Cargo.toml` (`[workspace.package]`), `studio/tauri.conf.json`, `playground/package.json`, `playground/depsql.js` (`VERSION`). Add the entry to `CHANGELOG.md`.
 2. Push to `main`, and wait for `ci.yml` to pass.
 3. Tag and push the tag:
    ```sh

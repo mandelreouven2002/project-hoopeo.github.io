@@ -14,7 +14,7 @@
 > **Status:** v1.0 · October 2026 · Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 > **DEP is presented as an idea, and this document is not a commitment to build it.** It records one way DEP could be built and released, for anyone, including the author, who decides to. Where it says "will", read "would".
 
-**About this document.** The companion document, [the DEP design proposal](01-dep-concept.md), defines what DEP is, how it is written, and how it works. This document sketches how DEP could be built and released. Two appendices complete the picture: how the design maps onto Apache DataFusion and PostgreSQL ([Appendix A](#appendix-a-mapping-the-design-to-real-engines)), and how DEP relates to existing products and research ([Appendix B](#appendix-b-how-dep-relates-to-existing-approaches)). What actually ships will be recorded in a separate, living document ([chapter 9](#9-after-the-release-what-shipped)).
+**About this document.** The companion document, [the DEP design proposal](01-dep-concept.md), defines what DEP is, how it is written, and how it works. This document sketches how DEP could be built and released. Two appendices complete the picture: how the design maps onto Apache DataFusion and PostgreSQL ([Appendix A](#appendix-a-mapping-the-design-to-real-engines)), and how DEP relates to existing products and approaches ([Appendix B](#appendix-b-how-dep-relates-to-existing-approaches)). What actually ships will be recorded in a separate, living document ([chapter 9](#9-after-the-release-what-shipped)).
 
 ---
 
@@ -236,8 +236,6 @@ The long-term replacement is `dep-core` itself compiled to WebAssembly, so the e
 
 Publishing the design or the code under an open-source license gives the idea to the world. That is excellent for reputation and adoption, but afterwards there is little left to sell. If a patent or a company might ever be wanted, that decision must be made **before the first public disclosure**: in many jurisdictions, a public disclosure before filing harms the ability to obtain a patent, and publishing the design proposal counts as disclosure.
 
-If the project is carried out within the Technion (as a course, a final project, or with a faculty advisor) the institution's intellectual-property policy may give it rights in the work. This should be checked in advance, for example with the Technion's technology-transfer office. These are legal questions and should be confirmed with a qualified advisor.
-
 ### 5.2 Licensing
 
 | Component | License |
@@ -259,7 +257,7 @@ All of them permit building on, modifying, and redistributing them, commercially
 
 ### 6.1 When
 
-DEP is published first as an idea: the design proposal, a short paper, and a post, in a public repository with a citable DOI. Publishing the idea does not depend on any implementation. A demonstration (the contract explorer, and later a reference server, if one is ever built) can follow and be added to the same repository.
+DEP is published first as an idea: the design proposal and a post, in a public repository. Publishing the idea does not depend on any implementation. A demonstration (the contract explorer, and later a reference server, if one is ever built) can follow and be added to the same repository.
 
 ### 6.2 Repository structure
 
@@ -310,12 +308,11 @@ One concentrated launch day works better than a trickle: a post that explains th
 
 After launch, label a few issues as good first issues and answer every report quickly. A responsive project attracts contributors; a silent one is forgotten.
 
-### 6.6 Research and industry routes
+### 6.6 Industry routes
 
 Large companies rarely accept unsolicited ideas, and many have explicit policies against it for legal reasons. The routes that work are public:
 
 - **Open publication**: the repository, a post, a talk at a PostgreSQL conference. Companies come to the project, not the other way round.
-- **A demonstration paper**: the main database conferences, SIGMOD and VLDB, have demonstration tracks that fit a project like this. A faculty advisor adds both guidance and credibility.
 - **A portfolio**: a project like this opens doors at database and privacy companies even if they never adopt it as is.
 
 In every route, what an organization is most likely to take is not the code but the **contract**: the rules, the error model, and the conformance suite, which it would then implement in its own engine. The documents deserve as much care as the code.
@@ -447,7 +444,7 @@ Two constraints shape the PostgreSQL track:
 
 ## Appendix B: How DEP relates to existing approaches
 
-DEP is not built from new techniques. Using a column in a predicate without returning it, masking output, restricting joins, approving queries in advance, keyed equality indexes, and declaring privacy policy as code all exist today, in products and in research. This appendix describes what exists, what DEP borrows, and what it adds. It is written through one lens: **Privacy as Code**: where the privacy policy is written, where it is enforced, and what it actually controls.
+DEP is not built from new techniques. Using a column in a predicate without returning it, masking output, restricting joins, approving queries in advance, keyed equality indexes, and declaring privacy policy as code all exist today, in products and in published systems. This appendix describes what exists, what DEP borrows, and what it adds. It is written through one lens: **Privacy as Code**: where the privacy policy is written, where it is enforced, and what it actually controls.
 
 The descriptions of products below are based on their public documentation as of October 2026.
 
@@ -486,10 +483,10 @@ The differences are in scope and in mechanism. Clean rooms are built for multi-p
 ### B.4 Cryptographic approaches
 
 - **Client-side encryption** (SQL Server Always Encrypted, MongoDB Queryable Encryption) protects data from an untrusted server or administrator. A client holding the keys receives plaintext. This is the opposite trust model to DEP, which protects data from clients and trusts the server; the two are complementary.
-- **Encrypted query processing research**, such as CryptDB, also protects data from the server.
+- **Encrypted query processing**, such as CryptDB, also protects data from the server.
 - **Application-side blind indexes**, as in the CipherSweet library, store a keyed hash next to each encrypted value so that applications can search by equality. DEP uses the same technique internally. The difference is where the key lives: with an application-side index, the application holds the key, can hash every possible value, and can enumerate them; in DEP, the key and the enforcement stay in the server.
 
-### B.5 Research on policy enforcement in databases
+### B.5 Policy enforcement in databases
 
 - **Hippocratic databases** (IBM Research, VLDB 2002, followed by *Limiting Disclosure in Hippocratic Databases*, VLDB 2004) proposed that databases take responsibility for privacy principles (purpose specification, consent, limited disclosure, limited retention) and enforce purpose-based disclosure inside the database. DEP's `DISCLOSES` functions, documented with a purpose, are a much narrower descendant of that vision.
 - **Qapla** (USENIX Security 2017) stores policies written in SQL in the database itself, and enforces them in a database adapter, so that policy compliance does not depend on application correctness.
@@ -532,7 +529,7 @@ The existing systems also suggest improvements that are not yet part of DEP:
 - **Differential privacy**, as offered in BigQuery and AWS Clean Rooms, could protect aggregate outputs of linking functions against repeated-query attacks.
 - **Tag-driven policies**, as in Databricks and Snowflake, suggest letting classification metadata drive which columns are declared `PROTECTED`, connecting Step 2 of the method to the schema automatically.
 
-The novelty of DEP's combination should still be confirmed by independent expert review. This appendix reflects a search of public documentation and well-known research, not an exhaustive survey.
+The novelty of DEP's combination should still be confirmed by independent expert review. This appendix reflects a search of public documentation and well-known systems, not an exhaustive survey.
 
 ---
 
